@@ -1,0 +1,372 @@
+<div  class="sticky">
+    <div  class="app-sidebar__overlay main-sidebar main-sidebar-sticky sidemenu-scroll" style="background-color: #3601b5;"></div>
+        <div  class="app-sidebar active" [class.isSidebarVisible]="visible" (mouseleave)="clearSubMenu()">
+        <div  class="side-header"><a 
+                routerlink="/dashboard/sales-dashboard" class="header-brand1"
+                href="/appdashboard#/appdashboard"><img 
+                    src="assets/images/pngs/PagarLogo.png" alt="EasyPagar" class="header-brand-img desktop-logo"><img
+                     src="assets/images/pngs/PagarLogo.png" alt="EasyPagar"
+                    class="header-brand-img toggle-logo"><img 
+                    src="assets/images/pngs/PagarLogo.png" alt="EasyPagar" class="header-brand-img light-logo"><img
+                     src="assets/images/pngs/PagarLogo.png" alt="EasyPagar"
+                    class="header-brand-img light-logo1"></a></div>
+        <ng-scrollbar class="ng-scrollbar" style="overflow: scroll !important;">
+            <div  class="ng-scrollbar-wrapper" position="native" track="vertical"
+                appearance="compact" visibility="native" deactivated="false" dir="ltr" pointereventsmethod="viewport"
+                verticalused="true" horizontalused="false" isverticallyscrollable="true"
+                ishorizontallyscrollable="false" verticalhovered="false" scrollbarclicked="false">
+                <div  class="ng-scroll-viewport-wrapper">
+                    <div style="overflow-y: auto;">
+                        <div  class="ng-scroll-content">
+                            <div  class="main-sidemenu is-expanded container">
+                                <div  id="slide-left" class="slide-left disabled active d-none">
+                                    <svg  xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
+                                        width="24" height="24" viewBox="0 0 24 24">
+                                        <path 
+                                            d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <ul  class="side-menu open flex-nowrap"
+                                    style="margin-left: 0px; margin-right: 0px;">
+                                    <li  class="side-item slide show is-expanded" *ngFor="let IL of navigation;">
+                                        <a  class="side-menu__item" *ngIf="IL.ModuleName=='Expense Master' && ShowExpensemodule==true">
+                                            <span 
+                                                class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}" ></i></span>
+                                                <span  class="side-menu__label">
+                                                     <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                     <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                    </span>
+                                                    <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i>
+                                                </a>
+
+                                                <a  class="side-menu__item" aria-disabled="true" *ngIf="IL.ModuleName=='Expense Master' && ShowExpensemodule==false">
+                                                    <span class="shape1"></span>
+                                                    <span class="shape2"></span>
+                                                    <span class="side-menu__icon">
+                                                        <i class="{{IL.Icon}}"></i>
+                                                    </span>
+                                                   <span class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span>
+                                                </a>
+
+                                                    <a class="side-menu__item" *ngIf="IL.ModuleName=='Attendance Master' && ShowAttendancemodule==true"> <span 
+                                                        class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                        <span  class="side-menu__label">
+                                                             <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                             <a *ngIf="IL.SubCount"   (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                            </span>
+                                                            <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+
+                                                        <a class="side-menu__item" *ngIf="IL.ModuleName=='Attendance Master' && ShowAttendancemodule==false"><span 
+                                                            class="shape1"></span><span 
+                                                            class="shape2"></span><span 
+                                                            class="side-menu__icon">
+                                                            <i class="{{IL.Icon}}"></i></span><span class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span>
+                                                            </a>
+                                                    <!-- <a class="side-menu__item" *ngIf="IL.ModuleName=='Lunch Break' && IsAddLunchHour==true"> <span 
+                                                        class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                        <span  class="side-menu__label">
+                                                             <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                             <a *ngIf="IL.SubCount" >{{IL.ModuleName}}</a>
+                                                            </span>
+                                                            <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+
+                                                        <a class="side-menu__item" *ngIf="IL.ModuleName=='Lunch Break' && IsAddLunchHour==false"><span 
+                                                            class="shape1"></span><span 
+                                                            class="shape2"></span><span 
+                                                            class="side-menu__icon">
+                                                            <i class="{{IL.Icon}}"></i></span><span class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span>
+                                                            </a> -->
+
+
+
+                                                        <a  class="side-menu__item" *ngIf="IL.ModuleName=='Location Tracking' && ShowLocationTracking==true"> <span 
+                                                            class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                            <span  class="side-menu__label">
+                                                                 <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                                 <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                                </span>
+                                                                <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+                                                            
+                                                        <a class="side-menu__item" *ngIf="IL.ModuleName=='Location Tracking' && ShowLocationTracking==false"><span 
+                                                            class="shape1"></span><span 
+                                                            class="shape2"></span><span 
+                                                            class="side-menu__icon"><i 
+                                                                class="{{IL.Icon}}"></i></span><span 
+                                                            class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                                            ></i></a>
+
+
+                                                        <a  class="side-menu__item" *ngIf="IL.ModuleName=='Message Master' && ShowNotificationmodule==true"> <span 
+                                                            class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                            <span  class="side-menu__label">
+                                                                 <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                                 <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                                </span>
+                                                                <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+
+                                                            
+                                                        <a class="side-menu__item" *ngIf="IL.ModuleName=='Message Master' && ShowNotificationmodule==false"><span 
+                                                            class="shape1"></span><span 
+                                                            class="shape2"></span><span 
+                                                            class="side-menu__icon"><i 
+                                                                class="{{IL.Icon}}"></i></span><span 
+                                                            class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                                            ></i></a>
+
+
+                                                            <a  class="side-menu__item" *ngIf="IL.ModuleName=='Reports Master' && ShowReportsmodule==true"> <span 
+                                                                class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                                <span  class="side-menu__label">
+                                                                     <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                                     <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                                    </span>
+                                                                    <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+
+                                                                
+                                                            <a aria-disabled="true" class="side-menu__item" *ngIf="IL.ModuleName=='Reports Master' && ShowReportsmodule==false"><span 
+                                                                class="shape1"></span><span 
+                                                                class="shape2"></span><span 
+                                                                class="side-menu__icon"><i 
+                                                                    class="{{IL.Icon}}"></i></span><span 
+                                                                class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                                                ></i></a>
+
+
+                                                                <a  class="side-menu__item" *ngIf="IL.ModuleName=='Loan Master' && ShowLoanmodule==true"> <span 
+                                                                    class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                                    <span  class="side-menu__label">
+                                                                         <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                                         <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                                        </span>
+                                                                        <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+
+                                                                    <a  class="side-menu__item" *ngIf="IL.ModuleName=='Loan Master' && ShowLoanmodule==false"><span 
+                                                                        class="shape1"></span><span 
+                                                                        class="shape2"></span><span 
+                                                                        class="side-menu__icon"><i 
+                                                                            class="{{IL.Icon}}"></i></span><span 
+                                                                        class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                                                        ></i></a>
+
+
+                                                                    <a  class="side-menu__item" *ngIf="IL.ModuleName=='Leave Master' && ShowLeavemodule==true"> <span 
+                                                                        class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                                        <span  class="side-menu__label">
+                                                                             <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                                             <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                                            </span>
+                                                                            <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+                                                                        <a class="side-menu__item" *ngIf="IL.ModuleName=='Leave Master' && ShowLeavemodule==false"><span 
+                                                                            class="shape1"></span><span 
+                                                                            class="shape2"></span><span 
+                                                                            class="side-menu__icon"><i 
+                                                                                class="{{IL.Icon}}"></i></span><span 
+                                                                            class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                                                            ></i></a>
+    
+
+                                                                        <a  class="side-menu__item" *ngIf="IL.ModuleName=='Advertise Master' && ShowBannermodule==true"> <span 
+                                                                            class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                                            <span  class="side-menu__label">
+                                                                                 <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                                                 <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                                                </span>
+                                                                                <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+                                                                            <a  class="side-menu__item" *ngIf="IL.ModuleName=='Advertise Master' && ShowBannermodule==false"><span 
+                                                                                class="shape1"></span><span 
+                                                                                class="shape2"></span><span 
+                                                                                class="side-menu__icon"><i 
+                                                                                    class="{{IL.Icon}}"></i></span><span 
+                                                                                class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                                                                ></i></a>
+
+
+                                                                            <a  class="side-menu__item" *ngIf="IL.ModuleName=='Employee Master' && ShowEmployeeModule==true"> <span 
+                                                                                class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                                                <span  class="side-menu__label">
+                                                                                     <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);"> {{IL.ModuleName}}</a>
+                                                                                     <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                                                    </span>
+                                                                                    <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+
+                                                                                <a  class="side-menu__item" *ngIf="IL.ModuleName=='Employee Master' && ShowEmployeeModule==false"><span 
+                                                                                    class="shape1"></span><span 
+                                                                                    class="shape2"></span><span 
+                                                                                    class="side-menu__icon"><i 
+                                                                                        class="{{IL.Icon}}"></i></span><span 
+                                                                                    class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                                                                    ></i></a>
+
+
+                                                                                    
+                                                                                <a class="side-menu__item" *ngIf="IL.ModuleName!='My Attendance' && IL.ModuleName!='My Expenses' && IL.ModuleName!='Apply Loan/Advance' && IL.ModuleName!='Messages' && IL.ModuleName!='My Reports' && IL.ModuleName!='Apply Leave' && IL.ModuleName!='Leave Master'&& IL.ModuleName!='Message Master' && IL.ModuleName!='Loan Master' && IL.ModuleName!='Employee Master' &&IL.ModuleName!='Attendance Master' &&IL.ModuleName!='Advertise Master' && IL.ModuleName!='Reports Master' && IL.ModuleName!='Expense Master'">
+                                                                                    <span 
+                                                                                    class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                                                                    <span  class="side-menu__label">
+                                                                                         <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                                                         <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                                                        </span>
+                                                                                        <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+<!-- Employee Validation -->
+
+<a class="side-menu__item" *ngIf="IL.ModuleName=='My Attendance' && ShowAttendancemodule==true"> <span 
+    class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+    <span  class="side-menu__label">
+         <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+         <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+        </span>
+        <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+
+
+    <a class="side-menu__item" *ngIf="IL.ModuleName=='My Attendance' && ShowAttendancemodule==false"><span 
+        class="shape1"></span><span 
+        class="shape2"></span><span 
+        class="side-menu__icon"><i 
+            class="{{IL.Icon}}"></i></span><span 
+        class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+        ></i></a>
+
+        <a class="side-menu__item" *ngIf="IL.ModuleName=='My Expenses' && ShowExpensemodule==true"> <span 
+            class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+            <span  class="side-menu__label">
+                 <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                 <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                </span>
+                <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+        
+        
+            <a class="side-menu__item" *ngIf="IL.ModuleName=='My Expenses' && ShowExpensemodule==false"><span 
+                class="shape1"></span><span 
+                class="shape2"></span><span 
+                class="side-menu__icon"><i 
+                    class="{{IL.Icon}}"></i></span><span 
+                class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                ></i></a>
+
+
+
+                <a class="side-menu__item" *ngIf="IL.ModuleName=='Apply Loan/Advance' && ShowLoanmodule==true"> <span 
+                    class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                    <span  class="side-menu__label">
+                         <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                         <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                        </span>
+                        <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+                
+                
+                    <a class="side-menu__item" *ngIf="IL.ModuleName=='Apply Loan/Advance' && ShowLoanmodule==false"><span 
+                        class="shape1"></span><span 
+                        class="shape2"></span><span 
+                        class="side-menu__icon"><i 
+                            class="{{IL.Icon}}"></i></span><span 
+                        class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span>
+                        </a>
+        
+
+                        <a class="side-menu__item" *ngIf="IL.ModuleName=='Apply Leave' && ShowLeavemodule==true"> <span 
+                            class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                            <span  class="side-menu__label">
+                                 <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                 <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                </span>
+                                <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+                        
+                        
+                            <a class="side-menu__item" *ngIf="IL.ModuleName=='Apply Leave' && ShowLeavemodule==false"><span 
+                                class="shape1"></span><span 
+                                class="shape2"></span><span 
+                                class="side-menu__icon"><i 
+                                    class="{{IL.Icon}}"></i></span><span 
+                                class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                ></i></a>
+                
+                                <a class="side-menu__item" *ngIf="IL.ModuleName=='Messages' && ShowNotificationmodule==true"> <span 
+                                    class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                    <span  class="side-menu__label">
+                                         <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                         <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                        </span>
+                                        <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+                                
+                                
+                                    <a class="side-menu__item" *ngIf="IL.ModuleName=='Messages' && ShowNotificationmodule==false"><span 
+                                        class="shape1"></span><span 
+                                        class="shape2"></span><span 
+                                        class="side-menu__icon"><i 
+                                            class="{{IL.Icon}}"></i></span><span 
+                                        class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                        ></i></a>
+                        
+
+
+                                        <a class="side-menu__item" *ngIf="IL.ModuleName=='My Reports' && ShowReportsmodule==true"> <span 
+                                            class="shape1"></span><span class="shape2"></span><span class="side-menu__icon"><i class="{{IL.Icon}}"></i></span>
+                                            <span  class="side-menu__label">
+                                                 <a *ngIf="!IL.SubCount" (click)="Navigate(IL.ModuleLink,true,true,true,true,true);">{{IL.ModuleName}}</a>
+                                                 <a *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)">{{IL.ModuleName}}</a>
+                                                </span>
+                                                <i class="angle fa fa-chevron-right" *ngIf="IL.SubCount" (click)="toggleSubMenu(IL.ModuleName)"></i></a>
+                                        
+                                        
+                                            <a class="side-menu__item" *ngIf="IL.ModuleName=='My Reports' && ShowReportsmodule==false"><span 
+                                                class="shape1"></span><span 
+                                                class="shape2"></span><span 
+                                                class="side-menu__icon"><i 
+                                                    class="{{IL.Icon}}"></i></span><span 
+                                                class="side-menu__label"><a (click)="upgrade(IL.ModuleName)">{{IL.ModuleName}}</a></span><i 
+                                                ></i></a>
+                                
+
+
+
+
+                                        <ul  class="slide-menu open">
+                                            <div *ngIf="expanddata.includes(IL.ModuleName)">
+                                            <li  *ngFor="let sub of IL.SubModules;">
+                                                <a routerlinkactive="active" *ngIf="sub.SubModuleName=='Branch Master' && ShowBranchModule==true" class="slide-item" (click)="Navigate(sub.RouterLink,sub.IsAdd,sub.IsDelete,sub.IsEdit,sub.IsView, sub.IsDownload);"> {{sub.SubModuleName}} </a>
+                                                <a routerlinkactive="active" *ngIf="sub.SubModuleName=='Annual Reports' && ShowAnnualReport==true" class="slide-item" (click)="Navigate(sub.RouterLink,sub.IsAdd,sub.IsDelete,sub.IsEdit,sub.IsView, sub.IsDownload);"> {{sub.SubModuleName}} </a>
+                                                <a routerlinkactive="active" aria-disabled="true" *ngIf="sub.SubModuleName=='Branch Master' && ShowBranchModule==false" class="slide-item" (click)="upgrade(sub.SubModuleName);"> {{sub.SubModuleName}} </a>
+                                                <a routerlinkactive="active" aria-disabled="true" *ngIf="sub.SubModuleName=='Annual Reports' && ShowAnnualReport==false" class="slide-item" (click)="upgrade(sub.SubModuleName);"> {{sub.SubModuleName}} </a>
+                                                <a routerlinkactive="active" *ngIf="sub.SubModuleName!='Branch Master' && sub.SubModuleName!='Annual Reports'" class="slide-item" (click)="Navigate(sub.RouterLink,sub.IsAdd,sub.IsDelete,sub.IsEdit,sub.IsView, sub.IsDownload);"> {{sub.SubModuleName}} </a>
+                                          </li></div>  </ul>
+                                    </li>
+                                    
+                                </ul>
+                                <div  id="slide-right" class="slide-right d-none"><svg
+                                         xmlns="http://www.w3.org/2000/svg" fill="#7b8191"
+                                        width="24" height="24" viewBox="0 0 24 24">
+                                        <path 
+                                            d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-scrollbar scrollable="true" fit="false"
+                    class="scrollbar-control">
+                    <div scrollbartracky="" class="ng-scrollbar-track">
+                        <div scrollbarthumby="" class="ng-scrollbar-thumb"
+                            style="height: 20px; transform: translate3d(0px, 0px, 0px);"></div>
+                    </div>
+                </ng-scrollbar>
+            </div>
+        </ng-scrollbar>
+    </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.6)" size = "medium" color = "#fff" [fullScreen] = "true">
+    <p style="color: white" > 
+        <img src="./assets/images/Banner/loading.gif" height="100px" width="100px"/><br>
+        &nbsp;&nbsp; Loading... </p></ngx-spinner>

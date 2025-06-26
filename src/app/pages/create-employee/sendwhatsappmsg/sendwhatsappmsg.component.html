@@ -1,0 +1,16 @@
+<div class="dialogs">
+    <div class="productdesc">
+        <h3 class="fw-bold alert-title">
+            <i class="fa fa-whatsapp"></i> Confirm WhatsApp Message
+        </h3>
+        <p class="alert-message"> Are you sure you want to send this WhatsApp message the {{this.data.empname}}</p>
+        <div class="border-top pt-3 btn-class">
+            <button class="rebtn" (click)="cancel()">
+                No <i class="fa fa-times-circle"></i>
+            </button>
+            <button class="greenbtn" (click)="sendwhatsapp()">
+                Yes <i class="fa fa-check-circle"></i>
+            </button>
+        </div>
+    </div>
+</div>

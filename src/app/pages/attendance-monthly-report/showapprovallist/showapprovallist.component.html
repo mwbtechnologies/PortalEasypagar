@@ -1,0 +1,27 @@
+<div class="dialogs">
+    <div style="display: flex;justify-content: space-between;">
+        <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+    </div>
+    <div  class="row">
+            <div class="col-md-12">
+            <div  class="productdesc">
+                <h3  class="mb-5 mt-3 fw-bold" style="text-align: center;"> Alert</h3>
+                <div *ngFor="let IL of Timings; let i = index;">
+                    <h6 style="text-align: center;" >{{i+1}}  {{IL.Name}} - {{IL.Time}}</h6>
+                </div>
+                <div *ngIf="Timings.length==0">
+                    <h6 style="text-align: center;" >Loading......</h6>
+                </div>
+               
+                <div class="text-center border-bottom">
+                    <button class="btn btn-success" (click)="ApproveAll();">
+                        Okay  <i  class="fa fa-check-circle-o"></i></button>    &nbsp; 
+
+                        <button class="btn btn-danger" (click)="CloseTab();">
+                            Close  <i  class="fa fa-times"></i></button>  
+                        </div> 
+            
+        </div>
+        </div>
+        </div>
+</div>

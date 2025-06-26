@@ -1,0 +1,151 @@
+<div >
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
+        >
+          Previous
+        </div>
+        <div
+          class="btn btn-outline-secondary"
+          mwlCalendarToday
+          [(viewDate)]="viewDate"
+        >
+          Today
+        </div>
+        <div
+          class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
+        >
+          Next
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+  </div>
+  <br />
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="CalendarView.Month"
+      [viewDate]="viewDate"
+      [events]="CalendarEvents"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent('Clicked', $event.event)"
+      (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-month-view>
+  </div>
+  
+  <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+  
+  <br /><br /><br />
+
+  
+  <ng-template #modalContent let-close="close">
+    <div class="modal-header">
+      <h5 class="modal-title">Event Details</h5>
+      <button type="button" class="close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        Title:
+        <pre>{{title}}</pre>
+      </div>
+      <div>
+        Description:
+        <pre>{{description}}</pre>
+      </div>
+      <div>
+        Date Range:
+        <pre>{{EventStartDate| date:'yyyy-MM-dd'}} - {{EventEndDate| date:'yyyy-MM-dd'}}</pre>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="close()">
+            Close</button>
+    </div>
+  </ng-template>
+</div>
+
+
+  <div >
+    <div  class="row">
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Add Holiday</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+<div  class="col-md-3">
+    <div  class="form-group"><label 
+            class="form-label">StartDate</label><input  type="date"
+            name="example-text-input" class="form-control" id="StartDate" name="StartDate"
+            [ngClass]="{'is-invalid': !StartDate.valid && (StartDate.dirty || StartDate.touched )}"
+            #StartDate="ngModel" required  StartDate [(ngModel)]="formInput.StartDate">
+         </div>
+</div>
+
+<div  class="col-md-3">
+    <div  class="form-group"><label 
+            class="form-label">EndDate</label><input  type="date"
+            name="example-text-input" class="form-control" id="EndDate" name="EndDate" (change)="Checkdate();"
+            [ngClass]="{'is-invalid': !EndDate.valid && (EndDate.dirty || EndDate.touched )}"
+            #EndDate="ngModel" required  EndDate [(ngModel)]="formInput.EndDate">
+         </div>
+</div>
+
+<div  class="col-md-4">
+    <div  class="form-group"><label 
+            class="form-label">Title</label><input
+            name="example-text-input" class="form-control" id="Title" name="Title" type="text"
+            placeholder="Title" 
+            [ngClass]="{'is-invalid': !Title.valid && (Title.dirty || Title.touched)}"
+            #Title="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)"  Title [(ngModel)]="formInput.Title">
+            <label *ngIf="!Title.valid && (Title.dirty || Title.touched)"
+            id="validation-link-error"
+            class="error jquery-validation-error small form-text invalid-feedback">Please Enter Title</label></div>
+</div>
+<div  class="col-md-1">
+  <div  class="form-group">
+      <label class="form-label">IsHalfDay<br></label>
+      <label  class="custom-switch">
+          <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" #IsHalfday="ngModel" required IsHalfday [(ngModel)]="formInput.IsHalfday" id="IsHalfday" name="IsHalfday" value="true">
+          <span class="custom-switch-indicator"></span><span class="custom-switch-description"></span></label></div>
+</div> 
+<div  class="col-md-6">
+    <div  class="form-group"><label 
+            class="form-label">Description</label><textarea rows="3"  type="text"
+            name="example-text-input" placeholder="Write Description for Holiday Here..." class="form-control" id="Description" name="Description" type="text" 
+            [ngClass]="{'is-invalid': !Description.valid && (Description.dirty || Description.touched )}"
+            #Description="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" Description [(ngModel)]="formInput.Description"></textarea>
+            </div>
+</div>
+
+
+                 
+                                  
+                    </div>
+                    <div  class="table-responsive ng-star-inserted">
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Save();">Submit</button>
+                        <!----></div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
+
+  

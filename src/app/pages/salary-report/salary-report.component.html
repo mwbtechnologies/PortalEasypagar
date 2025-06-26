@@ -1,0 +1,383 @@
+<div *ngIf="showPayList == true">
+  <div>
+    <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header" style="justify-content: space-between;">
+                  <div class="col-md-4">
+                      <label (click)="backToDashboard()" class="mb-0 card-title">
+                          <i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+                      </label>
+                  </div>
+                  <div class="col-md-6">
+                      <h3 class="mb-0 card-title">💰🧾 Salary Report</h3>
+                  </div>
+                  <!-- <h3 class="mb-0 card-title" matTooltip="Other Filter" (click)="drawerOpen()"> -->
+                  <h3 class="mb-0 card-title">
+                      <h3 class="mb-0 card-title">
+                          <button class="btn btn-secondary mb-4"
+                                  [disabled]="employeeLoading || SalaryList.length === 0"
+                                  (click)="downloadReport()">
+                              📥 Download Report
+                          </button>
+                      </h3>
+                      &nbsp;
+                      <!-- <i class="fa fa-filter"></i> -->
+                  </h3>
+
+                  <!-- FILTER Drawer -->
+                  <mat-drawer-container [class.drawer-opened]="drawer.opened" class="example-container">
+                      <mat-drawer #drawer class="drawer" [mode]="'over'" [position]="'end'" (backdropClick)="closeDrawer()">
+                          <mat-icon class="close" (click)="drawer.close()">close</mat-icon>
+                          <h2 style="font-size: 16px;color:rgb(0, 0, 0);font-family: poppins;padding:10px">Filters</h2>
+                          <div style="height:90%;overflow: scroll;">
+                              <div class="filters">
+                                  <div class="filtercss">
+                                      <label class="form-label">List Type &nbsp;</label>
+                                      <ng-multiselect-dropdown [settings]="listTypeSettings"
+                                                               [placeholder]="'All'"
+                                                               [data]="ListTypeData"
+                                                               [(ngModel)]="selectedListType"
+                                                               (onSelect)="onListTypeSelect($event)"
+                                                               (onDeSelect)="onListTypeDeSelect($event)">
+                                      </ng-multiselect-dropdown>
+                                  </div>
+                                  <div class="filtercss">
+                                      <label class="form-label">Other Filter &nbsp;</label>
+                                      <ng-multiselect-dropdown [settings]="otherFilterSettings"
+                                                               [placeholder]="'All'"
+                                                               [data]="otherFilterData"
+                                                               [(ngModel)]="otherFilterType"
+                                                               (onSelect)="onotherFilterSelect($event)"
+                                                               (onDeSelect)="onotherFilterDeSelect($event)">
+                                      </ng-multiselect-dropdown>
+                                  </div>
+                              </div>
+                          </div>
+                      </mat-drawer>
+                  </mat-drawer-container>
+              </div>
+
+              <div class="card-body">
+                  <div class="row" style="display: flex;flex-wrap: wrap;">
+                      <div class="col-md-3">
+                          <label class="form-label">Select Organization</label>
+                          <ng-multiselect-dropdown [placeholder]="'All Organizations'"
+                                                   [(ngModel)]="selectedOrganization"
+                                                   [data]="OrgList"
+                                                   [settings]="orgSettings"
+                                                   (onSelect)="onselectedOrg($event)"
+                                                   (onDeSelect)="onDeselectedOrg($event)">
+                          </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-md-3">
+                          <label class="form-label">Select Branch &nbsp;</label>
+                          <ng-multiselect-dropdown [settings]="branchSettings"
+                                                   [placeholder]="'Select Branch'"
+                                                   [data]="BranchList"
+                                                   [(ngModel)]="selectedBranch"
+                                                   (onSelect)="onBranchSelect($event)"
+                                                   (onDeSelect)="onBranchDeSelect($event)">
+                          </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-md-2">
+                          <label class="form-label">Select Department</label>
+                          <ng-multiselect-dropdown [settings]="departmentSettings"
+                                                   [placeholder]="'All Department'"
+                                                   [data]="DepartmentList"
+                                                   [(ngModel)]="selectedDepartment"
+                                                   (onSelect)="onDeptSelect($event)"
+                                                   (onDeSelect)="onDeptDeSelect($event)"
+                                                   (onSelectAll)="onDeptDeSelectAll()"
+                                                   (onDeSelectAll)="onDeptSelectAll($event)">
+                          </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-md-2">
+                          <label class="form-label">Select Year</label>
+                          <ng-multiselect-dropdown [settings]="yearSettings"
+                                                   [placeholder]="'Select Year'"
+                                                   [data]="YearList"
+                                                   [(ngModel)]="selectedyear"
+                                                   (onSelect)="OnYearChange($event)"
+                                                   (onDeSelect)="onyearDeSelect($event)">
+                          </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-md-2">
+                          <label class="form-label">Select Month</label>
+                          <ng-multiselect-dropdown [settings]="monthSettings"
+                                                   [placeholder]="'Select Month'"
+                                                   [data]="MonthList"
+                                                   [(ngModel)]="selectedMonth"
+                                                   (onSelect)="OnMonthChange($event)"
+                                                   (onDeSelect)="onMonthDeSelect($event)">
+                          </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-md-3">
+                          <label class="form-label">Select Employees</label>
+                          <ng-multiselect-dropdown [settings]="employeeSettings"
+                                                   [placeholder]="'Select Employees'"
+                                                   [data]="EmployeeList"
+                                                   [(ngModel)]="selectedEmployees"
+                                                   (onSelect)="OnEmployeesChange($event)"
+                                                   (onDeSelect)="OnEmployeesChangeDeSelect($event)"
+                                                   (onSelectAll)="OnEmployeesChange($event)"
+                                                   (onDeselectAll)="OnEmployeesChange($event)">
+                          </ng-multiselect-dropdown>
+                      </div>
+
+                      <div class="col-md-2">
+                          <label class="form-label">&nbsp;</label>
+                          <button class="btn btn-primary mb-4" (click)="GetReport()">Search</button>
+                      </div>
+
+                      <div class="col-md-2"></div>
+
+                      <!-- ACTION BUTTONS -->
+                      <div class="col-md-12">
+                          <div class="row mt-2" style="justify-content: space-between;">
+                              <div class="col-md-6 d-flex gap-2">
+                                  <button class="btn btn-success mb-4" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="ApprovePayslips();">📝 Bulk Approve</button>
+                                  <button class="btn btn-warning mb-4" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="SaveCalculations();">💾 Bulk Save</button>
+                              </div>
+                              <div class="col-md-6 d-flex justify-content-end gap-2">
+                                  <!-- <button class="btn btn-info mb-4" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="generateBankPaySlip();">🏦 Bank Sheet</button> -->
+                                  <button class="btn btn-primary mb-4" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="GetCalculatedReport();">📥 Recalculate</button>
+
+                                  <button class="btn btn-secondary mb-4" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="DownloadDrawer.toggle();initializeTable();">📤 Other Options</button> &nbsp;
+
+                                  <!-- <button class="btn btn-secondary mb-4" (click)="uploadDrawer.toggle()">📤 Upload Options</button>
+                        -->
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <mat-drawer-container class="example-container" autosize>
+                      <mat-drawer #uploadDrawer mode="over" position="end" style="z-index: 1000;">
+
+
+                      </mat-drawer>
+                  </mat-drawer-container>
+                  <!-- <mat-drawer-container class="example-container" autosize>
+                           <mat-drawer #DownloadDrawer mode="over" position="end" style="z-index: 1000;">
+                                 <div style="padding: 1rem;">
+                               <mat-icon class="float-end" (click)="DownloadDrawer.close()" style="cursor: pointer;">close</mat-icon>
+                                <h5 class="mb-3">📂 Upload/Download Data</h5>
+
+                               <button class="btn btn-outline-primary mb-2 w-100" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="generateBankPaySlip();DownloadDrawer.close();">🏦 Generate Bank Sheet</button>
+                            &nbsp;
+                               <button class="btn btn-outline-primary mb-2 w-100" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="downloadSample();DownloadDrawer.close();">📥 Download Sample File</button>
+                <form #validationForm="ngForm" class="editForm" novalidate>
+                               <div class="mb-3">
+
+                                 <label class="form-label">Select Excel File</label>
+                                 <input type="file" class="form-control" (change)="onFileChange($event, validationForm)" accept=".xlsx" />
+                           </div>
+                               </form>
+
+                               <button class="btn btn-success w-100" (click)="uploadExcel()">📤 Upload Excel</button>
+                             </div>
+                              <hr>
+
+                                 <div style="padding: 1rem;">
+                              <h5 class="mb-3">📂 Stop Deductions    <span class="custom-switch-description text-black">
+
+                                                <i class="fa fa-info-circle"
+                                                    matTooltip="Below selected deductions will be stopped from selected month (salary cycle start date)"></i>
+                                                    </span>
+                                          </h5>
+
+                              <label class="custom-switch"><input type="checkbox"
+                                                    name="custom-switch-checkbox"  required isESIEnabled [(ngModel)]="formInput.isESIEnabled"
+                                                  id="isESIEnabled" name="isESIEnabled" value="true"><span
+                                                    class="custom-switch-description">ESI</span></label>
+        &nbsp;
+                                                            <label class="custom-switch"><input type="checkbox"
+                                                    name="custom-switch-checkbox"  required isPFEnabled [(ngModel)]="formInput.isPFEnabled"
+                                                  id="isPFEnabled" name="isPFEnabled" value="true"><span
+                                                    class="custom-switch-description">PF</span></label>
+        &nbsp;
+                                                            <label class="custom-switch"><input type="checkbox"
+                                                    name="custom-switch-checkbox"  required isPTEnabled [(ngModel)]="formInput.isPTEnabled"
+                                                  id="isPTEnabled" name="isPTEnabled" value="true"><span
+                                                    class="custom-switch-description">PT</span></label>
+        &nbsp;
+                                                         <label class="custom-switch"><input type="checkbox"
+                                                    name="custom-switch-checkbox"  required isSDEnabled [(ngModel)]="formInput.isSDEnabled"
+                                                  id="isSDEnabled" name="isSDEnabled" value="true"></label>  <span
+                                                    class="custom-switch-description">SD</span>
+
+
+
+                               <button class="btn btn-success w-100" (click)="BulkUpdateDeductions();DownloadDrawer.close();">📤 Submit </button>
+                             </div>
+                           </mat-drawer>
+                         </mat-drawer-container> -->
+
+                  <mat-drawer-container class="example-container" autosize>
+                      <mat-drawer #DownloadDrawer mode="over" position="end" style="z-index: 1000;">
+                          <div style="padding: 1rem;">
+                              <mat-icon class="float-end" (click)="DownloadDrawer.close()" style="cursor: pointer;">close</mat-icon>
+                              <!-- <h5 class="mb-3">📂 Upload/Download Data</h5> -->
+
+                              <button class="btn btn-outline-primary mb-2 w-100" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="generateBankPaySlip();DownloadDrawer.close();">🏦 Generate Bank Sheet</button>
+                              &nbsp;
+                              <hr />
+                              <form [formGroup]="component_selection">
+                                  <div class="row ms-3" >
+
+                                      <div class="col-md-6">
+                                          <input type="checkbox" class="form-check-input" formControlName="isAttendanceBonus" /> Attendance Bonus
+                                      </div>
+                                      <div class="col-md-6">
+                                          <input type="checkbox" class="form-check-input" formControlName="isLastMonthIncentive" /> LastMonth Incentive
+                                      </div>
+                                      <div class="col-md-6">
+                                          <input type="checkbox" class="form-check-input" formControlName="isPerformanceIncentive" /> Performance Incentive
+                                      </div>
+                                      <div class="col-md-6">
+                                          <input type="checkbox" class="form-check-input" formControlName="isFinePoints" /> Fine Points
+                                      </div>
+                                  </div>
+                              </form>
+
+                          </div>
+                          <button class="btn btn-outline-primary mb-2 w-100" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)" (click)="dynamic_downloadSample();DownloadDrawer.close();">📥 Download Sample File</button>
+                          <form #validationForm="ngForm" class="editForm" novalidate>
+                              <div class="mb-3">
+                                  <!--
+                        <label class="form-label">Select Excel File</label> -->
+                                  <input type="file" class="form-control" (change)="onFileChange($event, validationForm)" accept=".xlsx" />
+                              </div>
+                          </form>
+
+                          <button class="btn btn-success w-100" disabled (click)="uploadExcel();DownloadDrawer.close();">📤 Upload Excel</button>
+            
+              <hr>
+
+              <div style="padding: 1rem;">
+                  <h5 class="mb-3">
+                      📂 Stop Deductions
+                      <span class="custom-switch-description text-black">
+
+                          <i class="fa fa-info-circle"
+                             matTooltip="Below selected deductions will be stopped from selected month (salary cycle start date)"></i>
+                      </span>
+                  </h5>
+
+                  <div class="row mt-2 p-2 mb-2">
+                      <div class="col-md-6">
+                          <div class="input-group input-group-sm">
+                              <span class="input-group-text border-1 border-secondary">YEAR</span>
+                              <select [(ngModel)]="selected_year_deductions" class="form-select form-select-sm border-1 border-secondary">
+                                  <option *ngFor="let item of YearList" [value]="item.Value">{{item.Text}}</option>
+                              </select>
+                          </div>
+
+                      </div>
+                      <div class="col-md-6">
+                          <div class="input-group input-group-sm">
+                              <span class="input-group-text border-1 border-secondary">Month</span>
+                              <select [(ngModel)]="selected_month_deductions" class="form-select form-select-sm border-1 border-secondary">
+                                  <option *ngFor="let item of MonthList" [value]="item.Value">{{item.Text}}</option>
+                              </select>
+                          </div>
+
+
+
+                      </div>
+                  </div>
+                  <div class="row mt-2 p-2">
+                      <div class="col-md-12">
+                          <label class="custom-switch">
+                              <input type="checkbox"
+                                     name="custom-switch-checkbox" required isESIEnabled [(ngModel)]="formInput.isESIEnabled"
+                                     id="isESIEnabled" name="isESIEnabled" value="true"><span class="custom-switch-description">ESI</span>
+                          </label>
+                          &nbsp;
+                          <label class="custom-switch">
+                              <input type="checkbox"
+                                     name="custom-switch-checkbox" required isPFEnabled [(ngModel)]="formInput.isPFEnabled"
+                                     id="isPFEnabled" name="isPFEnabled" value="true"><span class="custom-switch-description">PF</span>
+                          </label>
+                          &nbsp;
+                          <label class="custom-switch">
+                              <input type="checkbox"
+                                     name="custom-switch-checkbox" required isPTEnabled [(ngModel)]="formInput.isPTEnabled"
+                                     id="isPTEnabled" name="isPTEnabled" value="true"><span class="custom-switch-description">PT</span>
+                          </label>
+                          &nbsp;
+                          <label class="custom-switch">
+                              <input type="checkbox"
+                                     name="custom-switch-checkbox" required isSDEnabled [(ngModel)]="formInput.isSDEnabled"
+                                     id="isSDEnabled" name="isSDEnabled" value="true">
+                          </label>  <span class="custom-switch-description">SD</span>
+
+                      </div>
+                      <div class="col-md-12 mt-2">
+                          <button class="btn btn-success w-100" (click)="BulkUpdateDeductions();DownloadDrawer.close();">📤 Submit </button>
+                      </div>
+                  </div>
+              </div>
+              </mat-drawer>
+              </mat-drawer-container>
+              <!-- TABLE -->
+              <div class="table-responsive">
+                  <div class="note text-muted mt-n3 mb-3" style="font-size: 0.9rem;font: black;">
+                      <b>Note :</b> Attendance & Salary for the current day is excluded from the report...
+                  </div>
+
+                  <app-common-table-buttons [data]="SalaryList"
+                                            [ExportName]="'Salary Report'"
+                                            [displayColumns]="displayColumns"
+                                            [Loading]="employeeLoading"
+                                            [displayedColumns]="displayedColumns"
+                                            [editableColumns]="editableColumns"
+                                            [headerInfo]="headerInfo"
+                                            [actions]="actionOptions"
+                                            [topHeaders]="topHeaders"
+                                            [headerColors]="headerColors"
+                                            [smallHeaders]="smallHeaders"
+                                            [dataColors]="tableDataColors"
+                                            [ReportTitles]="ReportTitles"
+                                            [cellWiseButtons]="cellWiseButtons"
+                                            (cellButtonClicked)="onCellButtonClicked($event)"
+                                            (actionEmitter)="actionEmitter($event)">
+                  </app-common-table-buttons>
+
+                  <p>
+                      <b>T</b>: Total Working Days, <b>P</b>: Paid Days, <b>HRA</b>: House Rent Allowance,
+                      <b>TA</b>: Travel Allowance, <b>DA</b>: Dearness Allowance, <b>MA</b>: Medical Allowance,
+                      <b>ESI</b>: Employee's State Insurance, <b>EPF</b>: Employee Provident Fund,
+                      <b>TDS</b>: Tax Deducted at Source, <b>PT</b>: Professional Tax, <b>SD</b>: Security Deposit , <b>Conveyance</b>:commuting or transportation costs ,  <b>LTA</b>:Leave Travel Allowance , <b>PSA</b>:Personal Skill Assistance, <b>FI</b>:Fixed Incentive
+                  </p>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  <!-- Payslip View -->
+ 
+  <div *ngIf="showPayslip == true">
+    <label class="button" (click)="backToSalaryReport()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to report</label>
+    <div style="height: 80vh;overflow-y: auto;">
+      <app-generate-payslip [employeeDetail]="employeeDetail" (updateValues)='updateValues($event)'></app-generate-payslip>
+    </div>
+  </div>
+
+  <!-- Bank Payslip View -->
+  <div *ngIf="showBankPayslip == true">
+    <label class="button" (click)="backToSalaryReport()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to report</label>
+    <div style="height: 80vh;overflow-y: auto;">
+      <app-bank-pay-slip [BankPaySlipList]="BankPaySlipList"></app-bank-pay-slip>
+    </div>
+  </div>

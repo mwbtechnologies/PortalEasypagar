@@ -1,0 +1,238 @@
+.button {
+  background-color: white;
+  border: 1px solid #dadada;
+  color: black;
+  border-radius: 10px;
+  margin-right: 4px;
+  padding: 5px;
+}
+
+.subscription-container {
+  /* display: flex; */
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+
+  .plan-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    width: 30%;
+    height: max-content;
+    margin-bottom: 30px;
+    animation: fadeInUp 0.8s ease-out;
+
+    .plan-header {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .plan-name {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      .plan-version {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 14px;
+      }
+
+      .plan-status {
+        font-size: 14px;
+        font-weight: 400;
+        color: white;
+
+        /* &.expired {
+          border-radius: 10px;
+          background-color: #e74c3c;
+          padding: 2px 13px;
+          margin: 0;
+          font-weight: 400;
+        }
+
+        &:not(.expired) {
+          border-radius: 10px;
+          background-color: #27ae60;
+          padding: 2px 13px;
+          margin: 0;
+          font-weight:400;
+        } */
+      }
+    }
+
+    .plan-body {
+      padding: 0px;
+      text-align: center;
+
+      .plan-price {
+        font-size: 24px;
+        font-weight: 500;
+        color: #6a11cb;
+        margin: 5px 0;
+      }
+
+      .plan-duration {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .plan-dates {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: #242424;
+      }
+
+      .plan-single-date {
+        background-color: #dadada;
+        padding: 4px;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+
+    }
+
+    .plan-actions {
+      display: flex;
+      justify-content: end;
+      padding: 0px 10px 10px 0px;
+      background: #f9f9f9;
+
+      .btn {
+        background: #6a11cb;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 3px 10px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: #2575fc;
+        }
+
+        &.renew {
+          background-color: #7f5dd0;
+          font-size: 12px;
+
+          &:hover {
+            background-color: #805dd0e7;
+          }
+        }
+      }
+    }
+  }
+
+  .FeatureClass {
+    width: 69%;
+
+    .features-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      h3 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #6a11cb;
+      }
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+
+      .feature-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+          width: 60px;
+          height: 60px;
+          margin-bottom: 15px;
+        }
+
+        .feature-name {
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 10px;
+          color: #333;
+        }
+
+        .feature-allocation,
+        .feature-usage {
+          font-size: 14px;
+          color: #777;
+          margin-bottom: 5px;
+        }
+
+
+      }
+    }
+  }
+
+}
+
+.combinedContainer {
+  background-color: #f2f6ff;
+  padding: 10px 20px;
+  margin: 2px 0px;
+  border-radius: 15px;
+  width: 280px;
+}
+
+.combinedvalues {
+  justify-content: end;
+  display: flex;
+  font-size: 16px;
+}
+
+.progress-bar {
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 6px;
+
+  .progress {
+    background: #6a11cb;
+    height: 100%;
+    transition: width 0.4s ease;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,28 @@
+<div>
+    <div style="display: flex;flex-wrap: wrap;">
+        <div class="col-12 row">
+            <div class="col-11 row">
+                <ng-container  *ngFor="let option of dropDownOrder">
+                    <div class="col-md-3" *ngIf="dropDownData[option].isActive == true">
+                        <label class="form-label">{{dropDownData[option].label}}</label>
+                        <ng-multiselect-dropdown [settings]="dropDownData[option].settings" [placeholder]="dropDownData[option].placeholder" [(ngModel)]="dropDownData[option]. selected" [data]="dropDownData[option].data"
+                        (onSelect)="onDropDownSelect($event,option)" (onDeSelect)="onDropDownDeSelect($event,option)">
+                        </ng-multiselect-dropdown>
+                        <label class="form-label" style="font-size: 12px;color: #1f35ff;margin: 2px 0px 0px 0px;width: fit-content;" *ngIf="dropDownData[option].selected.  length>0" (click)="onDropDownClearAll({},option)"><u>clear all</u></label>
+
+                        <label style="color: rgb(255, 12, 12);" *ngIf="dropDownData[option].errorString?.length>0">
+                            {{dropDownData[option].errorString}}
+                        </label>
+
+                    </div>
+                </ng-container>
+            </div>
+            <div class="col-1">
+                <label *ngIf="actions.length > 0" class="form-label filelabels">Actions</label>
+                <ng-container *ngFor="let action of actions">
+                    <button class="btn btn-primary" (click)="triggerAction(action)">{{action}}</button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

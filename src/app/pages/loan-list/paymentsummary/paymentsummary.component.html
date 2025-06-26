@@ -1,0 +1,79 @@
+<div style="width: 700px;padding:20px;height:500px;overflow: scroll;">
+    <div class="col-md-12">
+     <h4>Payment Summary</h4>
+    <div class="">
+    <div class="col-md-6" style="padding: 0;">
+        <label class="form-label">Select Payment Type</label>
+         <ng-multiselect-dropdown [placeholder]="'Select Payment'" [data]="PaymentType"
+           [(ngModel)]="selectedPayment" (onSelect)="PaymentSelect($event)" (onDeSelect)="PaymentDeselect($event)"
+           [settings]="PaymentSetting">
+         </ng-multiselect-dropdown>
+    </div>
+        <div class="row col-md-12">
+        <div class="col-md-6">
+            <label class="labels">Payment Date</label>
+            <input class="timings" type="date" [(ngModel)]="PaymentDate">
+        </div>
+        <div class="col-md-6">
+            <label class="labels">Amount</label>
+            <label class="timings">{{data.data.ApprovedAmount}}</label>
+        </div>
+        <!-- </div> -->
+    <!-- <div class="row" > -->
+        <!-- <div class="row"> -->
+         <div class="col-md-6" *ngIf="selectedPayment == 'CHEQUE'">
+            <label class="labels">Cheque Number</label>
+            <input class="timings" type="number" [(ngModel)]="Paymentcheque" placeholder="Enter Cheque No">
+        </div>
+        <div class="col-md-6" *ngIf="selectedPayment == 'CHEQUE'">
+            <label class="labels">Bank Name</label>
+            <input class="timings" type="text" [(ngModel)]="PaymentBank" placeholder="Enter Bank Name">
+        </div>    
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+        <div class="col-md-6" *ngIf="selectedPayment == 'CHEQUE'">
+            <label class="labels">Account Number</label>
+            <input class="timings" type="number" [(ngModel)]="PaymentAccNo" placeholder="Enter Acc No">
+        </div>
+        <div class="col-md-6" *ngIf="selectedPayment == 'CHEQUE'">
+            <label class="labels">IFSC Code</label>
+            <input class="timings" type="text" [(ngModel)]="PaymentIFSC" placeholder="Enter IFSC code">
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- <div class="row" > -->
+            <!-- <div class="row"> -->
+             <div class="col-md-6" *ngIf="selectedPayment == 'UPI'">
+                <label class="labels">UPI Number</label>
+                <input class="timings" type="text" [(ngModel)]="PaymentUPINO" placeholder="Enter UPI No">
+            </div>
+            <div class="col-md-6" *ngIf="selectedPayment == 'UPI'">
+                <label class="labels">UPI APP</label>
+                <input class="timings" type="text" [(ngModel)]="PaymentUPIAPP" placeholder="Enter Amount">
+            </div>     
+            <!-- </div> -->
+        </div>
+            <div class="col-md-6" style="padding: 0;">
+                <label class="labels">Description</label>
+                <textarea class="timings" [(ngModel)]="ReferenceID" placeholder="Enter Description"></textarea>
+            </div>
+            <form #validationForm="ngForm" class="editForm" novalidate>
+            <div class="row">
+              <div  class="col-md-6">
+                <div  class="form-label">Upload Image</div>
+                <div  class="mb-3"><input  type="file" id="formFile"
+                    (change)="UploadProof1Image1($event,validationForm)" class="form-control"></div>
+
+                    <div *ngIf="ShowImage">
+                        <img [src]="fileurl" height="100" width="200"/>
+                     </div>
+                     </div>    
+            </div>
+            </form>
+            <br>
+            <button class="btn btn-primary" style="width: auto;" (click)="submitSummary()">Submit</button>&nbsp;
+            <button class="btn btn-primary" style="width: auto;" (click)="closeTab()">Cancel</button>
+    </div>    
+    </div>
+   
+</div>

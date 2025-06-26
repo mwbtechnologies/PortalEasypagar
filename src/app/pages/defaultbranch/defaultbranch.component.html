@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card">
+            <div class="card-header"> 
+                <div>
+                    <h3 class="mb-0 card-title">Default Branch</h3>
+                </div>  
+            </div>
+            <div class="card-body" style="min-height: 60vh;">
+                <div style="display: flex;">
+                <div class="col-md-3">
+                   <label class="form-label">Select Branch </label>
+                   <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                       [(ngModel)]="selectedBranch" [settings]="branchSettings">
+                   </ng-multiselect-dropdown>
+               </div>
+               <div>
+                   <label class="form-label" style="color: white;">.</label>    
+                   <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="SaveDefaultBranch()">Submit</button><br>
+               </div>
+                </div>
+               
+             </div>
+        </div>
+    </div>
+</div>

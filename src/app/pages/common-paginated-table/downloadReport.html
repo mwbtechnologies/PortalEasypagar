@@ -1,0 +1,108 @@
+<div style="width: auto;padding: 20px;max-height: 90vh;overflow: scroll;">
+    <div mat-dialog-title class="dialog-title">
+      <div>
+        <div style="font-size: 16px;color: #000000;position: relative;" >
+          Download Report
+          <i class="fa fa-question-circle" aria-hidden="true" (mouseenter)="showDragDropHelp()" (mouseleave)="hideDragDropHelp()" ></i>
+          <div style="position: absolute;padding: 20px;box-shadow: 0px 0px 5px 0px #000000a6;background-color: #ffffff;border-radius: 5px;z-index: 999;/* min-width: 250px; */width: 319px;height: 568px;" *ngIf="dragDropHelp==true">
+            <div>
+              How to download report
+            </div>
+            <div>
+              <img src="./assets/images/gifs/downloadReport.gif" alt="download report help" style="width: 85%;box-shadow: 0px 0px 7px -1px #000000;">
+            </div>
+          </div>
+        </div>
+        <div style="font-size: 14px;color: #4b4b4b;">
+          customize your report now 
+        </div>
+      </div>
+      <div>
+        <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <!-- <button class="closeButton" mat-icon-button class="close-button" [mat-dialog-close]="true">
+        close
+    </button> -->
+
+    <div style="margin: 40px 0px;">
+        <label class="title">File Type</label>
+        <br>
+        <mat-radio-group aria-label="Select a file type" [(ngModel)]="selectedFileType">
+            <mat-radio-button value="excel">Excel</mat-radio-button>
+            <mat-radio-button value="csv" matTooltip="Future Development" disabled>CSV</mat-radio-button>
+            <mat-radio-button value="pdf">PDF</mat-radio-button>
+          </mat-radio-group>
+    </div>
+
+    <div style="margin: 5px 0px;">
+      <div class="example-container">
+        <h4>Selected columns</h4>
+      
+        <div
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="selectedColumns"
+          [cdkDropListConnectedTo]="[todoList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+          style="max-height: 50vh;overflow-y: auto;">
+          <!-- @for (item of done; track item) {
+            <div class="example-box" cdkDrag>{{item}}</div>
+          } -->
+            
+<!-- <div *ngFor="let item of selectedColumns" cdkDrag ><span  class="example-box"  [style.color]="getHeaderTextColor(item)" [style.background]="getHeaderBgColor(item)"  [style.border]="getHeaderBorderColor(item)" >{{getColumnDiaplayName(item)}}</span></div>
+
+        </div> -->
+        <div *ngFor="let item of selectedColumns;let sc_i=index" cdkDrag >
+          <span  class="example-box"  [style.color]="getHeaderTextColor(item)" [style.background]="getHeaderBgColor(item)"  [style.border]="getHeaderBorderColor(item)"> 
+            <div style="display: flex;">
+              <button class="arrow-button arrow-up" [disabled]="sc_i==0" (click)="shift('select-up',sc_i)"> <i class="fa fa-arrow-up" aria-hidden="true"></i> </button>
+              <button class="arrow-button arrow-down" (click)="shift('select-down',sc_i)"> <i class="fa fa-arrow-down" aria-hidden="true"></i> </button>
+            </div>
+            <label class="drag-text">
+              {{getColumnDiaplayName(item)}}
+            </label>
+            <span class="arrow-button" (click)="shift('right',sc_i)"> <i class="fa fa-arrow-right" aria-hidden="true"></i> </span>
+          </span>
+        </div>
+        </div>
+      </div>
+        <div class="example-container">
+            <h4>Removed columns</h4>
+          
+            <div
+              cdkDropList
+              #todoList="cdkDropList"
+              [cdkDropListData]="displayedColumns"
+              [cdkDropListConnectedTo]="[doneList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)"
+              style="max-height: 50vh;overflow-y: auto;">
+              <!-- @for (item of todo; track item) {
+               
+                <div class="example-box" cdkDrag>{{item}}</div>
+              } -->
+              <!-- <div *ngFor="let item of displayedColumns" cdkDrag ><div   class="example-box"  [style.color]="getHeaderTextColor(item)" [style.background]="getHeaderBgColor(item)"  [style.border]="getHeaderBorderColor(item)" >{{getColumnDiaplayName(item)}}</div></div> -->
+              <div *ngFor="let item of displayedColumns;let dc_i=index" cdkDrag >
+                <div   class="example-box"  [style.color]="getHeaderTextColor(item)" style="justify-content: left;" [style.background]="getHeaderBgColor(item)"  [style.border]="getHeaderBorderColor(item)" >
+                  <span class="arrow-button" (click)="shift('left',dc_i)"> <i class="fa fa-arrow-left" aria-hidden="true"></i> </span>
+                  <label class="drag-text">
+                    {{getColumnDiaplayName(item)}}
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+    </div>
+    <div class="row">
+        <button class="btn btn-primary" [disabled]="selectedColumns.length == 0" (click)="close()">Download</button>
+        <label style="text-align: center;" *ngIf="selectedColumns.length == 0"><span>Please Select Atlest One Column in</span><br> 
+          <span>"Selected Columns" To Download</span></label>
+    </div>
+
+</div>

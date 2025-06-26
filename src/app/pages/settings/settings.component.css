@@ -1,0 +1,104 @@
+.settingcard{
+    border: 1px solid #dadada;
+     border-radius: 10px;
+     text-align: center;
+     position: relative;
+     height:150px;
+     width:150px
+    } 
+    
+    .selected{
+        border: 1px solid #000000;
+    }
+    .calendarview{
+        background-color: #ffffff;
+        border: 1px solid black;
+        padding:0px 8px;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    
+        }
+        .tableview{
+        background-color: #ffffff;
+        border: 1px solid black;
+        padding:0px 8px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        }
+        .selectedtype{
+         background-color: black;
+        color: white;
+        }
+          
+          .slider-container {
+            text-align: center;
+          }
+          
+          .dot-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+          }
+          
+          .location-pin {
+            width: 10px;
+            height: 10px;
+            background-color: #3498db;
+            clip-path: path(
+                "M15 0C23.2843 0 30 6.71573 30 15C30 24.6224 16.3084 40.2066 15.4386 41.1918C15.1771 41.4876 14.8229 41.4876 14.5614 41.1918C13.6916 40.2066 0 24.6224 0 15C0 6.71573 6.71573 0 15 0Z"
+              );
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+          }
+          .circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px dashed #3498db;
+            z-index: 0;
+          }
+          .value-display {
+            position: absolute;
+            top: 50%;
+            left: 110%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #333;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+          }
+          
+          .range-slider {
+            width: 300px;
+            height: 6px;
+            background: #ddd;
+            outline: none;
+            border-radius: 5px;
+            margin-top: 20px;
+          }
+          
+          .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #3498db;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+          
+          .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #3498db;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+          

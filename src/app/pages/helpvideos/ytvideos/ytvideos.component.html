@@ -1,0 +1,14 @@
+<div class="dailogs">
+  <h4>{{data.row.Text}} Youtube Videos</h4>
+  <div class="row">
+    <ng-container *ngFor="let yt of YoutubeVideos">
+      <div class="col-md-6">
+        <iframe width="300" height="170" [src]="getEmbedUrl(yt.VideoURL)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+       <h5>{{yt.Title}}</h5>
+       
+      </div>
+      
+      </ng-container>
+    </div>
+
+</div>

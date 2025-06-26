@@ -1,0 +1,75 @@
+<!-- <div>
+    <label class="button" (click)="backtolist()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back</label>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div>
+                        <span class="filelabels" style="font-size: 12px;color: #978f8f">Asset Manager</span>
+                        <h3 class="mb-0 card-title filelabels">Department Analytics</h3>
+                    </div>
+                        <button class="btn btn-primary listbutton" (click)="drawerOpen()">Filters</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive"> 
+                            -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label filelabels">Branch</label>
+                                <ng-multiselect-dropdown [settings]="branchSettings" [placeholder]="'All Branches'" [data]="BranchList"
+                                    [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                    (onDeSelect)="onBranchDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label filelabels">Action</label>
+                                <button class="btn btn-primary listbutton" (click)="getDepartmentWise()">Search</button>
+        
+                            </div>
+                        </div>
+        
+                        
+                            <app-common-table [data]="DepartmentWiseList" [displayColumns]="displayColumns" [Loading]="Loading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" (actionEmitter)="actionEmitter($event)" [dataColors]="tableDataColors" [topHeaders]="topHeaders" [name]="commonTableName"></app-common-table>
+                        <!-- </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div> -->
+<!-- <mat-drawer-container [class.drawer-opened]="drawer.opened"
+class="example-container">
+<mat-drawer #drawer class="drawer" #sideNav opened="false" [mode]="'over'"
+    [position]="'end'" (backdropClick)="closeDrawer()">
+    <mat-icon class="close" (click)="drawer.close()">close</mat-icon>
+    <h2
+        style="font-size: 16px;color:rgb(0, 0, 0);font-family: poppins;padding:10px">
+        Filters</h2>
+    <div style="height:90%;overflow: scroll;">
+        <div class="filters">
+            <div class="filtercss">
+                <div class="detailscard">
+                  
+                            <div class="col-md-12">
+                                <label class="form-label filelabels">Branch</label>
+                                <ng-multiselect-dropdown [placeholder]="'All Branches'" [data]="BranchList"
+                                    [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                    (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label filelabels">Department</label>
+                                <ng-multiselect-dropdown [placeholder]="'All Departments'" [data]="DepartmentList"
+                                    [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                                    (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-12" style="text-align: center;margin-top: 10%;">
+                                <button class="btn btn-primary" (click)="getAssignedList()">Apply Filters</button>
+                            </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-drawer>
+</mat-drawer-container> -->

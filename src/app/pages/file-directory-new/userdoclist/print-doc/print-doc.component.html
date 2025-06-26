@@ -1,0 +1,106 @@
+<div class="dialogs">
+    <div style="display: flex; justify-content: space-between;color:#fff;">
+        <div mat-dialog-title style="font-size: 16px;font-weight: 500px;padding: 7px 0px ;">
+          <h4 style="margin: 0;">Print - {{ data.fulldata[0].name }} <span *ngIf="data.fulldata[0].required == true" style="color: red;">*</span></h4>
+          <label style="font-size: 13px;">{{ data.fulldata[0].subName }}</label>
+        </div>
+        <div>                     
+            <button (click)="print()" style="background-color: #397dfd;color: #ffffff;font-size: 15px;padding: 4px 18px;border-radius: 5px;margin-right: 28px;"> Print </button>
+            <button mat-icon-button aria-label="close dialog" mat-dialog-close (click)="closeDialog()" style="background-color: #ffffff00;color: #c5c5c5;font-size: 20px;">
+                <i style="cursor: pointer;" class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <br>
+    
+    <div *ngIf="Loader == true" class="loaderContainer">
+        <img src="./assets/images/gifs/animation.gif" height="30px" width="30px"/>
+      </div >
+    <section *ngIf="Loader != true" class="print">
+        <div class="print-customize">
+            <div>
+                <label class="form-label">Documents to print</label>
+                <mat-chip-listbox [(ngModel)]="selectedDocListType" (change)="changeDocListType($event.value)">
+                    <mat-chip-option value="latest">Latest uploads</mat-chip-option>
+                    <mat-chip-option value="allDocs">All uploads</mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+            <div>
+                <label class="form-label">File Name</label>
+                <div style="display: flex;">
+                    <label class="form-label">{{filename}}</label>
+                    <input type="text" class="form-control" placeholder="Enter file name" [(ngModel)]="filenameByUser" style="width: 160px;margin: 0px 5px;"/>
+                    <label class="form-label">.pdf</label>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section *ngIf="Loader != true" class="print">
+        <div class="print-body" id="print_container">
+            <div class="print-page" *ngFor="let doc of docList; let doc_i=index;">
+                <!-- <div class="print-page-number" *ngIf="prinitng != true">Upload {{doc_i+1}}</div> -->
+                <div class="print-page-content">
+                    <div style="font-size: 16px;font-weight: 500px;padding: 7px 0px ;" *ngIf="data.fulldata && data.fulldata[0]">
+                        <h4 style="margin: 0;">{{ data.fulldata[0].name }}</h4>
+                        <label style="font-size: 13px;">{{ data.fulldata[0].subName }}</label>
+                    </div>
+
+                    <ng-container *ngIf="doc.documents['file']">
+                        <tr *ngFor="let fileParam of doc.documents['file']">
+                            <div class="file-title">{{getDocDetails(fileParam.key,'name',"line 49 html")}}</div>
+                            <div *ngIf="fileParam.fileType == 'image'">
+                                <img [src]="IMGURL + fileParam.data" style="color:#000;width: 50%;" class="image" #imageElement (error)="fileParam.imageError = true" *ngIf="!fileParam.imageError">
+                            </div>
+                        </tr>
+                    </ng-container>
+                    <br>
+                    <table *ngIf="doc.documents">
+                        <!-- <thead>
+                            <tr>
+                            </tr>
+                        </thead> -->
+                        <tbody>
+                            <ng-container *ngIf="doc.documents['text']">
+                                <tr *ngFor="let textParam of doc.documents['text']">
+                                    <td>{{getDocDetails(textParam.key,'name',"line 253 html")}}</td>
+                                    <td>{{textParam.data}}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="doc.documents['number']">
+                                <tr *ngFor="let numberParam of doc.documents['number']">
+                                    <td>{{getDocDetails(numberParam.key,'name',"line 253 html")}}</td>
+                                    <td>{{numberParam.data}}</td>
+                                </tr>
+                            </ng-container>
+                            <tr>
+                                <td>Employee</td>
+                                <td>{{data.userdata?.UserName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Branch</td>
+                                <td>{{data.userdata?.branchName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Organization</td>
+                                <td>{{data.userdataExtras?.suborgDetails?.Text}}</td>
+                            </tr>
+                            <tr>
+                                <td>Uploaded on</td>
+                                <td>{{doc.createdAt  | date: 'dd-MMM-yyyy hh:mm:ss a' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Uploaded By</td>
+                                <td>{{doc.uploadedByName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="page-break"></div> -->
+        </div>
+    </section>
+
+</div>

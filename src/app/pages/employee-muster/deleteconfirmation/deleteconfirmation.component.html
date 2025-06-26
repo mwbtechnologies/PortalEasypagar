@@ -1,0 +1,19 @@
+<div class="confirmation">
+    <h4><b>Delete Confirmation</b></h4>
+    <h6 style="font-size: 15px;">Are you sure you want to permanently delete <span style="font-weight: 600;">{{data.row.Name}}'s</span> data? This action cannot be undone.</h6>
+    <h5 style="font-weight: 500;margin-top:15px">Terms And Conditions</h5>
+    <label>1. Deleting employee data is permanent and irreversible.</label>
+    <label>2. Data will archive the records in the backend. The data will no longer be accessible through the application but will remain stored securely in the system. </label>
+    <label>3. Archived records will retain key information like attendance and salary reports. Employees can still request and download these reports after deletion.</label>
+    <label>4. Other associated records, such as personal information, employment history, and performance reviews, will not be available once the data is archived.</label>
+    <label>5. The employee count credit used for this employee will be restored to your account upon deletion, allowing you to add another employee</label>
+   <br>
+    <input type="checkbox" [(ngModel)]="confirm"><label style="font-weight: 500">I Agree Above Terms And Conditons</label>
+    <br>
+    <textarea type="text"  class="form-control" [(ngModel)]="Comment" placeholder="Enter the Reason" rows="3"></textarea>
+   
+    <div class="flex">
+        <span [attr.title]="!confirm ? 'Click checkbox to enable' : ''"><button class="green" [disabled]="!confirm" style="padding:6px 27px;font-size: 12px;" (click)="onConfirmClick()">Confirm</button></span>
+        <button class="red"  style="padding:6px 27px;font-size: 12px" (click)="onCancelClick()">Cancel</button>
+    </div>
+</div>

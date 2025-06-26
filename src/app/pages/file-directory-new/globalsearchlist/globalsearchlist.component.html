@@ -1,0 +1,29 @@
+<label class="backbutton" (click)="backToList()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back To User</label>
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div class="col-md-3">
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 12px;color: #978f8f;">Directory Management</h3>
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 16px;font-weight: 600;">Search And Manage</h3>
+                    </div>
+                </div>
+                <div class="card-body" style="display: flex;">
+                    <div class="col-md-2">
+                        <input type="text" placeholder="search by data" class="form-control" [(ngModel)]="searchText" (keyup.enter)="searchData()">
+                    </div>
+                    <button class="btn btn-primary" (click)="searchData()">Search</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <app-common-paginated-table  [paginatedData]="paginatedData" [data]="SearchedData" [displayColumns]="displayColumns" [Loading]="Loading"
+                            [displayedColumns]="displayedColumns" [editableColumns]="editableColumns"
+                            [actions]="actionOptions" (actionEmitter)="actionEmitter($event)"
+                            [name]="commonTableName" (onPageNumberChange)="onPageNumberChange($event)"></app-common-paginated-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

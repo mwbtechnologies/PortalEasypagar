@@ -1,0 +1,63 @@
+<div class="dialog">
+    <h4><span *ngIf="isEdit">Update Working Hours Configuration</span><span *ngIf="!isEdit">Add Working Hours Configuration</span></h4>
+    <div class="row col-md-12" style="padding: 0;row-gap: 10px;">
+        <div class="col-md-4">
+            <label class="form-label"> Select Organization</label>
+            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                (onDeSelect)="onDeselectedOrg($event)">
+            </ng-multiselect-dropdown>
+            <label style="color: red;font-size: 12px;" *ngIf="error?.organization">{{ error?.organization }}</label>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Select Branch </label>
+            <ng-multiselect-dropdown [placeholder]="'All Branch'" [data]="BranchList" [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onSelectAll)="onBranchDeSelectAll()" 
+              (onDeSelectAll)="onBranchSelectAll($event)"
+              (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+            </ng-multiselect-dropdown>
+            <label style="color: red;font-size: 12px;" *ngIf="error?.branch">{{ error?.branch }}</label>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Select Department</label>
+              <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+              [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onSelectAll)="onDeptDeSelectAll()" (onDeSelectAll)="onDeptSelectAll($event)"
+              (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+          </ng-multiselect-dropdown>
+          </div>
+            <div class="col-md-4">
+              <label class="form-label">First Half Hours</label>
+             <input type="number" style="border: 1px solid #b3b0b0;" [(ngModel)]="firstHalf" class="form-control" placeholder="First half">
+             <label style="color: red;font-size: 12px;" *ngIf="error?.fHalf">{{ error?.fHalf }}</label>
+          </div>
+            <div class="col-md-4">
+              <label class="form-label">Second Half Hours</label>
+              <input type="number" style="border: 1px solid #b3b0b0;"[(ngModel)]="secondHalf" class="form-control" placeholder="Second half">
+              <label style="color: red;font-size: 12px;" *ngIf="error?.sHalf">{{ error?.sHalf }}</label>
+          </div>
+            <div class="col-md-4">
+              <label class="form-label">Whole Day Hours</label>
+              <input type="number" style="border: 1px solid #b3b0b0;" [(ngModel)]="wholeDay" class="form-control" placeholder="Whole Day">
+              <label style="color: red;font-size: 12px;" *ngIf="error?.wDay">{{ error?.wDay }}</label>
+          </div>
+            <div class="col-md-4">
+                <div style="display: flex;gap: 10px;align-items: center;">
+                    <label class="form-label">Is Hours <i class="fa fa-info-circle" matTooltip="Select this option to calculate based on hours. If left unchecked, the calculation will default to percentage."></i>
+                    </label><input type="checkbox" [(ngModel)]="isHour">
+                </div>
+          </div>
+            <div *ngIf="isEdit" class="col-md-4">
+                <div style="display: flex;gap: 10px;align-items: center;">
+                    <label class="form-label">Status <label class="switch">
+                        <input type="checkbox" [(ngModel)]="IsActive">
+                        <span class="slider round"></span>
+                      </label>
+                      </label>
+                </div>
+          </div>
+        
+    </div>
+    <div style="display: flex;justify-content: center;">
+        <button class="btn btn-primary" *ngIf="!isEdit" (click)="submit()">Submit</button>
+        <button class="btn btn-primary" *ngIf="isEdit" (click)="Update()">Update</button>
+    </div>
+</div>

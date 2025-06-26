@@ -1,0 +1,37 @@
+.confirmation{
+    width: 350px;
+    display: block;
+    text-align: center;
+    justify-content: center;
+    padding: 20px;
+}
+.flex{
+    display: flex;
+    margin-top: 15%;
+    justify-content: center;
+    gap: 57px;
+}
+.green{
+    background-color: rgb(51, 156, 51);
+    color: white;
+    padding: 4px;
+    height: fit-content;
+    font-size: 10px;
+    border-radius: 5px;
+    width: fit-content;
+        }
+
+   .red{
+     background-color: #fb5454;
+     color: white;
+     padding: 4px;
+     height: fit-content;
+     font-size: 10px;
+     border-radius: 5px;
+     width: fit-content;
+ }
+ .alignment{
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 25px;
+ }

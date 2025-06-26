@@ -1,0 +1,123 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header p-2" style="border-bottom:1px solid black">
+                   <h5 class="mt-2"><span>&nbsp;<i class="fa fa-university text-primary"></i> &nbsp;</span>Switch Branch</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-1">
+                        <div class="col-lg-3 col-12">
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Organization'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                                     [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                                     (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        
+                        <div class="col-lg-3 col-12">
+                            <label class="form-label">Select Employees <span class="text-danger">*</span></label>
+                            <ng-multiselect-dropdown [settings]="employeeSettings" [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                                     [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                                     (onDeSelect)="OnEmployeesChangeDeSelect($event)" (onSelectAll)="OnEmployeesChange($event)" (onDeSelectAll)="OnEmployeesChange($event)">
+                            </ng-multiselect-dropdown>
+                            <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('employee') && errorMessages['employee']!=''">{{errorMessages['employee'].message}}</label>
+                        </div>
+                        <div class="col-lg-3 col-9 ">
+                            <label class="form-label">
+                                Select New Branch <span class="text-danger">*</span> &nbsp;
+
+                            </label>
+                            <ng-multiselect-dropdown [settings]="branchSettings_new" [placeholder]="'Select New Branch'" [data]="BranchList" [(ngModel)]="selectedNewBranch"
+                                                     (onSelect)="onBranchSelectNew($event)" (onDeSelect)="onBranchDeSelectNew($event)">
+                            </ng-multiselect-dropdown>
+                            <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('branch') && errorMessages['branch']!=''">{{errorMessages['branch'].message}}</label>
+
+                        </div>
+                        <div class="col-lg-3 col-3">
+                            <label class="form-label">
+                                &nbsp;
+
+                            </label>
+                            <button (click)="change_branch()" class="btn btn-primary p-1 d-flex align-items-center"><i style="font-size:20px !important" class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;Change Branch</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-header p-2" style="border-bottom:1px solid black">
+                    <div class="row g-1">
+                        <div class="col-md-12 ms-2">
+                            <h5 class="mt-2"><span>&nbsp;<i class="fa fa-university text-primary"></i> &nbsp;</span>Switched Branch History</h5>
+
+                        </div>
+                      
+                    </div>
+
+                </div>
+                <div class="card-body">
+
+                    <div class="row g-1">
+                        <div class="col-lg-3 col-6">
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Organization'" [(ngModel)]="selectedOrganization_Report" [data]="OrgList"
+                                                     [settings]="orgSettings" (onSelect)="onselectedOrg_Report($event)"
+                                                     (onDeSelect)="onDeselectedOrg_Report($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-lg-3 col-4 ">
+                            <label class="form-label">
+                                Select Branch <span class="text-danger">*</span>
+
+                            </label>
+                            <ng-multiselect-dropdown [settings]="branchSettings" [placeholder]="'Select Branch'" [data]="BranchList_Report" [(ngModel)]="selectedBranch"
+                                                     (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)" (onSelectAll)="onBranchSelect_All($event)" (onDeSelectAll)="onBranchDeSelect_All($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-lg-2 col-3">
+                            <label class="form-label">
+                                From Date <span class="text-danger">*</span>
+
+                            </label>
+                            <input type="date" [(ngModel)]="from_date" class="form-control " />
+                        </div>
+                        <div class="col-lg-2 col-3">
+                            <label class="form-label">
+                                To Date <span class="text-danger">*</span>
+
+                            </label>
+                            <input type="date" [(ngModel)]="to_date" class="form-control " />
+                        </div>
+
+
+                        <div class="col-lg-2 col-2">
+                            <label class="form-label">
+                                &nbsp;
+
+                            </label>
+                            <button (click)="list_data()" class="btn btn-primary p-1 d-flex align-items-center"><i style="font-size:20px !important" class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> &nbsp;List Data</button>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <app-common-table [data]="data_list"
+                                      [ExportName]="'Switched_Branch_History'"
+                                      [displayColumns]="displayColumns"
+                                      [Loading]="employeeLoading"
+                                      [displayedColumns]="displayedColumns"
+                                      [editableColumns]="editableColumns"
+                                      [actions]="actionOptions"
+                                      [headerColors]="headerColors"
+                                      [smallHeaders]="smallHeaders"
+                                      [name]="Report_Export_List"
+                                      (actionEmitter)="actionEmitter($event)"></app-common-table>
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>

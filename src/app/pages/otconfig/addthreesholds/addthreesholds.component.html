@@ -1,0 +1,110 @@
+<div class="dialogs">
+  <div class="col-md-12">
+    <div style="display: flex;justify-content: space-between;">
+      <h4><span *ngIf="!isEdit">Add</span><span *ngIf="isEdit">Edit</span> OT</h4>
+      <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+  </div>
+
+</div>
+  <div class="row" style="width: 800px;">
+ 
+    <div class="col-md-4">
+      <label class="labels"><span *ngIf="!isEdit">Add</span><span *ngIf="isEdit"></span> Branch *</label><br>
+      <ng-multiselect-dropdown *ngIf="!isEdit" [placeholder]="'Select Branch'" 
+       [data]="BranchList" [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)"
+       [settings]="branchSettings"  >
+       </ng-multiselect-dropdown>
+       <input type="text" class="timings" *ngIf="isEdit" [disabled]="isEdit" [(ngModel)]="BranchName">
+       <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('branch') && errorMessages['branch']!=''">{{errorMessages['branch']}}</label>
+    </div>
+    <div class="col-md-4">
+      <label class="labels"><span *ngIf="!isEdit">Add</span><span *ngIf="isEdit"></span> Department *</label><br>
+      <ng-multiselect-dropdown *ngIf="!isEdit"  [placeholder]="'Select Department'" 
+      [data]="DepartmentList" [(ngModel)]="selectedDepartment" (onSelect)="onDepartmentSelect($event)" (onDeSelect)="onDepartmentDeSelect($event)" [settings]="departmentSettings" >
+      </ng-multiselect-dropdown>
+      <input type="text" class="timings" *ngIf="isEdit" [disabled]="isEdit" [(ngModel)]="DepartmentName">
+      <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('department') && errorMessages['department']!=''">{{errorMessages['department']}}</label>
+    </div>
+
+    <div class="col-md-4">
+      <label class="labels">Select Employees *</label><br>
+      <ng-multiselect-dropdown [settings]="employeeSettings" [placeholder]="'Select Employees'" 
+      [data]="EmployeeList" [(ngModel)]="selectedEmployee" (onSelect)="onEmployeeSelect($event)" (onDeselect)="validateFields()"  (onSelectAll)="employeeSelectAll()" (onDeSelectAll)="employeeDeSelectAll()" >
+      </ng-multiselect-dropdown>
+      <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('employee') && errorMessages['employee']!=''">{{errorMessages['employee']}}</label>
+
+
+  </div>
+
+    <div class="col-md-4">
+      <label class="labels"><span *ngIf="!isEdit">Add</span><span *ngIf="isEdit"></span> OT Type *</label><br>
+      <ng-multiselect-dropdown *ngIf="!isEdit" [placeholder]="'Select Type'" 
+       [data]="TypeList" [(ngModel)]="selectedType" (onSelect)="onTypeSelect($event)" (onDeSelect)="onTypeDeSelect($event)"
+       [settings]="typeSettings">
+       </ng-multiselect-dropdown>
+       <input type="text" class="timings" *ngIf="isEdit" [disabled]="isEdit" [(ngModel)]="OtType">
+       <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('ottype') && errorMessages['ottype']!=''">{{errorMessages['ottype']}}</label>
+    </div>
+    <div class="col-md-4">
+      <label class="labels">OT Name *</label><br>
+        <input type="text" class="timings" placeholder="Enter Ot Name" [(ngModel)]="OtName">
+        <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('otname') && errorMessages['otname']!=''">{{errorMessages['otname']}}</label>
+        
+    </div>
+    <div class="col-md-4">
+          <label class="labels"><button mat-raised-button matTooltip="Employee should work these minimum minutes to consider his OT"><i class="fa fa-info-circle"></i></button>Min Minutes *</label><br>
+          <input type="number" class="timings" placeholder="Enter Hours" [(ngModel)]="MinimumWorkingHours"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="3">
+          <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('minimumworkinghours') && errorMessages['minimumworkinghours']!=''">{{errorMessages['minimumworkinghours']}}</label>
+     
+    </div>
+    <div class="col-md-12">
+      <input type="checkbox" [(ngModel)]="checkAllFeilds"> &nbsp;<label class="labels">Check this box to consider both Amount per Hour and Gross/Basic Salary</label>
+    </div>
+    <div class="col-md-4">
+      <label class="labels"><button mat-raised-button matTooltip="If OT rate is 2 and Employee works for 3hrs, his work hours will be considered as 6 hrs i.e (OT Rate*Work Hours)"><i class="fa fa-info-circle"></i></button>OT Rate</label><br>
+      <input matInput type="number"  class="timings" placeholder="Enter Rate" [(ngModel)]="Time"    step="0.01">
+    </div>
+    <div class="col-md-4">
+      <label class="labels">Amount / Hour</label><br>
+      <input  type="number"  class="timings" placeholder="Enter Amount" [(ngModel)]="Amount" >
+      <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('amount') && errorMessages['amount']!=''">{{errorMessages['amount']}}</label>
+    </div>
+    <div class="col-md-4" *ngIf="Amount < 1 || checkAllFeilds == true">
+      <label class="labels">Salary Type</label> <br>
+        <ng-multiselect-dropdown [placeholder]="'Salary Type'" [data]="SalaryTypeList" [(ngModel)]="selectedSalaryType"
+          (onSelect)="onSalaryTypeSelect($event)" (onDeSelect)="onSalaryTypeDeSelect($event)"
+          [settings]="SalaryTypeSettings">
+        </ng-multiselect-dropdown>
+    </div>
+      <div class="col-md-4" >
+        <label class="labels"><button mat-raised-button matTooltip="Maximum hours to be considered as while calculating OT"><i class="fa fa-info-circle"></i></button>Max OT Hours *</label><br>
+        <input type="number" class="timings" placeholder="Enter Daily OT Hours" [(ngModel)]="DailyOtHours"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="3">
+        <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('dailyothours') && errorMessages['dailyothours']!=''">{{errorMessages['dailyothours']}}</label>
+      </div>
+      <div class="col-md-4" >
+        <label class="labels"><button mat-raised-button matTooltip="Grace Time for employee to start OT after the work hours"><i class="fa fa-info-circle"></i></button>GraceIn Time</label><br>
+        
+        <input type="number" class="timings" placeholder="Grace Time" [(ngModel)]="GraceTime" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="3">
+      </div>
+      <div class="col-md-12" >
+         <label class="labels" *ngIf="Time > 0 && Amount > 0 && (!selectedSalaryType || selectedSalaryType.length === 0)">
+           Your extra hours are multiplied by {{Time}} and then by {{Amount}} Rs.
+         </label>
+         
+         <label class="labels" *ngIf="Time > 0 && selectedSalaryType && selectedSalaryType.length > 0 && (!Amount || Amount <= 0)">
+           Your extra hours are multiplied by {{Time}} and then by Per hour of {{selectedSalaryType[0]}} salary.
+         </label>
+         
+         <label class="labels" *ngIf="Time > 0 && selectedSalaryType && selectedSalaryType.length > 0 && Amount > 0">
+           Your extra hours are first multiplied by the {{Time}} and {{Amount}} Rs, then by the {{selectedSalaryType[0]}} salary per hour and {{Time}}, with the results added to give the total amount
+         </label>
+  
+      </div>
+    <div class="col-md-4">
+      <br>
+      <button *ngIf="!isEdit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="CreateOT()">Submit</button>
+      <button *ngIf="isEdit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="UpdateShift()">Update</button> &nbsp;
+      <button class="btn btn-danger" style="border-radius: 10px;background-color: #3601b5a3;" (click)="CloseTab()">Close</button>
+  </div>
+    </div>
+</div>

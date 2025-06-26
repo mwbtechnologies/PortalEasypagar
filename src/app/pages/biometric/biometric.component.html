@@ -1,0 +1,50 @@
+<div class="card" *ngIf="showpunchpage==0">
+    <div class="card-header" style="display: flex;justify-content:space-between;">
+        <div>
+            <h3 class="card-title" style="text-align: center;">Biometric Configuration</h3>
+        </div>
+    </div>
+    <div class="card-body" style="flex-flow:row;justify-content: center;">
+        <div class="row">
+        
+            <div class="col-md-4"><img src="./assets/images/Banner/metric.png" style="height: 300px;width: 500px;object-fit: contain;">
+            <br>
+            <!-- <button class="btn btn-primary" style="width: auto;" (click)="ShowPunch(1)">Employee Punch Report</button>
+         &nbsp;
+            <button class="btn btn-primary" style="width: auto;" (click)="ShowPunch(2)">Datewise Punch Report</button> -->
+         </div> 
+           <div class="col-md-1"></div>
+            <div class="col-md-7"><br><br>
+                <h5 class="card-title" style="text-align: start;font-weight: bold;">Note :</h5> 
+                <h6 style="text-align: start;font-weight: bold;padding-left: 20px;">* Please download all the files in setup folder</h6>
+                <h6 style="text-align: start;font-weight: bold;padding-left: 20px;">* Click <a download="biometricsetupfile" style="color: blue;" href="./assets/Biometric_Installation.zip"> here </a> to download setup files folder 
+                    
+                  </h6>
+                <h6 style="text-align: start;font-weight: bold;padding-left: 20px;">* Once all the files are installed. Click <a (click)="RegBioMetric();" style="color: blue;">
+                    here
+                  </a>to navigate to Biometric Portal  </h6>
+             
+            </div>
+        </div>
+
+    </div>
+    <div  class="card-body">
+        <div  class="table-responsive">
+<app-common-table [data]="BiometricData" [ExportName]="'Biometric Device List'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+[smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+    
+</div>                      
+  
+    </div>
+    </div>
+
+    <div *ngIf="showpunchpage==1">
+        <label class="button" (click)="backTobio()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+            report</label>
+<app-biometric-punches></app-biometric-punches>
+    </div>
+    <div *ngIf="showpunchpage==2">
+        <label class="button" (click)="backTobio()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+            report</label>
+        <app-biometric-datewise-punches></app-biometric-datewise-punches>
+            </div>

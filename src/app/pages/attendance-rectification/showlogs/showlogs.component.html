@@ -1,0 +1,53 @@
+<div style="width: auto;overflow:scroll;padding:20px;height:auto">
+    <div style="display:flex;justify-content: space-between;">
+        <h4>Attendance Logs of {{data.name}}</h4>
+        <button class="btn btn-primary" (click)="downloadReport()">📥 Download Report</button>
+    </div>
+<!-- <table 
+       class="table table-striped table-bordered table-hover">
+       <thead>
+         <tr>
+             <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Check-In</th>
+             <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Check-Out</th>
+             <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Session</th>
+             <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Rectified Check-In</th>
+             <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Rectified Check-Out</th>
+             <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Rectified Session</th>
+             <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Modified By</th>
+             <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Modified Date</th>
+         </tr>
+     </thead>
+         <tbody >
+             <tr  class="ng-star-inserted" *ngFor="let IL of LogsData;let i = index;">   
+                 <td >
+                     <div  class="ng-star-inserted">{{IL.Checkin}}</div>
+                 </td>
+                 <td >
+                     <div  class="ng-star-inserted">{{IL.Checkout}}</div>
+                 </td>
+                 <td >
+                     <div  class="ng-star-inserted">{{IL.Sessiontype}}</div>
+                 </td>
+                 <td >
+                     <div  class="ng-star-inserted">{{IL.ModifiedCheckin}}</div>
+                 </td>
+                 <td >
+                     <div  class="ng-star-inserted">{{IL.ModifiedCheckout}}</div>
+                 </td>
+                 <td >
+                     <div  class="ng-star-inserted">{{IL.ModifiedSessionType}}</div>
+                 </td>
+                 <td >
+                     <div  class="ng-star-inserted">{{IL.ModifiedByName}}</div>
+                 </td>
+                 <td >
+                     <div  class="ng-star-inserted">{{IL.InsertedDate}}</div>
+                 </td>
+             </tr>
+         </tbody>
+       </table> -->
+<!-- common table__{{employeeLoading==undefined}}__ -->
+<app-common-table [data]="LogsData" [ExportName]="'AttendanceRectificationLogs Report'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+[smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+<!-- end here --> 
+    </div> 

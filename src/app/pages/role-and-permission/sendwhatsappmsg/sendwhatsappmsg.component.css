@@ -1,0 +1,55 @@
+.dialogs {
+    width: 430px;
+    background-color: #eafdea;
+    padding: 20px;
+    border: 2px solid green;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    animation: _ngcontent-yqo-c166_fadeIn 0.3s ease-in-out;
+}
+
+/* Common Styles */
+.alert-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.alert-message {
+    font-size: 14px;
+    margin-bottom: 20px;
+    word-break: break-all;
+    margin-top: 30px;
+}
+
+/* Close Button */
+.close-btn {
+    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.close-btn:hover {
+    background-color: #fff;
+}
+
+.btn-class{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.rebtn{
+color: white;
+background-color: red;
+padding: 4px 16px;
+border-radius: 5px;
+}
+.greenbtn{
+color: white;
+background-color: green;
+padding: 4px 16px;
+border-radius: 5px;
+}

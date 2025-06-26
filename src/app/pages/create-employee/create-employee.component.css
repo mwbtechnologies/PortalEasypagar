@@ -1,0 +1,22 @@
+.imgSize{
+    width: 200px;
+    height: 150px;
+  }
+  .backbutton{
+    background-color: white;
+    border:1px solid #dadada;
+    color: black;
+    border-radius: 10px;
+    margin-right: 4px;
+    padding: 5px;
+  }
+
+  .no-gap{
+    padding-left: 0.1rem;
+    padding-right: 0,1rem;
+  }
+  
+  .m-8
+  {
+      margin-left:8px !important;
+  }

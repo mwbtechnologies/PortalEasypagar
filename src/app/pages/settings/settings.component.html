@@ -1,0 +1,745 @@
+<div class="card">
+  <div class="card-header" style="display: flex;justify-content:space-between;">
+    <div>
+      <h3 class="card-title">Settings</h3>
+    </div>
+  </div>
+  <div class="card col-md-12" style="margin: 0;padding: 0;border: none !important;">
+    <div style="padding:5px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-evenly;">
+      <ng-container *ngFor="let st of Settings">
+        <div class="">
+          <div class="settingcard" [ngClass]="{'selected':  selectedSetting == st.text}"
+            (click)="toggleSetting(st.text);getSettingsData(st)">
+            <img [src]="st.image" style="max-width: 100px;max-height: 100px;object-fit: cover;">
+            <h4 style="font-size: 14px;
+          margin: 0;
+          position: absolute;
+          bottom: 10px;
+          width: -webkit-fill-available;
+          text-align: center;">{{st.text}}</h4>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div style="padding:10px" *ngIf="IsChangePassword">
+    <div class="card-header">
+      <h3 class="mb-0 card-title">Change Password</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group"><label class="form-label">Old Password</label>
+            <div id="Password-toggle" class="wrap-input100 validate-input input-group">
+              <div class="input-group-text " (click)="OnOldClick();">
+                <i class="fa fa-eye" *ngIf="this.oldpasswordinput=='password'"></i>
+                <i class="fa fa-eye-slash" *ngIf="this.oldpasswordinput=='text'"></i>
+              </div><input name="OldPassword" id="OldPassword" type="{{oldpasswordinput}}"
+                placeholder="Enter Old Password *" #OldPassword="ngModel" required
+                onkeydown="return /^\S*$/.test(this.value + event.key)" OldPassword
+                [(ngModel)]="settingformInput.OldPassword"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                maxlength="8" class="border-start-0 ms-0 form-control ng-untouched ng-pristine ng-invalid">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group"><label class="form-label">New Password</label>
+            <div id="Password-toggle" class="wrap-input100 validate-input input-group">
+              <div class="input-group-text" (click)="OnPassClick();">
+                <i aria-hidden="true" class="fa fa-eye" *ngIf="this.passwordinput=='password'"></i>
+                <i aria-hidden="true" class="fa fa-eye-slash" *ngIf="this.passwordinput=='text'"></i>
+              </div><input name="NewPassword" id="NewPassword" type="{{passwordinput}}" placeholder="Enter Password *"
+                #NewPassword="ngModel" required onkeydown="return /^\S*$/.test(this.value + event.key)" NewPassword
+                [(ngModel)]="settingformInput.NewPassword"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                maxlength="8" class="border-start-0 ms-0 form-control ng-untouched ng-pristine ng-invalid">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Confirm Password </label>
+          <div id="Password-toggle" class="wrap-input100 validate-input input-group">
+            <div class="input-group-text" (click)="OnConfirmClick();">
+              <i aria-hidden="true" class="fa fa-eye" *ngIf="this.confirmpasswordinput=='password'"></i>
+              <i aria-hidden="true" class="fa fa-eye-slash" *ngIf="this.confirmpasswordinput=='text'"></i>
+            </div><input name="ConfirmPassword" id="ConfirmPassword" type="{{confirmpasswordinput}}"
+              placeholder="Enter Confirm Password *" #ConfirmPassword="ngModel" required
+              onkeydown="return /^\S*$/.test(this.value + event.key)" ConfirmPassword
+              [(ngModel)]="settingformInput.ConfirmPassword"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              maxlength="8" class="border-start-0 ms-0 form-control ng-untouched ng-pristine ng-invalid">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <button type="button" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+      (click)="submitpassword()">Submit</button>
+  </div>
+  <div *ngIf="IsHoliday">
+    <ng-container *ngIf="Add">
+      <div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card" style="margin: 0;">
+              <div class="card-header">
+                <h3 class="mb-0 card-title">Add Holiday</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3" >
+                    <label class="form-label">Select Organization</label>
+                    <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                        [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                        (onDeSelect)="onDeselectedOrg($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                  <div class="col-md-3">
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label class="form-label">
+                            Branch 
+                        </label>  <ng-multiselect-dropdown [placeholder]="'All Branch'" [data]="BranchList" [(ngModel)]="selectedBranchH"
+                        (onSelect)="newonselectedBranchesChange($event)" (onDeSelect)="newonDeselectedBranchesChange($event)" [settings]="branchSettings">
+                      </ng-multiselect-dropdown>
+                
+                        
+                    </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group" style="margin-bottom: 20px;">
+                    <label class="form-label">
+                        Department 
+                    </label>  <ng-multiselect-dropdown [placeholder]="'All Branch'" [data]="DepartmentList" [(ngModel)]="selectedDepartment"
+                    (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                  </ng-multiselect-dropdown>
+            
+                    
+                </div>
+                </div>
+                  <div class="col-md-3">
+                    <div class="form-group"><label class="form-label">StartDate</label><input type="date"
+                        name="example-text-input" class="form-control" id="StartDate" name="StartDate"
+                        (change)="Checkdate(formInput.StartDate);" #StartDate="ngModel" required StartDate
+                        [(ngModel)]="formInput.StartDate">
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group"><label class="form-label">EndDate</label><input type="date"
+                        name="example-text-input" class="form-control" id="EndDate" name="EndDate"
+                        (change)="Checkdate(formInput.EndDate);" #EndDate="ngModel" required EndDate
+                        [(ngModel)]="formInput.EndDate">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group"><label class="form-label">Title</label><input name="example-text-input"
+                        class="form-control" id="Title" name="Title" type="text" placeholder="Title" #Title="ngModel"
+                        required (keydown)="onKeyDown($event)" (input)="onInputTitleChange($event)"
+                        (paste)="onPaste($event)" Title [(ngModel)]="formInput.Title">
+                      <label *ngIf="!Title.valid && (Title.dirty || Title.touched)" id="validation-link-error"
+                        class="error jquery-validation-error small form-text invalid-feedback">Please Enter
+                        Title</label>
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="form-group">
+                      <label class="form-label">IsHalfDay <i class="fa fa-info-circle"
+                          matTooltip="If You Select IsHalfDay Then That Is Considered As A Halfday Not A Holiday."></i><br></label>
+                      <label class="custom-switch">
+                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                          #IsHalfday="ngModel" required IsHalfday [(ngModel)]="formInput.IsHalfday" id="IsHalfday"
+                          name="IsHalfday" value="true">
+                        <span class="custom-switch-indicator"></span><span
+                          class="custom-switch-description"></span></label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group"><label class="form-label">Description</label><input type="text"
+                        name="example-text-input" placeholder="Write Description for Holiday Here..."
+                        class="form-control" id="Description" name="Description" type="text" #Description="ngModel"
+                        required (keydown)="onKeyDown($event)" (input)="onInputDescChange($event)"
+                        (paste)="onPaste($event)" Description [(ngModel)]="formInput.Description">
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive ng-star-inserted">
+                  <button id="table2-new-row-button" class="btn btn-primary mb-4"
+                    style="border-radius:10px;background-color: #3601b5a3;" (click)="SaveHoliday()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="Edit">
+      <div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="mb-0 card-title">Edit Holiday</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3" >
+                    <label class="form-label">Select Organization</label>
+                    <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                        [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                        (onDeSelect)="onDeselectedOrg($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                  <div class="col-md-3">
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label class="form-label">
+                            Branch 
+                        </label>
+                        <ng-multiselect-dropdown [placeholder]="'All Branch'" [data]="BranchList" [(ngModel)]="selectedBranchH"
+                        (onSelect)="newonselectedBranchesChange($event)" (onDeSelect)="newonDeselectedBranchesChange($event)" [settings]="branchSettings">
+                      </ng-multiselect-dropdown>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group" style="margin-bottom: 20px;">
+                    <label class="form-label">
+                        Department 
+                    </label>  <ng-multiselect-dropdown [placeholder]="'All Branch'" [data]="DepartmentList" [(ngModel)]="selectedDepartment"
+                    (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                  </ng-multiselect-dropdown>
+            
+                    
+                </div>
+                </div>
+                  <div class="col-md-3">
+                    <div class="form-group"><label class="form-label">Start Date</label><input name="example-text-input"
+                        class="form-control" id="StartDate" name="StartDate" type="date" placeholder="Designation Name"
+                        [ngClass]="{'is-invalid': !StartDate.valid && (StartDate.dirty || StartDate.touched || isSubmit)}"
+                        (change)="Checkdate(formInput.StartDate);" #StartDate="ngModel" required StartDate
+                        [(ngModel)]="formInput.StartDate">
+                      <label *ngIf="!StartDate.valid && (StartDate.dirty || StartDate.touched || isSubmit)"
+                        id="validation-link-error"
+                        class="error jquery-validation-error small form-text invalid-feedback">Please Enter
+                        StartDate</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group"><label class="form-label">End Date</label><input name="example-text-input"
+                        class="form-control" id="EndDate" name="EndDate" type="date" placeholder="Designation Name"
+                        (change)="Checkdate(formInput.EndDate)"
+                        [ngClass]="{'is-invalid': !EndDate.valid && (EndDate.dirty || EndDate.touched || isSubmit)}"
+                        #EndDate="ngModel" required EndDate [(ngModel)]="formInput.EndDate">
+                      <label *ngIf="!EndDate.valid && (EndDate.dirty || EndDate.touched || isSubmit)"
+                        id="validation-link-error"
+                        class="error jquery-validation-error small form-text invalid-feedback">Please Enter
+                        EndDate</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group"><label class="form-label">Title</label><input name="example-text-input"
+                        class="form-control" id="Title" name="Title" type="text" placeholder="Title"
+                        [ngClass]="{'is-invalid': !Title.valid && (Title.dirty || Title.touched || isSubmit)}"
+                        #Title="ngModel" required (keydown)="onKeyDown($event)" (input)="onInputTitleChange($event)"
+                        (paste)="onPaste($event)" Title [(ngModel)]="formInput.Title">
+                      <label *ngIf="!Title.valid && (Title.dirty || Title.touched || isSubmit)"
+                        id="validation-link-error"
+                        class="error jquery-validation-error small form-text invalid-feedback">Please Enter
+                        Title</label>
+                    </div>
+                  </div>
+               
+                  <div class="col-md-6">
+                    <div class="form-group"><label class="form-label">Description</label><input type="text"
+                        name="example-text-input" placeholder="Write Description for Holiday Here..."
+                        class="form-control" placeholder="Description Name"
+                        [ngClass]="{'is-invalid': !Description.valid && (Description.dirty || Description.touched || isSubmit)}"
+                        #Description="ngModel" required (keydown)="onKeyDown($event)"
+                        (input)="onInputDescChange($event)" (paste)="onPaste($event)" Description
+                        [(ngModel)]="formInput.Description">
+                    </div>
+                    <div class="col-md-1">
+                      <div class="form-group">
+                        <label class="form-label">IsHalfDay
+                          <i class="fa fa-info-circle"
+                            matTooltip="If You Select IsHalfDay Then That Is Considered As A Halfday Not A Holiday."></i><br></label>
+                        <label class="custom-switch">
+                          <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                            #IsHalfday="ngModel" required IsHalfday [(ngModel)]="formInput.IsHalfday" id="IsHalfday"
+                            name="IsHalfday" value="true">
+                          <span class="custom-switch-indicator"></span><span
+                            class="custom-switch-description"></span></label>
+                      </div>
+                    </div>
+                    <!-- <div  class="form-group"><label 
+              class="form-label">Description / Comment</label><input
+              name="example-text-input" class="form-control" id="Description" name="Description" type="text"
+              placeholder="Designation Name" 
+              [ngClass]="{'is-invalid': !Description.valid && (Description.dirty || Description.touched || isSubmit)}"
+              #Description="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)"  Description [(ngModel)]="formInput.Description">
+              <label *ngIf="!Description.valid && (Description.dirty || Description.touched || isSubmit)"
+              id="validation-link-error"
+              class="error jquery-validation-error small form-text invalid-feedback">Please Enter Description</label></div> -->
+                  </div>
+
+
+                </div>
+                <div class="table-responsive ng-star-inserted">
+                  <button id="table2-new-row-button" class="btn btn-primary mb-4"
+                    style="border-radius:10px;background-color: #3601b5a3;" (click)="updateHoliday()">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="col-md-12" style="display:flex;justify-content:center;padding: 20px;">
+      <button class="calendarview" [class.selectedtype]="calanderview == true"
+        (click)="selectCalendar()">Calendar</button>
+      <button class="tableview" [class.selectedtype]="tableview" (click)="selectTable()">Table</button>&nbsp;
+    </div>
+    <ng-container *ngIf="tableview">
+      <div class="card-body">
+        <div style="display: flex;justify-content: end;">
+          <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+            *ngIf="showbtn" (click)="addHoliday()">Add Holiday</button>
+        </div>
+        <form #validationForm="ngForm" class="editForm" novalidate>
+          <div class="table-responsive">
+            <!-- common table -->
+            <!-- <app-common-table [data]="HolidayList" [ExportName]="'Holiday List'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+                     [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table> -->
+            <!-- end here -->
+            <table id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+              class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>SL No</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Branch</th>
+                  <th>Start Date - End Date</th>
+                  <th>IsHalfDay</th>
+                  <th>Created On</th>
+                  <th>Modified On</th>
+                  <th>Edit/Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="ng-star-inserted" *ngFor="let IL of HolidayList; let i = index;">
+                  <td>
+                    <div class="ng-star-inserted"> {{i+1}} </div>
+                  </td>
+
+                  <td>
+                    <div class="ng-star-inserted">{{IL.Title}} </div>
+
+                  </td>
+                  <td>
+                    <div class="ng-star-inserted"> {{IL.Comment}} </div>
+
+                  </td>
+                  <td>
+                    <div class="ng-star-inserted"><span *ngIf="IL.BranchID!=0">{{IL.BranchName}}</span> <span *ngIf="IL.BranchID==0">All Branch</span> </div>
+
+                  </td>
+                  <td>
+                    <div class="ng-star-inserted"> {{IL.StartDate|date: 'dd-MM-yyyy'}} - {{IL.EndDate|date:
+                      'dd-MM-yyyy'}} </div>
+
+                  </td>
+                  <td>
+                    <div *ngIf="IL.IsHalfday==true" class="ng-star-inserted"> Yes </div>
+                    <div *ngIf="IL.IsHalfday==false" class="ng-star-inserted"> No </div>
+
+                  </td>
+
+                  <td>
+                    <div class="ng-star-inserted"> {{IL.CreatedDate|date: 'dd-MM-yyyy'}} </div>
+
+                  </td>
+
+                  <td>
+                    <div class="ng-star-inserted"> {{IL.ModifiedDate|date: 'dd-MM-yyyy'}} </div>
+
+                  </td>
+
+                  <td>
+                    <button id="bEdit" type="button" class="btn btn-sm btn-primary ng-star-inserted"
+                      style="background-color: #3601b5a3;" (click)="edit(IL);"><span class="fa fa-edit"></span></button>
+
+                    <button [disabled]="IL.DeleteStatus == false" (click)="DeleteHoliday(IL);" id="bDel" type="button"
+                      class="btn mx-3 btn-sm btn-danger ng-star-inserted"><span class="fa fa-trash"></span>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="!HolidayList">
+                  <td colspan="10" class="text-center text-danger">No Data Available</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="calanderview">
+      <div>
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+                mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()">
+                Previous
+              </div>
+              <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+                Today
+              </div>
+              <div class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" mwlCalendarNextView
+                [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                Next
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+          </div>
+        </div>
+        <br />
+        <div [ngSwitch]="view">
+          <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="CalendarEvents"
+            [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+          </mwl-calendar-month-view>
+        </div>
+        <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+        <br /><br /><br />
+        <ng-template #modalContent let-close="close">
+          <div class="modal-header">
+            <h5 class="modal-title">Event Details</h5>
+            <button type="button" class="close" (click)="close()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+              Title:
+              <pre>{{title}}</pre>
+            </div>
+            <div>
+              Description:
+              <pre>{{description}}</pre>
+            </div>
+            <div>
+              Date Range:
+              <pre>{{EventStartDate| date:'yyyy-MM-dd'}} - {{EventEndDate| date:'yyyy-MM-dd'}}</pre>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" (click)="close()">
+              Close</button>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+
+
+
+
+  </div>
+  <div *ngIf="IsTimeFormat">
+    <div class="card-header">
+      <h3 class="mb-0 card-title">Time Format</h3>
+    </div>
+    <div class="card-body">
+      <label><input type="checkbox" [(ngModel)]="twelvehoursformat" (change)="twhformat()"> 12 Hours Format</label><br>
+      <label><input type="checkbox" [(ngModel)]="twentyfourhoursformat" (change)="ttfformat()"> 24 Hours
+        Format</label><br>
+      <br>
+      <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+        (click)="saveTimeFormat()">Submit</button>
+    </div>
+  </div>
+  <div *ngIf="GracePeriod">
+    <ng-container *ngIf="graceTimeAdd">
+      <div class="card-header">
+        <h3 class="mb-0 card-title">Add Attendance Grace Period</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3" >
+            <label class="form-label">Select Organization</label>
+            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                (onDeSelect)="onDeselectedOrg($event)">
+            </ng-multiselect-dropdown>
+        </div>
+          <div class="col-md-3">
+            <label class="form-label">Select Branch</label>
+            <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList" [(ngModel)]="selectedBranch"
+              (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Select Department</label>
+            <ng-multiselect-dropdown [placeholder]="'Select Department'" [data]="DepartmentList"
+              [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"
+              [settings]="departmentSettings">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Check-In Grace Period</label>
+            <input type="number" [(ngModel)]="checkingrace"
+              style="width:30%;height:50%;border-radius: 5px;">&nbsp;&nbsp;<label>Minutes</label>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Check-Out Grace Period</label>
+            <input type="number" [(ngModel)]="checkoutgrace"
+              style="width:30%;height:50%;border-radius: 5px;">&nbsp;&nbsp;<label>Minutes</label>
+          </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+          (click)="addAttendanceGrace()">Submit</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="graceTimeEdit">
+      <div class="card-header">
+        <h3 class="mb-0 card-title">Edit Attendance Grace Period</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3" >
+            <label class="form-label">Select Organization</label>
+            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                (onDeSelect)="onDeselectedOrg($event)">
+            </ng-multiselect-dropdown>
+        </div>
+          <div class="col-md-3">
+            <label class="form-label">Select Branch</label>
+            <input type="text" name="example-text-input" class="form-control" [(ngModel)]="editbranch" disabled>
+            <!-- <ng-multiselect-dropdown [data]="BranchList" [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+              (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+            </ng-multiselect-dropdown> -->
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Select Department</label>
+            <input type="text" name="example-text-input" class="form-control" [(ngModel)]="editdepartment" disabled>
+            <!-- <ng-multiselect-dropdown [placeholder]="'Select Department'" [data]="DepartmentList"
+              [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"
+              [settings]="departmentSettings">
+            </ng-multiselect-dropdown> -->
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Check-In Grace Period</label>
+            <input type="number" [(ngModel)]="checkingrace"
+              style="width:30%;height:50%;border-radius: 5px;">&nbsp;&nbsp;<label>Minutes</label>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Check-Out Grace Period</label>
+            <input type="number" [(ngModel)]="checkoutgrace"
+              style="width:30%;height:50%;border-radius: 5px;">&nbsp;&nbsp;<label>Minutes</label>
+          </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+          (click)="updateAttendanceGrace()">Update</button>
+      </div>
+    </ng-container>
+
+    <div class="card-body">
+      <div style="display: flex;justify-content: end;">
+        <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+          *ngIf="showgracebtn" (click)="addGrace()">Add Grace</button>
+      </div>
+      <form #validationForm="ngForm" class="editForm" novalidate>
+
+        <div class="table-responsive">
+          <table id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+            class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th style="background-color: #3601b51f;text-align: center;">SL No</th>
+                <th style="background-color: #3601b51f;text-align: center;">Department Name</th>
+                <th style="background-color: #3601b51f;text-align: center;">Branch Name</th>
+                <th style="background-color: #3601b51f;text-align: center;">CheckinGrace</th>
+                <th style="background-color: #3601b51f;text-align: center;">checkoutGrace</th>
+                <th style="background-color: #3601b51f;text-align: center;">Edit/Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="ng-star-inserted" *ngFor="let IL of AttendanceGraceList; let i = index;">
+                <td>
+                  <div class="ng-star-inserted"> {{i+1}} </div>
+                </td>
+
+                <td>
+                  <div class="ng-star-inserted">{{IL.deptname}} </div>
+
+                </td>
+                <td>
+                  <div class="ng-star-inserted"> {{IL.Branchname}} </div>
+
+                </td>
+                <td>
+                  <div class="ng-star-inserted"> {{IL.CheckinGrace}} </div>
+
+                </td>
+
+                <td>
+                  <div class="ng-star-inserted"> {{IL.checkoutGrace}} </div>
+
+                </td>
+
+
+                <td><button id="bEdit" (click)="editAttendanceGrace(IL)" type="button"
+                    class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;"><span
+                      class="fa fa-edit" matTooltip="Edit"></span></button> &nbsp;
+                  <button type="button" class="btn btn-sm btn-danger ng-star-inserted" (click)="deleteGrace(IL);"><span
+                      class="fa fa-trash" matTooltip="Delete"></span></button>
+                </td>
+              </tr>
+              <tr *ngIf="!AttendanceGraceList">
+                <td colspan="10" class="text-center text-danger">No Data Available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <div *ngIf="IsNotification">
+    <div class="card-header">
+      <h3 class="mb-0 card-title">Notification Settings</h3>
+    </div>
+    <div class="card-body">
+      <span>Note : <label>Select Modules Below If You Dont't Want
+          To Receive Notifications (Uncheck To Receive Notification)</label></span>
+      <ng-container *ngFor="let noti of NotificationList">
+        <div class="notificationcard">
+          <input type="checkbox" [(ngModel)]="noti.Status" (change)="checkIfAnySelected()">&nbsp;<label>{{noti.Type}}</label><br>
+        </div>
+      </ng-container>
+      <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+        (click)="saveNotification()">Submit</button><br>
+    </div>
+  </div>
+  <div *ngIf="isAccessControl">
+    <div class="card-header">
+      <h3 class="mb-0 card-title">Access Control</h3>
+    </div>
+    <div class="card-body">
+      <span>Note : <label>Select The Modules Below If You Wish Your Employees To
+          Use These Feature (Uncheck If You Don't Want To)</label></span>
+      <table id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+        class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Branch Name</th>
+            <th>Expense</th>
+            <th>Loan/Advance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ng-star-inserted" *ngFor="let IL of AccessControlList; let i = index;">
+            <td>
+              <div class="ng-star-inserted"> {{IL.BranchName}} </div>
+            </td>
+            <td>
+              <div class="ng-star-inserted"> <input type="checkbox" [(ngModel)]="IL.isExpenses"> </div>
+            </td>
+            <td>
+              <div class="ng-star-inserted"> <input type="checkbox" [(ngModel)]="IL.isLoanAdvance"> </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <ng-container *ngFor="let ac of AccessControlList"> -->
+      <!-- <div class="notificationcard"> -->
+      <!-- <input type="checkbox" [(ngModel)]="noti.status">&nbsp;<label>{{noti.label}}</label><br> -->
+      <!-- <tabble></tabble> -->
+      <!-- </div> -->
+      <!-- </ng-container> -->
+      <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+        (click)="saveAccessControl()">Submit</button>
+    </div>
+  </div>
+  <!-- <div *ngIf="salarySetting">
+    <app-salary-setting></app-salary-setting>
+  </div> -->
+  <div *ngIf="isBreakConfig">
+    <!-- <label class="button" (click)="backToSettings()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+      Settings</label>  -->
+    <app-adminlunchconfig></app-adminlunchconfig>
+  </div>
+  <div *ngIf="isEasyTrackerMap">
+    <app-easytrackermapping></app-easytrackermapping>
+  </div>
+  <div *ngIf="isBranchLevels">
+    <app-branchlevels></app-branchlevels>
+  </div>
+  <div *ngIf="isDefaultBranch">
+    <app-defaultbranch></app-defaultbranch>
+  </div>
+  <div *ngIf="isGeoFence">
+    <div class="card-header" style="display: flex;justify-content: start;">
+      <h3 class="mb-0 card-title">Geo Fence Config</h3>
+    </div>
+    <div class="card-body" style="min-height: 60vh;">
+      <div style="display: flex;flex-wrap: wrap;row-gap: 10px;">
+        <ng-container *ngFor="let bl of GeoFenceList">
+          <div class="col-md-4">
+            <div style="border:1px solid #dadada;padding: 15px;border-radius: 13px;">
+              <label style="font-weight:500">{{bl.Name}}</label>
+              <!-- <div class="slider-container">
+                    <div class="dot-container">
+                      <div class="circle" [ngStyle]="{'width.px': bl.Radius, 'height.px': bl.Radius}"></div>
+                      <div class="location-pin"></div>
+                      <div class="value-display">{{ bl.Radius }} mts</div>
+                    </div> -->
+              <div style="display: flex;justify-content: space-between;">
+                <div class="col-md-8">
+                  <input type="range" min="0" max="500" class="range-slider" [(ngModel)]="bl.Radius"
+                    style="width: 100%;">
+                </div>
+                <div class="col-md-3">
+                  <input type="number"
+                    style="width: -webkit-fill-available;border-radius: 5px;border: 1px solid #878282;"
+                    [(ngModel)]="bl.Radius" (wheel)="$event.preventDefault()" (keydown)="preventPlusMinus($event)"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    maxlength="3" (ngModelChange)="InputValidation(bl)">meters
+                </div>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div>
+        <label class="form-label" style="color: white;">.</label>
+        <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+          (click)="SaveGeoFenced()">Submit</button><br>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="locationConfig">
+    <app-locationconfig></app-locationconfig>
+  </div>
+  <div *ngIf="isCheckIns">
+    <app-checkintypes></app-checkintypes>
+  </div>
+  <div *ngIf="workHourConfig">
+   <app-workhourconfig></app-workhourconfig>
+  </div>
+</div>

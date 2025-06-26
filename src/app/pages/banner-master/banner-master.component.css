@@ -1,0 +1,13 @@
+.table-bordered, .text-wrap table, .table-bordered th, .text-wrap table th, .table-bordered td, .text-wrap table td {
+    border: 1px solid rgba(0, 0, 0, 0.29);
+  }
+
+  .hovered{
+  background-color: #dadada;
+  width: max-content;
+  padding: 0px 5px;
+  border-radius: 50px;
+  margin: 0;
+  height: max-content;
+  cursor: pointer;
+  }

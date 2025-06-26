@@ -1,0 +1,294 @@
+<div >
+    <div *ngIf="ShowMessageTab">
+    <div  class="row chatbox">
+        <div  class="col-md-12 col-lg-12 col-xl-8 chat">
+            <div  class="main-content-app">
+                <div  class="card shadow-none overflow-hidden mb-xl-0 mb-5">
+                    <div  class="action-header clearfix mt-2">
+                        <div  class="float-start hidden-xs d-flex ms-2">
+                            <div  class="img_cont me-3"><img 
+                                    src="{{UserProfile}}" alt="img" class="rounded-circle user_img"></div>
+                            <div  class="align-items-center mt-2">
+                                <h4  class="mb-0 font-weight-semibold">{{UserName}}</h4><span
+                                     class="dot-label bg-success"></span><span 
+                                    class="me-3">online</span>
+                            </div>
+                        </div>
+                        <ul  class="ah-actions actions align-items-center">
+                            <li  class="call-icon"><a 
+                                    href="javascript:void(0);" placement="top" ngbtooltip="Call" class="d-done d-md-flex"><i
+                                         class="fa fa-phone-call"></i></a><!----></li>
+                            <li  class="video-icon"><a 
+                                    href="javascript:void(0);" placement="top" ngbtooltip=" Video Call"
+                                    class="d-done d-md-flex"><i  class="fa fa-video"></i></a><!---->
+                            </li>
+                            <li  class="video-icon"><a 
+                                    href="javascript:void(0);" placement="top" ngbtooltip="Add Contact"
+                                    class="d-done d-md-flex"><i 
+                                        class="fa fa-user-plus"></i></a><!----></li>
+                            <li  class="video-icon"><a 
+                                    href="javascript:void(0);" placement="top" ngbtooltip="Trash"
+                                    class="d-done d-md-flex"><i  class="fa fa-trash-2"></i></a><!---->
+                            </li>
+                        </ul>
+                    </div>
+                    <ng-scrollbar   class="ng-scrollbar">
+                        <div  class="ng-scrollbar-wrapper" position="native" track="vertical"
+                            appearance="compact" visibility="native" deactivated="false" dir="ltr"
+                            pointereventsmethod="viewport" verticalused="true" horizontalused="false"
+                            isverticallyscrollable="true" ishorizontallyscrollable="false">
+                            <div  class="ng-scroll-viewport-wrapper">
+                                <div  scrollviewport="" hidenativescrollbar=""
+                                    class="ng-native-scrollbar-hider ng-scroll-viewport "
+                                    style="--native-scrollbar-size:0px;">
+                                    <div  class="ng-scroll-content">
+                                        <div  class="card-body msg_card_body">
+                                            <div  class="chat-box-single-line"><abbr
+                                                     class="timestamp">{{MessageStart}}</abbr></div>
+                                                     <div  *ngFor="let IL of MessageHistory;">
+                                                        <div  class="d-flex justify-content-start" *ngIf="IL.FromEmployeeId!=this.UserID">
+                                                            <div  class="img_cont_msg"><img 
+                                                                    src="{{IL.ToProfileImgUrl}}" alt="img"
+                                                                    class="rounded-circle user_img_msg"></div>
+                                                            <div  class="msg_cotainer">{{IL.Message}} <span  class="msg_time">{{IL.ReceivedDate| date:'yyyy-MM-dd'}}</span></div>
+                                                        </div>
+    
+                                                        <div  class="d-flex justify-content-end" *ngIf="IL.FromEmployeeId==this.UserID">
+                                                            <div  class="msg_cotainer_send">{{IL.Message}} 
+                                                                <span class="msg_time_send">{{IL.ReceivedDate| date:'yyyy-MM-dd'}}</span></div>
+                                                            <div  class="img_cont_msg"><img 
+                                                                    src="{{IL.FromProfileImgUrl}}" alt="img"
+                                                                    class="rounded-circle user_img_msg"></div>
+                                                        </div>
+                                                     </div>
+                                                     
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!----><ng-scrollbar   scrollable="true"
+                                fit="false" class="scrollbar-control">
+                                <div  scrollbartracky="" class="ng-scrollbar-track">
+                                    <div  scrollbarthumby="" class="ng-scrollbar-thumb"
+                                        style="height: 20px; transform: translate3d(0px, 0px, 0px);"></div>
+                                </div>
+                            </ng-scrollbar><!----><!----><!---->
+                        </div>
+                    </ng-scrollbar>
+                    <div  class="card-footer">
+                        <div  class="input-group">
+                            <input name="Message" type="text" required Message [(ngModel)]="this.Message"
+                                placeholder="Typing a message here..." class="form-control"><button 
+                                type="button" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="ReplyMessage();">
+                                Send &nbsp;<i class="fa fa-paper-plane-o"></i></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
+            <div  class="card custom-card chat-account">
+                <div  class="main-content-app d-block pt-0">
+                    <ng-scrollbar 
+                         class="ng-scrollbar">
+                        <div  class="ng-scrollbar-wrapper" position="native" track="vertical"
+                            appearance="compact" visibility="native" deactivated="false" dir="ltr"
+                            pointereventsmethod="viewport" verticalused="true" horizontalused="false"
+                            isverticallyscrollable="true" ishorizontallyscrollable="false">
+                            <div  class="ng-scroll-viewport-wrapper">
+                                <div  scrollviewport="" hidenativescrollbar=""
+                                    class="ng-native-scrollbar-hider ng-scroll-viewport "
+                                    style="--native-scrollbar-size:0px;">
+                                    <div  class="ng-scroll-content" *ngFor="let Profile of ProfileList;">
+                                        <div  class="card-body text-center">
+                                            <div  class="user-lock text-center">
+                                              
+                                                <a><img 
+                                                        alt="avatar" src="{{UserProfile}}" class="brround"></a>
+                                            </div>
+                                            <a>
+                                                <h5  class="mb-0 mt-4 font-weight-semibold">{{Profile.FirstName}} {{Profile.LastName}} </h5>
+                                            </a>
+                                            <p  class="mb-0 mt-1 text-muted">{{Profile.Designation}}</p>
+                                        </div>
+                                        <div  class="card-body">
+                                            <h6  class="mb-3 tx-normal">Contact Details</h6>
+                                            <div  class="d-flex">
+                                                <div ><a 
+                                                        href="javascript:void(0);" class="contact-icon text-primary m-0"><i
+                                                             class="fa fa-phone"></i></a></div>
+                                                <div  class="ms-3">
+                                                    <p  class="tx-13 mb-0">Phone</p>
+                                                    <p  class="tx-12 text-muted">{{Profile.MobileNumber}}</p>
+                                                </div>
+                                            </div>
+                                            <div  class="d-flex">
+                                                <div ><a 
+                                                        href="javascript:void(0);" class="contact-icon text-primary m-0"><i
+                                                             class="fa fa-mail"></i></a></div>
+                                                <div  class="ms-3">
+                                                    <p  class="tx-13 mb-0">Email</p>
+                                                    <p  class="tx-12 text-muted">{{Profile.Email}}</p>
+                                                </div>
+                                            </div>
+                                            <div  class="d-flex">
+                                                <div ><a 
+                                                        href="javascript:void(0);" class="contact-icon text-primary m-0"><i
+                                                             class="fa fa-map-pin"></i></a></div>
+                                                <div  class="ms-3">
+                                                    <p  class="tx-13 mb-0">Address</p>
+                                                    <p  class="tx-12 text-muted mb-0">{{Profile.Address}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div  class="card-body">
+                                            <h6  class="mb-3 tx-normal">Shared Files</h6>
+                                            <div  class="media mb-3"><a 
+                                                    href="javascript:void(0);" class="contact-icon text-primary m-0"><i
+                                                         class="mdi mdi-file-image"></i></a>
+                                                <div  class="media-body ms-3 d-flex">
+                                                    <div >
+                                                        <p  class="tx-13 text-dark mb-0">Image1.jpg
+                                                        </p><span  class="tx-12 text-muted">200
+                                                            KB</span>
+                                                    </div>
+                                                    <div  class="ms-auto my-auto"><i
+                                                            
+                                                            class="fa fa-download my-auto text-muted tx-18"></i></div>
+                                                </div>
+                                            </div>
+                                            <div  class="media mb-3"><a 
+                                                    href="javascript:void(0);" class="contact-icon text-danger m-0"><i
+                                                         class="mdi mdi-file-pdf"></i></a>
+                                                <div  class="media-body ms-3 d-flex">
+                                                    <div >
+                                                        <p  class="tx-13 text-dark mb-0">Doc1.pdf</p>
+                                                        <span  class="tx-12 text-muted">48 KB</span>
+                                                    </div>
+                                                    <div  class="ms-auto my-auto"><i
+                                                            
+                                                            class="fa fa-download my-auto text-muted tx-18"></i></div>
+                                                </div>
+                                            </div>
+                                            <div  class="media mb-3"><a 
+                                                    href="javascript:void(0);" class="contact-icon text-info m-0"><i
+                                                         class="mdi mdi-file-word"></i></a>
+                                                <div  class="media-body ms-3 d-flex">
+                                                    <div >
+                                                        <p  class="tx-13 text-dark mb-0">Word1.doc</p>
+                                                        <span  class="tx-12 text-muted">35 KB</span>
+                                                    </div>
+                                                    <div  class="ms-auto my-auto"><i
+                                                            
+                                                            class="fa fa-download my-auto text-muted tx-18"></i></div>
+                                                </div>
+                                            </div>
+                                            <div  class="media"><a 
+                                                    href="javascript:void(0);" class="contact-icon text-warning m-0"><i
+                                                         class="mdi mdi-file-powerpoint"></i></a>
+                                                <div  class="media-body ms-3 d-flex">
+                                                    <div >
+                                                        <p  class="tx-13 text-dark mb-0">Example1.ppt
+                                                        </p><span  class="tx-12 text-muted">54
+                                                            KB</span>
+                                                    </div>
+                                                    <div  class="ms-auto my-auto"><i
+                                                            
+                                                            class="fa fa-download my-auto text-muted tx-18"></i></div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div><!----><ng-scrollbar   scrollable="true"
+                                fit="false" class="scrollbar-control">
+                                <div  scrollbartracky="" class="ng-scrollbar-track">
+                                    <div  scrollbarthumby="" class="ng-scrollbar-thumb"
+                                        style="height: 20px; transform: translate3d(0px, 0px, 0px);"></div>
+                                </div>
+                            </ng-scrollbar><!----><!----><!---->
+                        </div>
+                    </ng-scrollbar></div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <div *ngIf="!ShowMessageTab">
+        <div  class="row chatbox">
+            <div  class="col-md-12 col-lg-12 col-xl-12 chat">
+                <div  class="main-content-app">
+                    <div  class="card shadow-none overflow-hidden mb-xl-0 mb-5">
+                        <div  class="action-header clearfix mt-2">
+                            <div  class="float-start hidden-xs d-flex ms-2">
+                                <div  class="img_cont me-3"><img 
+                                        src="assets/images/users/user.png" alt="img" class="rounded-circle user_img"></div>
+                                <div  class="align-items-center mt-2">
+                                    <h4  class="mb-0 font-weight-semibold">{{UserName}}</h4><span
+                                         class="dot-label bg-success"></span><span 
+                                        class="me-3"></span>
+                                </div>
+                            </div>
+                            <ul  class="ah-actions actions align-items-center">
+                                <li  class="call-icon"><a 
+                                        href="javascript:void(0);" placement="top" ngbtooltip="Call" class="d-done d-md-flex"><i
+                                             class="fa fa-phone-call"></i></a><!----></li>
+                                <li  class="video-icon"><a 
+                                        href="javascript:void(0);" placement="top" ngbtooltip=" Video Call"
+                                        class="d-done d-md-flex"><i  class="fa fa-video"></i></a><!---->
+                                </li>
+                                <li  class="video-icon"><a 
+                                        href="javascript:void(0);" placement="top" ngbtooltip="Add Contact"
+                                        class="d-done d-md-flex"><i 
+                                            class="fa fa-user-plus"></i></a><!----></li>
+                                <li  class="video-icon"><a 
+                                        href="javascript:void(0);" placement="top" ngbtooltip="Trash"
+                                        class="d-done d-md-flex"><i  class="fa fa-trash-2"></i></a><!---->
+                                </li>
+                            </ul>
+                        </div>
+                        <ng-scrollbar   class="ng-scrollbar">
+                            <div  class="ng-scrollbar-wrapper" position="native" track="vertical"
+                                appearance="compact" visibility="native" deactivated="false" dir="ltr"
+                                pointereventsmethod="viewport" verticalused="true" horizontalused="false"
+                                isverticallyscrollable="true" ishorizontallyscrollable="false">
+                                <div  class="ng-scroll-viewport-wrapper">
+                                    <div  scrollviewport="" hidenativescrollbar=""
+                                        class="ng-native-scrollbar-hider ng-scroll-viewport "
+                                        style="--native-scrollbar-size:0px;">
+                                        <div  class="ng-scroll-content">
+                                            <div  class="card-body msg_card_body">
+                                                <div  class="chat-box-single-line"></div>
+                                                         <div>
+    
+                                                            <h3 style="padding-left: 25%;"><i class="fa fa-commenting"></i> &nbsp;
+                                                                No Message History Found..</h3>
+                                                         
+                                                         </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!----><ng-scrollbar   scrollable="true"
+                                    fit="false" class="scrollbar-control">
+                                    <div  scrollbartracky="" class="ng-scrollbar-track">
+                                        <div  scrollbarthumby="" class="ng-scrollbar-thumb"
+                                            style="height: 20px; transform: translate3d(0px, 0px, 0px);"></div>
+                                    </div>
+                                </ng-scrollbar><!----><!----><!---->
+                            </div>
+                        </ng-scrollbar>
+                        <div  class="card-footer">
+                            <div  class="input-group"><input name="Message" type="text" required Message [(ngModel)]="this.Message"
+                                    placeholder="Typing a message here..." class="form-control">
+                                    <button disabled="true" 
+                                    type="button" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="ReplyMessage();"><i 
+                                        class="fa fa-paper-plane-o"></i></button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div></div>
+
+    
+        

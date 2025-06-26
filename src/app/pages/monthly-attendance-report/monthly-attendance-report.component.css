@@ -1,0 +1,8 @@
+/* * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+  } */
+  .table-bordered, .text-wrap table, .table-bordered th, .text-wrap table th, .table-bordered td, .text-wrap table td {
+    border: 1px solid rgba(0, 0, 0, 0.29);
+  }

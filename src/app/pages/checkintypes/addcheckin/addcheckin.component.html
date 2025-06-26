@@ -1,0 +1,61 @@
+<div class="dialogs">
+  <div style="display: flex;justify-content: space-between;">
+    <h4 style="margin-left: 10px;"><span *ngIf="isEdit">Edit Check-In Types</span><span *ngIf="!isEdit">Add Check-In Types</span></h4>
+
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+</div>
+ 
+  <div class="col-md-12 row">
+    <div class="col-md-6" *ngIf="!isEdit">
+      <label class="labels">Branch &nbsp;</label>
+      <ng-multiselect-dropdown  [placeholder]="'Select Branch'" [data]="BranchList"
+        [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)"
+        [settings]="branchSettings">
+      </ng-multiselect-dropdown>
+    </div>
+    <div class="col-md-6" *ngIf="!isEdit">
+      <label class="labels">Department</label>
+      <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+        [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"
+        [settings]="departmentSettings">
+      </ng-multiselect-dropdown>
+    </div>
+    <div class="col-md-6">
+      <label class="labels">Employees</label>
+      <ng-multiselect-dropdown *ngIf="!isEdit" [placeholder]="'Select Employees'" [data]="EmployeeList"
+        [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+        (onDeSelect)="OnEmployeesChangeDeSelect($event)"  (onSelectAll)="OnEmployeesAllChange($event)"
+        (onDeSelectAll)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+      </ng-multiselect-dropdown>
+      <input type="text" class="form-control" *ngIf="isEdit" [(ngModel)]="EmployeeName" disabled>
+    </div>
+    <div class="col-md-6">
+      <label class="labels">Login Devices</label>
+      <ng-multiselect-dropdown [placeholder]="'Select Device'" [data]="LoginList"
+        [(ngModel)]="selectedLogins" (onSelect)="OnloginChange($event)"
+        (onDeSelect)="OnloginChangeDeSelect($event)" [settings]="loginSettings">
+      </ng-multiselect-dropdown>
+    </div>
+    <div class="col-md-2" style="margin-top:15px">
+        <button class="btn btn-primary" style="width: auto;" *ngIf="!isEdit" (click)="saveCheckIn()">Submit</button>
+        <button class="btn btn-primary" style="width: auto;" *ngIf="isEdit"  (click)="updateCheckIn()">Update</button>
+    </div>
+  </div>
+   <!-- <div class="outercardimg">
+    <div class="col-md-3">
+        <div class="imagecard" [ngClass]="{'selected-border': isMobileApp}" (click)="toggleSelection('1')">
+            <img src="./assets/images/pngs/check.png" alt="Add" style="width: 100%; height: 100%;">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="imagecard" [ngClass]="{'selected-border': isBiometric}" (click)="toggleSelection('2')">
+            <img src="./assets/images/pngs/cancel.png" alt="Add" style="width: 100%; height: 100%;">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="imagecard" [ngClass]="{'selected-border': isFaceApp}" (click)="toggleSelection('3')">
+            <img src="./assets/images/pngs/check.png" alt="Add" style="width: 100%; height: 100%;">
+        </div>
+    </div>
+   </div>                                -->
+</div>

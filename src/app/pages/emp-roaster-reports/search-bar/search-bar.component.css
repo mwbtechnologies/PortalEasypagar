@@ -1,0 +1,8 @@
+iframe{
+    border:none !important;
+}
+
+.spinner-border{
+    position:relative;
+    left:20px;
+}

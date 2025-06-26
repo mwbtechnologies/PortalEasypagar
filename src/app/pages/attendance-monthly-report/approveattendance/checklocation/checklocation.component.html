@@ -1,0 +1,17 @@
+<div class="dialogs">
+    <div style="display: flex;justify-content: space-between;">
+        <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+    </div>
+    <h4>Select Address for {{data.name}}</h4>
+    <div class="container row" style="padding: 0;">
+        <ng-container *ngFor="let add of data.Address">
+            <div class="col-md-5 addresstab" [ngClass]="{'selected':  selectedAddressdetails == add.Address}" 
+            (click)="selectedAddress(add.Address)">
+                <h5>{{add.Address}}</h5>
+            </div>
+        </ng-container>
+        
+    </div>
+    <button class="btn btn-primary" style="width: auto;margin-top: 20px;" (click)="Submit()">Submit</button> &nbsp;
+    <button class="btn btn-danger" style="width: auto;margin-top: 20px;" (click)="CloseTab()">Close</button>
+</div>

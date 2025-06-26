@@ -1,0 +1,262 @@
+<div style="min-height: 100vh;">
+    <div class="dialogs">
+        <h4 style="margin: 0;"><label style="margin-right: 15px;" (click)="backtolist()"><i
+            class="fa fa-arrow-left"></i></label><span *ngIf="IsEdit">Edit</span><span *ngIf="!IsEdit">Add</span> Stock Inward</h4>
+        <mat-horizontal-stepper [linear]="true" #stepper>
+            <mat-step [completed]="steps[0] == true">
+                <ng-template matStepLabel>Invoice details & Scope</ng-template>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="form-label filelabels">Supplier Name</label>
+                        <input class="form-control" type="text" placeholder="Enter Supplier Name" [(ngModel)]="inwardData.invoice.supplierName">
+                      <label style="color: red;font-size: 12px;" *ngIf="error?.supplier">{{ error?.supplier }}</label>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="form-label filelabels">Purchased By</label>
+                        <input class="form-control" type="text" placeholder="Enter Purchased By Name" [(ngModel)]="inwardData.invoice.purchasedBy">
+                        <label style="color: red;font-size: 12px;" *ngIf="error?.purchase">{{ error?.purchase }}</label>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="form-label filelabels">Reference Number</label>
+                        <input class="form-control" type="text" placeholder="Enter Reference Number" [(ngModel)]="inwardData.invoice.referenceNumber">
+                        <label style="color: red;font-size: 12px;" *ngIf="error?.reference">{{ error?.reference }}</label>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="form-label filelabels">Invoice Number</label>
+                        <input class="form-control" type="text" placeholder="Enter Invoice Number" [(ngModel)]="inwardData.invoice.invoiceNumber">
+                        <label style="color: red;font-size: 12px;" *ngIf="error?.invoice">{{ error?.invoice }}</label>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="form-label filelabels">Invoice Date</label>
+                        <input placeholder="Select Invoice Date"  type="date" class="form-control" [(ngModel)]="inwardData.invoice.invoiceDate">
+                        <label style="color: red;font-size: 12px;" *ngIf="error?.invoicedate">{{ error?.invoicedate }}</label>
+                    </div>
+
+                    <!-- <div class="col-lg-5">
+                        <label class="form-label filelabels">Users</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Employees'" [data]="EmployeeList"
+                            [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                            (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                        </ng-multiselect-dropdown>
+                    </div> -->
+                </div>
+                <div>
+                    <button class="btn btn-primary px-4 m-2" (click)="validateSteps(0);validateSteps(0)">Next</button>
+                </div>
+            </mat-step>
+            <!-- <mat-step [completed]="steps[1] == true">
+                <ng-template matStepLabel></ng-template>
+
+                <div>
+                    <button class="btn btn-primary px-4 m-2" (click)="goToPreviousStep()">Previous</button>
+                    <button class="btn btn-primary px-4 m-2" (click)="validateSteps(1);validateSteps(1)">Next</button>
+                  </div>
+            </mat-step> -->
+            <mat-step>
+                <ng-template matStepLabel>Stock Item details</ng-template>
+
+                <div class="row">
+                    <!-- <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="form-label filelabels">Branch <span style="font-size: 10px;">(optional)</span></label>
+                        <ng-multiselect-dropdown [settings]="branchSettings" [placeholder]="'All Branches'" [data]="BranchList" [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)" ></ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <label class="form-label filelabels">Department <span style="font-size: 10px;">(optional)</span></label>
+                        <ng-multiselect-dropdown [settings]="departmentSettings" [placeholder]="'All Departments'" [data]="DepartmentList" [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"> </ng-multiselect-dropdown>
+                    </div> -->
+                    <app-hierarchy [selectedFilterData]="selectedFilterData" [dropDownExtras]="dropDownExtras" [actions]="hirearchyActions" (actionEmitter)="triggerHierarchyAction($event)"></app-hierarchy>
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="row">
+
+                            <div class="col-3 row">
+                                <div class="col-2">Sl. no.</div>
+                                <div class="col-10">Item Name</div>
+                            </div>
+                            <div class="col-2">Model Number</div>
+                            <div class="col-1">Quantity</div>
+                            <div class="col-3">Serial Number
+                                <i class="fa fa-info" matTooltip="Enter the serial number in the given input box and click on + button to add serial number. Repeat this this add multiple serial number" style="border: 1px solid #0041bf;padding: 2px 6px;border-radius: 14px;color: #0041bf;"></i>
+                            </div>
+                            <div class="col-2">Warranty Date</div>
+                            <div class="col-1 filelabels"></div>
+                        </div>
+                        <hr>
+                        
+                        <div #itemListContainer style="height: 40vh;overflow-y: auto;">
+                            <ng-container *ngFor="let item of inwardData.items;let item_i = index">
+                                <div class="row mt-2">
+                                    <div class="col-3 row">
+                                        <div class="col-2">{{item_i + 1}}</div>
+                                        <div class="col-10">
+                                            <ng-multiselect-dropdown [settings]="itemSettings" [placeholder]="'Select Item'" [data]="itemList" [(ngModel)]="item.item"  (onSelect)="onItemSelected($event,item_i)" (onDeSelect)="onItemDeSelect($event,item_i)"> </ng-multiselect-dropdown>
+                                            <label style="color: red;font-size: 12px;" *ngIf="error?.[item_i]?.item">{{ error?.[item_i]?.item }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <input class="form-control" type="text" [(ngModel)]="item.modelNumber" placeholder="Enter ModelNumber">
+                                    </div>
+                                    <div class="col-1">
+                                        <div>
+                                            <input class="form-control" type="text" [(ngModel)]="item.quantity" placeholder="Enter Quantity">
+                                            <label style="color: red;font-size: 12px;" *ngIf="error?.[item_i]?.quantity">{{ error?.[item_i]?.quantity }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div style="display: flex;align-items: center;gap: 10px;">
+                                            <input class="form-control" type="text" [(ngModel)]="item.serialNumber" (keyup.enter)="addSerialNumber(item_i)" placeholder="Enter Serial">
+                                            <div (click)="addSerialNumber(item_i)"  style="background-color: #0041bf;height: 25px;font-size: 25px;padding: 6px;color:#fff;line-height: 12px;border-radius: 8px;" matTooltip="Add Serial number">+</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-2">
+                                        <input placeholder="Select Warranty Date" type="date" class="form-control" [(ngModel)]="item.warrantyDate">
+                                        <label style="color: red;font-size: 12px;" *ngIf="error?.[item_i]?.warranty">{{ error?.[item_i]?.warranty }}</label>
+                                    </div>
+                                    <div class="col-1">
+                                        <label class="cancel" matTooltip="Click To Remove Assets"
+                                         *ngIf="inwardData.items.length > 1" (click)="removeDetails(item_i)"><i
+                                            class="fa fa-times" style="font-size: 10px;"></i></label>
+                                    </div>
+                                </div>
+                                <div class="row" >
+
+                                    <div class="col-4 row">
+                                        <div class="col-2"></div>
+                                        <div class="col-10">
+
+                                            <div *ngIf="item?.itemDetails?.measurement?.length>0">
+                                                <label style="font-weight: 400;color: #313131;margin-bottom: 1px;">
+                                                    Measured in 
+                                                </label>
+                                                &nbsp;
+                                                <label style="font-weight: 500;margin-bottom: 1px;">
+                                                    {{item.itemDetails.measurement}}
+                                                </label>
+                                            </div>
+                                        <div class="returnType returnable" *ngIf="item?.itemDetails?.returnType=='returnable'">Returnable</div>
+                                        <div class="returnType non-returnable" *ngIf="item?.itemDetails?.returnType=='non-returnable'">Non-Returnable</div>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div style="display: flex;justify-content: end;gap: 10px;padding: 5px 0px;" *ngIf="item.serialNumbers?.length>0">
+                                            <ng-container *ngFor="let serial of item.serialNumbers; let serial_i = index">
+                                                <div style="background-color: #3601b5a3;color: #fff;padding: 5px 0px 5px 10px;border-radius: 20px;">
+                                                    {{serial}}
+                                                    <i class="fa fa-times" matTooltip="Remove Serial number" style="padding: 2px 6px;color: #dfeaff;" (click)="removeSerialnumber(item_i,serial_i)"></i>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <hr/>
+                    <button class="btn btn-primary px-4" style="margin-top: 20px;width: fit-content;line-height: 0px;height: 25px;font-size: 12px;background-color: #3601b5a3;" (click)="addItemRow()">Add New Item</button>
+                      <label style="color: red;font-size: 14px;margin: 10px 0px 0px 0px;padding: 0;" *ngIf="error?.InwardError">{{ error?.InwardError }}</label>
+                </div>
+                <div class="row">
+                  <button class="btn btn-primary px-4" style="margin-top:20px;width: fit-content;" (click)="onSubmit()">{{IsEdit == true ? 'Update' : 'Save'}}</button>
+                </div>
+            </mat-step>
+
+        </mat-horizontal-stepper>
+
+
+
+        <!-- <div style="min-height: 300px;">
+            <div style="display: flex; justify-content: space-between;">
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="step-label" (click)="setStepNumber(1)" [class.step-label-selected]="step_number==1">User Details
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-label" (click)="setStepNumber(2)" [class.step-label-selected]="step_number==2">Asset Details
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-label" (click)="setStepNumber(3)" [class.step-label-selected]="step_number==3">Summary
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="step-line"></div>
+            </div>
+            <div class="col-md-12 main-card">
+                <div [hidden]="step_number!=1">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="form-label filelabels">Branch</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Branches'" [data]="BranchList"
+                                [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label filelabels">Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Departments'" [data]="DepartmentList"
+                                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                                (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label filelabels">Users</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Employees'" [data]="EmployeeList"
+                                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div [hidden]="step_number!=2">
+                    <div *ngFor="let pm of AssetsDetails; let i = index" style="display: flex; justify-content: start;margin-bottom: 10px">
+                        <div class="col-md-3">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Name</label>
+                            <input type="text" [(ngModel)]="pm.Asset" class="form-control timings" placeholder="Document Name">    
+                        </div>
+                        <div class="col-md-3">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Name</label>
+                            <input type="text" [(ngModel)]="pm.MeasurementType" class="form-control timings" placeholder="Document Name">    
+                        </div>
+                        <div class="col-md-3">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Name</label>
+                            <input type="text" [(ngModel)]="pm.SerialNumber" class="form-control timings" placeholder="Document Name">    
+                        </div>
+                 
+                        <div class="col-md-1" style="display: flex;align-items: end;">
+                          <label class="cancel" matTooltip="Click To Remove Assets"*ngIf="AssetsDetails.length > 1" (click)="removeDetails(i)" ><i class="fa fa-times" style="font-size: 10px;"></i></label>
+                      </div>
+                  </div>
+                  <div class="col-md-10" style="display: flex;justify-content:end;">
+                    <div class="col-md-1">
+                        <label class="plus" matTooltip="Click To Add Multiple Assets" (click)="addDetails()">Add</label>
+                    </div>
+                  </div>
+                </div>
+                <div [hidden]="step_number!=3">
+                    
+                </div>
+            </div>
+            </div> -->
+            <!-- <div class="row" style="justify-content: end;width: 95%;margin: 0 auto;">
+              <div class="col-6">
+                <div class="plan_button" style="float: left;cursor: pointer;" *ngIf="step_number>1" (click)="backStep()">
+                  back
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="plan_button"  style="float:right;cursor: pointer;" *ngIf="step_number < 3" (click)="nextStep()">
+                  next
+                </div>
+                <div class="plan_button"  style="float:right;cursor: pointer;" *ngIf="step_number == 3">
+                  Submit
+                </div>
+              </div>
+            </div> -->
+    </div>
+</div>

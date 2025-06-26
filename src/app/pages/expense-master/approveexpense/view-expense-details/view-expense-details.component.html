@@ -1,0 +1,87 @@
+<div class="dialogs">
+    <div  class="row">
+            <div class="col-md-3">
+                    <div  class="productdesc">
+                            <div  class="card overflow-hidden">
+                                <div  class="card-body bootslider p-3">
+                                        <ngb-carousel data-interval="5">
+                                                <ng-template ngbSlide *ngFor="let IL of ExpenseData.BillImages">
+                                                        <img src="{{IL.BillImageUrl}}" alt="Random first slide" style="max-height: 400px;">
+                                                </ng-template>
+                                               
+                                        </ngb-carousel>
+                                        </div>
+                                        </div>
+                                        </div>
+            </div>
+            <div class="col-md-9">
+            <div  class="productdesc">
+                <div  class="card overflow-hidden">
+                    <div  class="card-body bootslider p-3">
+                                            <div  class="panel panel-primary mb-5 mx-5 border" style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                                                    <div  class="table-responsive">
+                                                            <h4  class="mb-5 mt-3 fw-bold" style="text-align: center;"> Expense Details</h4>
+                                                          <br> 
+                                                           <table  class="table table-bordered">
+                                                                <tr>
+                                                                        <td  class="fw-bold">EmployeeName</td><td >{{ExpenseData.EmployeeName}}</td>
+                                                                        <td  class="fw-bold">Branch</td><td >{{ExpenseData.Branch}}</td>
+                                                                        <td  class="fw-bold">Department</td><td >{{ExpenseData.Department}}</td>
+                                                                </tr>
+                                                        <tr ><td  class="fw-bold">Expense Type</td>
+                                                            <td >{{ExpenseData.ExpenseTypeName}}</td>
+                                                            <td  class="fw-bold">Sub ExpenseType</td>
+                                                            <td >{{ExpenseData.SubExpenseTypeName}}</td>
+                                                            <td  class="fw-bold">Reason</td><td >{{ExpenseData.CommentByEmployee}}</td>
+                                                            
+                                                            </tr>
+                                                            <tr>
+                                                                <td *ngIf="ExpenseData.ExpenseTypeName=='Travel Expense'"  class="fw-bold">Destination</td><td *ngIf="ExpenseData.ExpenseTypeName=='Travel Expense'">{{ExpenseData.DestinationLocation}}</td>
+                                                                <td *ngIf="ExpenseData.ExpenseTypeName=='Travel Expense'"  class="fw-bold">Source</td><td *ngIf="ExpenseData.ExpenseTypeName=='Travel Expense'">{{ExpenseData.SourceLocation}}</td>
+                                                                
+                                                                <td *ngIf="ExpenseData.ExpenseTypeName=='Lodging Expense'"  class="fw-bold">Hotel</td><td *ngIf="ExpenseData.ExpenseTypeName=='Lodging Expense'">{{ExpenseData.HotelName}}</td>
+                                                                <td *ngIf="ExpenseData.ExpenseTypeName=='Lodging Expense'"  class="fw-bold">Details</td><td *ngIf="ExpenseData.ExpenseTypeName=='Lodging Expense'">{{ExpenseData.HotelDetails}}</td>                                                               
+                                                                <td *ngIf="ExpenseData.ExpenseTypeName=='Lodging Expense'"  class="fw-bold">BoardFromDate</td><td *ngIf="ExpenseData.ExpenseTypeName=='Lodging Expense'">{{ExpenseData.BoardFromDate|date: 'dd-MM-yyyy'}}</td>
+                                                                <td *ngIf="ExpenseData.ExpenseTypeName=='Lodging Expense'"  class="fw-bold">BoardToDate</td><td *ngIf="ExpenseData.ExpenseTypeName=='Lodging Expense'">{{ExpenseData.BoardToDate|date: 'dd-MM-yyyy'}}</td>
+                                                                
+                                                               
+                                                            </tr>
+                                                            <tr>
+                                                                <td *ngIf="ExpenseData.ExpenseTypeName=='Travel Expense' || ExpenseData.ExpenseTypeName=='Local Expense' || ExpenseData.ExpenseTypeName=='DNS Expense'"  class="fw-bold">Expense Date</td><td *ngIf="ExpenseData.ExpenseTypeName=='Travel Expense' || ExpenseData.ExpenseTypeName=='Local Expense' || ExpenseData.ExpenseTypeName=='DNS Expense'">{{ExpenseData.ExpenseDateTime|date: 'dd-MM-yyyy'}}</td>
+                                                            <td  class="fw-bold">Requested Amount</td><td >{{ExpenseData.Amount}}</td>
+                                                            <td  class="fw-bold">ApprovedAmount</td><td >{{ExpenseData.ApprovedAmount}}</td>
+                                                         
+                                                           </tr>
+                                                           <tr>
+                                                                <td  class="fw-bold">Status</td><td >{{ExpenseData.Status}}</td>
+                                                            <td  class="fw-bold">Comment</td><td colspan="2">
+                                                                <input style="background-color: white;" placeholder="Enter Comment" type="text" class="form-control" [(ngModel)]="ExpenseData.CommentByAdmin">
+                                                                </td>
+                                                           
+
+                                                         
+                                                    </tr>    
+                                                    <tr>
+                                                        
+                                                    </tr>                      
+                    </table>
+                    <div class="text-center mt-2 pb-5 border-bottom">
+                            <button class="btn btn-success me-1" (click)="Approve(ExpenseData.ExpenseID,ExpenseData.ApprovedAmount,ExpenseData.CommentByAdmin);">
+                                <i  class="fa fa-check-circle"></i> Approve</button> &nbsp;
+                                <button class="btn btn-danger me-1" (click)="Reject(ExpenseData.ExpenseID,ExpenseData.CommentByAdmin);">
+                                    <i  class="fa fa-times"></i>Reject</button>&nbsp;
+                                    <button class="btn btn-primary me-1" (click)="CloseTab();">
+                                        <i  class="fa fa-times"></i> Close</button> 
+                                </div>
+                    </div>
+                 
+                
+            
+      
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+</div>

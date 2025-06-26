@@ -1,0 +1,15 @@
+ .table-bordered, .text-wrap table, .table-bordered th, .text-wrap table th, .table-bordered td, .text-wrap table td {
+    border: 1px solid rgba(0, 0, 0, 0.29);
+  }
+  .inputclass{
+    padding:3px;
+    width:87%;
+    opacity: 1
+  }
+
+  .closing{
+    opacity:57%
+  }
+  input[type=date]:invalid::-webkit-datetime-edit {
+    color: #999;
+}

@@ -1,0 +1,40 @@
+<div class="limitdialog">
+    <h4>Add Expense Limit</h4>
+    <div class="row col-md-12" style="padding: 0;row-gap: 10px;">
+        <div class="col-md-3" >
+            <label class="form-label">Select Organization</label>
+            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                (onDeSelect)="onDeselectedOrg($event)">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Select Branch </label>
+            <ng-multiselect-dropdown [placeholder]="'All Branch'" [data]="BranchList" [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onSelectAll)="onBranchDeSelectAll()" 
+              (onDeSelectAll)="onBranchSelectAll($event)"
+              (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+            </ng-multiselect-dropdown>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Select Department</label>
+              <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+              [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onSelectAll)="onDeptDeSelectAll()" (onDeSelectAll)="onDeptSelectAll($event)"
+              (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+          </ng-multiselect-dropdown>
+          </div>
+            <div class="col-md-3">
+              <label class="form-label">Select Designation</label>
+              <ng-multiselect-dropdown [placeholder]="'All Designation'" [data]="DesignationList"
+              [(ngModel)]="selectedDesignation" (onSelect)="onDesignationSelect($event)"
+              (onDeSelect)="onDesignationDeSelect($event)" [settings]="designationSettings">
+          </ng-multiselect-dropdown>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Expense Limit</label>
+            <input class="form-control" placeholder="Add Limit" type="number" [(ngModel)]="limit">
+        </div>
+        <div class="col-md-3" style="display: flex;align-items: end;">
+            <button class="btn btn-primary" (click)="submitLimit()">Submit</button>
+        </div>
+    </div>
+    </div>

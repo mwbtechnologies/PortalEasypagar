@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card">
+            <div class="card-header" style="display: flex;flex-wrap: wrap;justify-content: space-between;" > 
+                <div class="col-md-6">
+                    <h3 class="mb-0 card-title">Easy Tracker Mapping</h3>
+                </div>    
+                <div>
+                   <!-- <button class="btn btn-primary">📥 Download Report</button> -->
+                </div>    
+            </div>
+            <div class="card-body" style="min-height: 60vh;">
+                  <div style="display: flex;flex-wrap: wrap;">
+                    <div class="col-md-3" >
+                        <label class="form-label">Select Organization</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                            [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                            (onDeSelect)="onDeselectedOrg($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Select Branch </label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                            [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                            (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Select Department</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                            [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onSelectAll)="onDeptDeSelectAll()" (onDeSelectAll)="onDeptDeSelectAll()"
+                            (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Select Employees</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                            [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                            (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Action</label>
+                        <button class="btn btn-primary mb-4" (click)="MapEmployees()"> Map </button> &nbsp;
+                    </div>
+
+                </div>
+                <div class="table-responsive ng-star-inserted">
+                  <!-- common table__{{employeeLoading==undefined}}__ -->
+                  <app-common-table [data]="ESMappingList" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+                  [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+                  <!-- end here --> 
+                </div>
+          </div>
+      </div>
+    </div>
+</div>

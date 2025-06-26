@@ -1,0 +1,543 @@
+<div style="width: auto;padding: 20px;height:auto;overflow-y:scroll !important">
+    <div mat-dialog-title class="dialog-title">
+      <div>
+        <div style="font-size: 18px;color: #000000;position: relative;font-weight: 500;" >
+          {{edit == true ? 'Update' : 'Add'}} Salary Setting__
+        </div>
+      </div>
+      <div>
+        <button mat-icon-button aria-label="close dialog" style="padding: 0;" mat-dialog-close (click)="close()">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+     <div style="height: 75vh;overflow: hidden;">
+
+
+      <mat-horizontal-stepper [linear]="true" #stepper>
+  
+        <!-- Step 1 -->
+        <mat-step [completed]="steps[0] == true">
+          <ng-template matStepLabel>Choose Scope</ng-template>
+          <div class="row" style="padding: 10px 0px 20px 0px;">
+            <div class="col-lg-4 col-md-5 " >
+              <label class="form-label">Select Organization</label>
+              <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                  [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                  (onDeSelect)="onDeselectedOrg($event)">
+              </ng-multiselect-dropdown>
+          </div>
+            <div class="col-lg-4 col-md-5 ">
+                <label class="form-label">Select Branch &nbsp;
+                    <!-- <i class="fa fa-info-circle"
+                        matTooltip="If you dont select any branches,by default it takes all branches"></i> -->
+                </label>
+                <ng-multiselect-dropdown [settings]="branchSettings" [placeholder]="'Select Branch'" [data]="BranchList" [(ngModel)]="selectedBranch"
+                                         (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)" (onSelectAll)="onBranchSelect_All($event)" (onDeSelectAll)="onBranchDeSelect_All($event)">
+                </ng-multiselect-dropdown>
+                <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('branch') && errorMessages['branch']!=''">{{errorMessages['branch'].message}}</label>
+            </div>
+            <div class="col-lg-4  col-md-5">
+                <label class="form-label">Select Department</label>
+                <ng-multiselect-dropdown [settings]="departmentSettings" [placeholder]="'Select Department'" [data]="DepartmentList" (onSelectAll)="onDepartmentSelect_All($event)" (onDeSelectAll)="onDepartmentDeSelect_All($event)"
+                                         [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)">
+                </ng-multiselect-dropdown>
+                <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('department') && errorMessages['department']!=''">{{errorMessages['department'].message}}</label>
+            </div>
+            <div class="col-lg-4  col-md-5">
+                <label class="form-label">Select Employees</label>
+                <ng-multiselect-dropdown [settings]="employeeSettings" [placeholder]="'Select Employees'" [data]="EmployeeList"
+                    [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                    (onDeSelect)="OnEmployeesChangeDeSelect($event)" (onSelectAll)="OnEmployeesChange($event)" (onDeSelectAll)="OnEmployeesChange($event)">
+                </ng-multiselect-dropdown>
+                <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('employee') && errorMessages['employee']!=''">{{errorMessages['employee'].message}}</label>
+            </div>
+      
+          </div>
+      
+          <!-- <div *ngIf="step1Valid !== true">
+            <p>Step 1 is invalid. Please select 'True' to proceed.</p>
+          </div> -->
+      <!-- [disabled]="!isStepValid(1)" -->
+          <div>
+            <button class="btn btn-primary px-4 m-2" (click)="validateSteps(0);validateSteps(0)">Next</button>
+          </div>
+        </mat-step>
+      
+        <!-- Step 2 -->
+        <mat-step [completed]="steps[1] == true">
+          <ng-template matStepLabel>Enable Salary Types</ng-template>
+          <div style="height:60vh;overflow-y:scroll !important;overflow-x:hidden">
+              <div class="row" style="margin-top:10px">
+                  <!-- <div>
+            <label style="font-size: 16px;font-weight: 500;">Enabled Salary Types</label>
+        </div> -->
+                  <div>
+                      <div style="background-color: #F7FCF7;border-left: 3px solid #00BA13;padding: 2px;margin-bottom: 5px;">
+                          <section class="example-section">
+                              <span class="example-list-section">
+                                  <mat-checkbox class="example-margin"
+                                                [checked]="earningAllComplete"
+                                                [color]="earnings.color"
+                                                [indeterminate]="someComplete(earnings,earningAllComplete)"
+                                                (change)="setAll($event.checked,earnings,earningAllComplete)"
+                                                (click)="validateEarnings()">
+                                      <label style="padding-top: 20px;margin-right:20px;">{{earnings.name}}  </label>
+                                    
+                                  </mat-checkbox>
+                              </span>
+                              <span class="example-list-section">
+                                  <ul class="row" style="display: flex;flex-wrap: wrap;padding-left: 50px;">
+                                      <li class="col-md-4 col-sm-6" *ngFor="let subtask of earnings.subtasks" style="padding: 0;margin-top: -20px;">
+                                          <mat-checkbox [disabled]="subtask.disabled"
+                                                        [(ngModel)]="subtask.completed"
+                                                        [color]="subtask.color"
+                                                        (ngModelChange)="onEarningChanged(subtask)"
+                                                        (click)="updateAllComplete(earnings,earningAllComplete)">
+                                              <label style="padding-top: 20px;margin-right:20px;">{{subtask.name}} &nbsp;&nbsp; <i [matTooltip]="subtask.description" class="fa fa-info-circle" aria-hidden="true"></i></label>
+                                          </mat-checkbox>
+                                      </li>
+                                  </ul>
+                              </span>
+                          </section>
+                          <!-- <br> -->
+                          <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('earnings') && errorMessages['earnings']!=''">{{errorMessages['earnings'].message}}</label>
+                      </div>
+                      <!-- <br> -->
+                      <div style="background-color: #FEF7F7;border-left: 3px solid #EC0000;padding: 2px;margin-bottom: 5px;">
+                          <section class="example-section">
+                              <span class="example-list-section">
+                                  <mat-checkbox class="example-margin"
+                                                [checked]="deductionAllComplete"
+                                                [color]="deductions.color"
+                                                [indeterminate]="someComplete(deductions,deductionAllComplete)"
+                                                (change)="setAll($event.checked,deductions,deductionAllComplete)"
+                                                (click)="validateDeductions()">
+                                      <label style="padding-top: 20px;margin-right:20px;">{{deductions.name}}</label>
+                                  </mat-checkbox>
+                              </span>
+                              <span class="example-list-section">
+                                  <ul class="row" style="display: flex;flex-wrap: wrap;padding-left: 50px;">
+                                      <li class="col-md-4 col-sm-6" *ngFor="let subtask of deductions.subtasks" style="padding: 0;margin-top: -20px;">
+                                          <mat-checkbox [disabled]="subtask.disabled"
+                                                        [(ngModel)]="subtask.completed"
+                                                        [color]="subtask.color"
+                                                        (click)="updateAllComplete(deductions,deductionAllComplete)">
+                                              <label style="padding-top: 20px;margin-right:20px;">{{subtask.name}}</label>
+                                          </mat-checkbox>
+                                      </li>
+                                  </ul>
+                              </span>
+                          </section>
+                          <!-- <br> -->
+                          <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('deductions') && errorMessages['deductions']!=''">{{errorMessages['deductions'].message}}</label>
+                      </div>
+                      <!-- <br> -->
+
+                      <div style="background-color: #f7f8fc;border-left: 3px solid #0078ba;padding: 10px;margin-bottom: 5px;">
+                          <section>
+                              <div style="display: flex;justify-content: space-between;">
+                                
+                              </div>
+                              <label *ngIf="errorMessages.grossError != undefined" class="text-danger py-2">{{errorMessages.grossError.message}}</label>
+                              <div class="row">
+                                  <div class="col-lg-6 col-md-6 row " *ngFor="let grossType of get_active_gross_options()" style="padding-top: 10px;padding-bottom: 10px;">
+                                  
+                                              <div class="col-5 text-truncate">
+                                                  <span matTooltip="sample">  {{grossType.title}}</span>
+                                              </div>
+                                              <div class="col-2">
+                                                  <div class="form-check form-switch">
+                                                      <input type="checkbox" [(ngModel)]="grossType.isAmount" class="form-check-input" id="facebookSwitch">
+
+                                                      <label class="form-check-label" for="facebookSwitch"><span style="font-size:10px">IsAmount</span></label>
+
+                                                  </div>
+                                              </div>
+                                              <div class="col-4">
+                                                  <i class="fa fa-percent" aria-hidden="true" *ngIf="!grossType.isAmount"></i>
+                                                  <i class="fa fa-inr" aria-hidden="true" *ngIf="grossType.isAmount"></i>
+                                                  <input type="number" style="width:30px !important" (change)="validateGross()" [(ngModel)]="grossType.value" [disabled]="!grossType.status" />
+                                                  <i class="fa fa-sort" aria-hidden="true"></i>
+                                                  <input type="number" min="0" max="100" style="width:30px !important" [(ngModel)]="grossType.Priority" [disabled]="!grossType.status" />
+
+                                              </div>
+                                             
+                                         
+
+                                     
+                                    
+
+
+                                      
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+
+                  </div>
+
+
+              </div>
+              <div>
+                  <button class="btn btn-primary px-4 m-2" (click)="goToPreviousStep()">Previous</button>
+                  <button class="btn btn-primary px-4 m-2" [disabled]="!is_second_step_valid" (click)="validateSteps(1);validateSteps(1)">Next</button>
+              </div>
+          </div>
+
+
+        
+
+
+        
+          <!-- [disabled]="!isStepValid(2)" -->
+        
+        </mat-step>
+      
+        <!-- Step 3: Final Step -->
+        <mat-step [completed]="steps[2] == true">
+            <ng-template matStepLabel>Calculation</ng-template>
+            <div style="height:60vh;overflow-y:scroll !important;overflow-x:hidden">
+                <div class="row" style="margin-top:20px">
+                    <div *ngIf="SalaryFormulae.length>0">
+                        <label style="font-size: 16px;font-weight: 500;">Salary calculation formulas</label>
+                    </div>
+                    <div>
+
+                        <app-common-table *ngIf="SalaryFormulae.length>0" [data]="SalaryFormulae" [displayColumns]="displayColumns" [Loading]="salaryFormulaLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [headerInfo]="headerInfo" [actions]="actionOptions" [headerColors]="headerColors" [smallHeaders]="smallHeaders" [dataColors]="tableDataColors" (actionEmitter)="actionEmitter($event)"></app-common-table>
+
+                        <hr *ngIf="SalaryFormulae.length>0" />
+
+                        <div>
+                            <label style="font-size: 16px;font-weight: 500;">Add New Salary calculation formula</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <label class="">Salary Type</label>
+                                <ng-multiselect-dropdown [settings]="salaryTypeSettings" [placeholder]="'Select Salary Type'" [data]="SalaryTypes" [(ngModel)]="salaryFormulaRow.type" (onSelect)="onSalaryTypeSelect($event)" (onDeSelect)="onSalaryTypeDeSelect($event)" style="min-width: 100px;display: block;"> </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-1">
+                                <div class="">Value</div>
+                                <input type="number" [(ngModel)]="salaryFormulaRow.Percent" min="1" class="form-control" style="margin-top: 5px;" />
+                            </div>
+                            <div class="col-1">
+                                <div class="">Amount</div>
+                                <mat-slide-toggle name="isAmtPercent" ngDefaultControl [(ngModel)]="salaryFormulaRow.isAmount" (click)="validateAmount(salaryFormulaRow.isAmount)" color="primary" style="top: 5px;position: relative;"></mat-slide-toggle>
+                                <!-- <mat-radio-button ></mat-radio-button> -->
+                            </div>
+                            <div class="col-1">
+                                <div class="">Percent</div>
+                                <mat-slide-toggle name="isAmtPercent" ngDefaultControl [(ngModel)]="salaryFormulaRow.isPercent" (click)="validatePercent(salaryFormulaRow.isPercent)" color="primary" style="top: 5px;position: relative;" selected></mat-slide-toggle>
+                                <!-- <mat-radio-button ></mat-radio-button> -->
+                            </div>
+                            <div class="col-1">
+                                <div class="label1">Min Amt ₹</div>
+                                <input style="width: 80px;" type="number" [(ngModel)]="salaryFormulaRow.minAmt" class="form-control" (change)="minMaxValidationAmount(salaryFormulaRow.minAmt,salaryFormulaRow.maxAmt)" />
+                            </div>
+                            <div class="col-1">
+                                <div class="label1">Max Amt ₹</div>
+                                <input style="width: 80px;" type="number" [(ngModel)]="salaryFormulaRow.maxAmt" class="form-control" (change)="minMaxValidationAmount(salaryFormulaRow.minAmt,salaryFormulaRow.maxAmt)" />
+                            </div>
+                            <div class="col-1" style="width: 5% !important;max-width: 5% !important;" *ngIf="this.checkEarningsStatus('Basic') == true">
+                                <div class="label1">Basic</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isBasic"></mat-slide-toggle>
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isBasic"></mat-checkbox> -->
+                                </span>
+                            </div>
+                            <div class="col-1" style="width: 5% !important;max-width: 5% !important;" *ngIf="this.checkEarningsStatus('House Rent Allowance (HRA)') == true">
+                                <div class="label1">HRA</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isHRA"></mat-slide-toggle>
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isHRA"></mat-checkbox> -->
+                                </span>
+                            </div>
+                            <div class="col-1" style="width: 5% !important;max-width: 5% !important;" *ngIf="this.checkEarningsStatus('Dearness Allowance (DA)') == true">
+                                <div class="label1">DA</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isDA"></mat-slide-toggle>
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isDA"></mat-checkbox> -->
+                                </span>
+                            </div>
+                            <div class="col-1" style="width: 5% !important;max-width: 5% !important;" *ngIf="this.checkEarningsStatus('Travel Allowance (TA)') == true">
+                                <div class="label1">TA</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isTA"></mat-checkbox> -->
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isTA"></mat-slide-toggle>
+
+                                </span>
+                            </div>
+                            <div class="col-1" style="width: 5% !important;max-width: 5% !important;" *ngIf="this.checkEarningsStatus('Medical Allowance (MA)') == true">
+                                <div class="label1">MA</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isMA"></mat-checkbox> -->
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isMA"></mat-slide-toggle>
+
+                                </span>
+                            </div>
+
+                            <div class="col-1" style="width: 5% !important;max-width: 5% !important;" *ngIf="this.checkEarningsStatus('LTA') == true">
+                                <div class="label1">LTA</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isMA"></mat-checkbox> -->
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isLTA"></mat-slide-toggle>
+
+                                </span>
+                            </div>
+                            <div class="col-2" style="width: 10% !important;max-width: 10% !important;" *ngIf="this.checkEarningsStatus('Conveyance') == true">
+                                <div class="label1">Conveyance</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isMA"></mat-checkbox> -->
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isConveyance"></mat-slide-toggle>
+
+                                </span>
+                            </div>
+                            <div class="col-2" style="width: 10% !important;max-width: 10% !important;" *ngIf="this.checkEarningsStatus('Basic + DA') == true">
+                                <div class="label1">Basic+DA</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isMA"></mat-checkbox> -->
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isBasicAndDA"></mat-slide-toggle>
+
+                                </span>
+                            </div>
+                            <div class="col-2" style="width: 10% !important;max-width: 10% !important;" *ngIf="this.checkEarningsStatus('Washing Allowance') == true">
+                                <div class="label1">Washing Allowance</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isMA"></mat-checkbox> -->
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isWashingAllowance"></mat-slide-toggle>
+
+                                </span>
+                            </div>
+                            <div class="col-2" style="width: 10% !important;max-width: 10% !important;" *ngIf="this.checkEarningsStatus('Fuel Allowance') == true">
+                                <div class="label1">Fuel Allowance</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isMA"></mat-checkbox> -->
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isFuelAllowance"></mat-slide-toggle>
+
+                                </span>
+                            </div>
+                            <div class="col-2" style="width: 10% !important;max-width: 10% !important;" *ngIf="this.checkEarningsStatus('Special Allowance') == true">
+                                <div class="label1">Special Allowance</div>
+                                <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                                    <!-- <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isMA"></mat-checkbox> -->
+                                    <mat-slide-toggle ngDefaultControl [(ngModel)]="salaryFormulaRow.isSpecialAllowance"></mat-slide-toggle>
+
+                                </span>
+                            </div>
+
+
+
+
+                            <div class="col-1" style="margin-left:5px;width: 5% !important;max-width: 5% !important;">
+                                <button class="btn btn-primary" (click)="addSalaryFormula()">Add</button>
+                            </div>
+                        </div>
+                        <!-- <table>
+                  <tr>
+                    <th class="cal-th">Salary Type</th>
+                    <th class="cal-th">Value</th>
+                    <th class="cal-th">Amount</th>
+                    <th class="cal-th">Percent</th>
+                    <th class="cal-th">Min in ₹</th>
+                    <th class="cal-th">Max in ₹</th>
+                    <th class="cal-th">Basic</th>
+                    <th class="cal-th">HRA</th>
+                    <th class="cal-th">DA</th>
+                    <th class="cal-th">TA</th>
+                    <th class="cal-th">MA</th>
+                    <th class="cal-th"></th>
+                  </tr>
+
+                  <tr>
+                    <td class="cal-td">
+
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;padding: 0px 20px 0px 40px;">
+                        <input type="number" [(ngModel)]="salaryFormulaRow.Percent" class="form-control" />
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;">
+                        <mat-radio-button name="isAmtPercent" ngDefaultControl [(ngModel)]="salaryFormulaRow.isAmount" [value]="'amount'" color="primary"></mat-radio-button>
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;">
+                        <mat-radio-button name="isAmtPercent" ngDefaultControl [(ngModel)]="salaryFormulaRow.isAmount" [value]="'percent'"  color="primary"></mat-radio-button>
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                        <input style="width: 80px;" type="number" [(ngModel)]="salaryFormulaRow.minAmt" class="form-control" />
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                        <input style="width: 80px;" type="number" [(ngModel)]="salaryFormulaRow.maxAmt" class="form-control" />
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                        <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isBasic"></mat-checkbox>
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                        <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isHRA"></mat-checkbox>
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                        <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isDA"></mat-checkbox>
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                        <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isTA"></mat-checkbox>
+                      </span>
+                    <td class="cal-td">
+                      <span style="display: flex;justify-content: center;padding: 0px 5px;">
+                        <mat-checkbox color="primary" class="example-margin" [(ngModel)]="salaryFormulaRow.isMA"></mat-checkbox>
+                      </span>
+                    </td>
+                    <td class="cal-td">
+                      <button class="btn btn-primary" (click)="addSalaryFormula()">Add</button>
+                    </td>
+                  </tr>
+                </table> -->
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr />
+                    <div class="col-3">
+                        <button class="btn btn-primary px-4" style="margin-top:20px;width: fit-content;" (click)="onSubmit()">{{edit == true ? 'Update' : 'Save'}}</button>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+      
+      </mat-horizontal-stepper>
+
+      <!--  
+          <mat-stepper #stepper [linear]="true">
+            <mat-step [stepControl]="firstFormGroup" >
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Fill out your name</ng-template>
+                
+                <div>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+              <form [formGroup]="secondFormGroup">
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                         required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step>
+              <ng-template matStepLabel>Done</ng-template>
+              <p>You are now done.</p>
+              <div>
+            <button mat-button matStepperPrevious>Back</button>
+          </div>
+            </mat-step>
+          </mat-stepper> -->
+          
+
+    
+
+    <!-- <br>
+
+    <br>
+    <div class="row">
+      <div class="col-2">
+        <button class="btn btn-primary" style="width: 100px;" (click)="addSalaySetting()">Add</button>
+      </div>
+    </div>  -->
+    </div>
+
+</div>  
+
+
+
+
+<!-- ---------------------------------- -->
+<!-- ---------------------------------- -->
+<!-- ---------------------------------- -->
+<!-- ---------------------------------- -->
+<!-- ---------------------------------- -->
+
+<!-- 
+
+<ng-container *ngFor="let sf of SalaryFormulae; index as sfi">
+  <tr>
+    <tr>
+      <td class="cal-td" style="text-align: center;" >
+        {{sf.type}}
+      </td>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;padding: 0px 20px 0px 40px;">
+          <input type="number" [(ngModel)]="sf.Percent" class="form-control" />
+        </span>
+      </td>
+      <td class="cal-td">
+        _{{sf.isAmount}}_
+        <span style="display: flex;justify-content: center;">
+          <mat-radio-button [name]="'isAmtPercent'+sfi" ngDefaultControl  [value]="'amount'"  [(ngModel)]="sf.isAmount" color="primary"></mat-radio-button>
+        </span>
+      </td>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;">
+          <mat-radio-button [name]="'isAmtPercent'+sfi" ngDefaultControl  [value]="'percent'" [(ngModel)]="sf.isAmount"  color="primary"></mat-radio-button>
+        </span>
+      </td>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;padding: 0px 5px;">
+          <input style="width: 80px;" type="number" [(ngModel)]="sf.minAmt" class="form-control" />
+        </span>
+      </td>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;padding: 0px 5px;">
+          <input style="width: 80px;" type="number" [(ngModel)]="sf.maxAmt" class="form-control" />
+        </span>
+      </td>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;padding: 0px 5px;">
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="sf.isBasic"></mat-checkbox>
+        </span>
+      </td>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;padding: 0px 5px;">
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="sf.isHRA"></mat-checkbox>
+        </span>
+      </td>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;padding: 0px 5px;">
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="sf.isDA"></mat-checkbox>
+        </span>
+      </td>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;padding: 0px 5px;">
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="sf.isTA"></mat-checkbox>
+        </span>
+      <td class="cal-td">
+        <span style="display: flex;justify-content: center;padding: 0px 5px;">
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="sf.isMA"></mat-checkbox>
+        </span>
+      </td>
+      <td class="cal-td">
+      </td>
+  </tr>
+</ng-container> -->

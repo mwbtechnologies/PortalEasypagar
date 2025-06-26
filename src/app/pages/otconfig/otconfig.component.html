@@ -1,0 +1,128 @@
+<div  class="row">
+    <div  class="col-lg-12">
+        <div  class="card">
+            <div class="card-header" style="display: flex;justify-content:space-between;" >     
+                <h3  class="card-title">OT Settings</h3>
+            </div>
+            <!-- <div class="col-md-12" style="padding:10px">
+                <ng-container *ngFor="let ot of Otsettings" style="display: flex;">
+                    <label class="otsettings" [ngClass]="{'selected': selectedTab === ot.Name}"  (click)="selectTab(ot.Name)">{{ot.Name}}</label>
+                </ng-container>
+            </div> -->
+            <div class="col-md-12" *ngIf="selectedTab === 'General Settings'">
+                <div class="card-header" style="display: flex;justify-content:end;flex-wrap: wrap-reverse;row-gap: 5px;" >
+                        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="addthresholds(false)"> 🆕 Create OT</button>&nbsp;
+                        <!-- <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportPDF()">📕 Export PDF</button>&nbsp; -->
+                        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="downloadReport()">📥 Download Report</button>&nbsp;
+
+                        <!-- <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportexcel()">📗 Export Excel</button> -->
+                </div>
+                <!-- <form #validationForm="ngForm" class="editForm" novalidate> -->
+                    <div  class="row">
+                        <div class="col-md-4" >
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                            <div  class="col-md-4">
+                                <div  class="form-group"><label 
+                                    class="form-label">Select Branch</label>
+                         <ng-multiselect-dropdown [placeholder]="'Select Branch'" 
+                         [data]="BranchList" [(ngModel)]="selectedBranchId" (onSelect)="OnBranchSelect($event)"  (onDeSelect)="onBranchDeSelect($event)"
+                         [settings]="branchSettings">
+                         </ng-multiselect-dropdown>
+                            </div></div>
+                            
+                           </div>
+                    <div  class="table-responsive">
+                        <!-- <app-common-table [data]="OtList" [displayColumns]="displayColumns"
+                         [displayedColumns]="displayedColumns" [Loading]="OTLoading"
+                          (StatusUpdate)="deletethresholds($event)" [actions]="actionOptions" (actionEmitter)="actionEmitter($event)"></app-common-table> -->
+                          <app-common-table [data]="OtList" [ExportName]="'Ot List'" [displayColumns]="displayColumns" (StatusUpdate)="deletethresholds($event)" [Loading]="OTLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors" [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+
+               </div>
+           <!-- </form> -->
+            </div>
+            <div class="col-md-12" *ngIf="selectedTab === 'Allocated OT For Employees'">
+                <div class="card-header" style="display: flex;justify-content:space-between;" > 
+                    <div class="col-md-3">
+                        <!-- <h3  class="card-title">Allocated List</h3> -->
+                        <label class="otsettings"  (click)="selectTab('General Settings')">Back</label>
+                    </div>    
+                    <div class="col-md-3" style="display: flex;justify-content: right;">
+                        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportAllocateOtPDF()">📕 Export PDF</button>&nbsp;
+                        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportAllocateOtexcel()">📗 Export Excel</button>
+
+                    </div>
+                </div>
+                <form #validationForm="ngForm" class="editForm" novalidate>
+                    <div  class="table-responsive">
+                      <table id="DataTables_Table_1" table datatable [dtOptions]="dtExportButtonOptions1" [dtTrigger]="dtTrigger1"
+                         class="table table-striped table-bordered table-hover">
+                         <thead >
+                             <tr >
+                                 <th style="background-color: #3601b51f;text-align: center;">SL No</th>
+                                 <th style="background-color: #3601b51f;text-align: center;">Employee ID</th>
+                                 <th style="background-color: #3601b51f;text-align: center;">Employee</th>
+                                 <!-- <th style="background-color: #3601b51f;text-align: center;">OT Name</th> -->
+                                 <th style="background-color: #3601b51f;text-align: center;">Branch</th>
+                                 <th style="background-color: #3601b51f;text-align: center;">Department</th>
+                                 <th style="background-color: #3601b51f;text-align: center;">Status</th>
+                                 <th style="background-color: #3601b51f;text-align: center;">Start Date</th>
+                                 <th style="background-color: #3601b51f;text-align: center;">End Date</th>
+                             </tr>
+                         </thead>
+                         <tbody >
+                             <tr  class="ng-star-inserted" *ngFor="let IL of AllocatedOtEmpList; let i = index;">
+                                 <td >
+                                     <div  class="ng-star-inserted"> {{i+1}} </div>
+                                 </td>
+                                
+                                 <td >
+                                     <div  class="ng-star-inserted">{{IL.MappedEmpId}} </div>
+                                     
+                                 </td>
+                                 <td >
+                                     <div  class="ng-star-inserted">{{IL.employeename}} </div>
+                                     
+                                 </td>
+                                 <!-- <td >
+                                     <div  class="ng-star-inserted">{{IL.OTname}} </div>
+                                     
+                                 </td> -->
+                                 <td >
+                                     <div  class="ng-star-inserted">{{IL.Branch.text}} </div>
+                                     
+                                 </td>
+                                 <td >
+                                     <div  class="ng-star-inserted">{{IL.Department.text}} </div>
+                                     
+                                 </td>
+                                 <td >
+                                    <div class="ng-star-inserted"  *ngIf="IL.status == true"> <button class="active"  matTooltip="Click To Deactivate" (click)="Removethresholds(IL.allotid)">Active</button> </div>
+                                        <div class="ng-star-inserted"  *ngIf="IL.status == false"> <button class="inactive" *ngIf="IL.enddata == null" >Inactive</button> </div>
+                                        <div class="ng-star-inserted"  *ngIf="IL.status == false"> <button class="inactive" *ngIf="IL.enddata != null" matTooltip="Click To Activate" (click)="Removethresholds(IL.allotid)">Inactive</button> </div>
+                                     
+                                 </td>
+                                 <td >
+                                     <div  class="ng-star-inserted"> {{IL.startdate | date:'dd-MM-yyyy'}} </div>
+                                     
+                                 </td>
+                                 <td >
+                                     <div  class="ng-star-inserted"> {{IL.enddate | date:'dd-MM-yyyy'}} </div>
+                                     
+                                 </td>                               
+                             </tr>
+                             <tr *ngIf="!OtList">
+                                 <td colspan="10" class="text-center text-danger">No Data Available</td>
+                               </tr> 
+                         </tbody>
+                     </table>                       
+               </div>
+           </form>
+            </div>
+        </div>
+    </div>
+    </div>

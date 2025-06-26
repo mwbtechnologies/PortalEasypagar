@@ -1,0 +1,203 @@
+        <div >
+            <div  class="row">
+                <div  class="col-lg-12">
+                    <div  class="card">
+                        <div class="card-header" style="display: flex;flex-wrap: wrap;justify-content: space-between;" > 
+                            <div class="col-md-2">
+                                <h3  class="card-title">Shift Master</h3>
+                            </div>    
+                            <div class="col-md-4" style="display: flex;justify-content: end; flex-wrap: wrap-reverse;  padding: 5px;row-gap: 4px;">
+                                <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="AllocateShift(false)">Allocate Shift</button>&nbsp;
+                                <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportPDF()">📕 Export PDF</button>&nbsp;
+                                <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportexcel()">📗 Export Excel</button>&nbsp;
+                            </div>
+                        </div>
+                        <div  class="card-body">
+                                <div  class="row">
+                                    <div class="col-md-3 " >
+                                        <label class="form-label">Select Organization</label>
+                                        <ng-multiselect-dropdown [placeholder]="'Select Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                            [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                            (onDeSelect)="onDeselectedOrg($event)">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                    <div  class="col-md-3">
+                                        <div  class="form-group">
+                                            <label class="form-label">Select Branch</label>
+                                            <ng-multiselect-dropdown [placeholder]="'Select Branch'" 
+                                            [data]="BranchList" [(ngModel)]="selectedBranch" (onSelect)="OnBranchSelect($event)"  (onDeSelect)="onBranchDeSelect($event)"
+                                            [settings]="branchSettings">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </div> 
+                                    <div  class="col-md-3">
+                                        <div  class="form-group">
+                                            <label class="form-label">List Type</label>
+                                            <ng-multiselect-dropdown [placeholder]="'All'" 
+                                            [data]="ListType" [(ngModel)]="selectedListType" (onSelect)="OnTypeChange($event)"  (onDeSelect)="OnTypeChange($event)"
+                                            [settings]="branchSettings">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-2">
+                                        <div class="form-group"><label class="form-label">.</label>
+                                            <button id="bEdit" type="button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;"
+                                                (click)="GetAllotedShifts();"><span class="fa fa-search"> Search</span></button>
+                                        </div>
+                                    </div>
+                                   </div>
+                                   <div  class="table-responsive">
+                                    <table id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+                                       class="table table-striped table-bordered table-hover">
+                                       <thead >
+                                           <tr >
+                                            <th style="background-color: #3601b51f;text-align: center;">Action</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">SL No</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Emp ID</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Name</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Branch</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Department</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">StartDate</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">EndDate</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Week-I</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Week-II</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Week-III</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Week-IV</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Week-V</th>
+                                               <th style="background-color: #3601b51f;text-align: center;">Months</th>                                              
+                                               <th style="background-color: #3601b51f;text-align: center;">CreatedDate</th>
+                                               
+                                           </tr>
+                                       </thead>
+                                       <tbody >
+                                           <tr  class="ng-star-inserted" *ngFor="let IL of institutionsList; let i = index;">
+                                            <td style="min-width: 130px;">
+                                                <button matTooltip="Edit Allocation" *ngIf="IL.IsEditable==true && IL.IsActive==true" id="bEdit" type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;" (click)="EditShift(true,IL)">
+                                                    <span class="fa fa-edit"></span>
+                                                </button>
+                                                <button matTooltip="Edit Allocation" *ngIf="IL.IsEditable==true && IL.IsActive==false" disabled id="bEdit" type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;" (click)="EditShift(true,IL)">
+                                                    <span class="fa fa-edit"></span>
+                                                </button>
+                                                <button matTooltip="Deactive Allocation" id="bDel" *ngIf="IL.IsEditable==true && IL.IsActive==true" type="button" class="btn mx-3 btn-sm btn-danger ng-star-inserted" (click)="DeleteShift(IL)">
+                                                    <span class="fa fa-trash"></span>
+                                                    </button>
+                                                    <button id="bDel" matTooltip="Active Allocation" *ngIf="IL.IsEditable==true && IL.IsActive==false" type="button" class="btn mx-3 btn-sm btn-success ng-star-inserted" (click)="DeleteShift(IL)">
+                                                        <span class="fa fa-check-circle-o"></span>
+                                                        </button>
+
+                                                <button *ngIf="IL.IsEditable!=true && IL.IsShiftStarted==true && IL.IsShiftEnded==false" id="bEdit" disabled type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;">
+                                                    <span class="fa fa-hourglass-start"> Shift Started</span>
+                                                </button>
+
+                                                <button *ngIf="IL.IsEditable!=true && IL.IsShiftStarted==true && IL.IsShiftEnded==true" id="bEdit" disabled type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;">
+                                                    <span class="fa fa-hourglass-end">Shift Ended</span>
+                                                </button>
+                                          
+                                            </td>    
+                                            <td >
+                                                   <div  class="ng-star-inserted"> {{i+1}} </div>
+                                               </td>
+                                               <td >
+                                                <div  class="ng-star-inserted">{{IL.MappedEmpId}} </div>
+                                                
+                                            </td>
+                                               <td >
+                                                   <div  class="ng-star-inserted">{{IL.EmployeeName}} </div>
+                                                   
+                                               </td>
+                                               <td >
+                                                   <div  class="ng-star-inserted">{{IL.Branch}} </div>
+                                                   
+                                               </td>
+                                               <td >
+                                                   <div  class="ng-star-inserted">{{IL.Department ? IL.Department:"No Department"}} </div>
+                                                   
+                                               </td>
+                                               <td >
+                                                <div  class="ng-star-inserted"> {{IL.StartDate | date:'MMMM dd YYYY'}} </div>
+                                                
+                                            </td>  
+                                            <td >
+                                                <div  class="ng-star-inserted" *ngIf="IL.EndDate==null"> {{IL.EndDate | date:'MMMM dd YYYY'}} </div>
+                                                <div  class="ng-star-inserted" *ngIf="IL.EndDate!=null"> {{IL.EndDate | date:'MMMM dd YYYY'}} </div>
+                                               
+                                            </td>  
+                                               <td *ngFor="let wk of IL.WeekConfig" style="min-width: 250px;" >
+                                                <div  class="ng-star-inserted">
+                                                    <label *ngFor="let sh of wk.ShiftID"><b>Shift </b> : {{sh.Name}} <label *ngIf="sh.ShiftType!''">({{sh.ShiftType}})</label><br>
+                                                    <b>Timings </b>: {{sh.WorkTimings}}</label><br>
+                                                    <b >Work</b> : 
+                                                    <label *ngFor="let work of wk.WorkingDays;let j = index;">
+                                                        <b *ngIf="work.Value" style="color: green;" >{{work.Display}} &nbsp;</b>
+                                                        <!-- <b *ngIf="work.Value==false" style="color: red;" >{{work.Text}}</b> -->
+                                                        <br></label><br>
+                                                        <b >WeekOff</b> : 
+                                                        <label *ngFor="let week of wk.WeekOffDays;let j = index;">
+                                                            <b *ngIf="week.Value" style="color: green;" >{{week.Display}} &nbsp;</b>
+                                                            <!-- <b *ngIf="work.Value==false" style="color: red;" >{{work.Text}}</b> -->
+                                                            <br></label>
+                                    
+                                                    
+                                                    
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div  class="ng-star-inserted dayshovercard"> 
+                                                 <label>
+                                                 <span *ngIf="IL.IsJanSelected">Jan</span>
+                                                 <span *ngIf="!IL.IsJanSelected && IL.IsFebSelected">Feb</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && IL.IsMarSelected">March</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && IL.IsAprSelected">April</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && !IL.IsAprSelected && IL.IsMaySelected">May</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && !IL.IsAprSelected && !IL.IsMaySelected && IL.IsJunSelected">June</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && !IL.IsAprSelected && !IL.IsMaySelected && !IL.IsJunSelected && IL.IsJulySelected">July</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && !IL.IsAprSelected && !IL.IsMaySelected && !IL.IsJunSelected && !IL.IsJulySelected && IL.IsAugSelected">Aug</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && !IL.IsAprSelected && !IL.IsMaySelected && !IL.IsJunSelected && !IL.IsJulySelected && !IL.IsAugSelected && IL.IsSepSelected">Sep</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && !IL.IsAprSelected && !IL.IsMaySelected && !IL.IsJunSelected && !IL.IsJulySelected && !IL.IsAugSelected && !IL.IsSepSelected && IL.IsOctSelected">Oct</span>
+                                            
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && !IL.IsAprSelected && !IL.IsMaySelected && !IL.IsJunSelected && !IL.IsJulySelected && !IL.IsAugSelected && !IL.IsSepSelected && !IL.IsOctSelected && IL.IsNovSelected">Nov</span>
+                                                 <span *ngIf="!IL.IsJanSelected && !IL.IsFebSelected && !IL.IsMarSelected && !IL.IsAprSelected && !IL.IsMaySelected && !IL.IsJunSelected && !IL.IsJulySelected && !IL.IsAugSelected && !IL.IsSepSelected && !IL.IsOctSelected && !IL.IsNovSelected && IL.IsDecSelected">Nov</span>
+                                                </label>
+                                                <label class="days" *ngIf="IL.IsJanSelected && IL.IsFebSelected&& IL.IsMarSelected && IL.IsAprSelected && IL.IsMaySelected && IL.IsJunSelected && IL.IsJulySelected && IL.IsAugSelected && IL.IsSepSelected && IL.IsOctSelected && IL.IsNovSelected && IL.IsDecSelected">&nbsp;+1&nbsp;</label>
+                                             <!-- Hover display the remaining days -->
+                                             <div class="dayscard">
+                                                 <label *ngIf="IL.IsJanSelected">Jan,&nbsp;</label>
+                                                 <label *ngIf="IL.IsFebSelected">Feb,&nbsp;</label>
+                                                 <label *ngIf="IL.IsMarchSelected">Mar,&nbsp;</label>
+                                                 <label *ngIf="IL.IsAprilSelected">Apr,&nbsp;</label>
+                                                 <label *ngIf="IL.IsMaySelected">May,&nbsp;</label>
+                                                 <label *ngIf="IL.IsJuneSelected">June,&nbsp;</label>
+                                                 <label *ngIf="IL.IsJulySelected">July</label>
+                                                 <label *ngIf="IL.IsAugSelected">Aug</label>
+                                                 <label *ngIf="IL.IsSepSelected">Sep</label>
+                                                 <label *ngIf="IL.IsOctSelected">Oct</label>
+                                                 <label *ngIf="IL.IsNovSelected">Nov</label>
+                                                 <label *ngIf="IL.IsDecSelected">Dec</label>
+                                             </div>
+                                             </div>
+                                            </td>
+                                               <td >
+                                                   <div  class="ng-star-inserted"> {{IL.CreatedDate | date:'MMMM dd YYYY'}} </div>
+                                               </td>  
+                                           </tr>
+                                           <tr *ngIf="!institutionsList">
+                                               <td colspan="10" class="text-center text-danger">No Data Available</td>
+                                             </tr> 
+                                       </tbody>
+                                   </table>                       
+                                </div>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div  *ngIf="!ViewPermission &&!AddPermission">
+                       
+            <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+        </div>
+        
+   
+   
+   

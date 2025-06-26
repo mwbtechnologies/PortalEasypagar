@@ -1,0 +1,82 @@
+<div class="dailog">
+        <!-- <h4>Date Wise</h4> -->
+         <label style="text-align: end;width: -webkit-fill-available;font-size: 20px; margin: 0;"><i (click)="close()" class="fa fa-times" ></i></label>
+         <div class="headers">
+           <div class="col-md-4">
+               <label>Employee : <strong>{{Employee}}</strong></label>
+            </div>
+            <div class="col-md-4" *ngIf="Branch.length>0">
+            <label>Branch : <strong>{{Branch}}</strong></label>
+            </div>
+            <div class="col-md-4" *ngIf="Department.length>0">
+            <label>Department : <strong>{{Department}}</strong></label>
+            </div>
+         </div>
+          <div class="card-body">
+         <div class="row" style="margin: 0;margin-bottom: 10px;">
+            <button class="btn btn-primary approve" (click)="approveExpense()">Approve</button>&nbsp;&nbsp;
+            <button class="btn btn-primary reject" (click)="rejectExpense()">Reject</button>
+        </div>
+            <div  class="table-responsive">
+               <app-common-table [data]="dateWise" [displayColumns]="displayColumns" [Loading]="Loading" 
+               [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" 
+               (actionEmitter)="actionEmitter($event)" ></app-common-table>
+               </div></div>
+        <!-- <table table
+        class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">
+                Select All<br>
+                <input type="checkbox">
+            </th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Date</th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Local</th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Travel</th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Lodging</th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">DNS</th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Approved</th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Pending</th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Rejected</th>
+              <th  style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Actions</th>
+          </tr>
+      </thead>
+          <tbody >
+              <tr  class="ng-star-inserted" *ngFor="let dw of dateWise;let i=index">   
+                  <td style="text-align: center;">
+                      <div  class="ng-star-inserted"><input type="checkbox"></div>
+                  </td>
+                  <td >
+                      <div  class="ng-star-inserted">{{dw.Date | date:'dd-MMM-yyyy'}}</div>
+                  </td>
+                  <td >
+                      <div  class="ng-star-inserted">{{dw.Local}}</div>
+                  </td>
+                  <td >
+                      <div  class="ng-star-inserted">{{dw.Travel}}</div>
+                  </td>
+                  <td >
+                      <div  class="ng-star-inserted">{{dw.Lodging}}</div>
+                  </td>
+                  <td >
+                      <div  class="ng-star-inserted">{{dw.DNS}}</div>
+                  </td>
+                  <td >
+                      <div  class="ng-star-inserted">{{dw.Approved}}</div>
+                  </td>
+                  <td >
+                      <div  class="ng-star-inserted">{{dw.Pending}}</div>
+                  </td>
+                  <td >
+                      <div  class="ng-star-inserted">{{dw.Rejected}}</div>
+                  </td>
+                  <td >
+                      <div style="display: flex;" class="ng-star-inserted">
+                        <button class="actionbtns" (click)="viewExpense(dw)" matTooltip="View Expense"><i class="fa fa-eye"></i></button>&nbsp;
+                        <button class="actionbtns" (click)="viewBillImages(dw)" matTooltip="View Images"><i class="fa fa-image"></i></button>
+                      </div>
+                  </td>
+              </tr>
+          </tbody>
+        </table> -->
+</div>

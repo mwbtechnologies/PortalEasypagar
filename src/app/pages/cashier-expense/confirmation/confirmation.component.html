@@ -1,0 +1,16 @@
+<div class="dialogs">
+    <div class="productdesc">
+        <h4 >
+            Add Comment To {{this.data.type}}
+        </h4>
+        <!-- <p class="alert-message"> Are you sure want to approve expense</p> -->
+        <div class="col-md-12">
+            <input type="text" placeholder="Enter Comment" [(ngModel)]="comment" class="form-control">
+        </div>
+        <div class="pt-3 btn-class">
+            <button class="greenbtn" (click)="save()">
+                Submit 
+            </button>
+        </div>
+    </div>
+</div>

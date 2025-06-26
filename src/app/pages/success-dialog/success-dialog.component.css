@@ -1,0 +1,10 @@
+.dialogs{
+    width: fit-content;
+    height: fit-content;
+    overflow-y: scroll;
+    padding: 25px;
+    font-family: poppins;
+    background-color: #ffffff;
+    max-width: 60vh;
+    max-height: 60vh;
+}

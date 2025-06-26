@@ -1,0 +1,1538 @@
+<div>
+    <div class="row">
+
+
+
+
+        <div class="col-md-12">
+            <label class="backbutton" (click)="backtodashboard()">
+                <i class="fa fa-chevron-left"></i>
+                &nbsp;&nbsp;Back
+            </label>
+            <div class="card" style="border-radius: 20px;">
+                <div class="card-header">
+                    <h3 class="mb-0 card-title" style="text-align: center;">
+                        Basic Details
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Employee ID
+                                    <i class="fa fa-info-circle"
+                                        matTooltip="Enter Employee ID as per your organization records"></i>
+                                </label>
+                                <input type="text" name="EmployeeId" class="form-control"
+                                    placeholder="Enter Employee ID"
+                                    [ngClass]="{'is-invalid': !EmployeeId.valid && (EmployeeId.dirty || EmployeeId.touched || isSubmit)}"
+                                    #EmployeeId="ngModel" required EmployeeId (keydown)="allowOnlyAlphanumeric($event)"
+                                    [(ngModel)]="formInput.EmployeeId">
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    First Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="FirstName" class="form-control" placeholder="Enter First Name"
+                                    [ngClass]="{'is-invalid': FirstName.invalid && (FirstName.dirty || FirstName.touched ||isSubmit)}"
+                                    #FirstName="ngModel" required pattern="^[A-Za-z ]{1,30}$" maxlength="30"
+                                    [(ngModel)]="formInput.FirstName">
+
+
+
+
+                                <div *ngIf="(FirstName.invalid && (FirstName.dirty || FirstName.touched||isSubmit ))"
+                                    class="invalid-feedback">
+                                    <span *ngIf="FirstName.errors?.['required']">First name is required.</span>
+                                    <span *ngIf="FirstName.errors?.['pattern']">
+                                        Only letters and spaces are allowed (1-30 characters).
+                                    </span>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" name="LastName" placeholder="Enter Last Name" #LastName="ngModel"
+                                    maxlength="30" class="form-control" [(ngModel)]="formInput.LastName"
+                                    pattern="^[A-Za-z]+( [A-Za-z]+)*$">
+
+
+
+
+                                <div *ngIf="(LastName.invalid && (LastName.dirty || LastName.touched)) || isSubmit "
+                                    class="invalid-feedback">
+                                    <span *ngIf="LastName.errors?.['pattern']">
+                                        Only letters and spaces are allowed (1-30 characters).
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Mobile Number
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="MobileNumber" placeholder="Enter Contact Number"
+                                    (keypress)="validatemobilenumber($event, formInput.MobileNumber)"
+                                    [ngClass]="{'is-invalid': MobileNumber.invalid && (MobileNumber.dirty || MobileNumber.touched || isSubmit)}"
+                                    #MobileNumber="ngModel" required pattern="^[0-9]{10}$" maxlength="10"
+                                    [(ngModel)]="formInput.MobileNumber" class="form-control">
+
+
+
+
+                                <div *ngIf="(MobileNumber.invalid && (MobileNumber.dirty || MobileNumber.touched)) || isSubmit"
+                                    class="invalid-feedback">
+                                    <span *ngIf="MobileNumber.errors?.['required']">Mobile Number is required.</span>
+                                    <span *ngIf="MobileNumber.errors?.['pattern']">
+                                        Only numbers are allowed (exactly 10 digits).
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="Email" placeholder="Enter Email ID"
+                                    [ngClass]="{'is-invalid': Email.invalid && (Email.dirty || Email.touched)}"
+                                    #Email="ngModel" pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                    [(ngModel)]="formInput.Email" class="form-control">
+
+
+
+
+                                <div *ngIf="Email.invalid && (Email.dirty || Email.touched)" class="invalid-feedback">
+
+
+
+
+                                    <span *ngIf="Email.errors?.['pattern']">
+                                        Enter a valid email address (e.g., user@example.com).
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label class="form-label">
+                                    Select Organization
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <ng-multiselect-dropdown [placeholder]="'All Organizations'"
+                                    [(ngModel)]="selectedOrganization" [data]="OrgList" [settings]="orgSettings"
+                                    (onSelect)="onselectedOrg($event)" (onDeSelect)="onDeselectedOrg($event)">
+                                </ng-multiselect-dropdown>
+
+
+
+
+                                <div *ngIf="selectedOrganization.length === 0 && isSubmit" class="invalid-feedback">
+                                    <span>Sub Organization selection is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label class="form-label">
+                                    Branch
+                                    <span class="text-danger">*</span>
+                                </label>
+
+
+
+
+                                <ng-multiselect-dropdown [placeholder]="'Select Branch'" [(ngModel)]="selectedBranch"
+                                    [data]="Columns" [settings]="BranchSettings"
+                                    [ngClass]="{'is-invalid': selectedBranch.length === 0 && isSubmit}"
+                                    (onSelect)="newonselectedBranchesChange($event)"
+                                    (onDeSelect)="newonDeselectedBranchesChange($event)"
+                                    (keydown)="onKeyDown($event, 'branch', dropdownIndex.branch)">
+                                </ng-multiselect-dropdown>
+
+
+
+
+                                <div *ngIf="selectedBranch.length === 0 && isSubmit" class="invalid-feedback">
+                                    <span>Branch selection is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group" style="margin-bottom: 20px;" #departmentDropdownContainer>
+                                <label class="form-label">
+                                    Department
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <ng-multiselect-dropdown [placeholder]="'Select Department'"
+                                    [(ngModel)]="selectedDepartment" [data]="DeptColumns"
+                                    [settings]="SingleSelectionSettings"
+                                    [ngClass]="{'is-invalid': selectedDepartment.length === 0 && isSubmit}"
+                                    (onSelect)="newonselectedDepartmentChange($event)"
+                                    (onDeSelect)="newonDeselectedDepartmentChange($event)"
+                                    (keydown)="onKeyDown($event,'department',dropdownIndex.branch)">
+                                </ng-multiselect-dropdown>
+                                <div *ngIf="selectedDepartment.length === 0 && isSubmit" class="invalid-feedback">
+                                    <span>Department selection is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label class="form-label">Select Trainings</label>
+                                <ng-multiselect-dropdown [placeholder]="'Select Trainings'"
+                                    [(ngModel)]="selectedTrainer" [data]="TrainerList" [settings]="TrainerSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Date Of Joining
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="date" name="DateOfJoining" placeholder="Select Date"
+                                    (change)="onDateChange($event)" [(ngModel)]="formInput.DateOfJoining"
+                                    #DateOfJoining="ngModel" required
+                                    [ngClass]="{'is-invalid': DateOfJoining.invalid && (DateOfJoining.dirty || DateOfJoining.touched|| isSubmit)}"
+                                    class="form-control">
+
+
+
+
+                                <div *ngIf="(DateOfJoining.invalid && (DateOfJoining.dirty || DateOfJoining.touched || isSubmit))"
+                                    class="invalid-feedback">
+                                    <span *ngIf="DateOfJoining.errors?.['required']">Date of Joining is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">Work Start-Time</label>
+                                <input name="OfficeStartTime" [ngxTimepicker]="picker" placeholder="Select Time"
+                                    #OfficeStartTime="ngModel" is="officestartimecreate"
+                                    (ngModelChange)="validateOfficeStartTimings(formInput.OfficeStartTime)"
+                                    [(ngModel)]="formInput.OfficeStartTime"
+                                    [ngClass]="{'is-invalid': OfficeStartTime.invalid && (OfficeStartTime.dirty || OfficeStartTime.touched)}"
+                                    class="form-control" [format]="timeFormat">
+                                <ngx-material-timepicker #picker></ngx-material-timepicker>
+
+
+
+
+                                <div *ngIf="OfficeStartTime.invalid && (OfficeStartTime.dirty || OfficeStartTime.touched)"
+                                    class="invalid-feedback">
+                                    <span *ngIf="OfficeStartTime.errors?.['required']">Work Start-Time is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">Work End-Time</label>
+                                <input id="officeendtimecreate" name="OfficeEndTime" [ngxTimepicker]="picker1"
+                                    placeholder="Select Time" #OfficeEndTime="ngModel"
+                                    (ngModelChange)="validateOfficeEndTimings(formInput.OfficeEndTime)"
+                                    [(ngModel)]="formInput.OfficeEndTime"
+                                    [ngClass]="{'is-invalid': OfficeEndTime.invalid && (OfficeEndTime.dirty || OfficeEndTime.touched)}"
+                                    class="form-control" [format]="timeFormat">
+                                <ngx-material-timepicker #picker1></ngx-material-timepicker>
+
+
+
+
+                                <div *ngIf="OfficeEndTime.invalid && (OfficeEndTime.dirty || OfficeEndTime.touched)"
+                                    class="invalid-feedback">
+                                    <span *ngIf="OfficeEndTime.errors?.['required']">Work End-Time is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Password
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div id="Password-toggle" class="wrap-input100 validate-input input-group">
+                                    <a class="input-group-text bg-white text-muted" (click)="OnPassClick();">
+                                        <i aria-hidden="true" class="fa fa-eye"
+                                            *ngIf="passwordinput === 'password'"></i>
+                                        <i aria-hidden="true" class="fa fa-eye-slash"
+                                            *ngIf="passwordinput === 'text'"></i>
+                                    </a>
+                                    <input name="Password" id="Password1" type="{{passwordinput}}"
+                                        placeholder="Enter Password" #Password="ngModel" required [attr.required]="true"
+                                        [(ngModel)]="formInput.Password" pattern=".{6,8}"
+                                        [ngClass]="{'is-invalid': Password.invalid && (Password.dirty || Password.touched || isSubmit)}"
+                                        class="border-start-0 ms-0 form-control" maxlength="8">
+                                </div>
+
+
+
+
+                                <div *ngIf="(Password.invalid && (Password.dirty || Password.touched || isSubmit))"
+                                    class="invalid-feedback">
+                                    <span *ngIf="Password.errors?.['required']">Password is required.</span>
+                                    <span *ngIf="Password.errors?.['pattern']">
+                                        Password must be between 6 and 8 characters.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Confirm Password
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div id="Password-toggle" class="wrap-input100 validate-input input-group">
+                                    <a class="input-group-text bg-white text-muted" (click)="OnConfirmClick();">
+                                        <i aria-hidden="true" class="fa fa-eye"
+                                            *ngIf="this.confirmpasswordinput=='password'"></i>
+                                        <i aria-hidden="true" class="fa fa-eye-slash"
+                                            *ngIf="this.confirmpasswordinput=='text'"></i>
+                                    </a>
+                                    <input name="ConfirmPassword" id="ConfirmPassword" type="{{confirmpasswordinput}}"
+                                        placeholder="Enter Confirm Password" #ConfirmPassword="ngModel" required
+                                        onkeydown="return /^\S*$/.test(this.value + event.key)" ConfirmPassword
+                                        [(ngModel)]="formInput.ConfirmPassword"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        maxlength="8"
+                                        class="border-start-0 ms-0 form-control ng-untouched ng-pristine ng-invalid">
+
+
+
+
+                                </div>
+                                <div *ngIf="(ConfirmPassword.invalid && (ConfirmPassword.dirty || ConfirmPassword.touched || isSubmit))"
+                                    class="invalid-feedback">
+                                    <span *ngIf="ConfirmPassword.errors?.['required']">Confirm Password is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- <div class="col-lg-3">
+                                <div class="form-group"><label class="form-label">Basic Salary<label style="color:#000000;">
+                                            *</label></label><input name="BasicSalary" placeholder="Basic Salary"
+                                        type="number" (keypress)="validatebasic($event)" #BasicSalary="ngModel"
+                                        required pattern="[1-9]{1}[0-9]{1}" BasicSalary
+                                        [(ngModel)]="formInput.BasicSalary" class="form-control"></div>
+                            </div> -->
+                        <div class="col-md-3">
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label class="form-label">State</label>
+                                <input type="text" name="State" class="form-control" placeholder="State"
+                                    #State="ngModel" required pattern="[A-Za-z]+"
+                                    onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" FirstName
+                                    [(ngModel)]="formInput.State">
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label class="form-label">City</label>
+                                <input type="text" name="City" class="form-control" placeholder="City" #City="ngModel"
+                                    required pattern="[A-Za-z]+"
+                                    onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" City
+                                    [(ngModel)]="formInput.City">
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                <label class="form-label">Address</label>
+                                <textarea name="Address" rows="3" placeholder="Enter Address" type="text"
+                                    [ngClass]="{'is-invalid': !Address.valid && (Address.dirty || Address.touched || isSubmit)}"
+                                    #Address="ngModel" Address [(ngModel)]="formInput.Address"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="display:flex;align-items:center">
+                            <label class="form-label">
+                                <i class="fa fa-info-circle"
+                                    matTooltip="If a geofenced employee checks in within configured meters, attendance is approved; otherwise, it's pending, and the admin is notified."></i>
+                                GeoFenced &nbsp;
+                                <input type="checkbox" [checked]="formInput.IsGeofenced"
+                                    [(ngModel)]="formInput.IsGeofenced">
+                            </label>
+                        </div>
+
+
+
+
+                        <div class="col-md-1" style="display:flex;align-items:center">
+                            <label class="form-label">
+                                <i class="fa fa-info-circle" matTooltip="Mark if employee is working from home"></i>
+                                WFH &nbsp;
+                                <input type="checkbox" [(ngModel)]="formInput.IsWFH">
+                            </label>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+            <!-- <div class="card" style="border-radius: 20px;">
+                <div class="card-header">
+                    <h3 class="mb-0 card-title" style="text-align: center;" (click)="ShowKYCDetails();">KYC Details</h3>
+
+                </div>
+                <form #validationForm="ngForm" class="editForm" novalidate>
+                    <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.8);">
+                        
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+
+                                    <div class="form-group" style="margin-bottom: 20px;">
+                                        <label class="form-label">Proof I</label>
+                                        <select class="form-control" name="Proof1"
+                                            [ngClass]="{'is-invalid': !Proof1.valid && (Proof1.dirty || Proof1.touched || isSubmit)}"
+                                            Proof1 #Proof1="ngModel" [(ngModel)]="formInput.Proof1"
+                                            (change)="OnProofISelection($event.target);">
+                                            <option style="padding-bottom: 5%;" value="" disabled selected>Select Proof
+                                            </option>
+                                            <ng-container *ngFor="let state of ProofList">
+                                                <option style="padding-bottom: 5%;" [value]="state.Value">{{ state.Text
+                                                    }}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Proof ID I
+                                            <i class="fa fa-info-circle" matTooltip="Format {{ProofIPlaceHolder}}"></i>
+                                        </label>
+                                
+                                        <input type="text" name="ProofID1" placeholder="{{ProofIPlaceHolder}}"
+                                            [ngClass]="{'is-invalid': ProofID1.invalid && (ProofID1.dirty || ProofID1.touched || isSubmit)}"
+                                            #ProofID1="ngModel"
+                                            [required]="isProofType1Selected"
+                                            [pattern]="ProofIPlaceHolder"
+                                            [(ngModel)]="formInput.ProofID1"
+                                            (ngModelChange)="validateProofID1()"
+                                            class="form-control">
+                                        
+                                        <div *ngIf="(ProofID1.invalid && (ProofID1.dirty || ProofID1.touched || (isProofType1Selected && isSubmit)))" class="invalid-feedback">
+                                            <span *ngIf="ProofID1.errors?.['required']">Proof ID is required if proof type is selected.</span>
+                                            <span *ngIf="ProofID1.errors?.['pattern']">Invalid format! Must match: {{ProofIPlaceHolder}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="form-label"> Front File</div>
+                                        <div class="mb-3"><input type="file" id="front1" accept="image/*"
+                                                (change)="UploadProof1Image1($event,validationForm)"
+                                                class="form-control">
+                                        </div>
+                                        <img *ngIf="ProofImage1" [src]="getImageUrl(ProofImage1)" class="imgSize">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="form-label"> Back File</div>
+                                        <div class="mb-3"><input type="file" id="back1" accept="image/*"
+                                                (change)="UploadProof1Image2($event,validationForm)"
+                                                class="form-control">
+                                        </div>
+                                        <img *ngIf="ProofImage2" [src]="getImageUrl(ProofImage2)" class="imgSize">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+
+                                    <div class="form-group" style="margin-bottom: 20px;">
+                                        <label class="form-label">Proof II</label>
+                                        <select class="form-control" name="Proof2"
+                                            [ngClass]="{'is-invalid': !Proof2.valid && (Proof2.dirty || Proof2.touched || isSubmit)}"
+                                            Proof2 #Proof2="ngModel" [(ngModel)]="formInput.Proof2"
+                                            (change)="OnProofIISelection($event.target);">
+                                            <option style="padding-bottom: 5%;" value="" disabled selected>Select
+                                                Proof
+                                            </option>
+                                            <ng-container *ngFor="let state of ProofList">
+                                                <option style="padding-bottom: 5%;" [value]="state.Value">{{ state.Text
+                                                    }}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Proof ID
+                                            <i class="fa fa-info-circle" matTooltip="Format {{ProofIIPlaceHolder}}"></i>
+                                        </label>
+                                
+                                        <input type="text" name="ProofID2" placeholder="{{ProofIIPlaceHolder}}"
+                                            [ngClass]="{'is-invalid': ProofID2.invalid && (ProofID2.dirty || ProofID2.touched || isSubmit)}"
+                                            #ProofID2="ngModel"
+                                            [required]="isProofType2Selected"
+                                            [pattern]="ProofIIPlaceHolder"
+                                            [(ngModel)]="formInput.ProofID2"
+                                            (ngModelChange)="validateProofID2()"
+                                            class="form-control">
+                                        
+                                        <div *ngIf="(ProofID2.invalid && (ProofID2.dirty || ProofID2.touched || (isProofType1Selected && isSubmit)))" class="invalid-feedback">
+                                            <span *ngIf="ProofID2.errors?.['required']">Proof ID is required if proof type is selected.</span>
+                                            <span *ngIf="ProofID2.errors?.['pattern']">Invalid format! Must match: {{ProofIPlaceHolder}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="form-label"> Front File</div>
+                                        <div class="mb-3"><input type="file" id="front2" accept="image/*"
+                                                (change)="UploadProof2Image1($event,validationForm)"
+                                                class="form-control">
+                                        </div>
+                                        <img *ngIf="ProofImage3" [src]="getImageUrl(ProofImage3)" class="imgSize">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="form-label"> Back File</div>
+                                        <div class="mb-3"><input type="file" id="back2" accept="image/*"
+                                                (change)="UploadProof2Image2($event,validationForm)"
+                                                class="form-control">
+                                        </div>
+                                        <img *ngIf="ProofImage4" [src]="getImageUrl(ProofImage4)" class="imgSize">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+
+                                    <div class="form-group" style="margin-bottom: 20px;">
+                                        <label class="form-label">Proof III</label>
+                                        <select class="form-control" name="Proof3"
+                                            [ngClass]="{'is-invalid': !Proof3.valid && (Proof3.dirty || Proof3.touched || isSubmit)}"
+                                            Proof3 #Proof3="ngModel" [(ngModel)]="formInput.Proof3"
+                                            (change)="OnProofIIISelection($event.target);">
+                                            <option style="padding-bottom: 5%;" value="" disabled selected>Select
+                                                Proof
+                                            </option>
+                                            <ng-container *ngFor="let state of ProofList">
+                                                <option style="padding-bottom: 5%;" [value]="state.Value">{{ state.Text
+                                                    }}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Proof ID
+                                            <i class="fa fa-info-circle" matTooltip="Format {{ProofIIIPlaceHolder}}"></i>
+                                        </label>
+                                
+                                        <input type="text" name="ProofID3" placeholder="{{ProofIIIPlaceHolder}}"
+                                            [ngClass]="{'is-invalid': ProofID3.invalid && (ProofID3.dirty || ProofID3.touched || isSubmit)}"
+                                            #ProofID3="ngModel"
+                                            [required]="isProofType3Selected"
+                                            [pattern]="ProofIIIPlaceHolder"
+                                            [(ngModel)]="formInput.ProofID3"
+                                            (ngModelChange)="validateProofID3()"
+                                            class="form-control">
+                                        
+                                        <div *ngIf="(ProofID3.invalid && (ProofID3.dirty || ProofID3.touched || (isProofType1Selected && isSubmit)))" class="invalid-feedback">
+                                            <span *ngIf="ProofID3.errors?.['required']">Proof ID is required if proof type is selected.</span>
+                                            <span *ngIf="ProofID3.errors?.['pattern']">Invalid format! Must match: {{ProofIPlaceHolder}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="form-label"> Front File</div>
+                                        <div class="mb-3"><input type="file" id="front2" accept="image/*"
+                                                (change)="UploadProof3Image1($event,validationForm)"
+                                                class="form-control">
+                                        </div>
+                                        <img *ngIf="ProofImage4" [src]="getImageUrl(ProofImage4)" class="imgSize">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="form-label"> Back File</div>
+                                        <div class="mb-3"><input type="file" id="back2" accept="image/*"
+                                                (change)="UploadProof2Image2($event,validationForm)"
+                                                class="form-control">
+                                        </div>
+                                        <img *ngIf="ProofImage4" [src]="getImageUrl(ProofImage4)" class="imgSize">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </form>
+            </div> -->
+            <div class="card" style="border-radius: 20px;">
+                <div class="card-header">
+                    <h3 class="mb-0 card-title" (click)="ShowSalaryDetails();" style="text-align: center;">
+                        Salary
+                        Details
+                    </h3>
+
+
+
+
+                </div>
+                <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.8);">
+
+
+
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <div class="form-label">Salary Settings</div>
+                                    &nbsp; &nbsp;
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div style="display:flex">
+                                                <label class="custom-switch">
+                                                    <input type="checkbox" name="custom-switch-checkbox"
+                                                           class="custom-switch-input" #IsPerday="ngModel" required
+                                                           IsPerday [(ngModel)]="formInput.IsPerday"
+                                                           (ngModelChange)="WeekOff();" id="IsPerday" name="IsPerday"
+                                                           value="true">
+                                                    <span class="custom-switch-indicator"></span>
+                                                    <span class="custom-switch-description">Daily Payment</span>
+                                                </label>
+                                                <!-- <label *ngIf="ShowWeekOff" class="custom-switch col-md-2"><input type="checkbox"
+                             name="custom-switch-checkbox" class="custom-switch-input"
+                             #IsYearlyLeaves="ngModel" required IsYearlyLeaves [(ngModel)]="formInput.IsYearlyLeaves"
+                              id="IsYearlyLeaves" name="IsYearlyLeaves" value="true"><span
+                             class="custom-switch-indicator"></span>
+                             <span class="custom-switch-description"> Yearly Leaves </span>
+
+                            </label> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="ShowWeekOff">
+                                    <label class="form-label">WeekOff Days</label>
+                                    <div class="selectgroup selectgroup-pills">
+                                        <label class="selectgroup-item">
+                                            <input type="checkbox" name="IsSundayOff" value="HTML" checked
+                                                   class="selectgroup-input" #IsSundayOff="ngModel" required IsSundayOff
+                                                   [(ngModel)]="formInput.IsSundayOff"
+                                                   (change)="limitSelection($event,'IsSundayOff')">
+                                            <span class="selectgroup-button">Sunday</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="checkbox" name="IsMondayOff" value="true"
+                                                   class="selectgroup-input" #IsMondayOff="ngModel" required IsMondayOff
+                                                   [(ngModel)]="formInput.IsMondayOff"
+                                                   (change)="limitSelection($event,'IsMondayOff')">
+                                            <span class="selectgroup-button">Monday</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+
+
+
+
+                                            <input type="checkbox" name="IsTuesdayOff" value="true"
+                                                   class="selectgroup-input" #IsTuesdayOff="ngModel" required IsTuesdayOff
+                                                   [(ngModel)]="formInput.IsTuesdayOff"
+                                                   (change)="limitSelection($event,'IsTuesdayOff')">
+                                            <span class="selectgroup-button">Tuesday</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+
+
+
+
+                                            <input type="checkbox" name="IsWednesdayOff" value="true"
+                                                   class="selectgroup-input" #IsWednesdayOff="ngModel" required
+                                                   IsWednesdayOff [(ngModel)]="formInput.IsWednesdayOff"
+                                                   (change)="limitSelection($event,'IsWednesdayOff')">
+                                            <span class="selectgroup-button">Wednesday</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+
+
+
+
+                                            <input type="checkbox" name="IsThursdayOff" value="true"
+                                                   class="selectgroup-input" #IsThursdayOff="ngModel" required
+                                                   IsThursdayOff [(ngModel)]="formInput.IsThursdayOff"
+                                                   (change)="limitSelection($event,'IsThursdayOff')">
+
+
+
+
+                                            <span class="selectgroup-button">Thursday</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+
+
+
+
+                                            <input type="checkbox" name="IsFridayOff" value="true"
+                                                   class="selectgroup-input" #IsFridayOff="ngModel" required IsFridayOff
+                                                   [(ngModel)]="formInput.IsFridayOff"
+                                                   (change)="limitSelection($event,'IsFridayOff')">
+                                            <span class="selectgroup-button">Friday</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+
+
+
+
+                                            <input type="checkbox" name="IsSaturdayOff" value="true"
+                                                   class="selectgroup-input" #IsSaturdayOff="ngModel" required
+                                                   IsSaturdayOff [(ngModel)]="formInput.IsSaturdayOff"
+                                                   (change)="limitSelection($event,'IsSaturdayOff')">
+                                            <span class="selectgroup-button">Saturday</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3" *ngIf="ShowWeekOff">
+        <div class="row">
+            <div class="col-6 no-gap">
+                <div class="form-group m-0">
+                    <label class="form-label">
+                        Paid
+                        Leaves/
+                        <span *ngIf="formInput.IsYearlyLeaves == false">Month</span>
+                        <span *ngIf="formInput.IsYearlyLeaves == true">Year</span>
+                    </label>
+                    <input type="number" name="NoOfPaidLeave"
+                        placeholder="Enter No Of Paid Leave"
+                        (keypress)="validatepaidleave($event)"
+                        (input)="validatePaidLeaveRange()" #NoOfPaidLeave="ngModel" required
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        maxlength="3" NoOfPaidLeave [(ngModel)]="formInput.NoOfPaidLeave"
+                        class="form-control" (wheel)="$event.preventDefault()">
+                </div>
+            </div>
+            <div class="col-6 no-gap">
+                <div class="form-group m-0">
+                    <label class="form-label">
+                        Sick
+                        Leaves/
+                        <span *ngIf="formInput.IsYearlyLeaves == false">Month</span>
+                        <span *ngIf="formInput.IsYearlyLeaves == true">Year</span>
+                    </label>
+                    <input type="number" (wheel)="$event.preventDefault()" name="NoOfSickLeave"
+                        placeholder="Enter No Of Sick Leave"
+                        (keypress)="validatesickleave($event)"
+                        (input)="validateSickLeaveRange()" #NoOfSickLeave="ngModel" required
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        maxlength="3" NoOfSickLeave [(ngModel)]="formInput.NoOfSickLeave"
+                        class="form-control">
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <div class="col-3" >
+        <div class="form-group">
+            <label class="form-label">
+              CTC
+                <span class="text-danger">*</span>
+            </label>
+            <input placeholder="CTC"
+                oninput="javascript: if (this.value.length > this.  maxLength) this.value = this.value.slice(0, this. maxLength);"
+                maxlength="8" (input)="removeLeadingZero($event,'CTC')" type="number"
+                (ngModelChange)="validateCTC($event)" (keydown)="preventPlusMinus($event)"
+                 required pattern="[1-9]{1}[0-9]{1}"
+                [(ngModel)]="formInput.CTC" class="form-control"
+                [readonly]="GetSalaryFieldStatus('isBasic')" (wheel)="$event.preventDefault()"
+                [disabled]="formInput.IsPerday==true">
+        </div>
+
+
+    </div> -->
+                            <!-- <div class="col-md-3">
+            <div class="form-group"><label class="form-label">Gross/Monthly Salary<b
+                        style="color:#000000;"> *</label></label><input (keypress)="validategross($event)"
+                    name="GrossSalary" placeholder="Gross Salary"
+                    (change)="OnSalaryChange(formInput.GrossSalary);" type="number"
+                    #GrossSalary="ngModel" required pattern="[1-9]{1}[0-9]{1}" GrossSalary
+                    [(ngModel)]="formInput.GrossSalary" class="form-control"></div>
+        </div> -->
+                            <!-- <div class="col-md-3" >
+            <label class="form-label">Select Leaves Types <i
+                class="fa fa-info-circle"
+                matTooltip="Click Leave Setting Button To Choose leave That You Want To Give."></i></label>
+            <button class="btn btn-primary" [disabled]="!selectedBranch" (click)="LeaveSetting()">Leave Setting</button>
+        </div> -->
+                            <!-- <div class="col-3">
+            <div class="form-group">
+                <label class="form-label">
+                    CTC Salary <span class="text-danger">*</span>
+                </label>
+                <input
+                    name="CTCSalary"
+                    placeholder="CTC Salary"
+                    oninput="javascript: if (this.value.length > this.  maxLength) this.value = this.value.slice(0, this. maxLength);"
+                    maxlength="8"
+                    (input)="removeLeadingZero($event,'CTCSalary')"
+                    type="number"
+                    (ngModelChange)="validateGross($event)"
+                    (keydown)="preventPlusMinus($event)"
+                    #CTCSalary="ngModel"
+                    required
+                    pattern="[1-9]{1}[0-9]{1}"
+                    CTCSalary
+                    [(ngModel)]="formInput.CTCSalary"
+                    class="form-control"
+                    (wheel)="$event.preventDefault()"
+                    >
+            </div>
+        </div> -->
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        CTC
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input placeholder="CTC"
+                                           oninput="javascript: if (this.value.length > this.  maxLength) this.value = this.value.slice(0, this. maxLength);"
+                                           maxlength="8" (input)="removeLeadingZero($event,'CTC')" type="number"
+                                           (ngModelChange)="validateCTC($event)" (keydown)="preventPlusMinus($event)"
+                                           required pattern="[1-9]{1}[0-9]{1}"
+                                           [(ngModel)]="formInput.CTC" class="form-control"
+                                           [readonly]="GetSalaryFieldStatus('isBasic')" (wheel)="$event.preventDefault()"
+                                           [disabled]="formInput.IsPerday==true">
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Gross Salary
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input name="GrossSalary" placeholder="Gross Salary"
+                                           oninput="javascript: if (this.value.length > this.  maxLength) this.value = this.value.slice(0, this. maxLength);"
+                                           maxlength="8" (input)="removeLeadingZero($event,'GrossSalary')" type="number"
+                                           (ngModelChange)="validateGross($event)" (keydown)="preventPlusMinus($event)"
+                                           #GrossSalary="ngModel" required pattern="[1-9]{1}[0-9]{1}" GrossSalary
+                                           [(ngModel)]="formInput.GrossSalary" class="form-control"
+                                           [readonly]="GetSalaryFieldBasicAndBasicDaStatus()" (wheel)="$event.preventDefault()"
+                                           [disabled]="formInput.IsPerday==true">
+                                </div>
+                            </div>
+                            <div class="col-3" *ngIf="isPropertyVisible('isBasic')">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Basic Salary
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input name="BasicSalary" placeholder="Enter Basic Salary"
+                                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                           maxlength="7" (input)="removeLeadingZero($event, 'BasicSalary')" type="number"
+                                           (ngModelChange)="validatebasic($event)" #BasicSalary="ngModel"
+                                           (keydown)="preventPlusMinus($event)" required pattern="^[1-9][0-9]*$"
+                                           [(ngModel)]="formInput.BasicSalary" class="form-control"
+                                           (wheel)="$event.preventDefault()"
+                                           [ngClass]="{'is-invalid': BasicSalary.invalid && (BasicSalary.dirty || BasicSalary.touched || isSubmit)}">
+
+
+
+
+                                    <!-- Error Messages -->
+                                    <div *ngIf="BasicSalary.invalid && (BasicSalary.dirty || BasicSalary.touched || isSubmit)"
+                                         class="invalid-feedback">
+                                        <span *ngIf="BasicSalary.errors?.['required']">Basic Salary is required.</span>
+                                        <span *ngIf="BasicSalary.errors?.['pattern']">
+                                            Enter a valid salary (no leading zeros, only numbers).
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                            <ng-container *ngIf="isPropertyVisible('isHRA')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <div class="form-group">
+                                        <label class="form-label">HRA(House Rent Allowance)</label>
+                                        <input oninput="javascript: if (this.value.length > this.  maxLength) this.value = this.value.slice(0, this. maxLength);"
+                                               maxlength="7" (input)="removeLeadingZero($event,'HRA')" type="number"
+                                               (wheel)="$event.preventDefault()" name="HRA" placeholder="Enter HRA"
+                                               (keydown)="preventPlusMinus($event)" (ngModelChange)="validateHRA($event)"
+                                               #HRA="ngModel" required HRA [(ngModel)]="formInput.HRA" class="form-control"
+                                               [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isHRA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isPropertyVisible('isDA')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validatesalaryadvance($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">DA(Dearness Allowance)</label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               (input)="removeLeadingZero($event,'DA')" maxlength="7" type="number"
+                                               (wheel)="$event.preventDefault()" name="DA" placeholder="Enter DA"
+                                               (keydown)="preventPlusMinus($event)" (ngModelChange)="validateDA($event)"
+                                               required [(ngModel)]="formInput.DA" class="form-control"
+                                               [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isDA')"      #DA="ngModel" DA -->
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isPropertyVisible('isTA')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validateloandue($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">TA(Travel Allowance)</label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="7" type="number" (wheel)="$event.preventDefault()" name="TA"
+                                               placeholder="Enter TA" (keydown)="preventPlusMinus($event)" #TA="ngModel"
+                                               required TA (ngModelChange)="validateTA($event)"
+                                               (input)="removeLeadingZero($event,'TA')" [(ngModel)]="formInput.TA"
+                                               class="form-control" [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isTA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="isPropertyVisible('isMA')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validateloandue($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">MA(Medical Allowance)</label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="7" (input)="removeLeadingZero($event,'MA')" type="number"
+                                               (wheel)="$event.preventDefault()" name="MA" placeholder="Enter TA"
+                                               (keydown)="preventPlusMinus($event)" #MA="ngModel" required MA
+                                               (ngModelChange)="validateMA($event)" [(ngModel)]="formInput.MA"
+                                               class="form-control" [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isMA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isPropertyVisible('isLTA')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validateloandue($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            LTA(Leave Travel Allowance)
+                                        </label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="7"
+                                               (input)="removeLeadingZero($event,'LTA')"
+                                               type="number"
+                                               (wheel)="$event.preventDefault()"
+                                               name="LTA"
+                                               placeholder="Enter LTA"
+                                               (keydown)="preventPlusMinus($event)"
+                                               #LTA="ngModel"
+                                               required
+                                               LTA
+                                               (ngModelChange)="validateLTA($event)"
+                                               [(ngModel)]="formInput.LTA"
+                                               class="form-control"
+                                               [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isMA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="isPropertyVisible('isConveyance')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validateloandue($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Conveyance
+                                        </label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="7"
+                                               (input)="removeLeadingZero($event,'Conveyance')"
+                                               type="number"
+                                               (wheel)="$event.preventDefault()"
+                                               name="Conveyance"
+                                               placeholder="Enter Conveyance"
+                                               (keydown)="preventPlusMinus($event)"
+                                               #Conveyance="ngModel"
+                                               required
+                                               Conveyance
+                                               (ngModelChange)="validateConveyance($event)"
+                                               [(ngModel)]="formInput.Conveyance"
+                                               class="form-control"
+                                               [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isMA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="isPropertyVisible('isWashingAllowance')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validateloandue($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Washing Allowance
+                                        </label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="7"
+                                               (input)="removeLeadingZero($event,'WashingAllowance')"
+                                               type="number"
+                                               (wheel)="$event.preventDefault()"
+                                               name="WashingAllowance"
+                                               placeholder="Enter Washing Allowance"
+                                               (keydown)="preventPlusMinus($event)"
+                                               #Conveyance="ngModel"
+                                               required
+                                               Conveyance
+                                               (ngModelChange)="validateWashingAllowance($event)"
+                                               [(ngModel)]="formInput.WashingAllowance"
+                                               class="form-control"
+                                               [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isMA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isPropertyVisible('isFuelAllowance')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validateloandue($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Fuel Allowance
+                                        </label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="7"
+                                               (input)="removeLeadingZero($event,'FuelAllowance')"
+                                               type="number"
+                                               (wheel)="$event.preventDefault()"
+                                               name="FuelAllowance"
+                                               placeholder="Enter Fuel Allowance"
+                                               (keydown)="preventPlusMinus($event)"
+                                               #Conveyance="ngModel"
+                                               required
+                                               Conveyance
+                                               (ngModelChange)="validateFuelAllowance($event)"
+                                               [(ngModel)]="formInput.FuelAllowance"
+                                               class="form-control"
+                                               [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isMA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="isPropertyVisible('isSpecialAllowance')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validateloandue($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Special Allowance
+                                        </label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="7"
+                                               (input)="removeLeadingZero($event,'SpecialAllowance')"
+                                               type="number"
+                                               (wheel)="$event.preventDefault()"
+                                               name="SpecialAllowance"
+                                               placeholder="Enter Special Allowance"
+                                               (keydown)="preventPlusMinus($event)"
+                                               #Conveyance="ngModel"
+                                               required
+                                               Conveyance
+                                               (ngModelChange)="validateSpecialAllowance($event)"
+                                               [(ngModel)]="formInput.SpecialAllowance"
+                                               class="form-control"
+                                               [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isMA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="isPropertyVisible('isBasicAndDA')">
+                                <div class="col-3" *ngIf="!(formInput.IsPerday==true)">
+                                    <!-- (keypress)="validateloandue($event)" -->
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Basic And DA
+                                        </label>
+                                        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="7"
+                                               (input)="removeLeadingZero($event,'BasicAndDA')"
+                                               type="number"
+                                               (wheel)="$event.preventDefault()"
+                                               name="BasicAndDA"
+                                               placeholder="Enter Basic And DA"
+                                               (keydown)="preventPlusMinus($event)"
+                                               #Conveyance="ngModel"
+                                               required
+                                               Conveyance
+                                               (ngModelChange)="validateBasicAndDA($event)"
+                                               [(ngModel)]="formInput.BasicAndDA"
+                                               class="form-control"
+                                               [disabled]="formInput.IsPerday==true">
+                                        <!-- [readonly]="GetSalaryFieldStatus('isMA')" -->
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                   
+                        <div class="row">
+                            <div class="col-lg-2" *ngIf="ShowWeekOff">
+                                <div class="form-group">
+                                    <label class="form-label">PSA (Personal Skill Assistance)</label>
+                                    <input type="number" (wheel)="$event.preventDefault()" name="PSA"
+                                        placeholder="Enter Monthly Incentive"
+                                        (keypress)="validatePSA($event)" #PSA="ngModel" required
+                                        OldSalaryBalance [(ngModel)]="formInput.PSA" class="form-control">
+                                </div>
+                            </div>
+                              <div class="col-lg-2" *ngIf="ShowWeekOff">
+                                <div class="form-group">
+                                    <label class="form-label">FI (Fixed Incentive)</label>
+                                    <input type="number" (wheel)="$event.preventDefault()" name="FixedIncentive"
+                                        placeholder="Enter Monthly Incentive"
+                                        (keypress)="validatefixedincentive($event)" #FixedIncentive="ngModel" required
+                                        OldSalaryBalance [(ngModel)]="formInput.FixedIncentive" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Old Balance
+                                        Payable
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="Loan amount to be paid to the employee by the admin">
+                                        </i>
+                                    </label>
+                                    <input type="number" (wheel)="$event.preventDefault()" name="OldSalaryBalance"
+                                        placeholder="Enter OldSalaryBalance" (keypress)="validateoldsalary($event)"
+                                        #OldSalaryBalance="ngModel" required OldSalaryBalance
+                                        [(ngModel)]="formInput.OldSalaryBalance" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Old Advance
+                                        Receivable
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="Amount to be received from the employee by the admin">
+                                        </i>
+                                    </label>
+                                    <input type="number" (wheel)="$event.preventDefault()" name="OldSalaryAdvance"
+                                        placeholder="Enter Old SalaryAdvance" (keypress)="validatesalaryadvance($event)"
+                                        #OldSalaryAdvance="ngModel" required OldSalaryAdvance
+                                        [(ngModel)]="formInput.OldSalaryAdvance" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Old Loan Balance
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="Loan amount to be received from the employee by the admin">
+                                        </i>
+                                    </label>
+                                    <input type="number" (wheel)="$event.preventDefault()" name="LoanAdvanceBalance"
+                                        placeholder="Enter Loan Due" (keypress)="validateloandue($event)"
+                                        #LoanAdvanceBalance="ngModel" required LoanAdvanceBalance
+                                        [(ngModel)]="formInput.LoanAdvanceBalance" class="form-control">
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Monthly Deduction(EMI)
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="The fixed amount deducted monthly towards the loan repayment">
+                                        </i>
+                                    </label>
+                                    <input type="number" (wheel)="$event.preventDefault()" name="Deduction"
+                                        placeholder="Enter Deduction" (keypress)="validatededuction($event)"
+                                        (change)="CheckDeduction(formInput.Deduction);" #Deduction="ngModel" required
+                                        Deduction [(ngModel)]="formInput.Deduction" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" style="display: flex;" *ngIf="ShowWeekOff">
+                                <div style="display:flex">
+                                    <label class="custom-switch">
+                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                            (ngModelChange)="SDUpdate();" id="IsSecuritydeposit"
+                                            name="IsSecuritydeposit" #IsSecuritydeposit="ngModel" required
+                                            IsSecuritydeposit [(ngModel)]="formInput.IsSecuritydeposit"
+                                            name="IsSecuritydeposit" value="true">
+                                        <span class="custom-switch-indicator"></span>
+                                        <span class="custom-switch-description">Security Deposit</span>
+                                    </label>
+
+
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3" *ngIf="showsdoption ">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Security Deposit
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="security deposit amount to be received from the employee by the admin">
+                                        </i>
+                                    </label>
+                                    <input type="number" (wheel)="$event.preventDefault()" name="Securitydeposit"
+                                        placeholder="Enter Security Deposit" (keypress)="validatesddue($event)"
+                                        #Securitydeposit="ngModel" required Securitydeposit
+                                        [(ngModel)]="formInput.SecurityDeposit" class="form-control">
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-lg-3" *ngIf="showsdoption">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        SD Monthly Deduction(EMI)
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="The fixed amount deducted towards the security deposit">
+                                        </i>
+                                    </label>
+                                    <input type="number" (wheel)="$event.preventDefault()" name="SDmonthlydeduction"
+                                        placeholder="Enter Deduction" (keypress)="validatesddeduction($event)"
+                                        (change)="CheckSDDeduction(formInput.SDmonthlydeduction);"
+                                        #SDmonthlydeduction="ngModel" required SDmonthlydeduction
+                                        [(ngModel)]="formInput.SDmonthlydeduction" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2" *ngIf="showsdoption" style="display: flex;">
+                                <div style="display:flex">
+                                    <label class="custom-switch" style="margin-right:8px !important">
+                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                               (ngModelChange)="SDSelected();" id="IsPercentage" name="IsPercentage"
+                                               #IsPercentage="ngModel" required IsPercentage
+                                               [(ngModel)]="formInput.IsPercentage" name="IsPercentage" value="true">
+                                        <span class="custom-switch-indicator"></span>
+                                        <span class="custom-switch-description">
+                                            IsPercentage
+
+                                        </span>
+                                    </label>
+                                    <i class="fa fa-info-circle m-8"
+                                       matTooltip="If percentage is selected, entered % of employees gross salary will be deducted on monthly basis">
+                                    </i>
+
+
+
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="card-body" *ngIf="ShowWeekOff">
+                        <div class="row">
+                             <div class="col-3" *ngIf="ShowWeekOff">
+                                <div class="form-group m-0"><label class="form-label">Paid
+                                        Leaves/<span *ngIf="formInput.IsYearlyLeaves == false">Month</span><span *ngIf="formInput.IsYearlyLeaves == true">Year</span></label>
+                                        <input type="number" name="NoOfPaidLeave"
+                                        placeholder="Enter No Of Paid Leave" (keypress)="validatepaidleave($event)"
+                                        (input)="validatePaidLeaveRange()" #NoOfPaidLeave="ngModel" required
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        maxlength="3" NoOfPaidLeave [(ngModel)]="formInput.NoOfPaidLeave"
+                                        class="form-control" (wheel)="$event.preventDefault()">
+                                </div>
+                            </div>
+                            <div class="col-3" *ngIf="ShowWeekOff">
+                                <div class="form-group m-0"><label class="form-label">Sick
+                                        Leaves/<span *ngIf="formInput.IsYearlyLeaves == false">Month</span><span *ngIf="formInput.IsYearlyLeaves == true">Year</span></label><input type="number" (wheel)="$event.preventDefault()"
+                                        name="NoOfSickLeave" placeholder="Enter No Of Sick Leave"
+                                        (keypress)="validatesickleave($event)" (input)="validateSickLeaveRange()"
+                                        #NoOfSickLeave="ngModel" required
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        maxlength="3" NoOfSickLeave [(ngModel)]="formInput.NoOfSickLeave"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        ESI (Employees' State Insurance)
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="The Employee State Insurance (ESI) contribution is calculated as a percentage of the employee's gross salary. Currently, the employee contributes 0.75% of their gross salary. ESI applies to employees earning a monthly wage of ₹21,000 or less.">
+                                        </i>
+                                    </label>
+                                    <input name="esi" (input)="validateESIRange();removeLeadingZero($event,'ESI')"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        maxlength="3" [class.inputblink]="esiUpdating==true" placeholder="ESI"
+                                        type="number" (keydown)="preventPlusMinus($event)"
+                                        (wheel)="$event.preventDefault()" #esi="ngModel" required esi
+                                        [(ngModel)]="formInput.ESI" class="form-control"
+                                        [disabled]=" !GetSalaryFieldStatus('isBasic')">
+                                    <!-- [readonly]="GetSalaryFieldStatus('isESI')" -->
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        EPF (Employee Provident Fund)
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="The amount deducted for Employee Provident Fund (EPF) is 12% of the selected parameters in Salary setting.">
+                                        </i>
+                                    </label>
+                                    <input name="pf" placeholder="EPF" type="number"
+                                        (input)="removeLeadingZero($event,'PF')"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        maxlength="4" (input)="validatePFRange()" (wheel)="$event.preventDefault()"
+                                        (keydown)="preventPlusMinus($event)" #pf="ngModel"
+                                        [class.inputblink]="pfUpdating==true" pf [(ngModel)]="formInput.PF"
+                                        class="form-control" [disabled]="!GetSalaryFieldStatus('isBasic')">
+                                    <!-- [readonly]="GetSalaryFieldStatus('isPF')" -->
+                                </div>
+                            </div>
+
+
+
+
+
+                            <!-- <div class="col-lg-3">
+                               (keypress)="validateloandue($event)""
+                                <div class="form-group"><label class="form-label">TA(Travel Allowance)</label><input
+                                        type="number" (wheel)="$event.preventDefault()" name="TA" placeholder="Enter TA"
+                                        #TA="ngModel" required TA (ngModelChange)="validateTA($event)"
+                                            [(ngModel)]="formInput.TA" class="form-control"  >
+                                          [readonly]="GetSalaryFieldStatus('isTA')
+                            </div>
+                            </div>" -->
+                            <!-- <div class="col-lg-3">
+                                (keypress)="validateloandue($event)"
+                                <div class="form-group"><label class="form-label">MA(Medical Allowance)</label><input
+                                        type="number" (wheel)="$event.preventDefault()" name="MA" placeholder="Enter TA"
+                                        #MA="ngModel" required MA (ngModelChange)="validateMA($event)"
+                                            [(ngModel)]="formInput.MA" class="form-control" >
+                            </div>
+                            </div> -->
+
+
+
+
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-2 col-3">
+
+
+
+
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                        id="isPfEnabled" name="isPfEnabled" #isPfEnabled="ngModel" required isPfEnabled
+                                        [(ngModel)]="formInput.IsPFStopped" value="true">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description text-black">
+                                        Stop PF
+                                        <i class="fa fa-info-circle"
+                                            matTooltip=" PF Will Not  be Considered On Next Salary Cycle"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-md-2 col-3">
+
+
+
+
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                        id="isESIEnabled" name="isESIEnabled" #isESIEnabled="ngModel" required
+                                        isPfEnabled [(ngModel)]="formInput.IsESIStopped" value="true">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description text-black">
+                                        Stop ESI
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="ESI Will Not  be Considered On Next Salary Cycle"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-md-2 col-3">
+
+
+
+
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                        id="isPTEnabled" name="isPTEnabled" #isESIEnabled="ngModel" required isPTEnabled
+                                        [(ngModel)]="formInput.IsPTStopped" value="true">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description text-black">
+                                        Stop PT
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="PT Will Not be Considered On Next Salary Cycle"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-md-2 col-3" *ngIf="formInput.SecurityDeposit > 0">
+
+
+
+
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                                        id="isSDEnabled" name="isSDEnabled" #isESIEnabled="ngModel" required isSDEnabled
+                                        [(ngModel)]="formInput.IsSDStopped" value="true">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description text-black">
+                                        Stop SD
+                                        <i class="fa fa-info-circle"
+                                            matTooltip="SD Will Not be Considered On Next Salary Cycle"></i>
+                                    </span>
+                                </label>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="table-responsive ng-star-inserted">
+                    <div class="row">
+                        <div class="col-md-5"></div>
+                        <div class="col-md-2">
+                            <button id="table2-new-row-button" class="btn btn-primary mb-4"
+                                style="border-radius:10px;background-color: #3601b5a3;" (click)="ValidateAll();">
+                                Submit
+                            </button>
+                        </div>
+                        <div class="col-md-5"></div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>

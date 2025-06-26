@@ -1,0 +1,28 @@
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: start;display: flex;">
+                    <div class="col-md-5"><label (click)="backToDashboard()" class="mb-0 card-title"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+                    </label></div>
+                    <h3 class="mb-0 card-title">Expense Management</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                     <mat-tab-group (selectedIndexChange)="onTabChange($event)" [(selectedIndex)]="selectedTab">
+                            <mat-tab label="Employee Wise">
+                                <ng-container *ngIf="isLoaded(0)">
+                                    <app-employeewise></app-employeewise>
+                                </ng-container>
+                            </mat-tab>
+                            <mat-tab label="Date Wise">
+                                <ng-container *ngIf="isLoaded(1)">
+                                    <app-datewise></app-datewise>
+                                </ng-container>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

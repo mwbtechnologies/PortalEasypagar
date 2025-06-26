@@ -1,0 +1,23 @@
+<div class="dialogs">   
+    <div mat-dialog-title style="font-size: 16px;font-weight: 500px;padding: 7px 0px ;">
+        <h4 style="margin: 0;">Document Group Set Order</h4>
+        <label style="font-size: 13px;">Arrange the documents groups in your preferred order for viewing.</label>
+      </div>
+      <ng-container>
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+            <ng-container *ngFor="let group of DocumentGroups">
+                <div class="example-box" cdkDrag>
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    {{getNamings(group)}}
+                </div>
+            </ng-container>
+        </div>
+        <p style="font-size: 12px;"><b>Please note:</b> Changes to the order will not <br>
+           be saved until you click the Submit button.</p>
+        <br>
+        <div style="text-align: center;">
+            <button class="btn btn-primary" (click)="submit()">Submit</button>&nbsp;
+            <button class="btn btn-primary" (click)="close()">Cancel</button>
+        </div>&nbsp;
+    </ng-container>
+</div>

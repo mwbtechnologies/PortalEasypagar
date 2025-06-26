@@ -1,0 +1,70 @@
+<div>
+    <div class="col-lg-12" style="padding: 0;">
+        <div class="card">
+            <div class="card-header" style="display: flex;justify-content:space-between;">
+                <div class="col-md-5">
+                    <h3 class="card-title">Trainees Of {{trainerWiseList.trainerName}}</h3>
+                </div>
+                <div class="col-md-6" style="display: flex;justify-content: end;">
+                    <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="downloadPDF()" [disabled]="TrainerWiseLiting ==undefined || TrainerWiseLiting == null || !(TrainerWiseLiting.length > 0)">Get PDF Report</button>&nbsp;
+                    <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="downloadExcel()" [disabled]="TrainerWiseLiting ==undefined || TrainerWiseLiting == null || !(TrainerWiseLiting.length > 0)">Get Excel Report</button>
+                </div>
+            </div>
+                 <div class="maincards" *ngIf="TrainerWiseLiting.length>0">
+                    <div class="chip3">
+                        <div class="chip3-title">Trainer</div>
+                        <h3 class="chip3-value">{{trainerWiseList?.trainerName}}</h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">Title</div>
+                        <h3 class="chip3-value">{{trainerWiseList?.title}}</h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">Description</div>
+                        <h3 class="chip3-value">{{trainerWiseList?.description}}</h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">Assigned By</div>
+                        <h3 class="chip3-value">{{trainerWiseList?.assignedby}}</h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">1 ★ Rating</div>
+                        <h3 class="chip3-value">{{onestar}} <i class="fa fa-user"></i></h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">2 ★ Rating</div>
+                        <h3 class="chip3-value">{{twostars}} <i class="fa fa-user"></i></h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">3 ★ Rating</div>
+                        <h3 class="chip3-value">{{threestars}} <i class="fa fa-user"></i></h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">4 ★ Rating</div>
+                        <h3 class="chip3-value">{{fourstars}} <i class="fa fa-user"></i></h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">5 ★ Rating</div>
+                        <h3 class="chip3-value">{{fivestars}} <i class="fa fa-user"></i></h3>
+                    </div>
+                </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div *ngIf="showFilter" class="col-md-3" style="float: right;margin-top:-13px;margin-bottom: 6px;">
+                        <label class="form-label">Filter By Status</label>
+                        <ng-multiselect-dropdown [placeholder]="'All'" [data]="StatusList" [(ngModel)]="feSelectedStatus"
+                            (onSelect)="feOnstatusSelect($event)" (onDeSelect)="feOnDeselectstatus($event)"
+                            [settings]="statusSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <app-common-table [data]="TrainerWiseLiting" [ExportName]="'Assigned Trainer List'"
+                        [displayColumns]="displayColumns" [Loading]="employeeLoading"
+                        [displayedColumns]="displayedColumns" [editableColumns]="editableColumns"
+                        [actions]="actionOptions" [headerColors]="headerColors" [ReportTitles]="ReportTitles"
+                        (actionEmitter)="actionEmitter($event)"></app-common-table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

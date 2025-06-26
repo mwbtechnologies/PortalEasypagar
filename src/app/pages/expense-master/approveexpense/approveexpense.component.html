@@ -1,0 +1,149 @@
+<div class="dialogs">
+    <div  class="row">
+            <div class="col-md-3">
+                    <div  class="productdesc">
+                            <div  class="card overflow-hidden">
+                                <div  class="card-body bootslider p-3">
+                                        <ngb-carousel data-interval="5">
+                                                <ng-template ngbSlide *ngFor="let IL of BillImages">
+                                                        <img src="{{IL.Path}}" alt="Random first slide" style="max-height: 400px;">
+                                                </ng-template>
+                                               
+                                        </ngb-carousel>
+                                        </div>
+                                        </div>
+                                        </div>
+            </div>
+            <div class="col-md-9">
+            <div  class="productdesc">
+                <div  class="card overflow-hidden">
+                    <div  class="card-body bootslider p-3">
+                                            <div  class="panel panel-primary mb-5 mx-5 border" style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                                                    <div  class="table-responsive" >
+                                                            <h4  class="mb-5 mt-3 fw-bold" style="text-align: center;"> Expense Details</h4>
+                                                            <div style="display: flex; justify-content: start; margin-top: 20px;padding-left: 10px;width:600px">
+                                                                <button style="color: white;background-color: #3601b5a3;" class="btn" (click)="allCheck();">
+                                                                Select All</button> &nbsp; 
+                                                                    <input
+                                                                    style="max-width: 200px;"
+                                                                    name="expense-date"
+                                                                    type="date"
+                                                                    required
+                                                                    [(ngModel)]="formInput.StartDate"
+                                                                    class="form-control"
+                                                                >
+
+                                                                <input
+                                                                style="max-width: 200px;"
+                                                                name="expense-date"
+                                                                type="date"
+                                                                required 
+                                                                [(ngModel)]="formInput.EndDate"
+                                                                class="form-control" (change)="validateDate(formInput.EndDate)"
+                                                            >
+                                                            <button   style="color: white;background-color: #3601b5a3;" class="btn me-1" (click)="GetData();">Search</button>
+                                                            
+                                                            </div>
+                                                          <br> 
+                                                           <table  class="table table-bordered">
+                                                        <tr ><td  class="fw-bold">Name</td>
+                                                            <td >{{ExpenseData.EmployeeName}}</td>
+                                                            <td  class="fw-bold">Branch</td>
+                                                            <td >{{ExpenseData.Branch}}</td>
+                                                            <!-- <td  class="fw-bold">Department</td>
+                                                            <td *ngIf="ExpenseData.Department!=null && ExpenseData.Department!=''" >{{ExpenseData.Department}}</td>
+                                                            <td *ngIf="ExpenseData.Department==null ||ExpenseData.Department==''" > --</td> -->
+                                                       
+                                                    </tr>                              
+                    </table>
+                    <table  class="table table-bordered" style="display:flex;flex-wrap: wrap;">
+                    <th *ngFor="let IL of ExpenseList; let i=index;">
+                        <tr>  
+                                <td class="fw-bold">Select </td>
+                           <!-- <td><input type="checkbox" name="allEmployees" (change)="TypeallCheck(i)">All</td>  -->
+                           <td class="fw-bold">{{IL.ExpenseType}}</td>
+                           <td class="fw-bold">Requested Amount</td>
+                           <td class="fw-bold">Approved Amount</td>
+                           <td class="fw-bold">Action </td>
+                        </tr>
+                                <tr *ngFor="let ex of IL.Details; let j=index;">
+                                <td>
+                                <input *ngIf="!ex.IsPayslipExist" type="checkbox" [checked]="ex.IsChecked ? true : false"  (change)="OnChange(i,j)" id="{{i}}{{ex.SubExpenseTypeName}}" name="{{i}}{{ex.SubExpenseTypeName}}" [(ngModel)]="ex.IsChecked">
+                                <input *ngIf="ex.IsPayslipExist" disabled type="checkbox" [checked]="ex.IsChecked ? true : false"  (change)="OnChange(i,j)" id="{{i}}{{ex.SubExpenseTypeName}}" name="{{i}}{{ex.SubExpenseTypeName}}" [(ngModel)]="ex.IsChecked">  
+                                </td>
+                                <td *ngIf="ex.SubExpenseTypeName==''||ex.SubExpenseTypeName==null">--</td>
+                                <td *ngIf="ex.SubExpenseTypeName!=''&&ex.SubExpenseTypeName!=null">{{ex.SubExpenseTypeName}}</td>
+                                <td>{{ex.Amount}}</td>
+                                <td>
+                                <input *ngIf="!ex.IsPayslipExist" (change)="CalculateTotal(i,'List');" style="background-color: white;" type="number" class="form-control" [(ngModel)]="ex.ApprovedAmount">
+                                <input *ngIf="ex.IsPayslipExist" disabled (change)="CalculateTotal(i,'List');" style="background-color: white;" type="number" class="form-control" [(ngModel)]="ex.ApprovedAmount">
+                        </td>
+                        <td class="fw-bold">
+                                <!-- <button  id="bEdit" *ngIf="ex.PayslipExist" type="button" class="btn btn-sm btn-success ng-star-inserted"><span
+                
+                                        class="fa fa-check-circle-o" aria-disabled="true"></span></button>
+                                        <button  id="bEdit" type="button" class="btn btn-sm btn-success ng-star-inserted"><span
+                                                    
+                                            class="fa fa-check-circle-o" matTooltip="Approve Expense" (click)="Approve(ex.ExpenseID,ex.ApprovedAmount,'Approved By Admin');"></span></button>
+    
+                                    
+                                        <button  id="bEdit" type="button" class="btn btn-sm btn-danger ng-star-inserted"><span
+                                                    
+                                            class="fa fa-window-close" matTooltip="Reject Expense" (click)="Reject(ex.ExpenseID,'Rejected By Admin');"></span></button> -->
+
+                                            <button  id="bEdit" (click)="openDialog(ex);" matTooltip="View Details" type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;"><span
+                                                    
+                                                class="fa fa-info" ></span></button>
+                                   </td>   
+                        </tr>
+                        <tr>  <td style="min-width: 150px;" class="fw-bold">Total</td>
+                                <td></td>
+                                <td style="min-width: 150px;" class="fw-bold">{{IL.TotalRequested}}</td>
+                                <td style="min-width: 150px;" class="fw-bold">{{IL.TotalApproved}}</td></tr>
+                        
+                        </th>
+
+                        <div class="mt-2 pb-5 border-bottom" *ngIf="!showexpense"> &nbsp;
+                                <h4  class="mb-5 mt-3 fw-bold" style="text-align: center;"> No Expense Data Found</h4>
+   
+   
+                                    </div> 
+                     </table>
+                    
+                     <table  class="table table-bordered" *ngIf="showexpense">
+                     <th>
+                     
+                        <tr>  <td style="min-width: 150px;" class="fw-bold">Grand Total</td>
+                                <td style="min-width: 150px;" class="fw-bold"></td>
+                                <td style="min-width: 200px;" class="fw-bold">{{TotalRequested}}</td>
+                                <td style="min-width: 200px;" class="fw-bold">{{TotalApproved}}</td>
+                        </tr>
+                     </th>
+                     </table>
+                    <!-- <div *ngIf="ExpenseData.PayslipExist==false" class="text-center mt-2 pb-5 border-bottom">
+                            <a class="btn btn-primary me-1" (click)="Action(ExpenseData.EmployeeID,'Approved',ExpenseData.Date,ExpenseData.AdminID);">
+                                <i  class="fa fa-check-circle"></i> Approve</a>
+                                <a class="btn btn-secondary" (click)="Action(ExpenseData.EmployeeID,'Rejected',ExpenseData.Date,ExpenseData.AdminID);">
+                                    <i  class="fa fa-times"></i>Reject</a>
+                                </div> -->
+
+                                <div class="text-center mt-2 pb-5 border-bottom">
+                                        <button *ngIf="showexpense" style="color: white;" class="btn btn-success me-1" (click)="ApproveAll('Approved');">
+                                                <i  class="fa fa-check-circle"></i> Approve</button>    
+                                                <button *ngIf="showexpense" style="color: white;" class="btn btn-danger me-1" (click)="ApproveAll('Rejected');">
+                                                    <i  class="fa fa-times"></i> Reject</button> 
+                                        <button class="btn btn-primary me-1" (click)="CloseTab();">
+                                            <i  class="fa fa-times"></i> Close</button>    
+                                            </div> 
+                    </div>
+                 
+                
+            
+      
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+</div>

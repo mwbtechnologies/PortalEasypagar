@@ -1,0 +1,163 @@
+
+<div class="dialogs">
+  <div style="display: flex;justify-content: space-between;">
+    <h3 style="font-weight: bold;text-align: center;" > Allocate Shift</h3>
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+</div>
+    <div class="row Content" style="margin-bottom: 0%;margin-top:2%">
+        <div class="col-md-3">
+          <label class="labels"> <span>Add</span> Branch</label><br>
+         <ng-multiselect-dropdown [placeholder]="'Select Branch'" 
+          [data]="BranchList" [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)"
+          [settings]="branchSettings">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-3">
+          <label class="labels"><span>Add </span>Department</label><br>
+         <ng-multiselect-dropdown  [placeholder]="'Select Department'" 
+          [data]="DepartmentList" [(ngModel)]="selectedDepartment" (onSelect)="onDepartmentSelect($event)" (onDeSelect)="onDeselectDepartment($event)"
+          [settings]="departmentSettings">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-3">
+          <label class="labels"><span>Add</span> Employee</label>
+          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button>
+         <ng-multiselect-dropdown [placeholder]="'Select Employee'" 
+          [data]="EmployeeList" [(ngModel)]="selectedEmployee" (onSelect)="onEmpSelect($event)" (onDeSelect)="onEmpDeSelect($event)"
+          [settings]="employeeSettings">
+          </ng-multiselect-dropdown>
+        
+        </div>
+        <div class="col-md-3">
+          <label class="labels">Start-Date</label>
+          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button>
+          <input name="example-password-input" placeholder="Select Date" type="date" (keydown)="preventKeyboardInput($event)"
+ (change)="CheckDate(formInput.StartDate)"
+          required StartDate [(ngModel)]="formInput.StartDate" class="form-control">
+        
+        </div>
+    </div>
+
+    <div class="row Content" style="margin-bottom: 0%;margin-top:2%">
+      <div  class="table-responsive">
+        <table id="DataTables_Table_0" table  class="table table-striped table-bordered table-hover">
+           <thead >
+               <tr >
+                   <th >Weeks          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button></th>
+                   <th >Select Shift          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button></th>
+                   <th >Working Days          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button></th>
+                   <th >WeekOff          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button></th>
+               </tr>
+           </thead>
+           <tbody >
+               <tr  class="ng-star-inserted" *ngFor="let IL of DynamicArray; let i = index;">
+                   <td >
+                       <div  class="ng-star-inserted">{{IL.WeekName}}</div>
+                   </td>
+                  
+                   <td style="min-width: 150px;">
+                       <div  class="ng-star-inserted">
+                        <ng-multiselect-dropdown  [placeholder]="'Shift'" 
+                         [data]="ShiftList" [(ngModel)]="IL.ShiftID" (onSelect)="onShiftSelect($event)"
+                         [settings]="shiftSettings">
+                         </ng-multiselect-dropdown> </div>
+                       
+                   </td>
+                   <td style="min-width: 150px;">
+                    <div  class="ng-star-inserted">
+                      <label *ngFor="let wk of IL.WorkingDays;let j = index;">{{wk.Text}}<br>
+                        <input type="checkbox" name="{{j}}{{IL.ID}}" id="{{j}}{{IL.ID}}{{IL.WeekName}}" [(ngModel)]="DynamicArray[i].WorkingDays[j].Value" (change)="OnCheckSelect(j,i,'work')"></label>
+                       </div>                                 
+                </td>
+                <td style="min-width: 150px;">
+                       <div  class="ng-star-inserted">
+                        <label *ngFor="let wo of IL.WeekOffDays; let j = index;">
+                          {{wo.Text}}<br>
+                          <input type="checkbox" name="{{j}}{{IL.ID}}" id="{{j}}{{IL.ID}}{{IL.WeekName}}" [(ngModel)]="DynamicArray[i].WeekOffDays[j].Value" (change)="OnCheckSelect(j,i,'week')">
+                        </label>
+                         </div>
+                       
+                   </td>
+                
+               </tr>
+           </tbody>
+       </table>                       
+    </div>
+   
+    <div class="col-md-11">
+      <label class="labels">Applicable to Whole Year &nbsp;<input type="checkbox" [(ngModel)]="IsWholeYear" (change)="changeyearselection();"><button mat-raised-button matTooltip="Selected employees will work under this configuration for below selected months"><i class="fa fa-info-circle"></i></button></label><br>
+        <div class="col-md-12" style="display:flex;justify-content: start;padding: 0;flex-wrap: wrap;">
+          <div>
+          <label class="weeks">Jan</label>&nbsp;
+          <input *ngIf="monthid==1" disabled type="checkbox" title="For Jan" [(ngModel)]="IsJan" (change)="setwholeyearvalue();">
+        
+           <input *ngIf="monthid!=1" type="checkbox" title="For Jan" [(ngModel)]="IsJan" (change)="setwholeyearvalue();">
+         </div>&nbsp;
+          <div>
+          <label class="weeks">Feb</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==2" title="For Feb"  [(ngModel)]="IsFeb" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=2" type="checkbox" title="For Feb" [(ngModel)]="IsFeb" (change)="setwholeyearvalue();">
+        
+         </div>&nbsp;
+          <div>
+          <label class="weeks">March</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==3" title="For march" [(ngModel)]="IsMarch" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=3" type="checkbox" title="For march" [(ngModel)]="IsMarch" (change)="setwholeyearvalue();">
+        
+         </div>&nbsp;
+          <div>
+          <label class="weeks">April</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==4" title="For April"  [(ngModel)]="IsApril" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=4" type="checkbox" title="For April" [(ngModel)]="IsApril" (change)="setwholeyearvalue();">
+        
+         </div>&nbsp;
+          <div>
+          <label class="weeks">May</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==5" title="For May"  [(ngModel)]="IsMay" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=5" type="checkbox" title="For May" [(ngModel)]="IsMay" (change)="setwholeyearvalue();">
+           
+         </div>&nbsp;
+          <div>
+          <label class="weeks">June</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==6" title="For June"  [(ngModel)]="IsJune" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=6" type="checkbox" title="For June" [(ngModel)]="IsJune" (change)="setwholeyearvalue();">
+         </div>&nbsp;
+         <div>
+          <label class="weeks">July</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==7" title="For July"  [(ngModel)]="IsJuly" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=7" type="checkbox" title="For July" [(ngModel)]="IsJuly" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Aug</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==8" title="For Aug"  [(ngModel)]="IsAug" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=8" type="checkbox" title="For Aug" [(ngModel)]="IsAug" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Sep</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==9" title="For Sep"  [(ngModel)]="IsSep" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=9" type="checkbox" title="For Sep" [(ngModel)]="IsSep" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Oct</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==10" title="For Oct"  [(ngModel)]="IsOct" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=10" type="checkbox" title="For Oct" [(ngModel)]="IsOct" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Nov</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==11" title="For Nov"  [(ngModel)]="IsNov" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=11" type="checkbox" title="For Nov" [(ngModel)]="IsNov" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Dec</label>&nbsp;
+           <input type="checkbox" disabled *ngIf="monthid==12" title="For Dec" [(ngModel)]="IsDec" (change)="setwholeyearvalue();">
+           <input *ngIf="monthid!=12" type="checkbox" title="For Dec" [(ngModel)]="IsDec" (change)="setwholeyearvalue();">
+         </div>
+      </div>
+    </div>
+        <div class="col-md-1"><br>
+            <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="addAllocation()">Submit</button>
+     
+        </div>
+    </div>
+  
+</div>

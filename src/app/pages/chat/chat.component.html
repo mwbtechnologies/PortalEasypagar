@@ -1,0 +1,483 @@
+<div class="col-md-12" *ngIf="ShowChats">
+    <div class="card">
+        <div class="card-header">
+            <div class="col-md-12"
+                style="display:flex;justify-content: space-between;align-items: center;text-align: center;">
+                <h3 class="mb-0 card-title" *ngIf="ShowChats==true">Messages</h3>
+                <h3 class="mb-0 card-title" style="text-align: center;" *ngIf="ShowChats==false">Message History</h3>
+                <button *ngIf="IsAdmin=='true'&& ShowChats==true" class="btn btn-primary"
+                    style="border-radius: 10px;background-color: #3601b5a3;" (click)="createMeessage()">🆕 Create
+                    Message</button>
+            </div>
+        </div>
+        <div class="chatbox" style="display: flex;flex-wrap: wrap;">
+            <!-- View All Chats Together -->
+            <div class="col-md-12">
+                <div class="main-content-app">
+                    <div class="card">
+                        <div class="chat-search">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>From Date</label>
+                                    <input type="date" class="form-control" [(ngModel)]="FromDate">
+                                </div>
+                                <div class="col-md-2">
+                                    <label>To Date</label>
+                                    <input type="date" class="form-control" [(ngModel)]="ToDate">
+                                </div>
+                                <div class="col-md-2" style="padding-top: 25px;">
+                                    <button class="btn btn-primary"
+                                        style="border-radius: 10px;background-color: #3601b5a3;"
+                                        (click)="GetMessages()">Search</button>
+                                </div>
+                            </div>
+                            <div *ngIf="MessageList.length>0" class="input-group col-md-4" style="margin-top: 2%;padding: 0;">
+                                <input type="text" placeholder="Search........" [(ngModel)]="searchAll"
+                                    (ngModelChange)="AllFilter()" class="form-control bg-white">
+                                <button type="button" class="btn btn-primary"
+                                    style="border-radius: 10px;background-color: #3601b5a3;">
+                                    <i aria-hidden="true" class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="overflow-y: scroll;">
+                            <div class="contacts_body p-0">
+                                <ul class="contacts mb-0">
+                                    <li *ngFor="let IL of MessageList;let i=index;">
+                                        <div class="d-flex" (click)="ChangeUser(IL.MainMessageID,i );">
+                                            <div class="img_cont" *ngIf="IL.MessageType=='Group'"><img
+                                                    src="./assets/images/Banner/Icons/multichat.png" alt="img"
+                                                    class="rounded-circle user_img"></div>
+                                            <div class="img_cont" *ngIf="IL.MessageType!='Group'"><img
+                                                    src="./assets/images/Banner/Icons/singlechat.jpg" alt="img"
+                                                    class="rounded-circle user_img"></div>
+                                            <div class="d-sm-flex flex-wrap flex-1 ms-2 align-items-center">
+                                                <div class="user_info" *ngIf="IL.MessageType!='Group'">
+                                                    <h6 class="mb-0">{{IL.UserName}}
+
+                                                    </h6>
+                                                    <span class="fs-13">{{IL.Message}}</span>
+                                                </div>
+                                                <div class="user_info" *ngIf="IL.MessageType=='Group'">
+                                                    <h6 class="mb-0"><label
+                                                            *ngFor="let branch of IL.Branches">{{branch.text}} &nbsp;
+                                                            |&nbsp;</label>
+
+                                                    </h6>
+                                                    <h6 class="mb-0"><label style="font-size: 12px;"
+                                                            *ngFor="let branch of IL.Departments">{{branch.text}}&nbsp;
+                                                            |&nbsp;</label>
+
+                                                    </h6>
+                                                    <span class="fs-13">{{IL.Message}}</span>
+                                                </div>
+                                                <div class="ms-auto"><small class="ms-sm-auto text-muted fs-12">
+                                                        <span *ngIf="IL.UnReadCount!=0"
+                                                            class="dot-label bg-success ms-2"
+                                                            style="height: 15px;width: 15px;text-align:center;color: white;"><label
+                                                                style="text-align: center;">{{IL.UnReadCount}}</label></span>
+                                                        &nbsp;{{IL.ReceivedDate| date:'dd/MM/yyyy hh:mm a' }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </li>
+
+                                    <li *ngIf="MessageList.length==0">
+                                        <h5 style="text-align: center;font-size: 18px;">No Messages Found..!!</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12" *ngIf="ShowChatHistory">
+    <div class="card">
+        <div class="card-header">
+            <div class="col-md-12" style="display:flex;justify-content: space-between;align-items: center;">
+                <h3 class="mb-0 card-title">Messages</h3>
+                <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+                    (click)="Close()">Close</button>
+            </div>
+        </div>
+        <div class="row chatbox" *ngIf="!ShowSingleShow">
+            <div class="col-md-12 col-lg-12 col-xl-5"  >
+                <div class="main-content-app">
+                    <div class="card overflow-hidden mb-xl-0 mb-5">
+                        <div class="chat-search">
+                            <div class="input-group">
+                                <button type="button" *ngIf="HistoryFilter!='All'" class="btn btn-primary"
+                                    style="border-radius: 10px;background-color: #3601b5a3;"
+                                    (click)="ChangeHistoryFilter('All');">All ({{OverAllCount}}) </button>
+                                <button type="button" *ngIf="HistoryFilter=='All'" class="btn btn-primary"
+                                    style="border-radius: 10px;background-color: #7b4ee1a3;"
+                                    (click)="ChangeHistoryFilter('All');">All ({{OverAllCount}}) </button> &nbsp;
+                                &nbsp;
+
+                                <button type="button" *ngIf="HistoryFilter!='Read'" class="btn btn-primary"
+                                    style="border-radius: 10px;background-color: #3601b5a3;"
+                                    (click)="ChangeHistoryFilter('Read');">Read ({{OverAllReadCount}})</button>
+                                <button type="button" *ngIf="HistoryFilter=='Read'" class="btn btn-primary"
+                                    style="border-radius: 10px;background-color: #7b4ee1a3;"
+                                    (click)="ChangeHistoryFilter('Read');">Read ({{OverAllReadCount}})</button> &nbsp; &nbsp;
+
+                                <button type="button" *ngIf="HistoryFilter!='Unread'" class="btn btn-primary"
+                                    style="border-radius: 10px;background-color: #3601b5a3;"
+                                    (click)="ChangeHistoryFilter('Unread');">Unread ({{OverAllUnreadCount}})</button>&nbsp;
+
+
+                                <button type="button" *ngIf="HistoryFilter=='Unread'" class="btn btn-primary"
+                                    style="border-radius: 10px;background-color: #7b4ee1a3;"
+                                    (click)="ChangeHistoryFilter('Unread');">Unread ({{OverAllUnreadCount}})</button>
+                            </div>
+                            <div class="input-group" style="margin-top: 10px;">
+                                <input type="text" placeholder="Search" [(ngModel)]="searchEmployee"
+                                (ngModelChange)="empFilter()" class="form-control bg-white">
+                            <button type="button" class="btn btn-primary"
+                                style="border-radius: 10px;background-color: #3601b5a3;">
+                                <i aria-hidden="true" class="fa fa-search"></i>
+                            </button>
+                            </div>
+                        </div>
+                        <div style="overflow-y: scroll;">
+                            <div class="contacts_body p-0">
+                                <ul class="contacts mb-0">
+                                    <li style="border-bottom: 0px solid rgba(227, 231, 241, .8);" *ngFor="let IL of SubMessageList;let i=index">
+                                        <div class="d-flex flex-wrap"
+                                            (click)="GetUserMessageHistory(IL.EmployeeID,IL.EmployeeName,IL.Branch, IL.Department,IL.ProfileImage,i);">
+                                            <div class="img_cont"><img src="{{IL.ProfileImage}}" alt="img"
+                                                    class="rounded-circle user_img"></div>
+                                            <!-- All Filter -->
+                                            <div class="d-sm-flex flex-wrap flex-1 ms-2 align-items-center">
+                                                <div class="user_info">
+                                                    <h6 class="mb-0">{{IL.EmployeeName}} -> {{IL.Branch}}
+                                                        <span class="dot-label bg-success ms-2"
+                                                            *ngIf="IL.EmployeeID==this.UserID"></span>
+                                                    </h6><span class="fs-13">{{IL.Message}}
+                                                        </span>
+                                                </div>
+                                                <div class="ms-auto"><small class="ms-sm-auto text-muted fs-12">
+                                                        <span *ngIf="IL.UnReadCount!=0"
+                                                            class="dot-label bg-success ms-2"
+                                                            style="height: 15px;width: 15px;text-align:center;color: white;">
+                                                            <label
+                                                                style="text-align: center;">{{IL.UnReadCount}}</label>
+                                                        </span>&nbsp;
+
+                                                        {{IL.ReceivedDate|
+                                                        date:'yyyy-MM-dd'}}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-xl-7 chat" >
+                <div class="main-content-app">
+                    <div class="card shadow-none overflow-hidden mb-xl-0 mb-5">
+                        <div class="action-header clearfix mt-2">
+                            <div class="float-start hidden-xs d-flex ms-2">
+                                <div class="img_cont me-3"><img src="{{ProfileImage}}" alt="img"
+                                        class="rounded-circle user_img"></div>
+                                <div class="align-items-center mt-2">
+                                    <h4 class="mb-0 font-weight-semibold">{{EmployeeName}}</h4><span
+                                        class="dot-label bg-success"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="overflow-y: scroll;height: 100%;">
+                            <div class="ng-scroll-content">
+                                <div class="card-body msg_card_body">
+                                    <div class="chat-box-single-line"><abbr class="">{{MessageStart}}</abbr>
+                                    </div>
+                                    <div *ngFor="let IL of MessageHistory;">
+                                        <div class="d-flex justify-content-end"
+                                            *ngIf="IL.UserID==this.MainUserID">
+
+                                            <div *ngIf="IL.IsFilesExist!=true" style="background-color: #3601b5a3;"
+                                                class="msg_cotainer_send">{{IL.Message}} <span
+                                                    class="msg_time_send">{{IL.ReceivedDate|
+                                                    date:'yyyy-MM-dd'}}</span>
+                                            </div>
+                                            <div *ngIf="IL.IsFilesExist==true" class="msg_cotainer_send"
+                                                style="max-width: 300px;"> {{IL.Message}}
+                                                <div class="d-flex mt-2" style="min-height: 100px;margin-top:0rem">
+                                                    <div *ngFor="let img of IL.Files;let i=index">
+                                                        <img *ngIf="img.FileType=='Image'"
+                                                            style="position:relative;height: 100px;width: 100px;"
+                                                            (click)="ShowAlert('',img.FilePath)" src="{{img.FilePath}} "
+                                                            alt="img" class="img-fluid rounded">
+                                                        <a href="{{img.FilePath}}"><img *ngIf="img.FileType=='PDF'"
+                                                                src="./assets/images/Banner/Icons/pdfdownload.png"
+                                                                alt="PDF img" class="img-fluid rounded">
+                                                            <img *ngIf="img.FileType=='Excel'"
+                                                                src="./assets/images/Banner/Icons/exceldownload.png"
+                                                                alt="PDF img" class="img-fluid rounded">
+                                                            <img *ngIf="img.FileType=='Word'"
+                                                                src="./assets/images/Banner/Icons/worddownload.png"
+                                                                alt="PDF img" class="img-fluid rounded"></a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-start"
+                                            *ngIf="IL.UserID!=this.MainUserID">
+                                            <div class="img_cont_msg">
+                                                <img src="{{IL.ProfileImgUrl}}" alt="img"
+                                                    class="rounded-circle user_img_msg">
+                                            </div>
+                                            <div *ngIf="IL.IsFilesExist!=true" class="msg_cotainer">
+                                                {{IL.Message}}
+                                                <span class="msg_time">{{IL.ReceivedDate|
+                                                    date:'yyyy-MM-dd'}}</span>
+                                            </div>
+                                            <div *ngIf="IL.IsFilesExist==true" class="msg_cotainer_send"
+                                                style="max-width: 300px;"> {{IL.Message}}
+                                                <div class="d-flex mt-2" style="min-height: 100px;margin-top:0rem">
+                                                    <div *ngFor="let img of IL.Files;let i=index">
+                                                        <img *ngIf="img.FileType=='Image'"
+                                                            style="position:relative;height: 100px;width: 100px;"
+                                                            (click)="ShowAlert('',img.FilePath)" src="{{img.FilePath}} "
+                                                            alt="img" class="img-fluid rounded">
+                                                        <a href="{{img.FilePath}}"><img *ngIf="img.FileType=='PDF'"
+                                                                src="./assets/images/Banner/Icons/pdfdownload.png"
+                                                                alt="PDF img" class="img-fluid rounded">
+                                                            <img *ngIf="img.FileType=='Excel'"
+                                                                src="./assets/images/Banner/Icons/exceldownload.png"
+                                                                alt="PDF img" class="img-fluid rounded">
+                                                            <img *ngIf="img.FileType=='Word'"
+                                                                src="./assets/images/Banner/Icons/worddownload.png"
+                                                                alt="PDF img" class="img-fluid rounded"></a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="msg_cotainer_send" style="max-width: 300px;" *ngIf="ShowImage">
+                                        {{this.Message}}
+                                        <div class="d-flex mt-2" style="min-height: 100px;margin-top:0rem">
+                                            <div *ngFor="let img of ReplyFiles;let i=index">
+                                                <button style="left: 20px;
+                                                                    position: relative;
+                                                                    top: 0;
+                                                                    float: right;
+                                                                    z-index: 1000;" (click)="removeFile(i)"><i
+                                                        class="fa fa-times"></i></button>
+                                                <img *ngIf="img.FileType=='Image'"
+                                                    style="position:relative;height: 100px;width: 100px;"
+                                                    (click)="ShowAlert(CurrentDomain,img.FilePath)"
+                                                    src="{{CurrentDomain}}{{img.FilePath}} " alt="img"
+                                                    class="img-fluid rounded">
+                                                <a href="{{CurrentDomain}}{{img.FilePath}}"><img
+                                                        *ngIf="img.FileType=='PDF'"
+                                                        src="./assets/images/Banner/Icons/pdfdownload.png" alt="PDF img"
+                                                        class="img-fluid rounded">
+                                                    <img *ngIf="img.FileType=='Excel'"
+                                                        src="./assets/images/Banner/Icons/exceldownload.png"
+                                                        alt="PDF img" class="img-fluid rounded">
+                                                    <img *ngIf="img.FileType=='Word'"
+                                                        src="./assets/images/Banner/Icons/worddownload.png"
+                                                        alt="PDF img" class="img-fluid rounded"></a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <form #validationForm="ngForm" novalidate>
+                            <div class="card-footer">
+                                <div class="input-group">
+                                    <input name="Message" type="text" required Message [(ngModel)]="this.Message"
+                                        placeholder="Typing a message here..." class="form-control">
+                                    <button class="btn btn-primary"
+                                        style="border-radius: 10px;background-color: #3601b5a3;">
+                                        <input style="max-width: 100px;" multiple type="file" id="formFile"
+                                            (change)="UploadMultipleFiles($event,validationForm)"
+                                            class="form-control"></button> &nbsp;
+                                    <button type="button" class="btn btn-primary"
+                                        style="border-radius: 10px;background-color: #3601b5a3;"
+                                        (click)="ReplyMessage();">
+                                        Send &nbsp;<i class="fa fa-paper-plane-o"></i></button> &nbsp;<button
+                                        type="button" class="btn btn-primary"
+                                        style="border-radius: 10px;background-color: #3601b5a3;" (click)="CloseChat();">
+                                        Close &nbsp;<i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row chatbox" *ngIf="ShowSingleShow">
+          
+            <div class="col-md-12 col-lg-12 col-xl-12 chat" >
+                <div class="main-content-app">
+                    <div class="card shadow-none overflow-hidden mb-xl-0 mb-5">
+                        <div class="action-header clearfix mt-2">
+                            <div class="float-start hidden-xs d-flex ms-2">
+                                <div class="img_cont me-3"><img src="{{ProfileImage}}" alt="img"
+                                        class="rounded-circle user_img"></div>
+                                <div class="align-items-center mt-2">
+                                    <h4 class="mb-0 font-weight-semibold">{{EmployeeName}}</h4><span
+                                        class="dot-label bg-success"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="overflow-y: scroll;height: 100%;">
+                            <div class="ng-scroll-content">
+                                <div class="card-body msg_card_body">
+                                    <div class="chat-box-single-line"><abbr class="">{{MessageStart}}</abbr>
+                                    </div>
+                                    <div *ngFor="let IL of MessageHistory;">
+                                        <div class="d-flex justify-content-end"
+                                            *ngIf="IL.UserID==this.MainUserID">
+
+                                            <div *ngIf="IL.IsFilesExist!=true" style="background-color: #3601b5a3;"
+                                                class="msg_cotainer_send">{{IL.Message}} <span
+                                                    class="msg_time_send">{{IL.ReceivedDate|
+                                                    date:'yyyy-MM-dd'}}</span>
+                                            </div>
+                                            <div *ngIf="IL.IsFilesExist==true" class="msg_cotainer_send"
+                                                style="max-width: 300px;"> {{IL.Message}}
+                                                <div class="d-flex mt-2" style="min-height: 100px;margin-top:0rem">
+                                                    <div *ngFor="let img of IL.Files;let i=index">
+                                                        <img *ngIf="img.FileType=='Image'"
+                                                            style="position:relative;height: 100px;width: 100px;"
+                                                            (click)="ShowAlert('',img.FilePath)" src="{{img.FilePath}} "
+                                                            alt="img" class="img-fluid rounded">
+                                                        <a href="{{img.FilePath}}"><img *ngIf="img.FileType=='PDF'"
+                                                                src="./assets/images/Banner/Icons/pdfdownload.png"
+                                                                alt="PDF img" class="img-fluid rounded">
+                                                            <img *ngIf="img.FileType=='Excel'"
+                                                                src="./assets/images/Banner/Icons/exceldownload.png"
+                                                                alt="PDF img" class="img-fluid rounded">
+                                                            <img *ngIf="img.FileType=='Word'"
+                                                                src="./assets/images/Banner/Icons/worddownload.png"
+                                                                alt="PDF img" class="img-fluid rounded"></a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-start"
+                                            *ngIf="IL.UserID!=this.MainUserID">
+                                            <div class="img_cont_msg">
+                                                <img src="{{IL.ProfileImgUrl}}" alt="img"
+                                                    class="rounded-circle user_img_msg">
+                                            </div>
+                                            <div *ngIf="IL.IsFilesExist!=true" class="msg_cotainer">
+                                                {{IL.Message}}
+                                                <span class="msg_time">{{IL.ReceivedDate|
+                                                    date:'yyyy-MM-dd'}}</span>
+                                            </div>
+                                            <div *ngIf="IL.IsFilesExist==true" class="msg_cotainer_send"
+                                                style="max-width: 300px;"> {{IL.Message}}
+                                                <div class="d-flex mt-2" style="min-height: 100px;margin-top:0rem">
+                                                    <div *ngFor="let img of IL.Files;let i=index">
+                                                        <img *ngIf="img.FileType=='Image'"
+                                                            style="position:relative;height: 100px;width: 100px;"
+                                                            (click)="ShowAlert('',img.FilePath)" src="{{img.FilePath}} "
+                                                            alt="img" class="img-fluid rounded">
+                                                        <a href="{{img.FilePath}}"><img *ngIf="img.FileType=='PDF'"
+                                                                src="./assets/images/Banner/Icons/pdfdownload.png"
+                                                                alt="PDF img" class="img-fluid rounded">
+                                                            <img *ngIf="img.FileType=='Excel'"
+                                                                src="./assets/images/Banner/Icons/exceldownload.png"
+                                                                alt="PDF img" class="img-fluid rounded">
+                                                            <img *ngIf="img.FileType=='Word'"
+                                                                src="./assets/images/Banner/Icons/worddownload.png"
+                                                                alt="PDF img" class="img-fluid rounded"></a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="msg_cotainer_send" style="max-width: 300px;" *ngIf="ShowImage">
+                                        {{this.Message}}
+                                        <div class="d-flex mt-2" style="min-height: 100px;margin-top:0rem">
+                                            <div *ngFor="let img of ReplyFiles;let i=index">
+                                                <button style="left: 20px;
+                                                                    position: relative;
+                                                                    top: 0;
+                                                                    float: right;
+                                                                    z-index: 1000;" (click)="removeFile(i)"><i
+                                                        class="fa fa-times"></i></button>
+                                                <img *ngIf="img.FileType=='Image'"
+                                                    style="position:relative;height: 100px;width: 100px;"
+                                                    (click)="ShowAlert(CurrentDomain,img.FilePath)"
+                                                    src="{{CurrentDomain}}{{img.FilePath}} " alt="img"
+                                                    class="img-fluid rounded">
+                                                <a href="{{CurrentDomain}}{{img.FilePath}}"><img
+                                                        *ngIf="img.FileType=='PDF'"
+                                                        src="./assets/images/Banner/Icons/pdfdownload.png" alt="PDF img"
+                                                        class="img-fluid rounded">
+                                                    <img *ngIf="img.FileType=='Excel'"
+                                                        src="./assets/images/Banner/Icons/exceldownload.png"
+                                                        alt="PDF img" class="img-fluid rounded">
+                                                    <img *ngIf="img.FileType=='Word'"
+                                                        src="./assets/images/Banner/Icons/worddownload.png"
+                                                        alt="PDF img" class="img-fluid rounded"></a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <form #validationForm="ngForm" novalidate>
+                            <div class="card-footer">
+                                <div class="input-group">
+                                    <input name="Message" type="text" required Message [(ngModel)]="this.Message"
+                                        placeholder="Typing a message here..." class="form-control">
+                                    <button class="btn btn-primary"
+                                        style="border-radius: 10px;background-color: #3601b5a3;">
+                                        <input style="max-width: 100px;" multiple type="file" id="formFile"
+                                            (change)="UploadMultipleFiles($event,validationForm)"
+                                            class="form-control"></button> &nbsp;
+                                    <button type="button" class="btn btn-primary"
+                                        style="border-radius: 10px;background-color: #3601b5a3;"
+                                        (click)="ReplyMessage();">
+                                        Send &nbsp;<i class="fa fa-paper-plane-o"></i></button> &nbsp;<button
+                                        type="button" class="btn btn-primary"
+                                        style="border-radius: 10px;background-color: #3601b5a3;" (click)="CloseChat();">
+                                        Close &nbsp;<i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div>
+    <div  class="row">
+        <div  class="col-md-12 col-xl-12">
+            <div  class="card cart">
+                <div  class="card-header">
+                    <h3  class="card-title">AddOn List</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="table-responsive">
+                        <table  class="table table-bordered table-vcenter text-nowrap">
+                            <thead >
+                                <tr >
+                                    <th >Title</th>
+                                    <th >Price</th>
+                                    <th  class="w-15">Quantity</th>
+                                    <th >Duration</th>
+                                    <th >Expiry Date</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+
+                                <tr>
+                                    <td ><i class="fa fa-users"></i>&nbsp; {{PlanName}}</td>
+                                     <td  class="number-font1">{{PlanAmount}}</td>
+                                     <td>
+                                         <div  class="input-group" style="width: 80px;">
+                                        
+                                             <input name="minCount" type="number" disabled="true"
+                                            required value="1" placeholder="1"
+                                              minCount  class="form-control text-center">
+                                            
+                                         </div>
+                                     </td>
+                                     <td>{{Duration}}</td>
+                                     <td>{{PlanEndDate}}</td>
+                                </tr>
+                                <tr *ngFor="let plan of AddonList;let i = index;">
+                                   <td ><i class="fa fa-users"></i>&nbsp; {{plan.Title}}</td>
+                                    <td  class="number-font1">{{plan.Amount}}</td>
+                                    <td *ngIf="plan.minCount==0">
+                                        <div  class="input-group" style="width: 80px;">
+                                       
+                                            <input name="{{plan.Title}}" type="number"
+                                            #Count="ngModel" required pattern="[1-9]{1}[0-9]{1}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            maxlength="4"  Count [(ngModel)]="plan.Count" (change)="OnAddOnSelect($event);"  class="form-control text-center">
+                                           
+                                        </div>
+                                    </td>
+                                    <td *ngIf="plan.minCount!=0" >
+                                        <div  class="input-group" style="width: 80px;">
+                                       
+                                            <input disabled="true" name="{{plan.Title}}" type="number"
+                                            #Count="ngModel" required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            maxlength="4"  Count [(ngModel)]="plan.Count" (change)="OnAddOnSelect($event);"  class="form-control text-center">
+                                           
+                                        </div>
+                                    </td>
+                                    <td *ngIf="plan.Duration=='0 Days'"><label>-NA-</label></td>
+                                    <td *ngIf="plan.Duration!='0 Days'"><label>{{plan.Duration}}</label></td>
+                                    <td>{{plan.PlanEndDate}}</td>
+                               </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  class="col-md-12 col-xl-12">
+            <div  class="card cart">
+                <div  class="card-body">
+                    <ul  class="list-group">
+                        <li  class="list-group-item"> {{PlanName}} Plan Cost <span 
+                                class="badgetext h4 mb-0 number-font1"><i class="fa fa-rupee"></i> {{PlanAmount}}</span></li>
+                        <li  class="list-group-item"> AddOns Cost <span 
+                                class="badgetext h4 mb-0 number-font1">{{AddonAmount}}</span></li>
+                        <li  class="list-group-item h4 fw-600"> Total <span 
+                                class="badgetext h4 fw-600 mb-0 number-font1">{{TotalAmount}}</span></li>
+                    </ul>
+                </div>
+                <div  class="card-footer text-end">
+                    <a *ngIf="!ShowPayment" aria-disabled="true" class="btn btn-secondary mb-1">
+                        <i class="fa fa-credit-card"></i> Proceed to Pay</a>
+                        <a *ngIf="ShowPayment" (click)="CreateOrder();" class="btn btn-secondary mb-1">
+                            <i class="fa fa-credit-card"></i> Proceed to Pay</a></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+.active{
+    background-color: green;
+    border-radius: 5px;
+    color:white;
+    padding:0px 4px
+    }
+    .inactive{
+        background-color: red;
+        border-radius: 5px;
+        color:white;
+        padding:0px 4px
+    }

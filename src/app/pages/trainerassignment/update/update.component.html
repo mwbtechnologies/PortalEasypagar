@@ -1,0 +1,44 @@
+<div class="roledialog">
+    <!-- <h4>Update Status</h4> -->
+    <div style="display: flex;justify-content: space-between;">
+        <h4>Update Status</h4>
+        <i class="fa fa-times" style="font-size: 20px;" (click)="cancel()"></i>
+    </div>
+    <div class="row col-md-12" style="padding: 0;row-gap: 10px;">
+        <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <div class="ng-star-inserted" style="text-align: center;display: flex;">
+                <select [ngClass]="Status" [(ngModel)]="Status" style="border-radius: 10px;">
+                    <option value="Pending">Pending</option>
+                    <option value="On-Going">On-Going</option>
+                    <option value="Complete">Complete</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12" style="padding: 0;row-gap: 10px;">
+        <div class="col-md-6">
+            <label class="form-label">Title</label>
+            <textarea class="form-control" disabled type="text" placeholder="Enter Title"
+                [(ngModel)]="data.row.TrainingHeading"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" disabled type="text" placeholder="Enter Title"
+                [(ngModel)]="data.row.Training_Description"></textarea>
+        </div>
+        <div class="col-md-6" *ngIf=" Status == 'On-Going' || Status == 'Complete'">
+            <label class="form-label">Start Date <label style="color: red;margin:0">*</label></label>
+            <input class="form-control" [disabled]="SDdisableDates" type="date" [(ngModel)]="SessionStartDate">
+        </div>
+        <div class="col-md-6" *ngIf="Status == 'Complete'">
+            <label class="form-label">End Date <label style="color: red;margin:0">*</label></label>
+            <input class="form-control" [disabled]="EDdisableDates" type="date" [max]="today"
+                [(ngModel)]="SessionEndDate">
+        </div>
+
+    </div>
+    <div style="text-align: center;margin-top: 10px;">
+        <button class="btn btn-primary" (click)="updateStatus()">Update</button>
+    </div>
+</div>

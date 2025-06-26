@@ -1,0 +1,67 @@
+<div style="width: auto;height: auto;padding:10px">
+    <h4>Loan / Advance Deduction Details</h4>
+    <!-- <div *ngFor="let IL of data.LoanList;let i = index;"> -->
+        <!-- <div >
+            <label>LoanType<label>
+            <input  [(ngModel)]="IL.LoanType" disabled="true">
+          </div> &nbsp;
+
+        <mat-form-field appearance="fill">
+            <mat-label>Old Balance</mat-label>
+            <input  [(ngModel)]="IL.OldBalance" type="number" disabled="true">
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="fill">
+            <mat-label>Deduction</mat-label>
+            <input  [(ngModel)]="IL.Deduction" type="number" (change)="onchange(i,data.LoanList)">
+      </mat-form-field>&nbsp;
+      <mat-form-field appearance="fill">
+            <mat-label>Balance</mat-label>
+            <input  [(ngModel)]="IL.RemainingBalance" type="number" disabled="true">
+          </mat-form-field> -->
+          <table 
+          class="table table-striped table-bordered table-hover">
+          <thead >
+            <tr>
+                <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Type</th>
+                <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Amount</th>
+                <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Deduction</th>
+                <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Balance</th>
+            </tr>
+        </thead>
+            <tbody >
+                <tr  class="ng-star-inserted" *ngFor="let IL of data.LoanList;let i = index;">   
+                    <td >
+                        <div  class="ng-star-inserted">{{IL.LoanType}}</div>
+                    </td>
+                    <td >
+                        <div  class="ng-star-inserted">{{IL.OldBalance}}</div>
+                    </td>
+                    <td >
+                        <div  class="ng-star-inserted"><input (ngModelChange)="onDeducted($event,IL)" [(ngModel)]="IL.Deduction" type="number"></div>
+                    </td>
+                    <td >
+                        <div  class="ng-star-inserted">{{IL.RemainingBalance}}</div>
+                    </td>
+                </tr>
+            </tbody>
+
+            <thead >
+              <tr>
+                  <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Total</th>
+                  <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">{{TotalAmount}}</th>
+                  <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7"style="background-color:white;width:fit-content">{{TotalDeducted}}</th>
+                  <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">{{TotalBalance}}</th>
+              </tr>
+          </thead>
+          </table>
+
+          <div style="display: flex;">
+            <button class="btn btn-danger" (click)="Close()">Cancel</button> &nbsp;&nbsp;
+            <button class="btn btn-primary" (click)="submit()">Submit</button>
+          </div>
+    </div>
+  <!-- </div> -->
+  
+  
+
+ 

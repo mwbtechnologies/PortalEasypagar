@@ -1,0 +1,24 @@
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div>
+                        <h3 class="mb-0 card-title filelabels"><label (click)="backToAssets()"><i class="fa fa-arrow-left"></i></label> Asset Assignment</h3>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary listbutton" >Bulk Upload</button>&nbsp;
+                        <button class="btn btn-primary listbutton" (click)="backToAssets()">Assets</button>&nbsp;
+                        <button class="btn btn-primary listbutton" (click)="assetAssign()">Add</button>&nbsp;
+                        <button class="btn btn-primary listbutton" >Filter</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div  class="table-responsive">
+                        <!-- <app-common-table [data]="AssetList" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" (actionEmitter)="actionEmitter($event)" ></app-common-table> -->
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

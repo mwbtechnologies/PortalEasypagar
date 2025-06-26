@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card">
+            <div class="card-header"> 
+                <div style="display: flex;justify-content: start;">
+                    <h3 class="mb-0 card-title">Weekoff and Holiday Configurations</h3>
+                </div>  
+            </div>
+            <div class="card-body" style="min-height: 60vh;">
+                <span style="padding:0px 0px 0px 15px"><label class="weight">Days (D)</label> : Enter The Minimum Days An Employee Must be Present Per Week To Avail A Weekoff. If Not Will result In Weekoff Deduction </span><br>
+               <span style="padding:0px 0px 0px 15px"><label class="weight">WeekOff (W)</label> : Sandwich Rule - Employee has a weekly off on Sunday. Employee is absent on Saturday and Monday
+                    As per the rule, the Sunday off will be considered an absence.
+                </span><br>
+                <span style="padding:0px 0px 0px 15px"><label class="weight">Holiday (H)</label> : Sandwich Rule - Employee has a holiday on Sunday. Employee is absent on Saturday and Monday
+                    As per the rule, the Sunday holiday will be considered an absence.
+                </span><br>
+                <br>
+                    <label style="font-weight:500;padding-left:15px">Branches</label>
+                    <div style="display: flex;flex-wrap: wrap;">
+                    <ng-container *ngFor="let bl of BranchList">
+                        <div class="col-md-4">
+                        <div style="border: 1px solid #dadada;
+                        padding: 15px;
+                        border-radius: 10px;">
+                        <div style="display: flex;">
+                            <div class="col-md-6">
+                                <label style="font-weight:500">{{bl.Name}}</label>
+                            </div>
+                            <div class="col-md-2 spacing">
+                                <input type="number" style="width:25px;border-radius: 5px;border: 1px solid #878282;padding-left: 5px;" 
+                                [(ngModel)]="bl.Days" (wheel)="$event.preventDefault()" (keydown)="preventPlusMinus($event)" 
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" 
+                                maxlength="1" (ngModelChange)="InputValidation(bl)">&nbsp;&nbsp;D
+                            </div>
+                            <div class="col-md-2 spacing">
+                                <input type="checkbox"  [(ngModel)]="bl.IsSandwichWeekoffenabled">&nbsp;W
+                            </div>
+                            <div class="col-md-2 spacing">
+                                <input type="checkbox"  [(ngModel)]="bl.IsSandwichHolidayenabled">&nbsp;H
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    </ng-container>
+            </div>
+            <div>
+                <label class="form-label" style="color: white;">.</label>    
+                <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="SaveWeekoffs()">Submit</button><br>
+            </div>
+
+             </div>
+        </div>
+    </div>

@@ -1,0 +1,355 @@
+<div *ngIf="Add">
+    <div class="row">
+       
+            <div class="col-md-12" style="padding: 0;">
+                <div class="card">
+                    <div class="card-header" style="justify-content: start;">
+                        <div class="col-md-5"><i class="fa fa-arrow-left" (click)="backForAdd()"></i></div>
+                        <h3 class="mb-0 card-title">🏬 Create New Branch</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3" >
+                                <label class="form-label">Select Organization</label>
+                                <ng-multiselect-dropdown [placeholder]="'Select Organization'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                    [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                    (onDeSelect)="onDeselectedOrg($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <form #validationForm="ngForm" class="editForm row" novalidate >
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">Branch Name <b color="red"> *</b></label>
+                                    <input type="text" name="example-text-input" class="form-control" id="Name"
+                                        name="Name" placeholder="Branch Name" #Name="ngModel" 
+                                        onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" required
+                                        Name [(ngModel)]="formInput.Name">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <label class="form-label">Work Start-Time</label>
+                                <input [ngxTimepicker]="picker" placeholder="Start Time"
+                                    name="example-text-input" class="form-control timings" id="FromTime" name="FromTime"
+                                    [ngClass]="{'is-invalid': !FromTime.valid && (FromTime.dirty || FromTime.touched || isSubmit)}"
+                                    #FromTime="ngModel" required FromTime [(ngModel)]="formInput.FromTime" (keydown)="restrictInput($event)"
+                                    [format]="timeFormat">
+                                <ngx-material-timepicker #picker> </ngx-material-timepicker>
+                                <!-- <input 
+    name="example-text-input" class="form-control timings" id="FromTime" name="FromTime" type="time" 
+    [ngClass]="{'is-invalid': !FromTime.valid && (FromTime.dirty || FromTime.touched || isSubmit)}"
+    #FromTime="ngModel" required  FromTime [(ngModel)]="formInput.FromTime"> -->
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <label class="form-label">Work End-Time</label>
+                                <input [ngxTimepicker]="picker1" placeholder="End Time"
+                                    name="example-text-input" class="form-control timings" id="ToTime" name="ToTime"
+                                    [ngClass]="{'is-invalid': !ToTime.valid && (ToTime.dirty || ToTime.touched || isSubmit)}"
+                                    #ToTime="ngModel" required ToTime [(ngModel)]="formInput.ToTime" (keydown)="restrictInput($event)"
+                                    [format]="timeFormat">
+                                <ngx-material-timepicker #picker1> </ngx-material-timepicker>
+                                <!-- <input
+    name="example-text-input" class="form-control timings" id="ToTime" name="ToTime" type="time"
+    [ngClass]="{'is-invalid': !ToTime.valid && (ToTime.dirty || ToTime.touched || isSubmit)}"
+    #ToTime="ngModel" required  ToTime [(ngModel)]="formInput.ToTime"> -->
+                            </div>
+                            <div class="col-md-0 col-lg-3"></div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label class="form-label">State<b color="red"> *</b></label>
+                                    <input type="text" name="example-text-input" class="form-control" id="State"
+                                        name="State" placeholder="State" #State="ngModel"
+                                        onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" required
+                                        Name [(ngModel)]="formInput.State">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">City<b color="red"> *</b></label>
+                                    <input type="text" name="example-text-input" class="form-control" id="City"
+                                        name="City" placeholder="City" #City="ngModel"
+                                        onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" required
+                                        City [(ngModel)]="formInput.City">
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Address <i class="fa fa-map-marker"
+                                            aria-hidden="true"></i></label>
+                                    <textarea rows="3" name="example-text-input" class="form-control" id="Address"
+                                        name="Address" type="text"
+                                        [ngClass]="{'is-invalid': !Address.valid && (Address.dirty || Address.touched || isSubmit)}"
+                                        #Address="ngModel" required Address [(ngModel)]="formInput.Address"
+                                       ></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-2" style="padding-left: 0rem;">
+                                <img src="./assets/images/Banner/map.png" style="padding-top: 25px;height: 100px;"
+                                    (click)="setCurrentLocation();"
+                                    matTooltip="Click here to fetch your live location and fill the address details">
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label class="form-label">Latitude</label>
+                                    <input type="text" name="example-text-input" class="form-control" id="Latitude"
+                                        name="Latitude" placeholder="Enter Latitude" #Latitude="ngModel" required Latitude
+                                        [(ngModel)]="formInput.Latitude">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group"><label class="form-label">Longitude</label>
+                                    <input type="text" name="example-text-input" class="form-control" id=Longitude
+                                        name="lng" placeholder="Enter Longitude" #Longitude="ngModel" required Longitude
+                                        [(ngModel)]="formInput.Longitude">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" style="padding-top: 3%;">
+                                <div class="table-responsive ng-star-inserted">
+                                    <button id="table2-new-row-button" class="btn btn-primary mb-4"
+                                        style="border-radius:10px;background-color: #3601b5a3;"
+                                        (click)="CreateBranch();">Submit</button>
+                                    <!---->
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    
+    </div>
+</div>
+<div *ngIf="Edit">
+    <div class="row">
+       
+            <div class="col-md-12" style="padding: 0;">
+                <div class="card">
+                    <div class="card-header" style="justify-content: start;">
+                        <div class="col-md-5"><i class="fa fa-arrow-left" (click)="backForEdit()"></i></div>&nbsp;
+                        <h3 class="mb-0 card-title">Edit Branch</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3" >
+                                <label class="form-label">Select Organization</label>
+                                <ng-multiselect-dropdown [placeholder]="'Select Organization'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                    [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                    (onDeSelect)="onDeselectedOrg($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <form #validationForm="ngForm" class="editForm row" novalidate>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group"><label class="form-label">Branch Name <b color="red">
+                                            *</b></label>
+                                            <input type="text" name="example-text-input" class="form-control" id="Name"
+                                            name="Name" placeholder="Branch Name" #Name="ngModel"
+                                            [ngClass]="{'is-invalid': Name.invalid && (Name.dirty || Name.touched ||isSubmit)}"
+                                            onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" required
+                                            Name [(ngModel)]="formInput.Name">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <label class="form-label">Work Start-Time</label>
+                                <!-- <input name="example-text-input" class="form-control timings" id="FromTime"
+                                    name="FromTime" type="time"
+                                    [ngClass]="{'is-invalid': !FromTime.valid && (FromTime.dirty || FromTime.touched || isSubmit)}"
+                                    #FromTime="ngModel" required FromTime [(ngModel)]="formInput.FromTime" /> -->
+                                     <input [ngxTimepicker]="picker" placeholder="select work start time"
+                                    name="example-text-input" class="form-control timings" id="FromTime" name="FromTime"
+                                    [ngClass]="{'is-invalid': !FromTime.valid && (FromTime.dirty || FromTime.touched || isSubmit)}"
+                                    #FromTime="ngModel" required FromTime [(ngModel)]="formInput.FromTime" (keydown)="restrictInput($event)"
+                                    [format]="timeFormat">
+                                <ngx-material-timepicker #picker> </ngx-material-timepicker>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <label class="form-label">Work End-Time</label>
+                                <!-- <input name="example-text-input" class="form-control timings" id="ToTime" name="ToTime"
+                                    type="time"
+                                    [ngClass]="{'is-invalid': !ToTime.valid && (ToTime.dirty || ToTime.touched || isSubmit)}"
+                                    #ToTime="ngModel" required ToTime [(ngModel)]="formInput.ToTime"> -->
+                                    <input [ngxTimepicker]="picker1" placeholder="select work end time"
+                                    name="example-text-input" class="form-control timings" id="ToTime" name="ToTime"
+                                    [ngClass]="{'is-invalid': !ToTime.valid && (ToTime.dirty || ToTime.touched || isSubmit)}"
+                                    #ToTime="ngModel" required ToTime [(ngModel)]="formInput.ToTime" (keydown)="restrictInput($event)"
+                                    [format]="timeFormat">
+                                <ngx-material-timepicker #picker1> </ngx-material-timepicker>
+                            </div>
+                            <div class="col-md-0 col-3"></div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label class="form-label">State<b color="red"> *</b></label>
+                                    <input type="text" name="example-text-input" class="form-control" id="State"
+                                    name="State" placeholder="State" #State="ngModel" required State
+                                    [ngClass]="{'is-invalid': State.invalid && (State.dirty || State.touched ||isSubmit)}"
+                                        [(ngModel)]="formInput.State">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group"><label class="form-label">City<b color="red"> *</b></label>
+                                    <input type="text" name="example-text-input" class="form-control" id="City"
+                                        name="City" placeholder="City" #City="ngModel" required City
+                                        [ngClass]="{'is-invalid': City.invalid && (City.dirty || City.touched ||isSubmit)}"
+                                        [(ngModel)]="formInput.City">
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Address <i class="fa fa-map-marker"
+                                            aria-hidden="true"></i></label>
+                                    <textarea rows="3" name="example-text-input" class="form-control" id="Address"
+                                        name="Address" type="text"
+                                        [ngClass]="{'is-invalid': !Address.valid && (Address.dirty || Address.touched || isSubmit)}"
+                                        #Address="ngModel" required Address [(ngModel)]="formInput.Address">
+        </textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-2" style="padding-left: 0rem;">
+                                <img src="./assets/images/Banner/map.png" style="padding-top: 25px;height: 100px;"
+                                    (click)="setCurrentLocation();"
+                                    matTooltip="Click here to fetch your live location and fill the address details">
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label class="form-label">Latitude</label>
+                                    <input type="text" name="example-text-input" class="form-control" id="Latitude"
+                                        name="Latitude" placeholder="Enter Latitude" #Latitude="ngModel" required Latitude
+                                        [(ngModel)]="formInput.Latitude">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group"><label class="form-label">Longitude</label>
+                                    <input type="text" name="example-text-input" class="form-control" id=Longitude
+                                        name="lng" placeholder="Enter Longitude" #Longitude="ngModel" required Longitude
+                                        [(ngModel)]="formInput.Longitude">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" style="padding-top: 3%;">
+                                <div class="table-responsive ng-star-inserted">
+                                    <button id="table2-new-row-button" class="btn btn-primary mb-4"
+                                        style="border-radius:10px;background-color: #3601b5a3;"
+                                        (click)="Update();">Submit</button>
+                                    <!---->
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+    </div>
+</div>
+<div>
+    <div class="row" *ngIf="View">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header" style="display: flex;flex-wrap: wrap;justify-content: space-between;">
+                    <!-- <div class="col-md-6">
+                        <h3 class="card-title">Branch Master</h3>
+                    </div> -->
+                    <div class="col-md-4"><label (click)="backToDashboard()" class="mb-0 card-title"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+                    </label></div>
+                    <h3 class="mb-0 card-title">Branch Master</h3>
+                    <div class="col-md-4"
+                        style="display: flex;justify-content: flex-end; flex-wrap: wrap-reverse;  padding: 5px;row-gap: 4px;">
+                        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+                            (click)="AddNewModule();">🆕 Create Branch</button>&nbsp;
+                        <button id="table2-new-row-button" class="btn btn-primary"
+                            style="border-radius: 10px;background-color: #3601b5a3;"
+                            [disabled]="institutionsList ==undefined || institutionsList == null || !(institutionsList.length > 0)"
+                            (click)="downloadReport();">📥 Download Report</button>&nbsp;
+                        <!-- <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportPDF()">📕 Export PDF</button>&nbsp;
+                        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportexcel()">📗 Export Excel</button> -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- common table -->
+                    <!-- <button  id="table2-new-row-button" class="btn btn-primary mb-4" *ngIf="ShowBtn" (click)="downloadReport();" >📥 Download Report</button>&nbsp; -->
+                    <app-common-table [data]="institutionsList" [ExportName]="'Branch List'"
+                        [displayColumns]="displayColumns" [Loading]="employeeLoading"
+                        [displayedColumns]="displayedColumns" [editableColumns]="editableColumns"
+                        [actions]="actionOptions" [topHeaders]="topHeaders" [headerColors]="headerColors"
+                        [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles"
+                        (actionEmitter)="actionEmitter($event)"></app-common-table>
+                    <!-- end here -->
+                    <!-- <form #validationForm="ngForm" class="editForm" novalidate> -->
+                    <!-- <div  class="table-responsive">
+                        <table  id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+                        class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="background-color: #3601b51f;text-align: center;">SL No</th>
+                                    <th rowspan="2" style="background-color: #3601b51f;text-align: center;">Branch</th>
+                                    <th rowspan="2" style="background-color: #3601b51f;text-align: center;min-width: 300px;">Address</th>   
+                                    <th colspan="2" style="background-color: #3601b51f;text-align: center;">Office Timings</th>                                                                 
+                                    <th rowspan="2" style="background-color: #3601b51f;text-align: center;">Created On</th>
+                                    <th rowspan="2" style="background-color: #3601b51f;text-align: center;min-width: 100px;">Action</th>
+                                </tr>
+                                <tr>
+                                    <th style="background-color: #3601b51f;text-align: center;">Start</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">End</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr  class="ng-star-inserted" *ngFor="let IL of institutionsList; let i = index;">
+                                 
+                             
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{i+1}} </div>
+                                    </td>
+                                   
+                                    <td >
+                                        <div  class="ng-star-inserted">{{IL.BranchName}} </div>
+                                        
+                                    </td> 
+                                    <td >
+                                        <div  class="ng-star-inserted"><b>City</b> : {{IL.City}} <br><b>State</b> : {{IL.State}} <br><b>Address</b>  :{{IL.Address}}
+                                        </div>
+                                        
+                                    </td>  <td >
+                                        <div  class="ng-star-inserted"> {{IL.WorkStartTime}} </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.WorkEndTime}} </div>
+                                        
+                                    </td>
+                                  
+                                 
+                                 
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.CreatedDate| date:'dd-MM-YYYY'}} </div>
+                                        
+                                    </td>
+                                    <td style="text-align:center" >
+                                        <button  id="bEdit" matTooltip="Edit Branch"
+                                        type="button" class="btn btn-sm btn-primary mx-3 ng-star-inserted" style="background-color: #3601b5a3;"><span
+                                            
+                                            class="fa fa-edit" (click)="edit(IL);"></span></button>
+                                            
+                                            <button matTooltip="Deactive Branch" *ngIf="IL.IsActive==true" (click)="DeactiveModule(IL.BranchId);"
+                                         id="bDel" type="button"
+                                        class="btn btn-sm btn-danger ng-star-inserted"><span 
+                                            class="fa fa-trash"></span>
+                                        </button>
+                                        <button matTooltip="Active Branch" *ngIf="IL.IsActive==false" (click)="ActiveModule(IL.BranchId);"
+                                         id="bDel" type="button"
+                                        class="btn btn-sm btn-danger ng-star-inserted"><span 
+                                            class="fa fa-plus"></span>
+                                        </button>
+                                </td>
+                                   
+                                 
+                                </tr>
+                           
+                            </tbody>
+                        </table>                        
+                    </div> -->
+                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

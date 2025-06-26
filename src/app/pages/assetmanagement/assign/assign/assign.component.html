@@ -1,0 +1,216 @@
+<div style="min-height: 100vh;">
+    <div class="dialogs">
+        <h4 style="margin: 0;">
+            <!-- <label style="margin-right: 15px;" (click)="backtolist()">
+                <i class="fa fa-arrow-left"></i>
+            </label> -->
+            Assign Asset
+        </h4>
+        <mat-horizontal-stepper [linear]="true" #stepper>
+            <mat-step [completed]="steps[0] == true">
+                <ng-template matStepLabel>User Details</ng-template>
+                <!-- <div class="row" style="min-height: 50vh;">
+                     <div class="col-md-3" >
+                        <label class="form-label">Select Sub Organization</label>
+                        <ng-multiselect-dropdown [placeholder]="'select Sub Organization'" [(ngModel)]="selectedOrganization" [data]="SubOrgList"
+                            [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                            (onDeSelect)="onDeselectedOrg($event)">
+                        </ng-multiselect-dropdown>
+                    </div> 
+                    <div class="col-md-3">
+                        <label class="form-label filelabels">Branch</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Branches'" [data]="BranchList"
+                            [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                            (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label filelabels">Department</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Departments'" [data]="DepartmentList"
+                            [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                            (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label filelabels">Users</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Employees'" [data]="EmployeeList"
+                            [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                            (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div> -->
+                <app-hierarchy [selectedFilterData]="selectedFilterData" [dropDownExtras]="dropDownExtras" [actions]="hirearchyActions" (actionEmitter)="triggerHierarchyAction($event)"></app-hierarchy>
+                <div>
+                    <button class="btn btn-primary px-4 m-2" (click)="validateSteps(0);validateSteps(0)">Next</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Asset Details</ng-template>
+                <!-- <div class="row col-md-12"> -->
+                <div class="col-md-12">
+                    <div class="row" style="margin-top: 30px;"> 
+                        <div class="row">
+                            <div class="col-1 filelabels">Slno</div>
+                            <div class="col-2 filelabels">Item Name</div>
+                            <div class="col-2 filelabels">Details</div>
+                            <div class="col-1 filelabels">Quantity</div>
+                            <div class="col-2 filelabels">Model Number</div>
+                            <div class="col-2 filelabels">Serial Number</div>
+                            <div class="col-1 filelabels"></div>
+                        </div>
+                        <hr>
+                        <ng-container *ngFor="let item of AssetsDetails;let item_i = index">
+                            <div class="row mt-2">
+                                <div class="col-1 filelabels">{{item_i + 1}}</div>
+
+                                <div class="col-2">
+                                    <ng-multiselect-dropdown [settings]="assetSettings" [placeholder]="'Select Item'"
+                                        [data]="AssetList" [(ngModel)]="item.item"
+                                        (onSelect)="onItemSelected($event,item_i)"
+                                        (onDeSelect)="onItemDeSelect($event,item_i)"> </ng-multiselect-dropdown>
+                                        <label style="color: red;font-size: 12px;" *ngIf="error?.[item_i]?.item">{{ error?.[item_i]?.item }}</label>
+                                </div>
+                                <div class="col-2">
+                                    <div class="filelabels" *ngIf="item?.itemDetails?.measurement?.length>0">
+                                        Measured in {{item.itemDetails.measurement}}</div>
+                                    <div class="returnType returnable filelabels"
+                                        *ngIf="item?.itemDetails?.returnType=='returnable'">Returnable</div>
+                                    <div class="returnType non-returnable filelabels"
+                                        *ngIf="item?.itemDetails?.returnType=='non-returnable'">Non-Returnable</div>
+                                </div>
+                                <div class="col-1 filelabels">
+                                    <input type="number" class="form-control" placeholder="Quantity"
+                                        [(ngModel)]="item.quantity">
+                                        <label style="color: red;font-size: 12px;" *ngIf="error?.[item_i]?.quantity">{{ error?.[item_i]?.quantity }}</label>
+                                </div>
+                                <div class="col-2">
+                                    <div class="autocomplete-container">
+                                        <input type="text" class="timings form-control" [(ngModel)]="item.modelNumbers"
+                                            (focus)="showModelNumberSuggestions[item_i] = true"
+                                            (input)="editModelNumber(item_i)" placeholder="Select Model Number" />
+                                        <ul
+                                            *ngIf="showModelNumberSuggestions[item_i] && item.ModelNumberList?.length > 0">
+                                            <li *ngFor="let unit of item.ModelNumberList"
+                                                (click)="selectModelNumber(unit,item_i,item)">
+                                                {{ unit.modelNumber }}
+                                            </li>
+                                        </ul>
+                                        <label style="color: red;font-size: 12px;" *ngIf="error?.[item_i]?.model">{{ error?.[item_i]?.model }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="autocomplete-container">
+                                        <input type="text" class="timings form-control" [(ngModel)]="item.serialNumbers"
+                                            (focus)="showSerialNumberSuggestions[item_i] = true"
+                                            (input)="editSerialNumber(item_i)" placeholder="Select Serial Number" />
+                                        <ul
+                                            *ngIf="showSerialNumberSuggestions[item_i] && item.SerialNumberList?.length > 0">
+                                            <li *ngFor="let unit of item.SerialNumberList"
+                                                (click)="selectSerialNumber(unit,item_i,item)">
+                                                {{ unit }}
+                                            </li>
+                                        </ul>
+                                        <label style="color: red;font-size: 12px;" *ngIf="error?.[item_i]?.serial">{{ error?.[item_i]?.serial }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-1" style="display: flex;justify-content:center;gap:10px">
+                                    <label class="cancel" matTooltip="Click To Remove Assets"
+                                        *ngIf="AssetsDetails.length > 1" (click)="removeDetails(item_i)"><i
+                                            class="fa fa-times" style="font-size: 10px;"></i></label>
+                                    <label class="plus" matTooltip="Click To View Assets"
+                                        (click)="viewDetails(item_i,item);drawerOpen()"><i class="fa fa-eye"
+                                            style="font-size: 10px;"></i></label>
+                                </div>
+                            </div>
+                            <mat-drawer-container [class.drawer-opened]="drawer.opened" class="example-container">
+                                <mat-drawer #drawer class="drawer" #sideNav opened="false" [mode]="'over'"
+                                    [position]="'end'" (backdropClick)="closeDrawer()">
+                                    <mat-icon class="close" (click)="drawer.close()">close</mat-icon>
+                                    <h2 style="font-size: 16px;color:rgb(0, 0, 0);font-family: poppins;padding:10px">
+                                        Asset Details</h2>
+                                    <div style="height:90%;overflow: scroll;">
+                                        <div class="filters">
+                                            <div class="filtercss">
+                                                <div *ngIf="showDetails" class="detailscard">
+                                                    <table class="detailstable">
+                                                        <tr>
+                                                            <th class="key1">Asset Name</th>
+                                                            <td class="value">{{AssetName}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="key1">Quantity</th>
+                                                            <td class="value"> {{Quantity}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="key1">Model Number</th>
+                                                            <td class="value"> {{ModelNumber}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="key1">Serial Number</th>
+                                                            <td class="value"> {{SerialNumber}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="key1">unit Of Measurement</th>
+                                                            <td class="value"> {{UnitOfMeasurement}}</td>
+                                                        </tr>
+                                                    </table>
+                                                    <div style="gap: 20px;display: flex;margin-top: 15px;">
+                                                        <div class="col-md-4 quantitybox">
+                                                            <label class="digits">{{RemainingQuantity}}</label>
+                                                            <label class="names">Remaining Quantity</label>
+                                                        </div>
+                                                        <div class="col-md-4 quantitybox">
+                                                            <label class="digits">{{AssignedQuantity}}</label>
+                                                            <label class="names">Assigned Quantity</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-drawer>
+                            </mat-drawer-container>
+                            <div class="row"></div>
+                        </ng-container>
+                    </div>
+                    <hr />
+                    <button class="btn btn-primary px-4"
+                        style="margin-top: 20px;width: fit-content;line-height: 0px;height: 25px;font-size: 12px;background-color: #3601b5a3;"
+                        (click)="addItemRow()">Add New Item</button>
+                    <div class="col-3">
+                        <button class="btn btn-primary px-4" style="margin-top:20px;width: fit-content;"
+                            *ngIf="edit != true" (click)="onSubmit()">Save</button>
+                        <button class="btn btn-primary px-4" style="margin-top:20px;width: fit-content;"
+                            *ngIf="edit == true" (click)="onUpdate()">Update</button>
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-12">
+                    <div class="col-md-4 detailscard"
+                        *ngIf="selectedBranch.length > 0 || selectedDepartment.length > 0 || selectedEmployees.length > 0">
+                        <label class="filelabels" style="font-size: 16px;font-weight: 500;">Assignment</label>
+                        <table class="detailstable">
+                            <tr *ngIf="selectedBranch.length > 0">
+                                <th class="key">Branch</th>
+                                <td class="value"> {{selectedBranch[0]?.Text}}
+                                </td>
+                            </tr>
+                            <tr *ngIf="selectedDepartment.length > 0">
+                                <th class="key">Department</th>
+                                <td class="value">
+                                    {{selectedDepartment[0]?.Text}}</td>
+                            </tr>
+                            <tr *ngIf="selectedEmployees.length > 0">
+                                <th class="key">User</th>
+                                <td class="value">
+                                    {{selectedEmployees[0]?.Name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </mat-step>
+
+
+        </mat-horizontal-stepper>
+    </div>
+</div>

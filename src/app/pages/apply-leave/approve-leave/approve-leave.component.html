@@ -1,0 +1,68 @@
+<div class="dialogs">
+    <div style="display: flex;justify-content: space-between;">
+        <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+    </div>
+    <div  class="row">
+           
+            <div class="col-md-12">
+            <div  class="productdesc">
+                <div  class="card overflow-hidden">
+                    <div  class="card-body bootslider p-3">
+                                            <div  class="panel panel-primary mb-5 mx-5 border" style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                                                    <div  class="table-responsive">
+                                                            <h4  class="mb-5 mt-3 fw-bold" style="text-align: center;"> Leave Details</h4>
+                                                          <br>  <table  class="table table-bordered">
+                                                      
+                                                        <tr >
+                                                            <td style="min-width: 120px;"  class="fw-bold">Leave Type </td>
+                                                            <td >{{LeaveData.LeaveType}} </td>
+                                                            <td style="min-width: 100px;" class="fw-bold">Leave Date</td>
+                                                            <td >{{LeaveData.RequestDate}} </td> 
+                                                       
+                                                </tr>
+                                                <tr >
+                                                 
+                                                    <td style="min-width: 100px;" colspan="2" class="fw-bold">Reason</td>
+                                                    <td colspan="2">{{LeaveData.ReasonForLeave}} </td>
+                          
+                                        </tr>  
+                                        <tr>
+                                            <td style="min-width: 100px;" class="fw-bold">Days</td>
+                                            <td *ngIf="LeaveData.NoOfDays==1 && LeaveData.IsHalfDay==true" >Half Day </td>
+                                            <td *ngIf="LeaveData.NoOfDays==1 && LeaveData.IsHalfDay==false" >1 </td>
+                                            <td *ngIf="LeaveData.NoOfDays!=1" >{{LeaveData.NoOfDays}} </td>
+                                          
+                                            <td style="min-width: 100px;" class="fw-bold">Status </td>
+                                            <td >{{LeaveData.ApproveStatus}} </td>
+
+                                            
+                                        </tr> 
+                                        <tr>
+                                            <td style="min-width: 100px;" class="fw-bold">Date </td>
+                                            <td >{{LeaveData.ApprovedDate}} </td>
+                                            <td style="min-width: 120px;"  class="fw-bold">Approved Type </td>
+                                            <td >{{LeaveData.ApprovedLeaveType}} </td>
+                                          
+               
+                                        </tr>   
+                                        <tr>
+                                            <td style="min-width: 100px;" colspan="2" class="fw-bold">Comment </td>
+                                            <td colspan="2">{{LeaveData.AdminComment}} </td>
+                                        </tr>                                                                     
+                    </table>
+                    <div class="text-center mt-2 pb-5 border-bottom">
+        <button  id="bEdit" type="button" (click)="CloseTab()" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> Close &nbsp;<span  class="fa fa-times"></span></button>
+               
+                            </div>     
+                    </div>
+                 
+                
+            
+      
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+</div>

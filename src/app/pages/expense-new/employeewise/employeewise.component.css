@@ -1,0 +1,10 @@
+.approve{
+    width: max-content;
+    background-color:green;
+    color: white;
+}
+.reject{
+    width: max-content;
+    background-color:red;
+    color: white;
+}

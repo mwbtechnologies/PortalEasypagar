@@ -1,0 +1,81 @@
+<div class="dialogs">
+        <div style="display: flex;justify-content: space-between;">
+                <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+            </div>
+    <div  class="row">
+           
+            <div class="col-md-12">
+            <div  class="productdesc">
+                <div  class="card overflow-hidden">
+                    <div  class="card-body bootslider p-3">
+                                            <div  class="panel panel-primary mb-5 mx-5 border" style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                                                    <div  class="table-responsive">
+                                                            <h4  class="mb-5 mt-3 fw-bold" style="text-align: center;"> Loan Details</h4>
+                                                          <br>  <table  class="table table-bordered">
+                                                  
+                                                     
+                                                        <tr >
+                                                            <td  class="fw-bold">Loan Type </td>
+                                                            <td >{{LoanData.LoanType}} </td>
+                                                            <td  class="fw-bold">Amount </td>
+                                                            <td >{{LoanData.RequestedAmount}} </td>
+                                                            <td  class="fw-bold">Date</td>
+                                                            <td >{{LoanData.RequestDate|date: 'dd-MM-yyyy'}} </td>
+                                                                                 
+                                                          
+                                                </tr>
+                                                <tr >
+                                                    <td  class="fw-bold">Reason</td>
+                                                    <td >{{LoanData.ReasonForLoan}} </td>
+                                                    <td  class="fw-bold">Approve Status </td>
+                                                    <td >{{LoanData.ApproveStatus}} </td>
+
+                                                    <td  class="fw-bold">Approve Date </td>
+                                                    <td >{{LoanData.ApprovedDate}} </td>
+                                        </tr>   
+                                        <tr>
+                                         <td  class="fw-bold">Approved Amount</td>
+                                        <td>
+
+                                        {{LoanData.ApprovedAmount}}
+                                          
+                                     </td> <td  class="fw-bold">Monthly Deduction</td>
+                                     <td>
+{{LoanData.MonthlyDeduction}}
+                                         
+                                    </td>
+                                 <td  class="fw-bold">PaymentID</td>
+                                <td>{{LoanData.PaymentID}}                                    
+                               </td>
+                                    </tr>
+                                    <tr>
+                                           <td  class="fw-bold">Comment</td>
+                                           <td colspan="2">
+{{LoanData.Comment}}
+                                             
+                                        </td>
+                                        </tr>                                                                        
+                    </table>
+
+                    <div class="text-center mt-2 pb-5 border-bottom">
+                  
+                            &nbsp; <button  id="bEdit" type="button" (click)="CloseTab()" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> Close<span  class="fa fa-times"></span></button>
+
+                            
+
+
+                            
+                            </div> 
+                             
+                    </div>
+                 
+                
+            
+      
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+</div>

@@ -1,0 +1,99 @@
+<!-- <label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back To Users</label> -->
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div class="col-md-3">
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 12px;color: #978f8f;">Document Manager</h3>
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 16px;font-weight: 600;">Document Type List</h3>
+                        <!-- <h3 class="mb-0 card-title filelabels">Document Type List</h3> -->
+                    </div>
+                    <div class="col-md-6" style="display: flex;justify-content:end;">
+                        <button class="btn btn-primary listbutton" (click)="doGroupOrder()">Set Order Document Group</button>&nbsp;
+                        <button class="btn btn-primary listbutton" (click)="docOrder()">Set Order Document</button>&nbsp;
+                        <button class="btn btn-primary listbutton" (click)="backToList()">User List</button>&nbsp;
+                    </div>
+                </div>
+                <div class="maincards" *ngIf="DocumentGroups && Total">
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total.totalDocGroups}}</h3>
+                        <div class="chip3-title">Total</div>
+                        <div class="chip3-sub-title">Document Groups</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total.totalDocTypes}}</h3>
+                        <div class="chip3-title">Total</div>
+                        <div class="chip3-sub-title">Document Types</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total.totalMandatoryDocumentTypes}}</h3>
+                        <div class="chip3-title">Mandatory</div>
+                        <div class="chip3-sub-title">Document Types</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total.totalActiveDocumentTypes}}</h3>
+                        <div class="chip3-title">Active</div>
+                        <div class="chip3-sub-title">Document Types</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total.totalInActiveDocumentTypes}}</h3>
+                        <div class="chip3-title">Inactive</div>
+                        <div class="chip3-sub-title">Document Types</div>
+                    </div>
+                </div>
+                <div class="card-body" *ngIf="DocumentGroups.length > 0">
+                    <div style="display: flex;justify-content: space-between;">
+                        <div class="col-md-3" style="padding: 0;" *ngIf="Loading!=undefined">
+                            <input class="search searchbar"  type="search" 
+                              placeholder="Search" [(ngModel)]="searchText" ngDefaultControl (ngModelChange)="applyFilter()">
+                              <div class="cancelsearch">
+                                 <i class="fa fa-times" *ngIf="searchText.length > 0" (click)="removesearch()" ></i>
+                                 <i class="fa fa-search" *ngIf="searchText.length == 0"></i>
+                               </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary listbutton" (click)="createDoc()">Create Document Type</button>
+                        </div>
+                    </div>
+                    <mat-tab-group #docTabGroupList [(selectedIndex)]="activeTabIndex" (selectedTabChange)="onTabChange($event)" [animationDuration]="animationDuration">
+                        <ng-container *ngFor="let group of DocumentGroups; let i = index">
+                          <mat-tab [label]="getNamings(group)">
+                              <div *ngIf="group.documentTypes.length > 0" class="outercard">
+                                  <div  *ngFor="let doc of group.documentTypes ; let i=index">
+                                      <div class="out-card" style="width: 15vw;">
+                                        <div class="main-card">
+                                            <img [src]="IMGURL + doc.iconPath" class="imagesize" (error)="setDefaultImage($event)">
+                                        </div>
+                                          <div class="info"style="margin-top: 10px;">
+                                              <h3 class="filelabels" style="margin:0;">{{ doc.name }} <span *ngIf="doc.required == true" style="color: red;">*</span></h3>
+                                              <h3 class="filelabels" style="font-size: 12px;margin: 0;">{{ doc.subName }}</h3>
+                                              <div class="details">
+                                                  <span class="filelabels">upload by<br> <label style="color:black">{{AdminName}}</label></span>
+                                                  <span class="date" class="filelabels" style="text-align: end;">Date<br><label style="color:black">{{doc.createdAt|    date:'dd-MMM-yyyy'}}</label></span>
+                                              </div>
+                                          </div>
+                                          <div class="buttons">
+                                            <button class="active bottombuttons" *ngIf="doc.isActive == true" matTooltip="click to deactivate" (click)="updateStatus(doc,false)">Active</button>
+                                            <button class="inactive bottombuttons" *ngIf="doc.isActive == false" matTooltip="click to activate" (click)="updateStatus(doc,true)">InActive</button>
+                                            <button class="update bottombuttons" (click)="EditDoc(doc)">Update</button>
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </mat-tab>
+                        </ng-container>
+                    </mat-tab-group>
+                </div>
+                <div class="card-body" *ngIf="DocumentGroups.length == 0">
+                    <div style="display: flex;justify-content: center;">
+                       <div class="noDataCard">
+                        <h3 style="font-size: 16px;">No Documents Found</h3>
+                        <button class="btn btn-primary listbutton" (click)="createDoc()">Create Document Type</button>
+                       </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

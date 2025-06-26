@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+  }
+
+.dialogs{
+    width: auto;
+    overflow-y: scroll;
+    padding: 20px;
+    font-family: poppins;
+    max-height: 93vh;
+    min-width: 100vh;
+    min-height: 70vh;
+    background-color: #2c2c2c;
+  }
+
+.print{
+
+    color:#000;
+    display: flex;
+    justify-content: center;
+}
+
+.print-body{
+    /* display: block;
+    width: 80vh;
+    max-width: 80vh;
+    height: 60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0px; */
+    
+    height: 60vh;
+    width: 80vh;
+    max-width: 80vh;
+    border-radius: 5px;
+    overflow-y: scroll;
+    padding: 10px;
+    /* border: 2px solid #ccc; */
+}
+
+.print-page{
+    /* position: relative;
+    display: block;
+    background-color: #fff;
+    height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0px; */
+
+    
+    position: relative;
+    min-height: 115vh;
+    border-radius: 5px;
+    padding: 30px;
+    margin: 10px 0px;
+    background-color: #fff;
+}
+
+/* .print-page-margin{
+    
+    min-height: 110vh;
+    margin: 0px;
+} */
+
+.print-page-number{
+    position: sticky;
+    top: 14px;
+    background: rgba(255, 255, 255, 0.87);
+    padding: 3px 7px;
+    border-radius: 5px;
+    font-size: 12px;
+    width: -moz-fit-content;
+    width: fit-content;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    margin-left: -5px;
+    margin-top: -10px;
+    z-index: 10;
+}
+
+.print-customize{
+    display: block;
+    /* justify-content: left; */
+    padding: 10px;
+    background-color: #aecaff;
+    margin: 10px 0px;
+    width: 100vh;
+    border-radius: 3px;
+}
+
+.print-page-content {
+  margin-top: 5px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* .print-page:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+.print-page:nth-child(even) {
+  background: #eaeaea;
+} */
+
+td{
+    border: 1px solid #000;
+    padding: 3px 20px
+}
+
+/* .page {
+    min-height: 80vh;
+    padding: 1rem;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+  }
+  .image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+  } */
+  
+
+  .page-break {
+    page-break-before: always;
+  }

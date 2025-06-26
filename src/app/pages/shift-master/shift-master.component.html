@@ -1,0 +1,303 @@
+  <!-- <div *ngIf="Add">
+  <div  class="row">
+        <form #validationForm="ngForm" class="editForm" novalidate>
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Add New Shift</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+                        <div  class="col-md-6">
+            
+                            <div  class="form-group"><label 
+                                class="form-label">Select Branch</label>
+                                <ng-select [items]="BranchList"
+                                bindLabel="Text"
+                                bindValue="Value"
+                                [multiple]="false"
+                                (change)="OnBranchChange($event)"
+                                notFoundText="No Branches Found"
+                                placeholder="Select Branch"
+                                [(ngModel)]="selectedBranchId">
+                     </ng-select>
+                        </div></div>
+
+                        <div  class="col-md-6">            
+                            <div  class="form-group"><label 
+                                class="form-label">Select Department</label>
+                                <ng-select [items]="DepartmentList"
+                                bindLabel="Text"
+                                bindValue="Value"
+                                [multiple]="false"
+                                (change)="OnDeptChange($event)"
+                                notFoundText="No Departments Found"
+                                placeholder="Select Department"
+                                [(ngModel)]="selectedDepartmentId">
+                     </ng-select>
+                        </div></div>
+
+
+                        <div  class="col-md-4">
+                            <div  class="form-group"><label 
+                                    class="form-label">Shift Name</label><input
+                                    name="example-text-input" class="form-control" id="ShiftName" name="ShiftName" type="text"
+                                    placeholder="Shift Name" 
+                                    [ngClass]="{'is-invalid': !ShiftName.valid && (ShiftName.dirty || ShiftName.touched || isSubmit)}"
+                                    #ShiftName="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" ShiftName [(ngModel)]="formInput.ShiftName">
+                                  </div>
+</div>
+<div  class="col-md-2">
+    <div  class="form-group"><label 
+            class="form-label">Start Time</label><input
+            name="example-text-input" class="form-control" id="FromTime" name="FromTime" type="time" 
+            [ngClass]="{'is-invalid': !FromTime.valid && (FromTime.dirty || FromTime.touched || isSubmit)}"
+            #FromTime="ngModel" required  FromTime [(ngModel)]="formInput.FromTime">
+        </div>
+</div>
+<div  class="col-md-2">
+    <div  class="form-group"><label 
+            class="form-label">End Time</label><input
+            name="example-text-input" class="form-control" id="ToTime" name="ToTime" type="time"
+            [ngClass]="{'is-invalid': !ToTime.valid && (ToTime.dirty || ToTime.touched || isSubmit)}"
+            #ToTime="ngModel" required  ToTime [(ngModel)]="formInput.ToTime">
+        </div>
+</div>
+         <div class="col-md-4">
+            <div  class="form-group">
+                <div  class="form-label">Upload Image</div>
+                <div  class="mb-3"><input  type="file" id="formFile"
+                    (change)="UploadProof1Image1($event,validationForm)" class="form-control"></div>
+            </div>
+         </div>        
+                                  
+                    </div>
+                    <div  class="table-responsive ng-star-inserted">
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Viewlist();"> Back To List</button> &nbsp;
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="CreateShift();">Submit</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>  
+</div>  -->
+<!-- <div *ngIf="Edit">
+    <div  class="row">
+        <form #validationForm="ngForm" class="editForm" novalidate>
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Edit Shift</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+                        <div  class="col-md-6">
+            
+                            <div  class="form-group"><label 
+                                class="form-label">Select Branch</label>
+                                <ng-select [items]="BranchList"
+                                bindLabel="Text"
+                                bindValue="Value"
+                                [multiple]="false"
+                                (change)="OnBranchChange($event)"
+                                notFoundText="No Branches Found"
+                                placeholder="Select Branch"
+                                [(ngModel)]="selectedBranchId">
+                     </ng-select>
+                        </div></div>
+
+                        <div  class="col-md-6">            
+                            <div  class="form-group"><label 
+                                class="form-label">Select Department</label>
+                                <ng-select [items]="DepartmentList"
+                                bindLabel="Text"
+                                bindValue="Value"
+                                [multiple]="false"
+                                (change)="OnDeptChange($event)"
+                                notFoundText="No Department Found"
+                                placeholder="Select Department"
+                                [(ngModel)]="selectedDepartmentId">
+                     </ng-select>
+                        </div></div>
+
+
+                        <div  class="col-md-4">
+                            <div  class="form-group"><label 
+                                    class="form-label">Shift Name</label><input
+                                    name="example-text-input" class="form-control" id="ShiftName" name="ShiftName" type="text"
+                                    placeholder="Shift Name" 
+                                    [ngClass]="{'is-invalid': !ShiftName.valid && (ShiftName.dirty || ShiftName.touched || isSubmit)}"
+                                    #ShiftName="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" ShiftName [(ngModel)]="formInput.ShiftName">
+                                  </div>
+</div>
+<div  class="col-md-2">
+    <div  class="form-group"><label 
+            class="form-label">Start Time</label><input
+            name="example-text-input" class="form-control" id="FromTime" name="FromTime" type="time" 
+            [ngClass]="{'is-invalid': !FromTime.valid && (FromTime.dirty || FromTime.touched || isSubmit)}"
+            #FromTime="ngModel" required  FromTime [(ngModel)]="formInput.FromTime">
+        </div>
+</div>
+<div  class="col-md-2">
+    <div  class="form-group"><label 
+            class="form-label">End Time</label><input
+            name="example-text-input" class="form-control" id="ToTime" name="ToTime" type="time"
+            [ngClass]="{'is-invalid': !ToTime.valid && (ToTime.dirty || ToTime.touched || isSubmit)}"
+            #ToTime="ngModel" required  ToTime [(ngModel)]="formInput.ToTime">
+        </div>
+</div>
+         <div class="col-md-4">
+            <div  class="form-group">
+                <div  class="form-label">Upload Image</div>
+                <div  class="mb-3"><input  type="file" id="formFile"
+                    (change)="UploadProof1Image1($event,validationForm)" class="form-control"></div>
+            </div>
+         </div>        
+                                  
+                    </div>
+                    <div  class="table-responsive ng-star-inserted">
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Viewlist();">Back To List</button> &nbsp;
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Update();">Update</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>   
+</div> -->
+<div >
+    <div  class="row">
+        <div  class="col-lg-12">
+            <div  class="card">
+                <div class="card-header" style="display: flex;flex-wrap: wrap;justify-content: space-between;" > 
+                    <div class="col-md-2">
+                        <h3  class="card-title">Shift Master</h3>
+                    </div>    
+                    <div class="col-md-4" style="display: flex;justify-content: end; flex-wrap: wrap-reverse;  padding: 5px;row-gap: 4px;">
+                        <button  class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="AddNewModule(false)">Add New
+                            Shift</button>&nbsp;
+                            <button  id="table2-new-row-button" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" *ngIf="ShowBtn" (click)="downloadReport();" >📥 Download Report</button>&nbsp;
+                        <!-- <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportPDF()">📕 Export PDF</button>&nbsp;
+                        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportexcel()">📗 Export Excel</button> -->
+                    </div>
+                </div>
+                <div  class="card-body">
+                        <div  class="row">
+                            <div class="col-md-4" >
+                                <label class="form-label">Select Organization</label>
+                                <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                    [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                    (onDeSelect)="onDeselectedOrg($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div  class="col-md-4">
+                                <div  class="form-group"><label 
+                                    class="form-label">Select Branch</label>
+                         <ng-multiselect-dropdown [placeholder]="'Select Branch'" 
+                         [data]="BranchList" [(ngModel)]="selectedBranchId" (onSelect)="OnBranchSelect($event)"  (onDeSelect)="onBranchDeSelect($event)"
+                         [settings]="branchSettings">
+                         </ng-multiselect-dropdown>
+                            </div></div>
+                            
+                           </div>
+
+<!-- common table -->
+<app-common-table [data]="institutionsList" [ExportName]="'Shift List'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+[smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (StatusUpdate)="activateDeactivateStatus($event)" (actionEmitter)="actionEmitter($event)"></app-common-table>
+<!-- end here -->  
+                    <!-- <div  class="table-responsive">
+                        <table  id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+                        class="table table-striped table-bordered table-hover">
+                            <thead >
+                                <tr >
+                                    <th  style="background-color: #3601b51f;text-align: center;display:none;">ID</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">SL No</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Shift Name</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Branch</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Department</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Ratio</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Amount</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Grace-In</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Grace-Out</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Status</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Timings</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Created On</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr  class="ng-star-inserted" *ngFor="let IL of institutionsList; let i = index;">
+                                    <td  style="display:none;">
+                                        <div  class="ng-star-inserted" > {{IL.ShiftID}} </div>
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{i+1}} </div>
+                                    </td>
+                                   
+                                    <td >
+                                        <div  class="ng-star-inserted">{{IL.ShiftName}} </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.BranchName}} </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.DepartmentName}} </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.Ratio}} X </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.Amount}}  </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.GraceInTime}} </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.GraceOutTime}} </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div class="ng-star-inserted" *ngIf="IL.IsActive == true"> <label class="active" matTooltip="Click To Deactivate" (click)="activateDeactivateStatus(IL)">Active</label> </div>
+                                        <div class="ng-star-inserted" *ngIf="IL.IsActive == false"> <label class="inactive" matTooltip="Click To Activate" (click)="activateDeactivateStatus(IL)">Inactive</label> </div>
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.StartTime}} - {{IL.EndTime}} </div>
+                                        
+                                    </td>
+                                    <td >
+                                        <div  class="ng-star-inserted"> {{IL.CreatedDate| date:'dd-MM-YYYY'}} </div>
+                                        
+                                    </td>
+                                   
+                                    <td>
+                                        <button  id="bEdit" 
+                                            type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;"><span
+                                                
+                                                class="fa fa-edit" (click)="AddNewModule(true,IL);"></span></button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="!institutionsList">
+                                    <td colspan="10" class="text-center text-danger">No Data Available</td>
+                                  </tr> 
+                            </tbody>
+                        </table>                        
+                    </div> -->
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        
+   
+   
+   

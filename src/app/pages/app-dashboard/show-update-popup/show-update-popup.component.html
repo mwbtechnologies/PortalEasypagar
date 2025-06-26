@@ -1,0 +1,21 @@
+<div class="dialogs">
+    <div style="display: flex;justify-content: space-between;">
+        <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+    </div>
+    <div  class="row">
+            <div class="col-md-12">
+            <div  class="productdesc">
+                <h3  class="mb-5 mt-3 fw-bold" style="text-align: center;"> | Latest Updates Alert |</h3>
+                <h6 style="text-align:left;white-space: pre;margin: 20px;" [innerHTML]="Message"></h6>
+
+                <div class="text-center border-bottom">
+                    <button class="btn btn-success" (click)="UpdateStatus();">
+                        Mark as Read  <i  class="fa fa-check-circle-o"></i></button>   &nbsp;
+                        <button class="btn btn-danger" (click)="CloseTab();"> 
+                            Close for Now <i  class="fa fa-times"></i></button>  
+                        </div> 
+            
+        </div>
+        </div>
+        </div>
+</div>

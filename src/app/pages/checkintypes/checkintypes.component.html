@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card">
+            <div class="card-header" style="display: flex;justify-content: space-between;"> 
+                
+                    <h3 class="mb-0 card-title">Check-in Device Configuration</h3>
+                    <button class="btn btn-primary" (click)="addCheckinType(false)">Add Check-In Type</button>
+            </div>
+            <div class="card-body" style="min-height: 60vh;">
+                <div class="col-md-12 row">
+                  <div class="col-md-3" >
+                    <label class="form-label">Select Organization</label>
+                    <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                        [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                        (onDeSelect)="onDeselectedOrg($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                    <div class="col-md-3">
+                      <label class="labels">Branch &nbsp;</label>
+                      <ng-multiselect-dropdown  [placeholder]="'Select Branch'" [data]="BranchList"
+                        [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)"
+                        [settings]="branchSettings">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="labels">Department</label>
+                      <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                        [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"
+                        [settings]="departmentSettings">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="labels">Employees</label>
+                      <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                        [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                        (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Action</label>
+                        <button class="btn btn-primary mb-4" (click)="submit();"> Search</button> &nbsp;
+                    </div>
+                  </div>
+                <div class="table-responsive">
+                    <table *ngIf="CheckinTypes.length > 0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+                      class="table table-striped table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th style="background-color: #3601b51f;text-align: center;">SL No</th>
+                          <th style="background-color: #3601b51f;text-align: center;">Employee Name</th>
+                          <th style="background-color: #3601b51f;text-align: center;">Mobile App</th>
+                          <th style="background-color: #3601b51f;text-align: center;">Biometric</th>
+                          <th style="background-color: #3601b51f;text-align: center;">Face App</th>
+                          <th style="background-color: #3601b51f;text-align: center;">Created By</th>
+                          <th style="background-color: #3601b51f;text-align: center;">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="ng-star-inserted" *ngFor="let IL of CheckinTypes; let i = index;">
+                          <td style="text-align: center;">
+                            <div class="ng-star-inserted"> {{i+1}} </div>
+                          </td>
+          
+                          <td style="text-align: center;">
+                            <div class="ng-star-inserted">{{IL.Empname}} </div>
+          
+                          </td>
+                          <td style="text-align: center;">
+                            <div class="ng-star-inserted" *ngIf="IL.isMobileApp == true"> <img src="./assets/images/pngs/check.png" width="30px" height="30px"/></div>
+                            <div class="ng-star-inserted" *ngIf="IL.isMobileApp == false"> <img src="./assets/images/pngs/cancel.png" width="30px" height="30px"/></div>
+          
+                          </td >
+                          <td style="text-align: center;">
+                            <div class="ng-star-inserted" *ngIf="IL.isBiometric == true"> <img src="./assets/images/pngs/check.png" width="30px" height="30px"/> </div>
+                            <div class="ng-star-inserted" *ngIf="IL.isBiometric == false"> <img src="./assets/images/pngs/cancel.png" width="30px" height="30px"/> </div>
+          
+                          </td>
+          
+                          <td style="text-align: center;">
+                            <div class="ng-star-inserted" *ngIf="IL.isFaceApp == true"> <img src="./assets/images/pngs/check.png" width="30px" height="30px"/> </div>
+                            <div class="ng-star-inserted" *ngIf="IL.isFaceApp == false"> <img src="./assets/images/pngs/cancel.png" width="30px" height="30px"/> </div>
+          
+                          </td>
+                          <td style="text-align: center;">
+                            <div class="ng-star-inserted"> {{IL.Createdbyname}} </div>
+          
+                          </td>
+                          <td style="text-align: center;">
+                            <div class="ng-star-inserted"><button class="btn btn-primary" (click)="addCheckinType(true,IL)"><i class="fa fa-edit"></i></button></div>
+                          </td>
+                        </tr>
+                        <tr *ngIf="!CheckinTypes">
+                          <td colspan="10" class="text-center text-danger">No Data Available</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

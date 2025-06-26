@@ -1,0 +1,6 @@
+.dialogs{
+    height: 400px;
+    border: 1px solid black;
+    overflow-y: scroll;
+    font-family: poppins;
+}

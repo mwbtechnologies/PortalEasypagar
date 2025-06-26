@@ -1,0 +1,127 @@
+<div class="dialogs">
+    <div class="row">
+        <!-- <label class="button"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+            report</label> -->
+        <!-- <div class="row"> -->
+        <!-- <div class="card"> -->
+        <!-- <div class="col-md-12"> -->
+        <!-- <div class="productdesc"> -->
+        <!-- <div class="card overflow-hidden" style="padding-top: 10px;"> -->
+        <div style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+            <h5 class="mb-5 mt-3 fw-bold" style="padding:10px">{{this.data.name}}
+            </h5>
+            <div class="col-md-6" *ngIf="data.name === 'Aadhar Card'">
+                <label for="frontImage">Enter Aadhar Card Number</label>
+                <input type="number" class="form-control" (change)="aadharValidate(aadharCard)" [(ngModel)]="aadharCard" placeholder="Enter Aadhar Card Number">
+                <br>
+            </div>
+            <div class="col-md-6" *ngIf="data.name === 'PAN Card'">
+                <label for="frontImage">Enter Pan Card</label>
+                <input type="text" class="form-control" (change)="panValidate(panCard)" [(ngModel)]="panCard" placeholder="Enter PAN Card">
+                <br>
+            </div>
+            <div class="col-md-6" *ngIf="data.name === 'Driving License'">
+                <label for="frontImage">Enter Driving License</label>
+                <input type="text" class="form-control" (change)="dlValidate(drivinglicense)" [(ngModel)]="drivinglicense" placeholder="Enter Driving License">
+                <br>
+            </div>
+            <!-- <form *ngIf="ShowTwo==true">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="frontImage">Front Image:</label>
+                        <input type="file" id="frontImage" (change)="onFileSelect($event, 'front')" accept="image/*">
+                        <br>
+                        <img *ngIf="frontImagePreview" [src]="frontImagePreview" alt="Front Image Preview"
+                            style="width: 150px; height: auto;">
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <label for="backImage">Back Image:</label>
+                        <input type="file" id="backImage" (change)="onFileSelect($event, 'back')" accept="image/*">
+                        <br>
+                        <img *ngIf="backImagePreview" [src]="backImagePreview" alt="Back Image Preview"
+                            style="width: 150px; height: auto;">
+                    </div>
+                </div>
+            </form> -->
+            <!-- <div *ngIf="ShowTwo==false"> -->
+                <!-- <div *ngIf="SelectedData[0].SelectedFileType == 2" style="display: flex;align-items: end;">
+                    <div class="col-md-5">
+                        <label for="frontImage">Upload File:</label>
+                    <input type="file" id="frontImage" class="form-control" (change)="onFileSelect($event, 'front')" accept="*">
+                    <img *ngIf="frontImagePreview" [src]="frontImagePreview" alt="Front Image Preview"
+                        style="width: 150px; height: auto;">
+                    </div>
+                </div> -->
+                <div >
+                    <label class="plus" *ngIf="SelectedData[0].SelectedFileType != 2" matTooltip="Click To Add Multiple Files" (click)="addField()">+</label>
+                    <div *ngFor="let field of fields; let i = index" style="display: flex; ">
+                        <div class="col-md-2" *ngIf="SelectedData[0].SelectedFileType != 2">
+                            <label >Enter File Name</label>
+                            <input type="text" (input)="nameValidate($event)" class="form-control" [(ngModel)]="field.fileName" placeholder="Enter File Name">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <form #validationForm="ngForm" class="editForm row" novalidate>
+                            <div class="col-md-6" *ngIf="SelectedData[0].SelectedFileType == 2">
+                              <label >Front Image</label>
+                              <input type="file" class="form-control" (change)="ondynamicFrontFileSelect($event, i,validationForm)" accept="image/jpeg">
+                              <img *ngIf="fields[i]?.frontImageFile && fields[i]?.frontImageFile.startsWith('data:image/')" [src]="field.frontImageFile" alt="No Preview" style="width: 150px; height: auto; margin-top: 10px;">
+                            </div>
+                            <div class="col-md-6" *ngIf="SelectedData[0].SelectedFileType == 2">
+                              <label >Back Image(optional)</label>
+                              <input type="file" class="form-control" (change)="ondynamicBackFileSelect($event, i,validationForm)" accept="image/jpeg">
+                              <img *ngIf="fields[i]?.backImageFile && fields[i]?.backImageFile.startsWith('data:image/')" [src]="field.backImageFile" alt="No Preview" style="width: 150px; height: auto; margin-top: 10px;">
+                            </div>
+                            <div class="col-md-6" *ngIf="SelectedData[0].SelectedFileType != 2">
+                              <label >Front Image</label>
+                              <input type="file" class="form-control" (change)="ondynamicFrontFileSelect($event, i,validationForm)" accept=".pdf,image/*,.doc,.docx">
+                              <img *ngIf="fields[i]?.frontImageFile && fields[i]?.frontImageFile.startsWith('data:image/')" [src]="field.frontImageFile" alt="No Preview" style="width: 150px; height: auto; margin-top: 10px;">
+                            </div>
+                            <div class="col-md-6" *ngIf="SelectedData[0].SelectedFileType != 2">
+                              <label >Back Image(optional)</label>
+                              <input type="file" class="form-control" (change)="ondynamicBackFileSelect($event, i,validationForm)" accept=".pdf,image/*,.doc,.docx">
+                              <img *ngIf="fields[i]?.backImageFile && fields[i]?.backImageFile.startsWith('data:image/')" [src]="field.backImageFile" alt="No Preview" style="width: 150px; height: auto; margin-top: 10px;">
+                            </div>
+                        </form>
+                        </div>
+                      
+                        <div>
+                          <label for="date-{{ i }}">Date</label>
+                          <!-- <input type="date" class="form-control" [value]="convertToDisplayFormat(field.date)">  -->
+                           <p class="form-control"> {{ convertToDisplayFormat(field.date) }}</p>
+                        </div>
+                        <div class="col-md-2">
+                          <label for="date-{{ i }}">Uploaded By</label>
+                          <!-- <input type="date" class="form-control" [value]="convertToDisplayFormat(field.date)">  -->
+                          <p class="form-control"> {{UploadedBy}}</p>
+                        </div>
+                     
+                      
+                        <label class="cancel" *ngIf="SelectedData[0].SelectedFileType != 2" matTooltip="Click To Remove File" (click)="removeField(i)"><i class="fa fa-times"></i></label>
+                      </div>
+                </div>
+            <!-- </div> -->
+            <br>
+            <div style="padding: 10px;">
+                <label>Note: PDF,Image and Document files are accepted</label><br>
+                <!-- <button *ngIf="ShowTwo==false" class="btn btn-primary" (click)="ShowFile()">Upload Images</button>&nbsp; -->
+                <button *ngIf="ShowTwo==true" class="btn btn-primary" (click)="ShowFile()">Upload File</button> &nbsp;
+                <button class="btn btn-primary" (click)="uploadImages()">Submit</button>
+            </div>
+
+        </div>
+        <!-- <div *ngIf="data.name === 'ID Proofs'" style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+            <input type="number">
+        </div> -->
+        <!-- </div> -->
+        <!-- </div> -->
+
+        <!-- </div> -->
+
+
+        <!-- </div> -->
+        <!-- </div> -->
+    </div>
+  
+</div>

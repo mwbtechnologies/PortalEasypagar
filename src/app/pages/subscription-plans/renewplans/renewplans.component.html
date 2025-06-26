@@ -1,0 +1,50 @@
+<div class="card" style="padding: 10px;">
+    <div style="display: flex;flex-wrap: wrap;">
+        <div class="col-md-3" style="text-align: center;width: fit-content;">
+        <div *ngFor="let rd of RenewDetails">
+                <img [src]="rd.PlanImage" style="width:300px"><br>
+                <button class="btn btn-primary" (click)="Proceed(rd.PlanId)">Proceed</button>
+            </div>
+        </div>
+        <div class="col-md-9" *ngIf="isProceedClicked">
+            <h2 class="plan-name">Addons Packs</h2>
+            <div class="col-12 section"  style="display: flex;flex-wrap: wrap;padding:10px 0px;padding-left: 0px;align-items: stretch;">
+                <ng-container *ngFor="let addon of PlanDetails; let addon_i = index">
+                    <div class="section content">
+                        <div style="display: flex;justify-content: space-between;min-width: 200px;">
+                            <div>
+                                <div style="font-size: 16px;width: 220px;">{{addon.Title}}</div>
+                            </div>
+                            <div>
+                               <div style="font-size: 14px;text-align: end;font-weight: 600;">₹{{addon.Amount}}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex;min-width: 200px;margin: 5px 0px;font-size: 14px;">
+                            Total &nbsp; ₹{{addon.Amount * addon.Count}}
+                        </div>
+                        <div style="display: flex;min-width: 200px;margin-top: 10px;">
+                            <button class="button_type1" style="margin-right:0px;" (click)="addonCount(addon_i,-1,PlanDetails)">-</button>
+                            <div style="margin:0px 3px;">
+                                <input type="number" [(ngModel)]="addon.Count" style="width: 50px;height: 25px;text-align: center;border-radius: 5px;" min="0" max="50">
+                            </div>
+                            <button class="button_type1" style="margin-right:0px;" (click)="addonCount(addon_i,1,PlanDetails)">+</button>
+                        </div>
+                    </div>
+                </ng-container>
+                </div>
+                <div class="Amount-card">
+                    <div class="plan-header">
+                        <h2 class="plan-name">Total Amount</h2>
+                      </div>
+                      <div class="plan-body" style="display: flex;justify-content: space-between;">
+                        <p class="plan-dates">
+                          <span style="font-size: 18px;">₹{{totalAmount}}</span>
+                        </p>
+                        <p class="plan-dates">
+                          <button class="btn btn-primary PayNow">Pay Now</button>
+                        </p>
+                      </div>
+                  </div>
+        </div>
+    </div>
+</div>

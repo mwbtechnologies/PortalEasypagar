@@ -1,0 +1,142 @@
+
+<div  class="row">
+     
+    <div  class="col-xl-9 col-xxl-9 col-md-12" >
+        <div  class="tab-content">
+            <div ngbnavpane="" class="tab-pane fade show active" id="ngb-nav-0-panel" role="tabpanel"
+                aria-labelledby="ngb-nav-0">
+                <div  id="edit" class="border-top-0">
+                    <div  class="card">
+                        <h4 style="text-align: center;font-weight: bold;padding-top: 20px;">🧑‍💼 Profile Details</h4>
+                        <div  class="card-body" style="max-height: 450px;">                          
+                                <div  class="form-group">
+                                    <div  class="row row-sm">
+                                                                                        <div  class="col-md-4"><label 
+                                                    class="form-label">First Name</label>
+                                           <input 
+                                                    type="text" placeholder="First Name" [ngClass]="{'is-invalid': !FirstName.valid && (FirstName.dirty || FirstName.touched || isSubmit)}"
+                                                    #FirstName="ngModel" required  disabled FirstName [(ngModel)]="formInput.FirstName"
+                                                    class="form-control"></div>
+
+                                                    <div  class="col-md-4"><label 
+                                                        class="form-label">Last Name</label><input
+                                                        type="text" disabled placeholder="Last Name" [ngClass]="{'is-invalid': !LastName.valid && (LastName.dirty || LastName.touched || isSubmit)}"
+                                                        #LastName="ngModel" required  LastName [(ngModel)]="formInput.LastName"
+                                                        class="form-control"></div>
+
+                                                        <div  class="col-md-4"><label 
+                                                            class="form-label">Mobile Number</label><input 
+                                                            type="number" disabled placeholder="Mobile number" [ngClass]="{'is-invalid':(MobileNumber.dirty || MobileNumber.touched || isSubmit)}"
+                                                            #MobileNumber="ngModel" disabled="true" required  MobileNumber [(ngModel)]="formInput.MobileNumber"
+                                                            class="form-control"></div>
+                                    </div>
+                                </div>
+                             
+                                <div  class="form-group">
+                                    <div  class="row row-sm">
+                                      
+
+                                                <div  class="col-md-4"><label 
+                                                    class="form-label">Email ID</label><input 
+                                                    type="text" placeholder="Email ID" [ngClass]="{'is-invalid': !Email.valid && (Email.dirty || Email.touched || isSubmit)}"
+                                                    #Email="ngModel" required Email [(ngModel)]="formInput.Email"
+                                                    class="form-control"></div>
+
+                                                    <div  class="col-md-4">
+                
+                                                        <div  class="form-group"><label 
+                                                            class="form-label">Gaurdian Contact Number<b color="red"> *</b></label><input 
+                                                            name="EmergencyNumber" placeholder="Enter Gaurdian Number" type="number" (keypress)="validategardiannumber($event)"
+                                                            [ngClass]="{'is-invalid': !EmergencyNumber.valid && (EmergencyNumber.dirty || EmergencyNumber.touched || isSubmit)}"
+                                                            #EmergencyNumber="ngModel" required pattern="[1-9]{1}[0-9]{9}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                            maxlength="10" EmergencyNumber [(ngModel)]="formInput.EmergencyNumber" class="form-control"></div>
+                                                    </div>
+                                                    
+                                                    <div  class="col-md-4"><label 
+                                                        class="form-label">Address</label><textarea 
+                                                         name="example-textarea-input" rows="2"
+                                                        placeholder="Address" [ngClass]="{'is-invalid': !Address.valid && (Address.dirty || Address.touched || isSubmit)}"
+                                                        #Address="ngModel" required Address [(ngModel)]="formInput.Address"
+                                                        class="form-control"></textarea>
+                                                </div>
+
+                                    </div>
+                                </div>
+                                <div  class="form-group">
+                                    <div  class="row row-sm">
+                                        <div  class="col-md-4">
+                                            <div  class="form-group"><label 
+                                                class="form-label">Qualification</label><input 
+                                                name="Education" placeholder="Enter Qualification" type="text"
+                                                [ngClass]="{'is-invalid': !Education.valid && (Education.dirty || Education.touched || isSubmit)}"
+                                                #Education="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" Education [(ngModel)]="formInput.Education" class="form-control">
+                                                </div>
+                                        </div>
+                                        <div  class="col-md-4">
+                                            <div  class="form-group"><label 
+                                                class="form-label">Date Of Birth</label><input 
+                                                name="DOB" placeholder="Select Date" type="date"
+                                                [ngClass]="{'is-invalid': !DOB.valid && (DOB.dirty || DOB.touched || isSubmit)}" (change)="CheckDOB(formInput.DOB);CalculateAge(formInput.DOB)"
+                                                #DOB="ngModel" required DOB [(ngModel)]="formInput.DOB" class="form-control" value=@Model.DOB.ToString()></div>
+                                        </div>
+                                        <div  class="col-md-4">
+                                            <div  class="form-group"><label 
+                                                class="form-label">Age</label><input 
+                                                name="Age" placeholder="Enter Age" type="number"
+                                                [ngClass]="{'is-invalid': !Age.valid && (Age.dirty || Age.touched || isSubmit)}"
+                                                #Age="ngModel" required pattern="[1-9]{1}[0-9]{1}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                maxlength="2"  Age [(ngModel)]="formInput.Age" class="form-control"></div>
+                                            </div>
+                                             
+                                    </div>
+                                </div>
+
+                              
+                             
+                                <div  class="col-md-3">
+                                    <div class="form-group" style="margin-bottom: 20px;">
+                                        <label class="form-label">Select Gender<b color="red"> *</b></label>
+                                    
+                                      
+                                            <input type="radio" [(ngModel)]="formInput.Gender"  #Gender="ngModel" required  Gender style="padding-top: 10px; margin-left: 16px;" id="Male" value="Male">Male
+                                            <input type="radio" [(ngModel)]="formInput.Gender"  #Gender="ngModel" required  Gender style="padding-top: 10px; margin-left: 16px;" id="Female" value="Female">Female
+                                         
+                                      </div>
+                                      </div>
+                             
+                        </div>
+                        <div  class="card-footer py-4" ><button  (click)="UpdateProfile();"
+                            class="btn ripple w-sm float-end" style="background-color: #3601b5;"> Update Profile </button></div>
+                    </div>
+
+                </div><!---->
+            </div>
+        </div>
+    </div>
+    <div  class="col-xl-3 col-xxl-3 col-md-12" style="padding-left: 0rem;">
+        <div  class="tab-content">
+            
+            <div ngbnavpane="" class="tab-pane fade show active" id="ngb-nav-0-panel" role="tabpanel"
+                aria-labelledby="ngb-nav-0">
+                <div  id="edit" class="border-top-0">
+                      <div  class="card">
+                        <div  class="card-body" style="min-height: 450px;">
+                            <!-- <h5  class="mb-4 font-weight-semibold"> Address Information </h5> -->
+                           <img style="height: 450px;" src="https://img.freepik.com/free-vector/competent-resume-writing-professional-cv-constructor-online-job-application-profile-creation-african-american-woman-filling-up-digital-form-concept-illustration_335657-2053.jpg">
+                        </div>
+                        
+                    </div>
+                </div><!---->
+            </div><!----><!----><!----><!----><!----><!---->
+        </div>
+    </div>
+
+   
+
+   
+</div>
+
+<div  *ngIf="!ViewPermission">
+                   
+<div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+</div>

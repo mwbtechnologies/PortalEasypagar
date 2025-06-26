@@ -1,0 +1,62 @@
+<div style="min-height: 100vh;">
+     <div class="card">
+                <!-- <div class="card-header" style="justify-content: space-between;">
+                    <div>
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 16px;font-weight: 600;">Employee Wise</h3>
+                    </div>
+                </div> -->
+                <div class="card-body">
+                    <div style="display: flex;flex-wrap: wrap;">
+                        <div class="col-md-3" >
+                            <label class="form-label">Select Sub Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Sub Organization'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels">Branch</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Branches'" [data]="BranchList"
+                                [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels">Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Departments'" [data]="DepartmentList"
+                                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                                (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels">Employees</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Employees'" [data]="EmployeeList"
+                                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels" >From Date</label>
+                            <input type="date" class="form-control" [(ngModel)]="FromDate">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels" >To Date</label>
+                            <input type="date" class="form-control" [(ngModel)]="ToDate">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels">Actions</label>
+                            <button class="btn btn-primary" (click)="getExpenseEmpWise()">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row" style="margin: 0;margin-bottom: 10px;">
+                        <button class="btn btn-primary approve" (click)="approveExpense()">Approve</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary reject" (click)="rejectExpense()">Reject</button>
+                    </div>
+                <div  class="table-responsive">
+                <app-common-table [data]="employeeWiseList" [displayColumns]="displayColumns" [Loading]="Loading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" (actionEmitter)="actionEmitter($event)" ></app-common-table>
+                </div>
+                </div>
+     </div>
+</div>

@@ -1,0 +1,7 @@
+.roledialog{
+    font-family:poppins;
+    width: 1000px;
+    padding: 20px;
+    height: 450px;
+    overflow: scroll;
+}

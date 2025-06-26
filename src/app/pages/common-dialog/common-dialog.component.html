@@ -1,0 +1,30 @@
+<div class="dialogs">
+    <div style="width: 100%;justify-content: center;display: flex;padding:0px 10px 20px 10px;">
+        <div *ngIf="type=='success'">
+            <img  style="width: 100px;" src="./assets/images/pngs/success-tick.png"/>
+        </div>
+        <div *ngIf="type=='option'">
+            <img  style="width: 100px;" src="./assets/images/pngs/question.png"/>
+        </div>
+    </div>
+    <div class="title" [class.success]="type == 'success'" [class.option]="type == 'option'" >{{title}}</div>
+    <div style="font-size: 16px;display: flex;justify-content: center;color: #454545;font-weight: 400;text-align: center;">{{subTitle}}</div>
+
+    <div style="display: flex;justify-content: center;margin-top: 50px;" *ngIf="type=='success'">
+        <button mat-icon-button aria-label="close dialog" (click)="close()" style="background-color: #6f6f6f;border-radius: 5px;padding: 4px 10px;font-size: 14px;color: #fff;font-weight: 300;">
+            close
+        </button>
+        
+    </div>
+    <div style="display: flex;justify-content: space-around;margin-top: 30px;" *ngIf="type == 'option'">
+        <ng-container>
+            <ng-container *ngFor="let opt of options;let i = index" >
+                <button mat-icon-button (click)="selectOption(i)" style="background-color: #25017b;border-radius: 5px;padding: 4px 10px;font-size: 14px;color: #fff;font-weight: 300;">
+                    {{opt.text}}
+                </button>
+            </ng-container>
+        </ng-container>
+        
+    </div>
+
+</div>

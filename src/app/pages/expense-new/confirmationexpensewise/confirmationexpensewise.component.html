@@ -1,0 +1,26 @@
+<div class="dialogs">
+    <div class="productdesc">
+        <div style="display: flex;justify-content: space-between;">
+            <h4 >
+                Add Comment To {{this.data.type}}
+            </h4>
+            <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+        </div>
+        <div class="col-md-12" style="padding: 0;">
+            <label class="form-label filelabels">Enter Comment</label>
+            <input type="text" placeholder="Enter Comment" style="border: 1px solid #b2b2b2;" [(ngModel)]="comment" class="form-control">
+        </div>
+        <div *ngIf="data.type == 'Approve'">
+            <label class="form-label filelabels">Select Cashier</label>
+            <ng-multiselect-dropdown [placeholder]="'Select Cashier'" [data]="CashierList"
+                [(ngModel)]="selectedCashier" (onSelect)="onCashierSelect($event)"
+                (onDeSelect)="onCashierDeSelect($event)" [settings]="CashierSettings">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="pt-3 btn-class">
+            <button class="greenbtn" (click)="save()">
+                Submit 
+            </button>
+        </div>
+    </div>
+</div>

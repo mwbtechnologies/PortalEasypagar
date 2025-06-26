@@ -1,0 +1,80 @@
+<div class="dialogs">
+    <div style="display: flex;justify-content: space-between;">
+        <h5 style="font-weight: bold;text-align: center;" > {{this.data.name}}</h5>
+        <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+    </div>
+     <!-- <div class="card-body">
+                <div class="file-image-1 file-image-md" style="padding: 10px;" *ngFor="let sub of FileData">
+                    <div class="product-image">
+                        <a>
+                            <img *ngIf="sub.Fileformat=='Image'" alt="Image File" src="{{sub.FilePath}}"  style="max-height: 200px;">   
+                            <img *ngIf="sub.Fileformat=='Image' && sub.BackFilePath!=null && sub.BackFilePath!=''" alt="Image File" src="{{sub.BackFilePath}}"  style="max-height: 200px;">  
+                            <img *ngIf="sub.Fileformat=='Music'" alt="Music File" src="assets/images/files/music.png" style="max-height: 400px;">
+                            <img *ngIf="sub.Fileformat=='Video'" alt="Video File" src="assets/images/files/video.png" style="max-height: 400px;">
+                            <img *ngIf="sub.Fileformat=='Document'" alt="Document File" src="assets/images/files/pdf.png"  style="max-height: 400px;">
+                            <img *ngIf="sub.Fileformat=='Excel'" alt="Excel File" src="assets/images/files/excel.png" style="max-height: 400px;">
+                            <img *ngIf="sub.Fileformat=='Word'" alt="Word File" src="assets/images/files/word.png" style="max-height: 400px;">
+                            <img *ngIf="sub.Fileformat=='Text'" alt="Text File" src="assets/images/files/text.png" style="max-height: 400px;"> 
+                            <img *ngIf="sub.Fileformat=='PowerPoint'" alt="PowerPoint File" src="assets/images/files/ppt.png" style="max-height: 400px;">
+                            <img *ngIf="sub.Fileformat=='XML'" alt="XML File" src="assets/images/files/xml.png"  style="max-height: 400px;">
+                            <img *ngIf="sub.Fileformat=='Json'" alt="Json File" src="assets/images/files/json.png" style="max-height: 400px;">
+                        </a>
+                        <ul class="icons">
+                            <li><a class="btn bg-danger" (click)="DeleteEmployee(sub.RecordID)"><i class="fa fa-trash"></i></a>
+                            </li>
+                            <li>
+                                <a class="btn bg-primary" (click)="openDialog(sub)">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a class="btn bg-primary" (click)="Open(sub.FilePath)">
+                                    <i class="fa fa-download" ></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div> -->
+            <div class="history-tl-container">
+              <ul class="tl">
+                <li class="tl-item" *ngFor="let sub of FileData">
+                  <div class="timestamp">
+                   {{sub.CreatedDate | date:'dd-MMM-yyyy'}}
+                  </div>
+                  <div class="item-title" style="width:130px">
+                    <span class="filetype">{{sub.Title}}</span> 
+                    <div class="maincard" >
+                        <img *ngIf="sub.Fileformat=='Image'" alt="Image File" src="{{sub.FilePath}}"  style="max-height: 130px;">   
+                        <img *ngIf="sub.Fileformat=='Image' && sub.BackFilePath!=null && sub.BackFilePath!=''" alt="Image File" src="{{sub.BackFilePath}}"  style="max-height: 130px;">  
+                        <img *ngIf="sub.Fileformat=='Music'" alt="Music File" src="assets/images/files/music.png" style="max-height: 130px;">
+                        <img *ngIf="sub.Fileformat=='Video'" alt="Video File" src="assets/images/files/video.png" style="max-height: 130px;">
+                        <img *ngIf="sub.Fileformat=='Document'" alt="Document File" src="assets/images/files/pdf.png"  style="max-height: 130px;">
+                        <img *ngIf="sub.Fileformat=='Excel'" alt="Excel File" src="assets/images/files/excel.png" style="max-height: 130px;">
+                        <img *ngIf="sub.Fileformat=='Word'" alt="Word File" src="assets/images/files/word.png" style="max-height: 130px;">
+                        <img *ngIf="sub.Fileformat=='Text'" alt="Text File" src="assets/images/files/text.png" style="max-height: 130px;"> 
+                        <img *ngIf="sub.Fileformat=='PowerPoint'" alt="PowerPoint File" src="assets/images/files/ppt.png" style="max-height: 130px;">
+                        <img *ngIf="sub.Fileformat=='XML'" alt="XML File" src="assets/images/files/xml.png"  style="max-height: 130px;">
+                        <img *ngIf="sub.Fileformat=='Json'" alt="Json File" src="assets/images/files/json.png" style="max-height: 130px;">
+                        <div class="icons">
+                               <button class="wdt" matTooltip="Delete Image" (click)="DeleteEmployee(sub.RecordID)">
+                                   <i class="fa fa-trash"></i>
+                               </button>
+                                <button class="wdt" matTooltip="View Image" (click)="openDialog(sub)">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <button class="wdt" *ngIf="sub.Fileformat=='Image'" matTooltip="Download Image" (click)="Open(sub)">
+                                    <i class="fa fa-download" ></i>
+                                </button>
+
+                                <button class="wdt" *ngIf="sub.Fileformat!='Image'" matTooltip="Download Image" (click)="OpenLink(sub.FilePath)">
+                                    <i class="fa fa-download" ></i>
+                                </button>
+                        </div>
+                    </div>
+                  </div>
+                </li>
+            
+              </ul>
+            
+            </div>
+
+        </div>

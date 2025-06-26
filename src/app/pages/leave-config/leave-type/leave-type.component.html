@@ -1,0 +1,55 @@
+<div class="card shadow-sm" style="width:400px">
+    <div class="card-header p-2 bg-secondary text-white">
+        <div class="row">
+            <div class="col-10">
+                <h5> <i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp;{{window_header | titlecase}}</h5>
+            </div>
+            <div class="col-2">
+                <a (click)="close()">
+                    <i class="fa fa-times" style="font-size:16px"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="leave_type_form">
+         
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="form-label">Leave Type Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" placeholder="(Sick Leave,Causal Leave)" formControlName="LeaveTypeName" />
+                        <div *ngIf="leave_type_form.get('LeaveTypeName')!.touched && leave_type_form.get('LeaveTypeName')!.hasError('required')">
+                            <span class="text-danger form-label">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>  Required *
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+        </form>
+    </div>
+    <div class="card-footer p-2">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-4">
+                <button (click)="on_save()" class="btn  btn-success w-100 d-block" [disabled]="!this.leave_type_form.valid">Save changes</button>
+
+            </div>
+            <div class="col-4">
+                <button class="btn btn-danger w-100  d-block" (click)="close()">Close</button>
+
+            </div>
+
+        </div>
+          
+      
+    </div>
+</div>
+
+
+
+
+
+

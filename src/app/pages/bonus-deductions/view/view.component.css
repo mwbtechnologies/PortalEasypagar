@@ -1,0 +1,11 @@
+.dialogs{
+    width: 1000px;
+    overflow: scroll;
+    height: 500px;
+    padding: 20px;
+    font-family: poppins;
+}
+.disabled-button { 
+    cursor: not-allowed;
+    opacity: 0.6;  
+  }

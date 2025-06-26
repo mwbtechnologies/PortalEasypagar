@@ -1,0 +1,16 @@
+.mirrored{
+    height: 250; width: 250px;
+}
+p {
+    font-family: Lato;
+  }
+
+  #chart {
+    max-width: 380px;
+    margin: 35px auto;
+    padding: 0;
+  }
+
+  .table-bordered, .text-wrap table, .table-bordered th, .text-wrap table th, .table-bordered td, .text-wrap table td {
+    border: 1px solid rgba(0, 0, 0, 0.29);
+  }

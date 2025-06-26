@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header justify-content-between">
+                <h5>Salary Component's</h5>
+                <div class="hstack">
+                    <button type="button" class="btn btn-warning me-1" (click)="openConfigDialog()"><i class="fa fa-gear"></i> &nbsp; Salary Configuration</button>
+                    <button type="button" class="btn  btn-secondary" (click)="openAddDialog()"><i class="fa fa-plus"></i>&nbsp;ADD NEW </button>
+
+                </div>
+                
+            </div>
+            <div class="card-body">
+                <app-common-table [data]="data_list"
+                                  [ExportName]="'Salary Component List'"
+                                  [displayColumns]="displayColumns"
+                                  [Loading]="employeeLoading"
+                                  [displayedColumns]="displayedColumns"
+                                  [editableColumns]="editableColumns"
+                                  [actions]="actionOptions"
+                                  [headerColors]="headerColors"
+                                  [smallHeaders]="smallHeaders"
+                                  [name]="['abc']"
+                                  (actionEmitter)="actionEmitter($event)"></app-common-table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

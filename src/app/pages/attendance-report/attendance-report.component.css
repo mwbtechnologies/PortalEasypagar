@@ -1,0 +1,17 @@
+.button{
+    background-color: white;
+    border:1px solid #dadada;
+    color: black;
+    border-radius: 10px;
+    margin-right: 4px;
+    padding: 5px;
+}
+
+.content {
+    position: fixed;
+    top: 70px;
+    /* width: -webkit-fill-available; */
+    z-index: 100;
+    box-shadow: 0 4px 8px 0 rgb(179 179 179), 0 6px 20px 0 rgb(161 161 161 / 50%);
+    margin-bottom: 0rem;
+  }

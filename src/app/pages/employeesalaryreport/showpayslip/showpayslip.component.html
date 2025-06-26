@@ -1,0 +1,156 @@
+<div class="dialogslip">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 card-title">{{EmployeeName}} Payslip</h3>
+                </div>
+                <div class="col-md-12 card-body" style="overflow: scroll;">
+                    <div class="maincard">
+                        <div class="datecard" *ngFor="let sd of SalaryDetails">From : {{sd.FromDate | date:'dd-MMM-yyyy'}} -  {{sd.ToDate | date:'dd-MMM-yyyy'}}</div>
+                        <div class="calendarcard">
+                         <ul>
+                            <ng-container *ngFor="let ss of DatewiseList">
+                                <li style="background-color: #73c31b;" *ngIf="ss.IsPresent == true">{{ss.Date | date:'dd'}}<br><label>{{ss.Date | date:'EEE' }}</label></li>
+                                <li style="background-color: #ff6262;" *ngIf="ss.IsOnLeave == true">{{ss.Date | date:'dd'}}<br><label>{{ss.Date | date:'EEE' }}</label></li>
+                                <li style="background-color: #d7d100;" *ngIf="ss.Isholiday == true">{{ss.Date | date:'dd'}}<br><label>{{ss.Date | date:'EEE' }}</label></li>
+                            </ng-container>
+                    </ul>      
+                        </div>
+                        
+                    </div>
+                 <div class="row">
+                    <div class="col-md-2">
+                        <div style="display:flex;align-items: center;">
+                          <div class="colorcard1"></div>&nbsp;&nbsp;
+                         <label style="margin: 0;">Present</label>        
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="display:flex;align-items: center;">
+                          <div class="colorcard2"></div>&nbsp;&nbsp;
+                         <label style="margin: 0;">Absent</label>        
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="display:flex;align-items: center;">
+                          <div class="colorcard3"></div>&nbsp;&nbsp;
+                         <label style="margin: 0;">Holidays</label>        
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="display:flex;align-items: center;">
+                          <div class="colorcard4"></div>&nbsp;&nbsp;
+                         <label style="margin: 0;">No Data</label>        
+                        </div>
+                    </div>
+                 
+                 </div>
+                   
+                </div>
+                <div class="card-body">
+                    <div ngbnavpane="" class="tab-pane fade active show" aria-labelledby="ngb-nav-4">
+                            <div class="row" *ngFor="let IL of SalaryDetails;">
+                                <div class="col-md-10" style="text-align: center;">
+                                    <h5 style="font-weight: bold;">Total Working Days : {{IL.TotalDays}}</h5>
+                                </div>
+                                <div class="col-md-2">
+                                    <button  id="table2-new-row-button" class="btn btn-primary mb-4" (click)="DownloadSlip();">Download Payslip</button>
+                                </div>
+                                <div class="col-md-6">
+                            <div  class="table-responsive">
+                                <table  class="table table-bordered">
+                                    <tr >
+                                        <td  class="fw-bold">Present</td>
+                                        <td >{{IL.PresentDays}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Absent</td>
+                                        <td >{{IL.EmployeeLeaves}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Holidays</td>
+                                        <td >{{IL.OfficialHolidays}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Basic Salary</td>
+                                        <td >{{IL.BasicSalary}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Old Balance</td>
+                                        <td >{{IL.OldSalaryBalance}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Incentive</td>
+                                        <td >{{IL.Incentive}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Shift Amount</td>
+                                        <td >{{IL.ShiftAmount}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">OT Hours</td>
+                                        <td >{{IL.OTHours}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">OT Amount</td>
+                                        <td >{{IL.OTAmount}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div  class="table-responsive">
+                                    <table  class="table table-bordered">
+                                        <tr >
+                                            <td  class="fw-bold">Paid Leaves</td>
+                                            <td >{{IL.PaidLeave}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">Sick Leaves</td>
+                                            <td >{{IL.SickLeave}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">WeekOff</td>
+                                            <td >{{IL.WeekOffDays}} WeekOff Alloted
+                                                <p *ngIf="IL.WeekOffDeduction!=0"> {{IL.WeekOffDeduction}} WeekOff are deducted due to continues absence</p>
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">Leave </td>
+                                            <td >{{IL.leaveDeduction}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">Loan & Advance</td>
+                                            <td *ngIf="IL.TotalLoanDeduction!=0">{{IL.TotalLoanDeduction}} &nbsp;</td>
+                                            <td *ngIf="IL.TotalLoanDeduction==0">{{IL.TotalLoanDeduction}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">Professional Tax</td>
+                                            <td >{{IL.ProfessionalTax}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">PF</td>
+                                            <td >{{IL.PF}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">ESI</td>
+                                            <td >{{IL.ESI}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                </div>
+
+                                <div class="col-md-5"></div>
+                                <div class="col-md-2">
+                                    <h6 style="font-weight: bold;">NET SALARY : {{IL.NetSalary}} /-</h6>
+                                </div>
+                                <div class="col-md-5"></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

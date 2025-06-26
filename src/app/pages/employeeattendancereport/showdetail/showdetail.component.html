@@ -1,0 +1,86 @@
+<div class="dialogs">
+    <div  class="row">
+            <div class="col-md-3">
+                    <div  class="productdesc">
+                            <div  class="card overflow-hidden">
+                                <div  class="card-body bootslider p-3">
+                                        <ngb-carousel data-interval="5">
+                                                <ng-template ngbSlide *ngFor="let IL of AttendanceData.Images">
+                                                        <img src="{{IL.Path}}" alt="Random first slide" style="max-height: 400px;">
+                                                </ng-template>
+                                               
+                                        </ngb-carousel>
+                                        </div>
+                                        </div>
+                                        </div>
+            </div>
+            <div class="col-md-9">
+            <div  class="productdesc">
+                <div  class="card overflow-hidden">
+                    <div  class="card-body bootslider p-3">
+                                            <div  class="panel panel-primary mb-5 mx-5 border" style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                                                    <div  class="table-responsive">
+                                                            <h4  class="mb-5 mt-3 fw-bold" style="text-align: center;"> Attendance Details</h4>
+                                                          <br>  <table  class="table table-bordered">
+                                                     
+                                                        <tr >
+                                                            <td  class="fw-bold">Date</td>
+                                                            <td >{{AttendanceData.Date | date:'MMMM dd YYYY'}} </td>
+                                                            <td  class="fw-bold">Total Duration</td>
+                                                            <td >{{AttendanceData.Duration}} </td>  
+                                                </tr>
+                                                        <tr *ngIf="AttendanceData.count==1 ||AttendanceData.count==2">
+                                                            <td style="min-width: 100px;"  class="fw-bold">Visit Type</td>                                                                        
+                                                            <td style="min-width: 150px;" class="fw-bold">Check-In</td>
+                                                            <td style="min-width: 150px;" class="fw-bold">Check-Out</td>
+                                                            <td style="min-width: 100px;" class="fw-bold">Duration</td>
+                                                            <td style="min-width: 80px;" class="fw-bold">Status</td>
+                                                          
+                                                </tr>
+                                                <tr *ngIf="AttendanceData.count==1 || AttendanceData.count==2">
+                                                    <td>{{AttendanceData.CheckInData[0].SessionTypeName}}</td>
+                                               <td>{{AttendanceData.CheckInData[0].CheckInDate}} <br>{{AttendanceData.CheckInData[0].CheckInAddress}}</td>
+                                                <td>
+                                                   {{AttendanceData.CheckInData[0].CheckInDate}} <br>{{AttendanceData.CheckInData[0].CheckOutAddress}}</td>
+                                                    <td >{{AttendanceData.CheckInData[0].Duration}} </td>
+                                                    <td>{{AttendanceData.CheckInData[0].ApproveStatus}}</td>
+                                                 
+                                            </tr>
+                    
+                                            <tr *ngIf="AttendanceData.count==2">
+                                                    <td>{{AttendanceData.CheckInData[1].SessionTypeName}}</td>
+                                               <td>{{AttendanceData.CheckInData[1].CheckInDate}} <br>{{AttendanceData.CheckInData[1].CheckInAddress}}</td>
+                                               <td>
+                                                    <input style="background-color: white;" type="time" class="form-control" [(ngModel)]="AttendanceData.CheckInData[1].CheckOutTime">
+                                                    <br>{{AttendanceData.CheckInData[1].CheckOutAddress}}</td>
+                                                    <td >{{AttendanceData.CheckInData[1].Duration}} </td>
+                                                    <td>{{AttendanceData.CheckInData[1].ApproveStatus}}</td>
+                                                  
+                                            </tr> 
+                                            <tr *ngIf="AttendanceData.count==0">
+                                                    <td class="fw-bold">-- No CheckIn-CheckOut Data Found --</td>
+                                            </tr>                                 
+                    </table>
+                    <!-- <div *ngIf="AttendanceData.PayslipExist==false" class="text-center mt-2 pb-5 border-bottom">
+                            <a class="btn btn-primary me-1" (click)="Action(AttendanceData.EmployeeID,'Approved',AttendanceData.Date,AttendanceData.AdminID);">
+                                <i  class="fa fa-check-circle"></i> Approve</a>
+                                <a class="btn btn-secondary" (click)="Action(AttendanceData.EmployeeID,'Rejected',AttendanceData.Date,AttendanceData.AdminID);">
+                                    <i  class="fa fa-times"></i>Reject</a>
+                                </div> -->
+                                  <div class="text-center mt-2 pb-5 border-bottom">
+                            <button class="btn btn-primary" (click)="CloseTab();">
+                                <i  class="fa fa-window-close"></i> Close</button>
+                             
+                                </div>
+                    </div>
+                 
+                
+            
+      
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+</div>

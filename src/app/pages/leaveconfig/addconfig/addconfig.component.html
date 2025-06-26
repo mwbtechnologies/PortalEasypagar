@@ -1,0 +1,12 @@
+<div class="configdailog">
+    <h4><span *ngIf="!isEdit">Add </span><span *ngIf="isEdit">Edit </span> Leave Type</h4>
+    <div class="col-md-12" style="padding: 0;">
+        <div class="col-md-10" style="padding: 0;">
+            <input type="text" class="form-control" placeholder="Enter Leave Type" style="border: 1px solid #bbb7b7;" [(ngModel)]="leaveType">
+        </div>
+    </div>
+    <div style="text-align: center;position: absolute;bottom: 20px;width: -webkit-fill-available;">
+        <button class="btn btn-primary" *ngIf="!isEdit" (click)="addLeaveConfig()">Add</button>    
+        <button class="btn btn-primary" *ngIf="isEdit" (click)="editLeaveConfig()">Update</button>    
+    </div>
+</div>

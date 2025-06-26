@@ -1,0 +1,16 @@
+<div class="dialogs">
+  <div style="display: flex;justify-content: space-between;">
+    <h5>Expense Images</h5>
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+</div>
+      <div class="container" *ngIf="AllImages.length > 0">
+          <ngb-carousel data-interval="5" >
+            <ng-template ngbSlide *ngFor="let image of AllImages">
+                <img [src]="IMGURL + image.BillImageUrl" style="width:300px;height:300px;border: 1px solid black;">
+            </ng-template>
+          </ngb-carousel>
+        </div>
+        <div class="container nif" *ngIf="AllImages.length == 0">
+          <h5>No Images Found</h5>
+        </div>
+  </div>

@@ -1,0 +1,104 @@
+.button {
+  background-color: white;
+  border: 1px solid #dadada;
+  color: black;
+  border-radius: 10px;
+  margin-right: 4px;
+  padding: 5px;
+}
+
+.hide{
+  display: none;
+}
+
+
+.drawer {
+    position: fixed;
+    margin-top: 4.1rem;
+    z-index: 101;
+    height: 87%;
+    width: 24%;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #006080a1;
+  }
+  .mat-drawer-container{
+    position: relative;
+    z-index: 1;
+    width:3px;
+    display:contents;
+    height: 100%;
+    overflow: auto;
+  }
+  
+  .drawer .header {
+    position: absolute;
+    right: 0;
+    justify-content: space-between;
+  }
+  .drawer .contents {
+    padding:10px;
+  }
+  .filtercss{
+    padding: 10px;
+  }
+  .maincards{
+    display: flex
+;
+    gap: 10px;
+    margin: 10px 20px;
+  }
+  .card-data{
+    padding: 10px;
+    /* background-color: white; */
+    text-align: center;
+    box-shadow: 0 0px 3px 0 rgb(0 0 0 / 0%), 0 1px 9px 0 rgb(0 0 0 / 17%);
+    border: 1px solid #dadada;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap:15px
+  }
+  .card-text{
+    margin: 0;
+    font-size: 12px;
+  }
+
+  
+  .chip3 {
+    background-color: rgb(233, 238, 255);
+    /* background: linear-gradient(132deg, rgba(233,238,255,1) 0%, rgba(146,146,231,1) 100%); */
+    margin-right: 12px;
+    margin-bottom: 12px;
+    /* border-top-right-radius: 5px; */
+    /* border-bottom-right-radius: 5px; */
+    padding: 5px 7px;
+    /* border-left: 2px solid rgb(4, 103, 216); */
+    border-radius: 5px;
+    width: 200px;
+  }
+
+  .chip3-title {
+    font-size: 14px;
+    color: rgb(97 97 97);
+    font-weight: 400;
+  }
+
+  .chip3-value {
+    font-size: 22px;
+    font-weight: 500;
+    color: rgb(4, 4, 143);
+    margin: 5px 2px;
+}
+
+.noDataCard {
+    margin-right: 12px;
+    margin-bottom: 12px;
+    padding: 15px 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Poppins';
+    font-size: 12px;
+    color: #ff2c2c;
+}

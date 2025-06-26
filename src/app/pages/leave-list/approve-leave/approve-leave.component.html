@@ -1,0 +1,94 @@
+<div class="dialogs">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="productdesc">
+                <div class="card overflow-hidden">
+                    <div class="card-body bootslider p-3">
+                        <div class="panel panel-primary mb-5 mx-5 border"
+                            style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                            <div class="table-responsive">
+                                <h4 class="mb-5 mt-3 fw-bold" style="text-align: center;"> Leave Details</h4>
+                                <br>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="fw-bold">Name</td>
+                                        <td>{{LeaveData.EmployeeName}}</td>
+                                        <td class="fw-bold">Branch</td>
+                                        <td>{{LeaveData.Branch}}</td>
+                                        <td class="fw-bold">Department</td>
+                                        <td *ngIf="LeaveData.Department!=null && LeaveData.Department!=''">
+                                            {{LeaveData.Department}}</td>
+                                        <td *ngIf="LeaveData.Department==null ||LeaveData.Department==''"> --</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Leave Type </td>
+                                        <td>{{LeaveData.LeaveType}} </td>
+                                        <td class="fw-bold">Requested Days</td>
+                                        <td *ngIf="LeaveData.NoOfDays==0 && LeaveData.IsHalfDay==true">Half Day </td>
+                                        <td *ngIf="LeaveData.IsHalfDay==false">{{LeaveData.NoOfDays}}</td>
+                                        <td class="fw-bold">Date</td>
+                                        <td>{{LeaveData.RequestDate|date: 'dd-MM-yyyy'}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Reason</td>
+                                        <td>{{LeaveData.ReasonForLeave}} </td>
+                                        <td class="fw-bold">Approved Days</td>
+                                        <td colspan="3"><input style="background-color: white;width:100px" [disabled]="LeaveData.IsHalfDay == true"
+                                            type="text" class="form-control" id="ApprovedDays" name="ApprovedDays"
+                                            placeholder="Enter Days" #ApprovedDays="ngModel"
+                                            [(ngModel)]="LeaveData.ApprovedDays"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Leave Status </td>
+                                        <td>{{LeaveData.ApproveStatus}} </td>
+                                        <td class="fw-bold">Leave Type</td>
+                                        <td>
+                                            <ng-multiselect-dropdown style="padding: 0;" [placeholder]="'LeaveType'"
+                                                [(ngModel)]="LeaveData.ApprovedLeaveType" [data]="LoginTypes"
+                                                [settings]="listtypesettings" (onSelect)="OnChange($event)"
+                                                (onDeSelect)="OnChange($event)">
+                                            </ng-multiselect-dropdown>
+                                        </td>
+                                        <td class="fw-bold">Approved Date </td>
+                                        <td>{{LeaveData.ApprovedDate|date: 'dd-MM-yyyy'}} </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Comment</td>
+                                        <td colspan="3">
+
+                                            <!-- <textarea  style="background-color: white;height: 100px;"  type="text" name="example-text-input" class="form-control" id="AdminComment" name="AdminComment" 
+                                            placeholder="Comment" #AdminComment="ngModel" [(ngModel)]="LeaveData.AdminComment"> </textarea> -->
+                                            <textarea style="background-color: white;height: 100px;" type="text"
+                                                name="example-text-input" class="form-control" id="AdminComment"
+                                                name="AdminComment" placeholder="AdminComment" #AdminComment="ngModel"
+                                                [(ngModel)]="LeaveData.AdminComment"> </textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="text-center mt-2 pb-5 border-bottom">
+                                    <button (click)="Approve(LeaveData);" id="bEdit" type="button"
+                                        class="btn btn-success">
+                                        Approve <span class="fa fa-check-circle"></span></button> &nbsp;
+                                    <button id="bEdit" type="button" (click)="Reject(LeaveData);"
+                                        class="btn btn-danger"> Reject <span class="fa fa-trash"></span></button>
+                                    &nbsp; <button id="bEdit" type="button" (click)="CloseTab()" class="btn btn-primary"
+                                        style="border-radius: 10px;background-color: #3601b5a3;"> Close<span
+                                            class="fa fa-times"></span></button>
+
+                                </div>
+
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="lunchcard">
+    <label class="lunchheader">Break Timing</label>
+    <!-- <h3>{{BreakType}}</h3> -->
+    <div class="col-md-8" *ngIf="Breaks?.length != 0">
+        <label classs="form-label" style="display: flex;">Select Break</label>
+        <ng-multiselect-dropdown [placeholder]="'Select Break'" [data]="Breaks"
+            [(ngModel)]="selectedBreak" (onSelect)="onBreakSelect($event)"
+            (onDeSelect)="onBreakDeSelect($event)" [settings]="breakSettings">
+        </ng-multiselect-dropdown>
+    </div>
+    <br>
+    <h4 style="margin-top: 20px;" *ngIf="Remainingtime != '00:00:00' && status==true">Your Break Timing Is {{minutes}} Minutes</h4>
+    <h4 style="margin-top: 20px;" *ngIf="status==true && Remainingtime === '00:00:00'">Your Break Time Has Ended</h4>
+    <h4 *ngIf="status==true && extratime !== '00:00:00'"> And Your Are {{ extratime }} Minutes Late</h4>
+    <div style="display: flex;justify-content: center;">
+        <!-- <h4 *ngIf="Breaks?.length == 0">No Breaks Available</h4> -->
+        <button type="button" *ngIf="!status && Breaks?.length" class="btn btn-primary" (click)="lunchIn()">Start Break</button>
+        <button type="button" *ngIf="status==true" class="btn btn-primary" (click)="lunchOut()">End Break</button>
+    </div>
+    <br>
+</div>

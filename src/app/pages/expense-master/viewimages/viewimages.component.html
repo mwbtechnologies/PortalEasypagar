@@ -1,0 +1,13 @@
+<div class="dialogs">
+  <!-- <h5>Expense Images Of <b>{{ImageData.data.EmployeeName}}</b></h5> -->
+    <div class="container" *ngIf="AllImages.length > 0">
+        <ngb-carousel data-interval="5" >
+          <ng-template ngbSlide *ngFor="let image of AllImages">
+              <img [src]="image.BillImageUrl" style="width:300px;height:300px;border: 1px solid black;">
+          </ng-template>
+        </ngb-carousel>
+      </div>
+      <div class="container nif" *ngIf="AllImages.length == 0">
+        <h5>No Images Found</h5>
+      </div>
+</div>

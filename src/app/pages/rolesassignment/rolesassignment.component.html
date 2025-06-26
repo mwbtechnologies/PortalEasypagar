@@ -1,0 +1,90 @@
+<div class="row" *ngIf="!trainerWise">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header" style="display: flex;justify-content:space-between;">
+                <div class="col-md-5">
+                    <h3 class="card-title">Trainer Assignment List</h3>
+                </div>
+                <div class="col-md-6" style="display: flex;justify-content: end;">
+                    <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+                        (click)="assignTrainee(false)">Assign Trainer</button>&nbsp;
+                    <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="downloadReport()" [disabled]="AssignedList ==undefined || AssignedList == null || !(AssignedList.length > 0)">📥 Download Report</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row" style="margin-left:10px;display: flex;align-items: end;">
+                    <div class="col-md-3">
+                        <label class="form-label">Select Organization  <label style="color: red;margin:0">*</label></label>
+                        <ng-multiselect-dropdown [settings]="orgSettings" [placeholder]="'Select Organization'"
+                            [data]="OrgList" [(ngModel)]="selectedOrganization" (onSelect)="onselectedOrg($event)"
+                            (onDeSelect)="onDeselectedOrg($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Select Branch  <label style="color: red;margin:0">*</label> </label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                            [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                            (onDeSelect)="onBranchDeSelect($event)" (onSelectAll)="onallbranchselect($event)"
+                            (onDeSelectAll)="onallbranchdeselect($event)" [settings]="branchSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Select Department</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Department'" [data]="DepartmentList"
+                            [(ngModel)]="selectedDepartment" (onSelect)="onDepartmentSelect($event)"
+                            (onDeSelect)="onDeselectDepartment($event)" (onSelectAll)="onalldeptselect($event)"
+                            (onDeSelectAll)="onalldeptdeselect($event)" [settings]="departmentSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Select Status</label>
+                        <ng-multiselect-dropdown [placeholder]="'All'" [data]="StatusList" [(ngModel)]="selectedStatus"
+                            (onSelect)="onstatusSelect($event)" (onDeSelect)="onDeselectstatus($event)"
+                            [settings]="statusSettings">
+                        </ng-multiselect-dropdown>
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">From Date  <label style="color: red;margin:0">*</label></label>
+                        <input type="date" class="form-control" [(ngModel)]="fromDate">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">To Date  <label style="color: red;margin:0">*</label></label>
+                        <input type="date" class="form-control" [(ngModel)]="toDate">
+                    </div>
+                    <div class="col-md-3">
+                        <button id="table2-new-row-button" class="btn btn-primary"
+                            style="border-radius:10px;background-color: #3601b5a3"
+                            (click)="getTraineeList(false);">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div *ngIf="showFilter" class="col-md-3" style="float: right;margin-top:-13px;margin-bottom: 6px;">
+                        <label class="form-label">Filter By Status</label>
+                        <ng-multiselect-dropdown [placeholder]="'All'" [data]="StatusList" [(ngModel)]="feSelectedStatus"
+                            (onSelect)="feOnstatusSelect($event)" (onDeSelect)="feOnDeselectstatus($event)"
+                            [settings]="statusSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <app-common-table [data]="AssignedList" [ExportName]="'Training List'"
+                        [displayColumns]="displayColumns" [Loading]="employeeLoading"
+                        [displayedColumns]="displayedColumns" [editableColumns]="editableColumns"
+                        [actions]="actionOptions" [headerColors]="headerColors" [ReportTitles]="ReportTitles"
+                        (actionEmitter)="actionEmitter($event)"></app-common-table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="trainerWise">
+    <label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+        List</label>
+    <app-trainerwise [trainerWiseList]="trainerWiseList"></app-trainerwise>
+</div>

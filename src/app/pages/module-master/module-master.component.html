@@ -1,0 +1,225 @@
+<div *ngIf="AddModule">
+    <div  class="row">
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Add New Module</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+                        <div  class="col-md-6">
+            
+                            <div  class="form-group"><label 
+                                class="form-label">Select Application</label>
+                                <ng-select [items]="ApplicationList"
+                                bindLabel="Text"
+                                bindValue="Value"
+                                [multiple]="false"
+                                placeholder="Select Application"
+                                [(ngModel)]="selectedApplicationId">
+                     </ng-select>
+                        </div></div>
+                        <div  class="col-md-6">
+                            <div  class="form-group"><label 
+                                    class="form-label">Module Name</label><input  type="text"
+                                    name="example-text-input" class="form-control" id="mname" name="mname" type="text"
+                                    placeholder="Module Name" 
+                                    [ngClass]="{'is-invalid': !mname.valid && (mname.dirty || mname.touched || isSubmit)}"
+                                    #mname="ngModel" required  onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" mname [(ngModel)]="formInput.mname">
+                                    <label *ngIf="!mname.valid && (mname.dirty || mname.touched || isSubmit)"
+                                    id="validation-link-error"
+                                    class="error jquery-validation-error small form-text invalid-feedback">Please Enter Valid Module Name</label></div>
+</div>
+<div  class="col-md-6">
+                            <div  class="form-group"><label 
+                                    class="form-label">Icon</label><input  type="text"
+                                    name="example-text-input" class="form-control" id="icon" name="icon" type="text" placeholder="Icon" 
+                                    [ngClass]="{'is-invalid': !icon.valid && (icon.dirty || icon.touched || isSubmit)}"
+                                    #icon="ngModel" required icon [(ngModel)]="formInput.icon">
+                                    <label *ngIf="!icon.valid && (icon.dirty || icon.touched || isSubmit)"
+                                    id="validation-link-error"
+                                    class="error jquery-validation-error small form-text invalid-feedback">Please Enter Valid Icon</label>
+                                </div>
+                           </div>
+                 
+                                  
+                    </div>
+                    <div  class="table-responsive ng-star-inserted">
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Viewlist();"> Back To List</button> &nbsp;
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="CreateModule();">Submit</button>
+                        <!----></div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
+<div *ngIf="Edit">
+    <div  class="row">
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Edit Module</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+                        <div  class="col-md-6">
+            
+                            <div  class="form-group"><label 
+                                class="form-label">Select Application</label>
+                                <ng-select [items]="ApplicationList"
+                                bindLabel="Text"
+                                bindValue="Value"
+                                [multiple]="false"
+                                placeholder="Select Application"
+                                [(ngModel)]="selectedApplicationId">
+                     </ng-select>
+                        </div></div>
+                        <div  class="col-md-6">
+                            <div  class="form-group"><label 
+                                    class="form-label">Module Name</label><input  type="text"
+                                    name="example-text-input" class="form-control" id="mname" name="mname" type="text"
+                                    placeholder="Module Name" 
+                                    [ngClass]="{'is-invalid': !mname.valid && (mname.dirty || mname.touched || isSubmit)}"
+                                    #mname="ngModel" required  onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" mname [(ngModel)]="formInput.mname">
+                                    <label *ngIf="!mname.valid && (mname.dirty || mname.touched || isSubmit)"
+                                    id="validation-link-error"
+                                    class="error jquery-validation-error small form-text invalid-feedback">Please Enter Valid Module Name</label></div>
+</div>
+<div  class="col-md-6">
+                            <div  class="form-group"><label 
+                                    class="form-label">Icon</label><input  type="text"
+                                    name="example-text-input" class="form-control" placeholder="Icon" 
+                                    [ngClass]="{'is-invalid': !icon.valid && (icon.dirty || icon.touched || isSubmit)}"
+                                    #icon="ngModel" required icon [(ngModel)]="formInput.icon">
+                                    <label *ngIf="!icon.valid && (icon.dirty || icon.touched || isSubmit)"
+                                    id="validation-link-error"
+                                    class="error jquery-validation-error small form-text invalid-feedback">Please Enter Valid Icon</label>
+                                </div>
+                           </div>
+                 
+                                  
+                    </div>
+                    <div  class="table-responsive ng-star-inserted">
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Viewlist();">Back To List</button> &nbsp;
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Update();">Update</button>
+                        <!----></div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
+
+<div >
+    <div  class="row" *ngIf="View">
+        <div  class="col-lg-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="card-title">Modules Master</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="table-responsive ng-star-inserted"><button 
+                            id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;"  (click)="AddNewModule();"> Add New Module</button><!----></div>
+                    <!---->
+                    <form #validationForm="ngForm" class="editForm" novalidate>
+                        <div  class="row">
+                            <div  class="col-md-6">
+                                <div  class="form-group"><label 
+                                    class="form-label">Select Application</label>
+                                    <ng-select [items]="ApplicationList"
+                                    bindLabel="Text"
+                                    bindValue="Value"
+                                    placeholder="Select Application"
+                                    (change)="OnAppChange($event)"
+                                    [(ngModel)]="selectedApplicationId">
+                         </ng-select>
+                            </div></div>
+                            
+                           </div>
+
+                            
+                    <div  class="table-responsive">
+                         <table id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+                            class="table table-striped table-bordered table-hover">
+                            <thead >
+                                <tr >
+                                    <th>
+                                        <input type="checkbox" name="allTrades" (change)="allCheck($event)">Check All
+                                        </th>
+                                    <th style="background-color: #3601b51f;text-align: center;display:none;">ID</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">SL No</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Module Name</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Module Order</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Icon</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Created On</th>
+                                    <th style="background-color: #3601b51f;text-align: center;">Edit/Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr  class="ng-star-inserted" *ngFor="let IL of institutionsList; let i = index;">
+                                    <td  style="display:none;"><!---->
+                                        <div  class="ng-star-inserted" > {{IL.ID}} </div><!---->
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="{{IL.ID}}" [(ngModel)]="institutionsList[i].checked">
+                                      </td>
+                                    <td ><!---->
+                                        <div  class="ng-star-inserted"> {{i+1}} </div><!---->
+                                    </td>
+                                   
+                                    <td ><!---->
+                                        <div  class="ng-star-inserted">{{IL.modulename}} </div>
+                                        <!---->
+                                    </td>
+                                    <td ><!---->
+                                        <div  class="ng-star-inserted"> {{IL.moduleorder}} </div>
+                                        <!---->
+                                    </td>
+                                    <td ><!---->
+                                        <div  class="ng-star-inserted"> {{IL.icon}} </div>
+                                        <!---->
+                                    </td>
+                                    <td ><!---->
+                                        <div  class="ng-star-inserted"> {{IL.CreatedDate| date:'dd-MM-YYYY'}} </div>
+                                        <!---->
+                                    </td>
+                                   
+                                    <td ><!----><button  id="bEdit" 
+                                            type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;"><span
+                                                
+                                                class="fa fa-edit" (click)="edit(IL.ID);"></span></button><!----><!---->
+                                                
+                                                <button *ngIf="IL.status==true && DeletePermission" (click)="DeactiveModule(IL.ID);"
+                                             id="bDel" type="button"
+                                            class="btn mx-3 btn-sm btn-danger ng-star-inserted"><span 
+                                                class="fa fa-trash"></span>
+                                            </button><!---->
+                                            <button *ngIf="IL.status==false && DeletePermission" (click)="ActiveModule(IL.ID);"
+                                             id="bDel" type="button"
+                                            class="btn mx-3 btn-sm btn-danger ng-star-inserted"><span 
+                                                class="fa fa-plus"></span>
+                                            </button><!---->
+                                    </td>
+                                </tr>
+                                <tr *ngIf="!institutionsList">
+                                    <td colspan="10" class="text-center text-danger">No Data Available</td>
+                                  </tr> 
+                            </tbody>
+                        </table>                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+       
+<div  *ngIf="!ViewPermission">
+                       
+    <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+</div>
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.6)" size = "medium" color = "#fff" [fullScreen] = "true">
+            <p style="color: white" > 
+                <img src="./assets/images/Banner/loading.gif" height="100px" width="100px"/><br>
+                &nbsp;&nbsp; Loading... </p></ngx-spinner>
+   
+   
+   

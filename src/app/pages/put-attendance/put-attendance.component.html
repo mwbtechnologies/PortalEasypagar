@@ -1,0 +1,94 @@
+
+
+
+
+<div >
+    <div  class="row">
+        <form #validationForm="ngForm" class="editForm" novalidate>
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title" style="align-items: center;">Daily Attendance</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+                        <div  class="col-md-4">
+                            <div  class="form-group">
+                                <label class="form-label">Visit Type</label>
+                            <ng-select [items]="VisitTypes" bindLabel="Text" bindValue="Value" placeholder="Select Visit" [(ngModel)]="selectedVisitID">
+                            </ng-select>
+                            </div>
+                        </div>
+<div  class="col-md-3">
+    <div  class="form-group">
+        <label class="form-label">Session Type</label>
+    <ng-select [items]="SessionTypes" bindLabel="Text" bindValue="Value" placeholder="Select Session" [(ngModel)]="selectedSessionID">
+    </ng-select>
+    </div>
+</div>
+
+<div  class="col-md-5">
+    <div  class="form-group"><label 
+            class="form-label">Date-Time</label><input  type="text"
+            name="example-text-input" class="form-control" id="LogDate" name="LogDate" disabled="true"
+            [ngClass]="{'is-invalid': !LogDate.valid && (LogDate.dirty || LogDate.touched )}"
+            #LogDate="ngModel" required  LogDate [(ngModel)]="formInput.LogDate">
+         </div>
+</div>
+
+<div  class="col-md-6">
+    <div  class="form-group"><label 
+            class="form-label">Address</label><textarea  type="text" rows="5"
+            name="example-text-input" class="form-control" id="Address" name="Address" disabled="true"
+            [ngClass]="{'is-invalid': !Address.valid && (Address.dirty || Address.touched )}"
+            #Address="ngModel" required  Address [(ngModel)]="formInput.Address"></textarea>
+         </div>
+</div>
+<div  class="col-md-1"></div>
+<div  class="col-md-5" *ngIf="showWebcam">
+    <div  class="form-group" style="align-items: center;">
+        <webcam [height]="200" [width]="500" [trigger]="triggerObservable"
+        (imageCapture)="handleImage($event);" type="file" [imageQuality]="2"></webcam>
+        <br>
+        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" type="button" (click)="triggerSnapshot();"><i
+            class="feather icon-slash"></i>Capture</button>          
+         </div>
+</div>
+<div  class="col-md-5" *ngIf="!showWebcam">
+    <div  class="form-group">
+            <img *ngIf="webcamImage" [src]="webcamImage.imageAsDataUrl" [height]="200" [width]="300" />
+       
+    </div>
+    <button *ngIf="webcamImage" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" type="button" (click)="toggleWebcam();" style="text-align: center;padding-left: 10px;"><i
+        class="feather icon-slash"></i> Recapture</button>
+&nbsp;
+        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="submit();">{{CheckInStatus}}</button>
+   
+</div>
+<!-- <div class="col-md-12" >
+    <agm-map [latitude]="lat" [longitude]="lng"  [zoom]="zoom">
+        <agm-direction [origin]="origin" [destination]="destination" >
+        </agm-direction>
+      </agm-map>
+      <br><br>
+</div>         -->
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>   
+</div>
+
+<div  *ngIf="!AddPermission">
+                       
+    <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+</div>
+
+
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.6)" size = "medium" color = "#fff" [fullScreen] = "true">
+    <p style="color: white" > 
+        <img src="./assets/images/Banner/loading.gif" height="100px" width="100px"/><br>
+        &nbsp;&nbsp; Loading... </p></ngx-spinner>

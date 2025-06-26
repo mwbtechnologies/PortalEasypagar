@@ -1,0 +1,92 @@
+<div class="dialogs">
+  <div style="display: flex;justify-content: space-between;">
+    <h3 style="font-weight: bold;text-align: center;" > Allocate OT For Employees</h3>
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+</div>
+  <div class="row Content">
+      <div class="col-md-4">
+          <label class="labels">Selected Branch</label><br>
+           <input type="text" class="timings" style="height: 35px;" [disabled]="true" [(ngModel)]="data.row.BranchName">
+      </div>
+      <div class="col-md-4">
+          <label class="labels">Select Department</label><br>
+          <ng-multiselect-dropdown [placeholder]="'All Department'" 
+          [data]="DepartmentList" [(ngModel)]="selectedDepartment" (onSelect)="onDepartmentSelect($event)" (onDeSelect)="onDepartmentDeSelect($event)" 
+          [settings]="departmentSettings">
+          </ng-multiselect-dropdown>
+      </div>
+      <div class="col-md-4">
+          <label class="labels">Select Employees</label><br>
+          <ng-multiselect-dropdown [placeholder]="'Select Employees'" 
+          [data]="EmployeeList" [(ngModel)]="selectedEmployee" (onSelect)="onEmployeeSelect($event)" 
+          [settings]="employeeSettings">
+          </ng-multiselect-dropdown>
+      </div>
+  </div>
+  <!-- <div class="row Content">
+      <div class="col-md-12" >
+        <label class="labels">Select Days</label><br>
+          <div class="col-md-12" style="display:flex;justify-content: space-between;padding: 0;">
+            <div>
+            <label class="weeks">Sunday</label>&nbsp;
+             <input type="checkbox" title="For Sunday" [(ngModel)]="IsSunday">
+           </div>&nbsp;
+            <div>
+            <label class="weeks">Monday</label>&nbsp;
+             <input type="checkbox" title="For Monday" [(ngModel)]="IsMonday">
+           </div>&nbsp;
+            <div>
+            <label class="weeks">Tuesday</label>&nbsp;
+             <input type="checkbox" title="For Tuesday" [(ngModel)]="IsTuesday">
+           </div>&nbsp;
+            <div>
+            <label class="weeks">Wednesday</label>&nbsp;
+             <input type="checkbox" title="For Wednesday" [(ngModel)]="IsWednesday">
+           </div>&nbsp;
+            <div>
+            <label class="weeks">Thursday</label>&nbsp;
+             <input type="checkbox" title="For Thursday" [(ngModel)]="IsThursday">
+           </div>&nbsp;
+            <div>
+            <label class="weeks">Friday</label>&nbsp;
+             <input type="checkbox" title="For Friday" [(ngModel)]="IsFriday">
+           </div>&nbsp;
+           <div>
+            <label class="weeks">Saturday</label>&nbsp;
+             <input type="checkbox" title="For Saturday" [(ngModel)]="IsSaturday">
+           </div>
+        </div>
+      </div>
+  </div>
+  <div class="row Content">
+      <div class="col-md-2" >
+        <label class="labels">Is Month</label>&nbsp;
+        <input type="checkbox" [(ngModel)]="isMonths">
+      </div>
+      <div *ngIf="isMonths == true" class="col-md-10" style="display:flex;justify-content: start;padding: 0;">
+          <div>
+          <label class="labels">Week 1</label>&nbsp;
+           <input type="checkbox" title="For Week 1" [(ngModel)]="Week1">
+         </div>&nbsp;&nbsp;
+          <div>
+          <label class="labels">Week 2</label>&nbsp;
+           <input type="checkbox" title="For Week 2" [(ngModel)]="Week2">
+         </div>&nbsp;&nbsp;
+          <div>
+          <label class="labels">Week 3</label>&nbsp;
+           <input type="checkbox" title="For Week 3" [(ngModel)]="Week3">
+         </div>&nbsp;&nbsp;
+          <div>
+          <label class="labels">Week 4</label>&nbsp;
+           <input type="checkbox" title="For Week 4" [(ngModel)]="Week4">
+         </div>&nbsp;&nbsp;
+          <div>
+          <label class="labels">Week 5</label>&nbsp;
+           <input type="checkbox" title="For Week 5" [(ngModel)]="Week5">
+         </div>
+      </div>
+  </div> -->
+  <div class="container">
+      <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="allocateotforemployee()">Add</button>
+  </div>
+</div>

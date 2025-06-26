@@ -1,0 +1,102 @@
+
+<div style="height: 600px; overflow: scroll; ">
+    <div class="container-fluid">
+        <h5 class="text-center   dialog_title">{{ form_title | titlecase }}</h5>
+        <hr />
+
+        <mat-dialog-content>
+            <form [formGroup]="form_group">
+
+                <div class="row">
+                    <div class="col-12">
+                        <input type="hidden" formControlName="ComponentId" />
+                        <label>Component Name  <span class="text-danger">*</span></label>
+                        <input type="text" ng-keydown="$event.keyCode != 32 ? $event:$event.preventDefault()" class="form-control  border-1 border-dark" formControlName="ComponentName" placeholder="like BASIC,HRA,TA,ESI" (keydown)="preventSpace($event)"
+                               (paste)="preventPasteSpace($event)" />
+                        <div *ngIf="form_group.get('ComponentName')?.touched && form_group.get('ComponentName')?.hasError('required')">
+                            <span class="text-danger">* Required</span>
+                        </div>
+
+                        <label>Component Description </label>
+                        <textarea placeholder="Component Description....." class="form-control  border-1 border-dark" formControlName="Description">
+
+                  </textarea>
+
+                    </div>
+                    <div class="col-12">
+                        <label> Component Type  <span class="text-danger">*</span></label>
+                        <select class="form-select border-1 border-dark text-dark" formControlName="ComponentType">
+                            <option value="Earnings">Earnings</option>
+                            <option value="Deduction">Deduction</option>
+                        </select>
+                        <div *ngIf="form_group.get('ComponentType')?.touched && form_group.get('ComponentType')?.hasError('required')">
+                            <span class="text-danger">* Required</span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label>Component Order  <span class="text-danger">*</span></label>
+                        <input type="number" placeholder="Components will sorted on this order" class="form-control border-1 border-dark text-dark" formControlName="order" />
+                        <div *ngIf="form_group.get('order')?.touched && form_group.get('order')?.hasError('required')">
+                            <span class="text-danger">* Required</span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <div class="hstack ms-4">
+                            <input type="checkbox" class="form-check-input me-2 border-1 border-dark" formControlName="IsGlobal" />
+                            <span class="form-title ms-3">Is Global ?</span>
+
+                        </div>
+                        <span class="text-muted">Is this applicable to all branches</span>
+
+                    </div>
+                    <div class="col-12 mt-2">
+                        <div class="hstack ms-4">
+                            <input type="checkbox" class="form-check-input me-2 border-1 border-dark" formControlName="IsMandatory" />
+                            <span class="form-title ms-3">Is Mandatory ?</span>
+
+                        </div>
+                        <span class="text-muted">Make this Mandatory Part of Employee Salary Structure</span>
+
+
+
+                    </div>
+                    <div class="col-12 mt-2">
+                        <div class="hstack ms-4">
+                            <input type="checkbox" class="form-check-input me-2 border-1 border-dark" formControlName="IsTaxable" />
+                            <span class="form-title ms-3">Is Component Taxable ?</span><br />
+
+                        </div>
+                        <span class="text-muted">The income tax amount will be divided equally and deducted every month acorss the financial year</span>
+
+
+
+
+                    </div>
+                    <div class="col-12 mt-2">
+                        <div class="hstack ms-4">
+                            <input type="checkbox" class="form-check-input me-2" formControlName="IsIncludeInGross" />
+                            <span class="form-title ms-3">Is Applicable to gross Calculation ?</span><br />
+
+                        </div>
+                        <span class="text-muted">Include this component in gross salary total before deductions</span>
+
+
+
+
+                    </div>
+
+                </div>
+            </form>
+        </mat-dialog-content>
+
+        <mat-dialog-actions align="end">
+            <button mat-flat-button color="secondary" (click)="closeDialog()">Close</button>
+            <button mat-flat-button color="primary" (click)="onSave()" [disabled]="!this.form_group.valid">Save changes</button>
+        </mat-dialog-actions>
+
+    </div>
+    
+
+</div>

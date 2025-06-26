@@ -1,0 +1,107 @@
+<div *ngIf="ViewPermission">
+    <div  class="row">
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Annual Report</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+
+                        <div  class="col-md-2">
+                            <div  class="form-group"><label 
+                                class="form-label">Select Report Type</label>
+                                <ng-select [items]="ReportsList"
+                                bindLabel="FormName"
+                                bindValue="APIName"
+                                [multiple]="false"
+                                placeholder="Select Report"
+                                [(ngModel)]="selectedReportIds">
+                     </ng-select>
+                        </div></div>
+                        <div  class="col-md-3">
+                            <div  class="form-group"><label 
+                                class="form-label">Select Branch</label>
+                                <ng-select [items]="BranchList"
+                                bindLabel="Text"
+                                bindValue="Value"
+                                [multiple]="false"
+                                placeholder="Select Branch"
+                                (change)="OnBranchChange($event)"
+                                [(ngModel)]="selectedBranchId">
+                     </ng-select>
+                        </div>
+                    </div>
+                                   <div  class="col-md-3">
+                                    <div  class="form-group"><label 
+                                        class="form-label">Select Department</label>
+                                        <ng-select [items]="DepartmentList"
+                                        bindLabel="Text"
+                                        bindValue="Value"
+                                        [multiple]="false"
+                                        placeholder="Select Department"
+                                        (change)="OnDepartmentChange($event)"
+                                        [(ngModel)]="selectedDepartmentIds">
+                             </ng-select>
+                                </div>
+                            </div>
+
+                                <div  class="col-md-2">
+                                <div  class="form-group"><label 
+                                    class="form-label">Select Year</label>
+                                    <ng-select [items]="YearList"
+                                    bindLabel="Text"
+                                    bindValue="Value"
+                                    [multiple]="false"
+                                    placeholder="Select Year"
+                                    (change)="OnYearChange($event)"
+                                    [(ngModel)]="selectedYearId">
+                         </ng-select>
+                            </div></div>
+
+                            <div  class="col-md-2">
+                                <div  class="form-group"><label 
+                                    class="form-label">Select Month</label>
+                                    <ng-select [items]="MonthList"
+                                    bindLabel="Text"
+                                    bindValue="Value"
+                                    [multiple]="false"
+                                    placeholder="Select Month"
+                                    (change)="OnMonthChange($event)"
+                                    [(ngModel)]="selectedMonthId">
+                         </ng-select>
+                            </div></div>
+
+                            <div  class="col-md-3">
+                                <div  class="form-group"><label 
+                                    class="form-label">Select Employee</label>
+                                    <ng-select [items]="EmployeeList"
+                                    bindLabel="Text"
+                                    bindValue="Value"
+                                    [multiple]="true"
+                                    placeholder="Select Employees"
+                                    (change)="OnEmployeesChange($event)"
+                                    [(ngModel)]="selectedEmployeeId">
+                         </ng-select>
+                            </div></div>
+                            <div  class="col-md-3">
+                                <label  class="form-label">Action</label>
+                                <button *ngIf="ShowDownload"  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="GetReportInPDF();"> Download PDF</button> &nbsp;
+                                <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="GetReportInExcel();"> Download Excel</button> &nbsp;
+                                    
+                                <button *ngIf="!ShowDownload"  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;"> <a href="{{pdfSrc}}" target="_blank" style="color:white">View PDF</a></button> &nbsp;
+                            </div>
+            
+                               </div>
+                               </div> </div>
+                            </div>
+                            </div>
+                            </div>
+
+
+
+
+                            <div  *ngIf="!ViewPermission">
+                       
+                                <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+                            </div>

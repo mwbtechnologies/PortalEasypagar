@@ -1,0 +1,15 @@
+.active{
+    background-color: green;
+    border-radius: 5px;
+    color:white;
+    padding:0px 4px
+    }
+    .inactive{
+        background-color: red;
+        border-radius: 5px;
+        color:white;
+        padding:0px 4px
+    }
+    .table-bordered, .text-wrap table, .table-bordered th, .text-wrap table th, .table-bordered td, .text-wrap table td {
+        border: 1px solid rgba(0, 0, 0, 0.29);
+      }

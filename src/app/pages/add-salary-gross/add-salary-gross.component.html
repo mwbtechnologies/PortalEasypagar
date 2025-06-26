@@ -1,0 +1,310 @@
+<div class="w-auto p-4">
+    <div mat-dialog-title class="dialog-title">
+
+        <div>
+            <div style="font-size: 18px;color: #000000;position: relative;left:20px;font-weight: 500;">
+                <i class="fa fa-address-book-o" aria-hidden="true"></i>    {{edit == true ? 'Update' : 'Add'}} Salary Setting
+            </div>
+        </div>
+        <div>
+            <button mat-icon-button aria-label="close dialog" style="padding: 0;" mat-dialog-close (click)="close()">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step [completed]="steps[0] == true" [ngStyle]="{ 'background-color': 'lightblue' }">
+            <ng-template matStepLabel>Choose  Scope</ng-template>
+
+            <div class="row g-0">
+                <div class="col-md-3 col-12 ">
+                    <label class="form-label">Select Organization</label>
+                    <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                             [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                             (onDeSelect)="onDeselectedOrg($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-3 col-12">
+                    <label class="form-label">
+                        Select Branch &nbsp;
+                        <!-- <i class="fa fa-info-circle"
+                        matTooltip="If you dont select any branches,by default it takes all branches"></i> -->
+                    </label>
+                    <ng-multiselect-dropdown [settings]="branchSettings" [placeholder]="'Select Branch'" [data]="BranchList" [(ngModel)]="selectedBranch"
+                                             (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)">
+                    </ng-multiselect-dropdown>
+                    <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('branch') && errorMessages['branch']!=''">{{errorMessages['branch'].message}}</label>
+                </div>
+                <div class="col-md-3 col-12">
+                    <label class="form-label">Select Department</label>
+                    <ng-multiselect-dropdown [settings]="departmentSettings" [placeholder]="'All Department'" [data]="DepartmentList"
+                                             [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)">
+                    </ng-multiselect-dropdown>
+                    <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('department') && errorMessages['department']!=''">{{errorMessages['department'].message}}</label>
+                </div>
+                <div class="col-md-3 col-12">
+                    <label class="form-label">Select Employees</label>
+                    <ng-multiselect-dropdown [settings]="employeeSettings" [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                             [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                             (onDeSelect)="OnEmployeesChangeDeSelect($event)" (onSelectAll)="OnEmployeesChange($event)" (onDeSelectAll)="OnEmployeesChange($event)">
+                    </ng-multiselect-dropdown>
+                    <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('employee') && errorMessages['employee']!=''">{{errorMessages['employee'].message}}</label>
+                </div>
+
+            </div>
+
+            <button (click)="openConfigDialog_demo()">open config window</button>
+            <div class="row mt-5">
+                <div class="col-md-9 col-0"></div>
+                <div class="col-md-3 col-12">
+                    <div class="d-none d-md-block">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <button class="btn btn-secondary w-100" (click)="validateSteps(0);validateSteps(0)">Next</button>
+
+                </div>
+            </div>
+
+
+
+
+
+
+        </mat-step>
+        <mat-step [completed]="steps[1] == true">
+            <ng-template matStepLabel>Select Salary Components</ng-template>
+
+
+            <form [formGroup]="main_form_group">
+                <div class="row">
+                    <div class="col-md-6 col-12 mt-2">
+
+                        <ul class="list-group rounded-2 list-group-action" formArrayName="earning_list">
+                            <li class="list-group-item bg-secondary text-white p-2">
+                                <div class="row">
+                                    <div class="col-12 d-flex align-items-center text-truncate">
+                                        <label class="ios-checkbox green me-2">
+                                            <input type="checkbox" (change)="select_all_earnings_clicked()" >
+                                            <div class="checkbox-wrapper">
+                                                <div class="checkbox-bg"></div>
+                                                <svg fill="none" viewBox="0 0 24 24" class="checkbox-icon">
+                                                    <path stroke-linejoin="round"
+                                                          stroke-linecap="round"
+                                                          stroke-width="2"
+                                                          stroke="currentColor"
+                                                          d="M4 12L10 18L20 6"
+                                                          class="check-path"></path>
+                                                </svg>
+                                            </div>
+                                        </label>
+                                        Earnings
+                                    </div>
+                                </div>
+                              
+
+                            </li>
+                            <li class="list-group-item list-group-action p-1" *ngFor="let group of earning_list.controls; let i = index" [formGroupName]="i">
+                                <input type="hidden" formControlName="ComponentId" />
+
+                                <div class="row">
+
+                                    <div class="col-10 d-flex align-items-center text-truncate">
+                                        <label class="ios-checkbox green me-2">
+                                            <input type="checkbox" formControlName="is_selected">
+                                            <div class="checkbox-wrapper">
+                                                <div class="checkbox-bg"></div>
+                                                <svg fill="none" viewBox="0 0 24 24" class="checkbox-icon">
+                                                    <path stroke-linejoin="round"
+                                                          stroke-linecap="round"
+                                                          stroke-width="2"
+                                                          stroke="currentColor"
+                                                          d="M4 12L10 18L20 6"
+                                                          class="check-path"></path>
+                                                </svg>
+                                            </div>
+                                        </label>
+
+                                        {{ group.get('ComponentName')?.value }}
+
+                                    </div>
+
+
+                                    <div class="col-2" *ngIf="group.get('is_selected')?.value">
+
+
+                                        <input type="number" placeholder="%" class="form-control form-control-sm fs-5 p-0" formControlName="Percentage" min="0" max="100" />
+                                        <div *ngIf="group.get('Percentage')?.touched && group.get('Percentage')?.hasError('required') && group.get('is_selected')?.value">
+                                            <p class="text-danger">*Required</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Percentage (Visible only if is_selected is true) -->
+
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-12 mt-2">
+
+                        <ul class="list-group rounded-2 list-group-action" formArrayName="deduction_list">
+                            <li class="list-group-item bg-danger text-white p-2">
+                                <div class="row">
+                                    <div class="col-12 d-flex align-items-center text-truncate">
+                                        <label class="ios-checkbox green me-2">
+                                            <input type="checkbox" (change)="select_all_deduction_clicked()">
+                                            <div class="checkbox-wrapper">
+                                                <div class="checkbox-bg"></div>
+                                                <svg fill="none" viewBox="0 0 24 24" class="checkbox-icon">
+                                                    <path stroke-linejoin="round"
+                                                          stroke-linecap="round"
+                                                          stroke-width="2"
+                                                          stroke="currentColor"
+                                                          d="M4 12L10 18L20 6"
+                                                          class="check-path"></path>
+                                                </svg>
+                                            </div>
+                                        </label>
+                                        Deductions
+                                    </div>
+                                </div>
+                              
+                            </li>
+                            <li class="list-group-item list-group-action p-1" *ngFor="let group of deduction_list.controls; let i = index" [formGroupName]="i">
+                                <input type="hidden" formControlName="ComponentId" />
+                                <div class="row">
+
+                                    <div class="col-10 d-flex align-items-center text-truncate">
+                                        <label class="ios-checkbox green me-2">
+                                            <input type="checkbox" formControlName="is_selected">
+                                            <div class="checkbox-wrapper">
+                                                <div class="checkbox-bg"></div>
+                                                <svg fill="none" viewBox="0 0 24 24" class="checkbox-icon">
+                                                    <path stroke-linejoin="round"
+                                                          stroke-linecap="round"
+                                                          stroke-width="2"
+                                                          stroke="currentColor"
+                                                          d="M4 12L10 18L20 6"
+                                                          class="check-path"></path>
+                                                </svg>
+                                            </div>
+                                        </label>
+
+                                        {{ group.get('ComponentName')?.value }}
+
+                                    </div>
+
+                                </div>
+
+
+
+
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <ul class="list-group">
+
+                            <li class="list-group-item ">
+                                <div class="row fs-7">
+                                    <div class="col-md-2 col-12 fw-bold">
+                                        <i class=" fa  fa-calculator"></i> Total Gross Pay : {{totalGross}}%
+                                    </div>
+                                    <div class="col-md-10 col-12">
+                                        {{gross_calcuation_text |titlecase}}
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+            </form>
+
+
+
+            <!-- [disabled]="!isStepValid(2)" -->
+            <div>
+                <button class="btn btn-primary px-4 m-2" (click)="goToPreviousStep()">Previous</button>
+                <button class="btn btn-primary px-4 m-2" [disabled]="!IsValidSelection()" (click)="save_gross_composition();validateSteps(1)">Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Calculation</ng-template>
+            <div class="row" style="margin-top:20px">
+                <div>
+                    <label style="font-size: 16px;font-weight: 500;">Salary calculation formulas</label>
+                </div>
+
+                <div class="col-12">
+                    <table class="table table-sm table-responsive table-striped table-bordered" border="1">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Component Name</th>
+                                <th>Component Type</th>
+                                <th>Pay Type</th>
+                                <th>Amount</th>
+                                <th>Expression</th>
+                                <th>Modify</th>
+
+                            </tr>
+                            <tr *ngFor="let item of salary_compoisition_list;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{item.ComponentName}}</td>
+                                <td>{{item.Type}}</td>
+                                <td>{{item.type}}</td>
+                                <td>{{item.Amount}}</td>
+                                <td>{{item.Expression}}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-secondary" (click)="openConfigDialog(item)"><i class="fa fa-gear"></i> &nbsp;Configure</button>
+                                </td>
+                            </tr>
+
+                        </thead>
+
+                    </table>
+                </div>
+
+                <div class="row">
+                    <hr />
+                    <div class="col-3">
+                        <button class="btn btn-primary px-4" style="margin-top:20px;width: fit-content;">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </mat-step>
+
+
+    </mat-horizontal-stepper>
+</div>

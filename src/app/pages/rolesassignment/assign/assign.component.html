@@ -1,0 +1,100 @@
+<div class="roledialog">
+    <div style="display: flex;justify-content: space-between;">
+        <h4 *ngIf="!isEdit">Assign Trainer</h4>
+        <h4 *ngIf="isEdit">Edit Trainer</h4>
+        <i class="fa fa-times" style="font-size: 20px;" (click)="cancel()"></i>
+    </div>
+    <div class="row col-md-12" style="padding: 0;row-gap: 10px;">
+        <div class="col-md-3">
+            <label class="form-label">Select Organization <label style="color: red;margin:0">*</label></label>
+            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization"
+                [data]="OrgList" [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                (onDeSelect)="onDeselectedOrg($event)">
+            </ng-multiselect-dropdown>
+            <label style="color: red;font-size: 12px;" *ngIf="error?.organization">{{ error?.organization }}</label>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Select Trainer <label style="color: red;margin:0">*</label></label>
+            <ng-multiselect-dropdown [placeholder]="'Select Trainer'" [data]="TraineeList" [(ngModel)]="selectedTrainer"
+                (onSelect)="onTraineeSelect($event)" (onDeSelect)="onTraineeDeSelect($event)"
+                [settings]="TrainerSettings">
+            </ng-multiselect-dropdown>
+            <label style="color: red;font-size: 12px;" *ngIf="error?.trainer">{{ error?.trainer }}</label>
+            <span *ngIf="!isEdit">
+                <label style="font-size: 12px;" *ngIf="TraineeList.length == 0">No Trainer? <label
+                        style="background-color: blue;color: white;margin: 0;padding: 0px 5px;border-radius: 5px;"
+                        (click)="addTrainer()">Add</label></label>
+                <label style="font-size: 12px;" *ngIf="TraineeList.length > 0">Add New Trainer <label
+                        style="background-color: blue;color: white;margin: 0;padding: 0px 5px;border-radius: 5px;"
+                        (click)="addTrainer()">Add</label></label>
+            </span>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Select Branch <label style="color: red;margin:0">*</label></label>
+            <ng-multiselect-dropdown [placeholder]="'Select Branches'" [data]="BranchList" [(ngModel)]="selectedBranch"
+                (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+            </ng-multiselect-dropdown>
+            <label style="color: red;font-size: 12px;" *ngIf="error?.branch">{{ error?.branch }}</label>
+        </div>
+        <div class="col-md-3" *ngIf="!isEdit">
+            <label class="form-label">Select Trainee <label style="color: red;margin:0">*</label></label>
+            <ng-multiselect-dropdown [placeholder]="'Select Trainee'" [data]="EmployeeList"
+                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+            </ng-multiselect-dropdown>
+            <label style="color: red;font-size: 12px;" *ngIf="error?.employee">{{ error?.employee }}</label>
+        </div>
+        <div class="col-md-3" *ngIf="isEdit">
+            <label class="form-label">Add More Trainees<i class="fa fa-info-circle"
+                    matTooltip="Trainees Who Are Already Assigned Will Not Be Visible In The Dropdown"></i> </label>
+            <ng-multiselect-dropdown [placeholder]="'Add Trainee'" [data]="UnAssignedEmployees"
+                [(ngModel)]="selectedUnAssignedEmployees" (onSelect)="OnUnAssignedEmpChange($event)"
+                (onDeSelect)="OnUnAssignedEmpChangeDeSelect($event)" [settings]="UnAssignedempSettings">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Title <label style="color: red;margin:0">*</label></label>
+            <input class="form-control" type="text" placeholder="Enter Title" [(ngModel)]="Title" maxlength="40">
+            <div style="display: flex;justify-content: space-between;">
+                <label style="color: red;font-size: 12px;">{{ error?.title }}</label>
+                <label class="form-label" style="font-size: 10px;">({{Title?.length ?? 0}}/40)</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Description <label style="color: red;margin:0">*</label></label>
+            <textarea class="form-control" placeholder="Add Description Related To Training" [(ngModel)]="Description"
+                maxlength="80"></textarea>
+            <div style="display: flex;justify-content: space-between;">
+                <label style="color: red;font-size: 12px;">{{ error?.description }}</label>
+                <label class="form-label" style="font-size: 10px;">({{Description?.length ?? 0}}/80)</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Start Date <label style="color: red;margin:0">*</label></label>
+            <input class="form-control" type="date" [min]="today" [(ngModel)]="StartDate"
+                [disabled]="isEdit && (data?.data?.StatusByTrainee == 'On-Going' || data.data.StatusByTrainee == 'Complete')">
+            <label style="color: red;font-size: 12px;" *ngIf="error?.startdate">{{ error?.startdate }}</label>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">End Date <label style="color: red;margin:0">*</label></label>
+            <input class="form-control" type="date" [min]="today" [(ngModel)]="EndDate"
+                [disabled]="isEdit && (data?.data?.StatusByTrainee == 'Complete')">
+            <label style="color: red;font-size: 12px;" *ngIf="error?.enddate">{{ error?.enddate }}</label>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Training Location <label style="color: red;margin:0">*</label></label>
+            <textarea class="form-control" placeholder="Add Training Location" [(ngModel)]="Address"
+                maxlength="160"></textarea>
+                <div style="display: flex;justify-content: space-between;">
+                <label style="color: red;font-size: 12px;">{{ error?.address }}</label>
+                <label class="form-label" style="font-size: 10px;">({{Address?.length ?? 0}}/160)</label>
+            </div>
+        </div>
+
+    </div>
+    <div style="display: flex;justify-content: center;">
+        <button class="btn btn-primary" *ngIf="!isEdit" (click)="assign()">Submit</button>&nbsp;
+        <button class="btn btn-primary" *ngIf="isEdit" (click)="update()">Update</button>&nbsp;
+        <button class="btn btn-primary" (click)="cancel()">Cancel</button>
+    </div>
+</div>

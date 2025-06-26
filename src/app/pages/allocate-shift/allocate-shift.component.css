@@ -1,0 +1,51 @@
+.days {
+    border-radius: 50%;
+    background-color: #dadada;
+    padding: 2px 5px;
+    position: relative;
+}
+
+.dayscard {
+    visibility: hidden;
+    background-color: #e7e7e7;
+    border: 1px solid gray;
+    border-radius: 6px;
+    position: absolute;
+    padding: 3px 10px;
+    z-index: 1000;
+    font-size: 12px;
+    top: 20px; /* Adjust to position the tooltip below the label */
+    left: 0;
+  }
+  
+  .dayshovercard {
+    position: relative; /* Ensure the tooltip is positioned relative to this container */
+  }
+  
+  .dayshovercard:hover .dayscard {
+    visibility: visible;
+}
+.weeks {
+    border-radius: 50%;
+    background-color: #dadada;
+    padding: 2px 5px;
+    position: relative;
+}
+
+.weekscard {
+    visibility: hidden;
+    background-color: #e7e7e7;
+    border: 1px solid gray;
+    border-radius: 4px;
+    position: absolute;
+    padding: 2px 10px;
+    z-index: 1000;
+    font-size: 12px;
+}
+
+.weekshovercard:hover .weekscard {
+    visibility: visible;
+}
+.table-bordered, .text-wrap table, .table-bordered th, .text-wrap table th, .table-bordered td, .text-wrap table td {
+    border: 1px solid rgba(0, 0, 0, 0.29);
+  }

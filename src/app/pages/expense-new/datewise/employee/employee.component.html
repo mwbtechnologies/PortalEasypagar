@@ -1,0 +1,53 @@
+<div class="dailog">
+        <label style="text-align: end;width: -webkit-fill-available;font-size: 20px; margin: 0;"><i (click)="close()" class="fa fa-times" ></i></label>
+        <div class="headers">
+           <div class="col-md-4" *ngIf="Branch.length>0">
+           <label>Branch : <strong>{{Branch}}</strong></label>
+           </div>
+           <div class="col-md-4" *ngIf="Department.length>0">
+           <label>Department : <strong>{{Department}}</strong></label>
+           </div>
+           <div class="col-md-4" *ngIf="Department.length>0">
+           <label>Date : <strong>{{data.fromdate | date:'dd-MMM-yyyy'}}</strong></label>
+           </div>
+        </div>
+               <!-- <div class="card-body">
+                   <div style="display: flex;flex-wrap: wrap;">
+                       <div class="col-md-3">
+                           <label class="form-label filelabels">Branch</label>
+                           <ng-multiselect-dropdown [placeholder]="'All Branches'" [data]="BranchList"
+                               [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                               (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                           </ng-multiselect-dropdown>
+                       </div>
+                       <div class="col-md-3">
+                           <label class="form-label filelabels">Department</label>
+                           <ng-multiselect-dropdown [placeholder]="'All Departments'" [data]="DepartmentList"
+                               [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                               (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                           </ng-multiselect-dropdown>
+                       </div>
+                       <div class="col-md-3">
+                           <label class="form-label filelabels">From Date</label>
+                           <input type="date" class="form-control">
+                       </div>
+                       <div class="col-md-3">
+                           <label class="form-label filelabels">To Date</label>
+                           <input type="date" class="form-control">
+                       </div>
+                       <div class="col-md-3">
+                           <label class="form-label filelabels">Actions</label>
+                           <button class="btn btn-primary" >Search</button>
+                       </div>
+                   </div>
+               </div> -->
+               <div class="card-body">
+                   <div class="row" style="margin: 0;margin-bottom: 10px;">
+                    <button class="btn btn-primary approve" (click)="approveExpense()" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)">Approve</button>&nbsp;&nbsp;
+                       <button class="btn btn-primary reject" (click)="rejectExpense()" [disabled]="!(selectedRows.length>0) || (commonTableDataSource && commonTableDataSource.filteredData && commonTableDataSource?.filteredData?.length<1)">Reject</button>
+                   </div>
+               <div  class="table-responsive">
+               <app-common-table [data]="EmpWiseList" [displayColumns]="displayColumns" [Loading]="Loading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" (actionEmitter)="actionEmitter($event)" ></app-common-table>
+               </div>
+               </div>
+</div>

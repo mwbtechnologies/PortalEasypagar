@@ -1,0 +1,77 @@
+<label class="backbutton" (click)="backToList()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back To User</label>
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div>
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 12px;color: #978f8f;">Directory
+                            Management</h3>
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 16px;font-weight: 600;">Document Wise User List</h3>
+                    </div>
+                </div>
+                <div class="maincards" *ngIf="docWiseUsers.length>0">
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{totalUsers.totalUsers}}</h3>
+                        <label class="chip3-title">Total Users</label>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{totalUsers.totalPending}}</h3>
+                        <label class="chip3-title">Pending Count</label>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{totalUsers.totalApproved}}</h3>
+                        <label class="chip3-title">Approved Count</label>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{totalUsers.totalRejected}}</h3>
+                        <label class="chip3-title">Rejected Count</label>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <app-hierarchy [selectedFilterData]="selectedFilterData" [dropDownExtras]="dropDownExtras" [actions]="hirearchyActions" (actionEmitter)="triggerHierarchyAction($event)"></app-hierarchy>
+                    <div class="col-12 row">
+                        <div class="col-11 row">
+                        <div class="col-md-3">
+                            <label class="form-label filelabels">Documents Group</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Doc'" [data]="DocumentGroups"
+                                [(ngModel)]="SelectedDocGroup" (onSelect)="onDocGroupSelect($event)"
+                                (onDeSelect)="onDocGroupDeSelect($event)" [settings]="DocSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels">Sub Documents</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Sub Doc'" [data]="SubDocList"
+                                [(ngModel)]="SelectedSubDoc" (onSelect)="onSubDocGroupSelect($event)"
+                                (onDeSelect)="onSubDocGroupDeSelect($event)" [settings]="SubDocSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels">Status</label>
+                            <ng-multiselect-dropdown
+                            [settings]="StatusSettings"
+                            [data]="StatusList"
+                              [placeholder]="'Select Status'"
+                              [(ngModel)]="SelectedStatus"
+                              >
+                            </ng-multiselect-dropdown>
+                          </div>
+                        <div class="col-md-3">
+                            <label class="form-label filelabels">Actions</label>
+                            <button class="btn btn-primary" (click)="getList()">Search</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <app-common-paginated-table [paginatedData]="paginatedData" [data]="docWiseUsers" [displayColumns]="displayColumns" [Loading]="Loading"
+                            [displayedColumns]="displayedColumns" [editableColumns]="editableColumns"
+                            [actions]="actionOptions" (actionEmitter)="actionEmitter($event)"
+                            [name]="commonTableName" (onPageNumberChange)="onPageNumberChange($event)"></app-common-paginated-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

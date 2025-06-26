@@ -1,0 +1,117 @@
+<div class="container p-4" style="max-width: 900px;min-width: 700px; max-height: 80vh; overflow-y: auto;">
+  <div class="row">
+    <!-- Employee List -->
+<div class="mb-4">
+  <h5 class="mb-2" style="text-align: center;">👨‍💼 Employee Payslip Summary</h5>
+  <br>
+  <table class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>SL No</th>
+        <th>Employee Name</th>
+        <th>Net Pay</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of selectedPayslips; let i=index">
+        <td>{{ i+1 }}</td>
+        <td>{{ emp.Employee }}</td>
+        <td>{{ emp.NetSalary }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  </div>
+  <!-- <h4 class="mb-4">💳 Payment Summary</h4> -->
+
+  <!-- Payment Type -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label class="form-label">💰 Select Payment Type</label>
+  <ng-multiselect-dropdown [placeholder]="'Select Payment'" [settings]="PaymentSetting" [data]="PaymentType"  
+           [(ngModel)]="UserSelectedPayment" (onSelect)="PaymentSelect($event)" (onDeSelect)="PaymentDeselect($event)"
+           >
+         </ng-multiselect-dropdown> </div>
+
+    <div class="col-md-4">
+        <label class="form-label">📅 Payment Date</label>
+        <input class="form-control" (change)="validateDate()" [min]="minDate" [max]="maxDate" (onchange)="OnDateSelected(PaymentDate);" type="date" [(ngModel)]="PaymentDate">
+        <div *ngIf="dateError" class="text-danger">{{ dateError }}</div>
+    </div>
+
+        <div class="col-md-4">
+      <label class="form-label">💵 Amount</label>
+      <div class="form-control bg-light">{{ netsalary }}</div>
+    </div>
+  </div>
+
+  <!-- CHEQUE Details -->
+  <div *ngIf="selectedPayment === 'CHEQUE'">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Cheque Number <span class="text-danger">*</span></label>
+        <input class="form-control" type="number" [(ngModel)]="Paymentcheque" placeholder="Enter Cheque No">
+        <div class="text-danger" *ngIf="errorMessages?.chequeno">{{ errorMessages?.chequeno?.message }}</div>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Bank Name <span class="text-danger">*</span></label>
+        <input class="form-control"  pattern="[A-Za-z]+"  (keypress)="allowOnlyLetters($event)"  type="text" [(ngModel)]="PaymentBank" placeholder="Enter Bank Name">
+        <div class="text-danger" *ngIf="errorMessages?.bankname">{{ errorMessages?.bankname?.message }}</div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Account Number <span class="text-danger">*</span></label>
+        <input class="form-control" type="text" (keypress)="allowOnlyNumbers($event)" [(ngModel)]="PaymentAccNo" placeholder="Enter Acc No ">
+        <div class="text-danger" *ngIf="errorMessages?.accno">{{ errorMessages?.accno?.message }}</div>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">IFSC Code <span class="text-danger">*</span></label>
+        <input class="form-control" type="text" maxlength="11"  (keypress)="validateIfscKeyPress($event)" [(ngModel)]="PaymentIFSC" placeholder="SBIN0001234">
+        <div class="text-danger" *ngIf="errorMessages?.ifsccode">{{ errorMessages?.ifsccode?.message }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPI Details -->
+  <div *ngIf="selectedPayment === 'UPI'" class="mb-3">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="form-label">UPI Number <span class="text-danger">*</span></label>
+        <input class="form-control" type="text" [(ngModel)]="PaymentUPINO" placeholder="Enter UPI No">
+        <div class="text-danger" *ngIf="errorMessages?.upino">{{ errorMessages?.upino?.message }}</div>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">UPI App Name</label>
+        <input class="form-control" type="text" [(ngModel)]="PaymentUPIAPP" placeholder="Enter UPI App Name">
+        <div class="text-danger" *ngIf="errorMessages?.upiappname">{{ errorMessages?.upiappname?.message }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="mb-3">
+    <label class="form-label">📝 Description</label>
+    <textarea class="form-control" [(ngModel)]="ReferenceID" placeholder="Enter Description"></textarea>
+  </div>
+
+  <!-- Upload Image -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+          <form #validationForm="ngForm" class="editForm" novalidate>
+      <label class="form-label">📷 Upload Image  <span class="text-danger" *ngIf="selectedPayment === 'UPI' || selectedPayment === 'CHEQUE'  ">*</span></label>
+      <input type="file" class="form-control" (change)="UploadProof1Image1($event,validationForm)">
+      <div class="imgcontainer mt-2" *ngIf="ShowImage">
+        <img [src]="fileurl" class="img-fluid rounded shadow border" style="max-height: 120px;">
+      </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <button class="btn btn-success" (click)="submitSummary()">✅ Submit</button>
+    <button class="btn btn-secondary" (click)="cancelSummary()">❌ Cancel</button>
+  </div>
+</div>

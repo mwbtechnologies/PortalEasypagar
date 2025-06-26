@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="justify-content: start;">
+                <div class="col-md-5"><label (click)="backToDashboard()" class="mb-0 card-title"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+                </label></div>
+                <h3 class="mb-0 card-title">Salary Settings</h3>
+            </div>
+            <div class="card-body">
+                <div style="display: flex;flex-wrap: wrap;">
+                    <div class="col-md-3" >
+                        <label class="form-label">Select Organization</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                            [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                            (onDeSelect)="onDeselectedOrg($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+        <div class="col-md-3">
+            <label class="form-label">Select Branch &nbsp;
+                <!-- <i class="fa fa-info-circle"
+                    matTooltip="If you dont select any branches,by default it takes all branches"></i> -->
+            </label>
+            <ng-multiselect-dropdown [placeholder]="'Select a branch'" [data]="BranchList" [(ngModel)]="selectedBranch"
+                (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)" (onSelectAll)="onBranchSelect_All($event)" (onDeSelectAll)="onBranchDeSelect_All($event)" [settings]="branchSettings">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Select Department</label>
+            <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"
+                [settings]="departmentSettings">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Select Employees</label>
+            <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-1">
+            <label class="form-label">Action</label>
+            <button id="table2-new-row-button" class="btn btn-primary mb-4" (click)="GetReport();"> Search</button>
+            &nbsp;
+        </div>
+        <div class="col-md-2">
+            
+            <button id="table2-new-row-button" class="btn btn-primary mb-4" (click)="openAddDialog();" style="margin-top: 35px;"> Add Salary Setting</button>
+            &nbsp;
+        </div>
+
+    </div>
+    </div>
+    <div>
+        <app-common-table [data]="SalarySettingList" [displayColumns]="displayColumns" [Loading]="salarySettingLoading" [displayedColumns]="displayedColumns" [actions]="actionOptions"  (actionEmitter)="actionEmitter($event)" [topHeaders]="topHeaders" [editableColumns]="editableColumns" [headerColors]="headerColors" [dataColors]="tableDataColors" (StatusUpdate)="changeStatus($event)"></app-common-table> 
+<!-- [dataToolTip]="dataToolTip"  -->
+        <!-- [headerInfo]="headerInfo" [topHeaders]="topHeaders" [headerColors]="headerColors"  [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" -->
+    </div>
+    </div>
+    </div>
+
+</div>

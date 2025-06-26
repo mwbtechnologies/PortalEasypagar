@@ -1,0 +1,94 @@
+<div style="min-height: 100vh;">
+    <div class="col-md-8 dialogs">
+        <h4 style="margin: 0;"><label (click)="backToList()"><i class="fa fa-arrow-left"></i></label> Assign</h4>
+        <div style="min-height: 300px;">
+            <div style="display: flex; justify-content: space-between;">
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="step-label" (click)="setStepNumber(1)" [class.step-label-selected]="step_number==1">User Details
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="step-label" (click)="setStepNumber(2)" [class.step-label-selected]="step_number==2">Asset Details
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="step-line"></div>
+            </div>
+            <div class="col-md-12 main-card">
+                <div [hidden]="step_number!=1">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="form-label filelabels">Branch</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Branches'" [data]="BranchList"
+                                [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label filelabels">Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Departments'" [data]="DepartmentList"
+                                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                                (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label filelabels">Users</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Employees'" [data]="EmployeeList"
+                                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div [hidden]="step_number!=2">
+                    <div *ngFor="let pm of AssetsDetails; let i = index" style="display: flex; justify-content: start;margin-bottom: 10px">
+                        <div class="col-md-3">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Asset</label>
+                            <!-- <input type="text" [(ngModel)]="pm.Asset" class="form-control timings" placeholder="Document Name">     -->
+                            <ng-multiselect-dropdown [placeholder]="'Select Asset'" [data]="AssetList"
+                            (onSelect)="OnEmployeesChange($event)" (onDeSelect)="OnEmployeesChangeDeSelect($event)" 
+                            [(ngModel)]="pm.Asset" [settings]="AssetSettings">
+                        </ng-multiselect-dropdown>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Name</label>
+                            <input type="text" [(ngModel)]="pm.MeasurementType" class="form-control timings" placeholder="Document Name">    
+                        </div>
+                        <div class="col-md-3">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Name</label>
+                            <input type="text" [(ngModel)]="pm.SerialNumber" class="form-control timings" placeholder="Document Name">    
+                        </div> -->
+                 
+                        <div class="col-md-1" style="display: flex;align-items: end;">
+                          <label class="cancel" matTooltip="Click To Remove Assets"*ngIf="AssetsDetails.length > 1" (click)="removeDetails(i)" ><i class="fa fa-times" style="font-size: 10px;"></i></label>
+                      </div>
+                  </div>
+                  <div class="col-md-10" style="display: flex;justify-content:end;">
+                    <div class="col-md-1">
+                        <label class="plus" matTooltip="Click To Add Multiple Assets" (click)="addDetails()">Add</label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="row" style="justify-content: end;width: 95%;margin: 0 auto;">
+              <div class="col-6">
+                <div class="plan_button" style="float: left;cursor: pointer;" *ngIf="step_number>1" (click)="backStep()">
+                  back
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="plan_button"  style="float:right;cursor: pointer;" *ngIf="step_number < 2" (click)="nextStep()">
+                  next
+                </div>
+                <div class="plan_button"  style="float:right;cursor: pointer;" *ngIf="step_number == 2">
+                  Submit
+                </div>
+              </div>
+            </div>
+    </div>
+</div>

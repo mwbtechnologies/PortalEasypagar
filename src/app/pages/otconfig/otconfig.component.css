@@ -1,0 +1,28 @@
+.otsettings{
+    background-color: white;
+    border:1px solid #dadada;
+    color: black;
+    border-radius: 10px;
+    margin-right: 4px;
+    padding: 10px;
+}
+.selected{
+    background-color:#3601b5a3;
+    color: white;
+}
+
+.active{
+    background-color: green;
+    border-radius: 5px;
+    color:white;
+    padding:0px 4px
+    }
+    .inactive{
+        background-color: red;
+        border-radius: 5px;
+        color:white;
+        padding:0px 4px
+    }
+    .table-bordered, .text-wrap table, .table-bordered th, .text-wrap table th, .table-bordered td, .text-wrap table td {
+        border: 1px solid rgba(0, 0, 0, 0.29);
+      }

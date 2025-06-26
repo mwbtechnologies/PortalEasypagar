@@ -1,0 +1,20 @@
+.spacing{
+    padding: 0;
+  }
+  .dialogs{
+    height: 600px;
+    overflow-y: scroll;
+    padding: 25px;
+    font-family: poppins;
+}
+
+.ms-5, .mx-5 {
+  margin-left: 0rem !important;
+}
+
+.mb-5, .my-5 {
+  margin-bottom: 0rem !important;
+}
+.me-5, .mx-5 {
+  margin-right: 0rem !important;
+}

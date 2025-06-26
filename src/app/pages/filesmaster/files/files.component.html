@@ -1,0 +1,50 @@
+<div style="border: 5px;">
+<div *ngIf="SelectedData[0].SelectedFileType == 0"> 
+        <div class="outercard" >
+    <div  *ngFor="let IL of TypesArray; let i=index">
+        <div class="types" [ngClass]="{'selected':  selectedType == IL.Value}" (click)="selectTypeWise(IL.Value);viewTypeWise(SelectedData[0].EmployeeID,IL.Value)">
+            <img src="{{IL.Icon}}" class="imagesize"><br>
+                <div style="display: flex;justify-content: space-between;padding: 12px;">
+                    <h3 class="textsize">{{IL.Text}}</h3>
+                </div>
+        </div>
+    </div>
+</div>
+    <input *ngIf="afterClick" class="search" type="search" class="searchbox"
+    placeholder="Search By Type" [(ngModel)]="searchText" ngDefaultControl (ngModelChange)="applyFilter()">
+       <div class="outercard" *ngIf="afterClick">
+    <div  *ngFor="let IL of FilesArray; let i=index">
+        <div class="types" (click)="viewImages(IL)">
+            <img src="{{IL.FileIcon}}" class="imagesize"><br>
+                <div style="padding: 12px;">
+                    <h3 class="textsize">{{IL.FileType}} ({{IL.FilesCount}})</h3>
+                    <div>
+                        <button *ngIf="IL.IsFormatExist == true" matTooltip="Download Format"  class="optbtn" (click)="downloadfiles(IL.FormatPath,$event)"><i class="fa fa-download"></i></button>&nbsp;&nbsp;
+                        <button  class="optbtn" matTooltip="Upload Files" (click)="uploadFiles(IL,$event)"><i class="fa fa-cloud-upload"></i></button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+        <label class="textsize" *ngIf="FilesArray.length == 0">No File Types Found</label>
+</div>
+<div *ngIf="SelectedData[0].SelectedFileType != 0">
+    <input class="search searchbox" type="search" class="searchbox"
+    placeholder="Search By Type" [(ngModel)]="searchText" ngDefaultControl (ngModelChange)="applyFilter()">
+    <div class="outercard" >
+<div  *ngFor="let IL of FilesArray; let i=index">
+    <div class="types" (click)="viewImages(IL)">
+        <img src="{{IL.FileIcon}}" class="imagesize"><br>
+            <div style="padding: 12px;">
+                <h3 class="textsize">{{IL.FileType}} ({{IL.FilesCount}})</h3>
+                <div>
+                    <button *ngIf="IL.IsFormatExist == true"  matTooltip="Download Format" class="optbtn" (click)="downloadfiles(IL.FormatPath,$event)"><i class="fa fa-download"></i></button>&nbsp;&nbsp;
+                    <button  class="optbtn" matTooltip="Upload Files" (click)="uploadFiles(IL,$event)"><i class="fa fa-cloud-upload"></i></button>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+<label class="textsize" *ngIf="FilesArray.length == 0">No File Types Found</label>
+</div>
+</div>

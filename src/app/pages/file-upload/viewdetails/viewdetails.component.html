@@ -1,0 +1,81 @@
+<div class="dialogs">
+        <div style="display:flex;flex-wrap:wrap">
+                <div class="col-md-6">
+                        <div class="productdesc">
+                                <div class="card overflow-hidden">
+                                        <div class="card-body bootslider p-3">
+                                                <ngb-carousel data-interval="5">
+                                                        <ng-template ngbSlide
+                                                                >
+                                                                <ng-container>
+
+                                        <img *ngIf="FileData.Fileformat=='Image'" alt="Image File" src="{{FileData.FilePath}}"  style="max-height: 400px;">   
+                                        <img *ngIf="FileData.Fileformat=='Music'" alt="Music File" src="assets/images/files/music.png" (click)="OpenFile(FileData.FilePath);"  style="max-height: 400px;">
+                                        <img *ngIf="FileData.Fileformat=='Video'" alt="Video File" src="assets/images/files/video.png" (click)="OpenFile(FileData.FilePath);" style="max-height: 400px;">
+                                        <img *ngIf="FileData.Fileformat=='Document'" alt="Document File" src="assets/images/files/pdf.png" (click)="OpenFile(FileData.FilePath);" style="max-height: 400px;">
+                                        <img *ngIf="FileData.Fileformat=='Excel'" alt="Excel File" src="assets/images/files/excel.png" (click)="OpenFile(FileData.FilePath);" style="max-height: 400px;">
+                                        <img *ngIf="FileData.Fileformat=='Word'" alt="Word File" src="assets/images/files/word.png" (click)="OpenFile(FileData.FilePath);" style="max-height: 400px;">
+                                        <img *ngIf="FileData.Fileformat=='Text'" alt="Text File" src="assets/images/files/text.png" (click)="OpenFile(FileData.FilePath);" style="max-height: 400px;"> 
+                                        <img *ngIf="FileData.Fileformat=='PowerPoint'" alt="PowerPoint File" src="assets/images/files/ppt.png" (click)="OpenFile(FileData.FilePath);" style="max-height: 400px;">
+                                        <img *ngIf="FileData.Fileformat=='XML'" alt="XML File" src="assets/images/files/xml.png" (click)="OpenFile(FileData.FilePath);"  style="max-height: 400px;">
+                                        <img *ngIf="FileData.Fileformat=='Json'" alt="Json File" src="assets/images/files/json.png" (click)="OpenFile(FileData.FilePath);" style="max-height: 400px;">
+                                                                </ng-container>
+                                                        </ng-template>
+                                                </ngb-carousel>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <div class="col-md-6">
+                        <div class="productdesc">
+                                <div class="card overflow-hidden">
+                                        <div class="">
+                                                <div class="panel panel-primary mb-5 mx-5 border"
+                                                        style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                                                        <div class="table-responsive">
+                                                                <h4 class="mb-5 mt-3 fw-bold"
+                                                                        style="text-align: center;"> Attendance Details
+                                                                </h4>
+                                                                <br>
+                                                                <table class="table table-bordered">
+                                                                        <tr>
+                                                                                <td class="fw-bold">File Type</td>
+                                                                                <td>{{FileData.FileType}}</td>
+                                                                               
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td class="fw-bold"> Format</td>
+                                                                                <td>{{FileData.Fileformat}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td class="fw-bold"> Size</td>
+                                                                                <td>{{FileData.FileSize}}</td>
+
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td class="fw-bold">Upload On</td>
+                                                                                <td>{{FileData.CreatedDate | date:'dd-MMM-yyyy HH:mm'}}</td>
+                                                                                
+                                                                              
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td class="fw-bold">Upload By</td>
+                                                                                <td>{{FileData.CreatedBy}}</td>
+                                                                        </tr>
+                                                                    
+                                                                </table>
+                                                        </div>
+
+
+
+
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+
+                </div>
+                <button style="display: flex;justify-content: center;" class="btn btn-primary" (click)="CloseTab()">Close</button>
+               
+        </div>
+</div>

@@ -1,0 +1,62 @@
+.card {
+    display: block;
+}
+
+.card-header {
+    display: block;
+}
+
+.col-md-3 {
+    padding-right: 0.1rem;
+    padding-left: 0.1rem;
+}
+
+.card-header {
+    display: block;
+}
+
+::ng-deep app-common-table-buttons .disabled_edit {
+    color: darkgrey !important;
+}
+
+td {
+    font-size: 14px !important;
+}
+
+th {
+    font-size: 15px !important;
+}
+
+::ng-deep app-common-table mat-table {
+    font-size: 12px !important; /* Change to desired size */
+}
+
+::ng-deep app-common-table-buttons .mdc-data-table__content,
+::ng-deep app-common-table-buttons .mdc-data-table__cell {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--mdc-typography-body2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+    font-size: var(--mdc-typography-body2-font-size, 8px);
+    line-height: var(--mdc-typography-body2-line-height, 12px);
+    font-weight: var(--mdc-typography-body2-font-weight, 200);
+    letter-spacing: var(--mdc-typography-body2-letter-spacing, .0178571429em);
+    -webkit-text-decoration: var(--mdc-typography-body2-text-decoration, inherit);
+    text-decoration: var(--mdc-typography-body2-text-decoration, inherit);
+    text-transform: var(--mdc-typography-body2-text-transform, none);
+    text-wrap: nowrap !important;
+}
+
+::ng-deep app-common-table-buttons .mdc-data-table__header-cell,
+::ng-deep app-common-table-buttons .mdc-data-table__cell {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--mdc-typography-body2-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+    font-size: var(--mdc-typography-body2-font-size, 12px);
+    line-height: var(--mdc-typography-body2-line-height, 20px);
+    font-weight: var(--mdc-typography-body2-font-weight, 400);
+    letter-spacing: var(--mdc-typography-body2-letter-spacing, .0178571429em);
+    -webkit-text-decoration: var(--mdc-typography-body2-text-decoration, inherit);
+    text-decoration: var(--mdc-typography-body2-text-decoration, inherit);
+    text-transform: var(--mdc-typography-body2-text-transform, none);
+    text-wrap: nowrap !important;
+}

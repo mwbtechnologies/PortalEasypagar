@@ -1,0 +1,29 @@
+.dialogs{
+  width: auto;
+  height: 600px;
+  overflow-y: scroll;
+  padding: 25px;
+  font-family: poppins;
+}
+
+.circle{
+  background-color: white;
+  border: 1px solid #7979ff;
+  border-radius: 5px;
+  color: black;
+  height: 35px;
+  font-size: 18px;
+  align-items: center;
+  display: 30px;
+  display: flex;
+  justify-content: center;
+  width: 35px;
+  margin: 5px;
+}
+.selected{
+  background-color: #0000ff;
+  color: white;
+}
+.weeks{
+  font-size: 12px;
+}

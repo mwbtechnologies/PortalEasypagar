@@ -1,0 +1,63 @@
+<div class="dialogs">
+  <div style="display: flex;justify-content: space-between;">
+    <h3 style="font-weight: bold;text-align: center;" > {{data.row.BranchName}} Employees Details</h3>
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+</div>
+    <input class="search" style="padding: 4px;border-radius: 10px;border: 1px solid #bcb9b9;" type="search" class="searchbar"
+      placeholder="Search By Employee" [(ngModel)]="searchText" ngDefaultControl (ngModelChange)="applyFilter()">
+      <!-- <div class="cancelsearch">
+         <i class="fa fa-cancel" *ngIf="searchText.length > 0" (click)="removesearch()" ></i>
+       </div> -->
+    <br>
+    <br>
+    <!-- <div class="col-md-12" style="padding: 0;"> -->
+      <!-- </div> -->
+    <table 
+    class="table table-striped table-bordered table-hover">
+    <thead >
+      <tr>
+        <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">SL No</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">EmployeeId</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">EmployeeName</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Department</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">StartDate</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">EndDate</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Action</th>
+      </tr>
+  </thead>
+      <tbody >
+          <tr  class="ng-star-inserted" *ngFor="let IL of filteredList;let i = index;">   
+            <td >
+                <div  class="ng-star-inserted">{{i+1}}</div>
+            </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.MappedEmpId}}</div>
+              </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.EmployeeName}}</div>
+              </td>
+              <td >
+                <div  class="ng-star-inserted">{{IL.DepartmentName}}</div>
+            </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.StartDate | date:'dd-MMM-yyyy'}}</div>
+              </td>
+              <td >
+                <div  class="ng-star-inserted">{{IL.EndDate | date:'dd-MMM-yyyy'}}</div>
+            </td>
+            
+              <td >
+                <div  class="ng-star-inserted">
+                    <button matTooltip="Click To Deactivate" style="background-color: red;color:white" *ngIf="IL.IsActive == true" [disabled]="IL.IsDeletable == false" [ngClass]="{ 'disabled-button': IL.IsDeletable == false }" (click)="DeActive(IL);"
+                    class="btn btn-sm btn-primary ng-star-inserted">Deactive</button>
+                    <button matTooltip="Deactivated" *ngIf="IL.IsActive == false" [disabled]="IL.IsDeletable == false" [ngClass]="{ 'disabled-button': IL.IsDeletable == false }" 
+                    class="btn btn-sm btn-danger ng-star-inserted" style="background-color: rgb(236, 109, 109);color:white">Deactivated</button> &nbsp; &nbsp;
+                    <button matTooltip="Delete" [disabled]="IL.IsDeletable == false" [ngClass]="{ 'disabled-button': IL.IsDeletable == false }" (click)="delete(IL);"
+                    class="btn btn-sm btn-danger ng-star-inserted"><span class="fa fa-trash"></span></button>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    <label style="display:flex;justify-content: center;" *ngIf="filteredList.length === 0">No Employees Found</label>
+  </div>

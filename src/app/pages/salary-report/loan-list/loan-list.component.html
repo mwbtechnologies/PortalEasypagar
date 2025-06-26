@@ -1,0 +1,41 @@
+<div class="card">
+    <div class="card-header">
+        <h4>{{window_header}}</h4>
+    </div>
+    <div class="card-body">
+        <div *ngIf='this.data.Loan_data.type=="OT"'>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text border-1 border-secondary">TOTAL AMOUNT</span>
+                        <input type="number" class="form-control form-control-sm border-1 border-secondary" [(ngModel)]="data.Loan_data.payload.OTEarning.OTAmount" />
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        <app-common-table-buttons [data]="loan_list"
+                         
+                          [displayColumns]="displayColumns"
+                          [Loading]="employeeLoading"
+                          [displayedColumns]="displayedColumns"
+                          [editableColumns]="editableColumns"
+                          [actions]="actionOptions"
+                          [headerColors]="headerColors"
+                          [smallHeaders]="smallHeaders"
+                          [searchVisible]="false"
+                          (actionEmitter)="actionEmitter($event)"></app-common-table-buttons>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-md-4 col-6">
+                <button type="button" (click)="saveChangesClick()" class="btn btn-primary w-100"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save Changes</button>
+
+            </div>
+            <div class="col-md-4 col-6">
+                <button type="button" (click)="close()" class="btn  btn-danger w-100"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>

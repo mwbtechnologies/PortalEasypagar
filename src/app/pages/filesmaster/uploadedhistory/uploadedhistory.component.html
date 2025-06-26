@@ -1,0 +1,51 @@
+<div class="dialogs">
+  <div style="display: flex;justify-content: space-between;">
+    <h5>{{EmployeeName}}'s History</h5>
+    <div class="col-md-4">
+      <input class="search searchbox" type="search" class="searchbox"
+    placeholder="Search By File Type" [(ngModel)]="searchText" ngDefaultControl (ngModelChange)="applyFilter()">
+    </div>
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+
+  </div>
+  <!-- <button class="btn btn-primary" (click)="print()">print</button> -->
+     <div id="history_container" class="history-tl-container">
+        <ul class="tl">
+                    <li class="tl-item" *ngFor="let sub of UploadHistory">
+                      <div class="timestamp">
+                       {{sub.CreatedDate | date:'dd-MMM-yyyy'}}<br>{{sub.CreatedBy}}
+                      </div>
+                      <div class="item-title">
+                          <span class="filetype">{{sub.SubFileType}}<span *ngIf="sub.Title != null">({{sub.Title}})</span></span> 
+                        <div class="maincard" >
+                            <img *ngIf="sub.Fileformat=='Image'" alt="Image File" src="{{sub.FilePath}}"  style="height: 100px;">   
+                            <img *ngIf="sub.Fileformat=='Image' && sub.BackFilePath!=null && sub.BackFilePath!=''" alt="Image File" src="{{sub.BackFilePath}}"  style="height: 100px;">  
+                            <img *ngIf="sub.Fileformat=='Music'" alt="Music File" src="assets/images/files/music.png" style="height: 100px;">
+                            <img *ngIf="sub.Fileformat=='Video'" alt="Video File" src="assets/images/files/video.png" style="height: 100px;">
+                            <img *ngIf="sub.Fileformat=='Document'" alt="Document File" src="assets/images/files/pdf.png"  style="height: 100px;">
+                            <img *ngIf="sub.Fileformat=='Excel'" alt="Excel File" src="assets/images/files/excel.png" style="height: 100px;">
+                            <img *ngIf="sub.Fileformat=='Word'" alt="Word File" src="assets/images/files/word.png" style="height: 100px;">
+                            <img *ngIf="sub.Fileformat=='Text'" alt="Text File" src="assets/images/files/text.png" style="height: 100px;"> 
+                            <img *ngIf="sub.Fileformat=='PowerPoint'" alt="PowerPoint File" src="assets/images/files/ppt.png" style="height: 100px;">
+                            <img *ngIf="sub.Fileformat=='XML'" alt="XML File" src="assets/images/files/xml.png"  style="height: 100px;">
+                            <img *ngIf="sub.Fileformat=='Json'" alt="Json File" src="assets/images/files/json.png" style="height: 100px;">
+                            <div class="icons">
+                               <button class="wdt" matTooltip="View Image" (click)="openDialog(sub)">
+                                   <i class="fa fa-eye"></i>
+                               </button>
+                               <button class="wdt" *ngIf="sub.Fileformat=='Image'" matTooltip="Download Image" (click)="Open(sub)">
+                                   <i class="fa fa-download" ></i>
+                               </button>
+
+                               <button class="wdt" *ngIf="sub.Fileformat!='Image'" matTooltip="Download Image" (click)="OpenLink(sub.FilePath)">
+                                   <i class="fa fa-download" ></i>
+                               </button>
+                       </div>
+                          </div>
+                      </div>
+                    </li>
+        </ul>
+                
+     </div>
+    
+</div>

@@ -1,0 +1,21 @@
+.dialogs{
+    width: 600px;
+    height: 400px;
+    overflow: scroll;
+    padding: 20px;
+    font-family: poppins;
+}
+.imagecard{
+    padding: 14px;
+    border: 1px solid #dadada;
+    border-radius: 15px;
+}
+.outercardimg{
+    display: flex;
+    padding: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+.selected-border{
+    border: 2px solid #1f0057;
+}

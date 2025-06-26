@@ -1,0 +1,290 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xl-7">
+        <div class="card overflow-hidden">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa fa-arrow-left" (click)="back()"></i>&nbsp;Mark Attendance</h3>
+            </div>
+            <div  class="card-body">
+                <div  class="row">
+                    <div  class="col-md-5" *ngIf="this.CheckInStatus=='Check-In'">
+                        <div  class="form-group" style="    margin-bottom: 0rem;">
+                            <label class="form-label">Visit Type</label>
+                        <ng-select [items]="VisitTypes" bindLabel="Text" bindValue="Text" placeholder="Select Visit" [(ngModel)]="selectedVisitID">
+                        </ng-select>
+                        </div>
+                        
+                        <div  class="form-group">
+                            <label class="form-label" style="    margin-bottom: 0rem;">Session Type</label>
+                        <ng-select [items]="SessionTypes" bindLabel="Text" bindValue="Value" placeholder="Select Session" [(ngModel)]="selectedSessionID">
+                        </ng-select>
+                        </div>
+                        <div  class="form-group" *ngIf="ShiftList.length > 0">
+                            <label class="form-label" style="    margin-bottom: 0rem;">Shift Type</label>
+                        <ng-select [items]="ShiftList" bindLabel="ShiftName" bindValue="ShiftID" placeholder="Select Session" [(ngModel)]="selectedShiftID">
+                        </ng-select>
+                        </div>
+                        <div  class="form-group">
+                            <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="submit();">{{CheckInStatus}}</button>
+                        </div>
+                    </div>
+
+                    <div  class="col-md-5" *ngIf="this.CheckInStatus=='Check-Out'">
+                        <div  class="form-group" style="    margin-bottom: 0rem;">
+                            <label class="form-label">Visit Type</label>
+                            <input type="text" disabled class="form-control" placeholder="{{showvisittype}}">
+                        </div>
+                        
+                        <div  class="form-group">
+                            <label class="form-label" style="margin-bottom: 0rem;">Session Type</label>
+                            <input disabled type="text" class="form-control" placeholder="{{showsessiontype}}">
+                       
+                        </div>
+                        <div  class="form-group">
+                            <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="submit();">{{CheckInStatus}}</button>
+                        </div>
+                    </div>
+                    <div  class="col-md-1"></div>
+<div  class="col-md-6">
+   <div *ngIf="!cameraNotFound"> <div  *ngIf="showWebcam" class="form-group" style="align-items: center;max-width: 254px;max-height: 250px;margin-bottom: 0rem;">
+        <webcam [mirrorImage]="'never'" [trigger]="triggerObservable" [width]="250" [height]="300"
+        (imageCapture)="handleImage($event);" type="file" [imageQuality]="2"></webcam>        
+    </div>
+     <div  class="form-group" *ngIf="!showWebcam" style="align-items: center;max-width: 254px;max-height: 250px;    margin-bottom: 0rem;">
+        <img *ngIf="webcamImage" [src]="webcamImage.imageAsDataUrl" [height]="190" [width]="300" />
+     </div>
+    <button *ngIf="showWebcam" style="margin-left: 80px;color: black;background-color: rgb(143, 145, 145);" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" type="button" (click)="triggerSnapshot();"><i
+        class="fa fa-camera-retro"></i>&nbsp;Capture</button> 
+        <button *ngIf="!showWebcam" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" type="button" (click)="toggleWebcam();" style="margin-left: 80px;color: black;background-color: rgb(143, 145, 145);"><i
+            class="fa fa-repeat"></i>&nbsp;Capture</button>
+        </div>
+        <div *ngIf="cameraNotFound" class="alert alert-warning">
+            No camera detected. Please enable your webcam or connect a camera.<br>
+            Note : As You dont have access to your camera you cannot either Check-In or Check-Out without an image.
+          </div>
+    </div>
+
+<!-- <div  class="col-md-6" >
+  
+    <button *ngIf="webcamImage" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" type="button" (click)="toggleWebcam();" style="text-align: center;padding-left: 10px;"><i
+        class="feather icon-slash"></i> Recapture</button>
+    &nbsp;
+    
+    
+    </div>  -->
+       
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xl-5">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Attendance Progress</h3>
+            </div>
+            <div class="card-body">
+                <div style="display: block">
+                    <apx-chart
+                    [series]="chartOptions.series"
+                    [chart]="chartOptions.chart"
+                    [labels]="chartOptions.labels"
+                    [responsive]="chartOptions.responsive"
+                  ></apx-chart>
+                  </div>
+      
+        <div class="row mt-2">
+     <div class="col-md-3 col-6 text-center mb-5" (click)=" onCountClick('Latein');">
+         <div class="task-box mb-0">
+             <p class="text-muted mb-2">
+                 <span class="dot-label bg-lightblue me-2"></span>
+                 LateIn </p>
+                 <h5 class="mt-1 mb-0 number-font1 font-weight-semibold">{{LateCheckinCount}}</h5>
+             </div>
+         </div>
+         <div class="col-md-3 col-6 text-center mb-5" (click)=" onCountClick('OnTime');">
+             <div class="task-box mb-0">
+                 <p class="text-muted mb-2">
+                     <span class="dot-label bg-primary me-2"></span>OnTime </p>
+                     <h5 class="mt-1 mb-0 number-font1 font-weight-semibold">{{OnTimeCheckinCount}}</h5>
+                 </div>
+             </div>
+             <div class="col-md-3 col-6 text-center mb-4 mb-lg-0" (click)=" onCountClick('EarlyCheckOut');">
+                     <div class="task-box mb-0">
+                         <p class="text-muted mb-2">
+                             <span class="dot-label bg-secondary1 me-2"></span>
+                             EarlyExit 
+                         </p>
+                             <h5 class="mt-1 mb-0 number-font1 font-weight-semibold">{{EarlyExitCount}}</h5>
+                         </div>
+                     </div>
+                     <div class="col-md-3 col-6 text-center" (click)=" onCountClick('Absent');">
+                         <div class="task-box mb-0">
+                             <p class="text-muted mb-2">
+                                 <span class="dot-label bg-pink me-2"></span>
+                                 Absent
+                              </p>
+                              <h5 class="mt-1 mb-0 number-font1 font-weight-semibold">{{Absentcount}}</h5>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div> 
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="card">
+                <div class="card-header" style="display: flex;flex-wrap: wrap;justify-content: space-between;" > 
+                    <div class="col-md-2">
+                        <h3  class="card-title">Attendance Details</h3>
+                    </div>    
+                    <div class="col-md-4" style="display: flex;justify-content: end; flex-wrap: wrap-reverse;  padding: 5px;row-gap: 4px;">
+                        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="exportPdf()">📕 Export PDF</button>&nbsp;
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div  class="table-responsive">    
+                        <table id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+                        class="table table-striped table-bordered table-hover">
+                    <thead >
+                        <tr >
+                            <th style="background-color: #3601b51f;text-align: center;" rowspan="2" >SL No</th>
+                            <th style="background-color: #3601b51f;text-align: center;" rowspan="2">Date</th>
+                            <th style="background-color: #3601b51f;text-align: center;" colspan="2">First Half</th>
+                            <th style="background-color: #3601b51f;text-align: center;" colspan="2">Second Half</th>
+                            <th style="background-color: #3601b51f;text-align: center;" rowspan="2">Time Duration</th>
+                            <th style="background-color: #3601b51f;text-align: center;" rowspan="2">Status</th>
+                            <th style="background-color: #3601b51f;text-align: center;" rowspan="2">Action</th>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #3601b51f;text-align: center;">IN</th>
+                            <th style="background-color: #3601b51f;text-align: center;">OUT</th>
+                            <th style="background-color: #3601b51f;text-align: center;">IN</th>
+                            <th style="background-color: #3601b51f;text-align: center;">OUT</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                       
+
+
+                        <tr  class="ng-star-inserted" *ngFor="let IL of DisplayList; let i = index;">
+                          
+                            <td >
+                                <div  class="ng-star-inserted"> {{i+1}} </div>
+                            </td>
+                           
+                            <td >
+                                <div  class="ng-star-inserted">{{IL.Date}} </div>
+                              
+                            </td>
+                            <td  *ngIf="IL.count==2">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[0].CheckInTime}} </div>
+                               
+                            </td>
+                            <td  *ngIf="IL.count==2">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[0].CheckOutTime}}</div>
+                               
+                            </td>
+                            <td  *ngIf="IL.count==2">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[1].CheckInTime}}</div>
+                               
+                            </td>
+                            <td  *ngIf="IL.count==2">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[1].CheckOutTime}} </div>
+                               
+                            </td>
+                       
+                            <td aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='Whole Day' && IL.count==1">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[0].CheckInTime}} </div>
+                               
+                            </td>
+                            <td  aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='Whole Day' && IL.count==1">
+                                <div  class="ng-star-inserted"> </div>
+                               
+                            </td>
+                            <td   aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='Whole Day' && IL.count==1">
+                                <div  class="ng-star-inserted"> </div>
+                               
+                            </td>
+                            <td  aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='Whole Day' && IL.count==1">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[0].CheckOutTime}}</div>
+                               
+                            </td>
+
+                            <td  aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='First Half' && IL.count==1">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[0].CheckInTime}} </div>
+                               
+                            </td>
+                            <td  aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='First Half' && IL.count==1">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[0].CheckOutTime}}</div>
+                               
+                            </td>
+                            <td aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='First Half' && IL.count==1">
+                                <div  class="ng-star-inserted"> </div>
+                               
+                            </td>
+                            <td aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='First Half' && IL.count==1">
+                                <div  class="ng-star-inserted"> </div>
+                               
+                            </td>
+
+                            
+                            <td  aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='Second Half' && IL.count==1">
+                                <div  class="ng-star-inserted">  </div>
+                               
+                            </td>
+                            <td aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='Second Half' && IL.count==1">
+                                <div  class="ng-star-inserted"> </div>
+                               
+                            </td>
+                            <td aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='Second Half' && IL.count==1">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[0].CheckInTime}}</div>
+                               
+                            </td>
+                            <td  aria-rowspan="2" *ngIf="IL.CheckInData[0]?.SessionTypeName=='Second Half' && IL.count==1">
+                                <div  class="ng-star-inserted"> {{IL.CheckInData[0].CheckOutTime}}</div>
+                               
+                            </td>
+                            <td  *ngIf="IL.count==0" aria-rowspan="2">
+                                <div  class="ng-star-inserted"> </div>
+                               
+                            </td>
+                            <td  *ngIf="IL.count==0" aria-rowspan="2">
+                                <div  class="ng-star-inserted"></div>
+                               
+                            </td>   <td  *ngIf="IL.count==0" aria-rowspan="2">
+                                <div  class="ng-star-inserted"> </div>
+                               
+                            </td>
+                            <td  *ngIf="IL.count==0" aria-rowspan="2">
+                                <div  class="ng-star-inserted"></div>
+                               
+                            </td>
+                               
+                                <td >
+                                    <div  class="ng-star-inserted"> {{IL.TimeDuration}}</div>
+                                   
+                                </td>
+                                <td >
+                                    <div  class="ng-star-inserted"> {{IL.Filter}}</div>
+                                   
+                                </td>
+                                <td >
+                            <button  id="bEdit" type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;"><span
+                                                
+                                class="fa fa-eye" (click)="openDialog(IL);"></span></button>
+                                </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+
+
+    

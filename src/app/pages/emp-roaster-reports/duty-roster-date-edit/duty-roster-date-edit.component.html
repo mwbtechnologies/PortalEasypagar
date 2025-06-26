@@ -1,0 +1,104 @@
+
+
+            <form [formGroup]="timeForm" (ngSubmit)="onSubmit()">
+                <div class="card shadow-sm">
+                   
+                    <div class="card-header bg-primary p-2">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <h5 class="mt-2"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Duty Rosters ({{employee_date | date:'EEEE dd-MM-yyyy'}})</h5> 
+                            </div>
+                        </div>
+                      </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <h5>Name : {{employee_name}}</h5>
+                                
+                             
+
+                            </div>
+                          
+                          
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="form-label">Select Shift</label>
+                                <select class="form-select text-dark" (change)="shift_change()" formControlName="Shift_ID">
+                                    <option *ngFor="let item of shift_list" [value]="item.ID">
+                                        {{item.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" formControlnName="EmployeeId" />
+                        <input type="hidden" formControlnName="BranchId" />
+                        <input type="hidden" formControlnName="Date" />
+                        <input type="hidden" formControlnName="column" />
+                      
+                      
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="startTime" class="form-label">From Time</label>
+                                <input type="text"
+                                       id="startTime"
+                                       class="form-control"
+                                       [ngxTimepicker]="fromPicker"
+                                       formControlName="StartTime"
+                                       readonly />
+                                <ngx-material-timepicker #fromPicker [format]="12"></ngx-material-timepicker>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="endTime" class="form-label">To Time</label>
+                                <input type="text"
+                                       id="endTime"
+                                       class="form-control"
+                                       [ngxTimepicker]="toPicker"
+                                       formControlName="EndTime"
+                                       readonly />
+                                <ngx-material-timepicker #toPicker [format]="12"></ngx-material-timepicker>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-checkbox formControlName="isweekoff">Week Off</mat-checkbox>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-checkbox formControlName="isholiday">Holiday</mat-checkbox>
+                            </div>
+                        </div>
+                        
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                   
+                    <div class="card-footer p-2">
+                        <div class="row" *ngIf="shift_list.length <=1">
+                            <p class="text-dark">No shifts are currently defined. Would you like to create one now? <a (click)="onCreateShift()">+ Create Shift</a></p>
+                            
+                        </div>
+                        <div class="row gap-0">
+                        
+                            <div class="col-md-4 mt-2 ms-2">
+                                <button class="btn btn-primary w-100" type="submit">Save Changes</button>
+                            </div>
+                            <div class="col-md-4 mt-2 ">
+                                <button class="btn btn-danger w-100" type="button" (click)="onCancel()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>

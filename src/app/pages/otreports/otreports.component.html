@@ -1,0 +1,102 @@
+<div *ngIf="showMonthWise == false">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: start;">
+                    <div class="col-md-5"><label (click)="backToDashboard()" class="mb-0 card-title"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+                    </label></div>
+                    <h3 class="mb-0 card-title">OT Report</h3>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex;flex-wrap: wrap;">
+                        <div class="col-md-3" >
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Select Branch </label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                                [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Select Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onSelectAll)="onDeptDeSelectAll()" (onDeSelectAll)="onDeptDeSelectAll()"
+                                (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Select Year</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Year'" [data]="YearList"
+                                [(ngModel)]="selectedyear" (onSelect)="OnYearChange($event)"
+                                (onDeSelect)="onyearDeSelect($event)" [settings]="yearSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <label class="form-label">Select OT Type</label>
+                            <ng-multiselect-dropdown  [placeholder]="'Select Type'" 
+                            [data]="TypeList" [(ngModel)]="selectedType" (onSelect)="onTypeSelect($event)" (onDeSelect)="onTypeDeSelect($event)"
+                            [settings]="typeSettings" >
+                            </ng-multiselect-dropdown>
+                        </div> -->
+                        <div class="col-md-2">
+                            <label class="form-label">Select Month</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Month'" [data]="MonthList"
+                                [(ngModel)]="selectedMonth" (onSelect)="OnMonthChange($event)"
+                                (onDeSelect)="onMonthDeSelect($event)" [settings]="monthSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Select Employees</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="form-label">Action</label>
+                            <button class="btn btn-primary mb-4" (click)="GetReport()"> Search</button> &nbsp;
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                 
+                    <div style="display: flex;">
+                    <div class="" style="display: flex;gap:30px;flex-wrap: wrap;">
+                    <div style="display: flex;gap: 5px;">
+                        <div style="width: 20px;height: 20px;background-color: green;"> </div> <label>Daily Ot</label>
+                    </div>
+                    <div style="display: flex;gap: 5px;">
+                        <div style="width: 20px;height: 20px;background-color: #1304ff;"></div> <label>Holiday Ot</label>
+                    </div>
+                    <div style="display: flex;gap: 5px;">
+                        <div style="width: 20px;height: 20px;background-color:#ff8100;"></div> <label>Weekoff Ot</label>
+                    </div>
+                    </div>
+                </div>
+                <!-- <div style="display:flex;justify-content: end;">
+                    <div class="col-md-6" style="display:flex;justify-content: end;">
+                        <button class="btn btn-primary mb-4" (click)="GetCalculatedReport()" [disabled]="!(selectedRows.length>0)">Recalculate Details</button> &nbsp;
+                   </div>
+                </div> -->
+                    <!-- common table__{{employeeLoading==undefined}}__ -->
+                    <app-common-table [data]="OTReportList" [ExportName]="'OT Report'" [topHeaders]="topHeaders" [displayColumns]="displayColumns" [Loading]="employeeLoading" [dataColors]="tableDataColors" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+                    [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+                    <!-- end here  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showMonthWise == true">
+    <label class="button" (click)="backToAttendance()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+        report</label>
+    <app-monthwise [MonthlyParams]="MonthlyParams"></app-monthwise>
+</div>

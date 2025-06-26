@@ -1,0 +1,36 @@
+<div class="dialogs">
+    <h4 style="margin: 0;">Returning Item - <b>{{ItemName}}</b></h4>
+    <div class="col-md-12 row" style="row-gap:15px;padding: 0;margin-top: 30px;">
+        <div class="col-md-6">
+            <label class="filelabels">Choose The Status Of Item</label>
+            <!-- <ng-multiselect-dropdown [settings]="ReturnTypeSettings" [placeholder]="'Select Return Type'" [data]="ReturnTypeList"
+            [(ngModel)]="SelectedReturnType">
+        </ng-multiselect-dropdown>  -->
+        <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle *ngFor="let return of ReturnTypeList" value="bold">{{return}}</mat-button-toggle>
+          </mat-button-toggle-group> -->
+          <div class="toggle-group">
+            <button *ngFor="let return of ReturnTypeList" 
+              class="toggle-button" 
+              [class.active]="selectedValue === return" 
+              (click)="selectValue(return)">
+              {{return}}
+            </button>
+          </div>
+          
+        </div>
+        <!-- <div>
+          <label class="filelabels">Quantity</label>
+          <input type="number" class="form-control" placeholder="Receiver name" [(ngModel)]="quantity">
+        </div> -->
+        <div>
+          <label class="filelabels">Remarks</label>
+          <input type="text" class="form-control" placeholder="Remarks" [(ngModel)]="remarks">
+        </div>
+        <br>
+
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary" (click)="returnItems()">Return</button>
+            </div>
+</div>

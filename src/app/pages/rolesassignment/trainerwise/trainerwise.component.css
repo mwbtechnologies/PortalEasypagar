@@ -1,0 +1,39 @@
+ .maincards{
+    display: flex;
+    gap: 10px;
+    margin: 10px 20px;
+    flex-wrap: wrap;
+  }
+
+
+
+  .chip3 {
+    background-color: rgb(233, 238, 255);
+    /* background: linear-gradient(132deg, rgba(233,238,255,1) 0%, rgba(146,146,231,1) 100%); */
+    margin-right: 12px;
+    margin-bottom: 12px;
+    /* border-top-right-radius: 5px; */
+    /* border-bottom-right-radius: 5px; */
+    padding: 5px 7px;
+    /* border-left: 2px solid rgb(4, 103, 216); */
+    border-radius: 5px;
+    width: 200px;
+  }
+.chip3-title {
+  font-size: 14px;
+  color: rgb(45 45 45);
+  font-weight: 500;
+}
+
+.chip3-sub-title {
+  font-size: 12px;
+  color: rgb(97 97 97);
+  font-weight: 500;
+}
+
+.chip3-value {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgb(4, 4, 143);
+  margin: 5px 2px;
+}

@@ -1,0 +1,87 @@
+<div *ngIf="ShowUserWise == false && ShowUserTimeline == false">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div>
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 12px;color: #978f8f;">Document Manager</h3>
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 16px;font-weight: 600;">User List</h3>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary listbutton" (click)="goToGlobalSearch()">Search & Manage</button>&nbsp;
+                        <button class="btn btn-primary listbutton" (click)="goToAnalytics()">Analytics</button>&nbsp;
+                        <button class="btn btn-primary listbutton" (click)="createDoc()">Document Types</button>&nbsp;
+                        <button class="btn btn-primary listbutton" (click)="DocUsers()">Document Wise Users</button>
+                    </div>
+                </div>
+                <div class="card-body" *ngIf="searchType=='filters'">
+                    <app-hierarchy [selectedFilterData]="selectedFilterData" [dropDownExtras]="dropDownExtras" [actions]="hirearchyActions" (actionEmitter)="triggerHierarchyAction($event)"></app-hierarchy>
+                    <div (click)="switchSearch('employeeId')" style="color: #0e26ff;padding: 12px;">click here to search by Employee Id</div>
+                </div>
+                <div class="card-body" *ngIf="searchType=='employeeId'">
+                    <div class="row" style="padding-left: 12px;">
+                        <div class="col-3">
+                            <input type="text" placeholder="search by employee Id" class="form-control" [(ngModel)]="employeeId" (keyup.enter)="searchByEmpId()">
+                        </div>
+                        <button class=" btn btn-primary" style="width: fit-content;" (click)="searchByEmpId()">Search By Employee Id</button>
+                        
+                    </div>
+                    <div (click)="switchSearch('filters')" style="color: #0e26ff;padding: 12px;">click here to search by organization,branch,department & employee filters</div>
+                </div>
+                <div class="maincards" *ngIf="Total?.datalength > 0">
+                    <div class="chip3" matTooltip="Total number of emmployees">
+                        <h3 class="chip3-value">{{Total?.totalUsers}}</h3>
+                        <label class="chip3-title">Total</label>
+                        <div class="chip3-sub-title">EMPLOYEES</div>
+                    </div>
+                    <div class="chip3" matTooltip="Employees who have uploaded atleast one document">
+                        <h3 class="chip3-value">{{Total?.datalength}}</h3>
+                        <label class="chip3-title">Uploaded</label>
+                        <div class="chip3-sub-title">EMPLOYEES</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total?.total.totalDocs}}</h3>
+                        <label class="chip3-title">Total</label>
+                        <div class="chip3-sub-title">TOTAL DOCUMENTS</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total?.data.totalDocumentsUploaded}}</h3>
+                        <label class="chip3-title">Uploaded</label>
+                        <div class="chip3-sub-title">TOTAL DOCUMENTS</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total?.data.totalApproved}}</h3>
+                        <label class="chip3-title">Approved</label>
+                        <div class="chip3-sub-title">TOTAL DOCUMENTS</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total?.data.totalRejected}}</h3>
+                        <label class="chip3-title">Rejected</label>
+                        <div class="chip3-sub-title">TOTAL DOCUMENTS</div>
+                    </div>
+                    <div class="chip3">
+                        <h3 class="chip3-value">{{Total?.data.totalPending}}</h3>
+                        <label class="chip3-title">Pending</label>
+                        <div class="chip3-sub-title">TOTAL DOCUMENTS</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                <div  class="table-responsive" *ngIf="ListData">
+                    <app-dir-mapping-list [groupBy]="'userId'" [filters]="usersIds" [actionRowOptions]="actionOptions" (triggerActionEmitter)="actionEmitter($event)"  (chipsData)="chipsEmmitter($event)"></app-dir-mapping-list>
+                <!-- <app-common-table [data]="userDocumentList" [displayColumns]="displayColumns" [Loading]="Loading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" (actionEmitter)="actionEmitter($event)" [name]="commonTableName"></app-common-table> -->
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="ShowUserWise == true">
+    <label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back To Users</label>
+    <app-userdoclist [UserData]="UserData" (showTimeline)="showTimeline()"></app-userdoclist>
+</div>
+
+<div *ngIf="ShowUserTimeline == true">
+    <label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back To Users</label>
+    <app-doctimeline [UserData]="UserData" (showUserWiseList)="showUserWiseList()"></app-doctimeline>
+</div>

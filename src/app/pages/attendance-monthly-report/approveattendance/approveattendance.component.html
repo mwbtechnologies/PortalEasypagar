@@ -1,0 +1,346 @@
+<div class="dialogs">
+        <div style="display: flex;justify-content: space-between;">
+                <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+            </div>
+        <i class="fa fa-close" (click)="CloseTab()"
+                style="display: flex;font-size: 20px;justify-content: end;margin-bottom: 5px;"></i>
+        <div style="display:flex;flex-wrap:wrap">
+                <div class="col-md-3">
+                        <div class="productdesc">
+                                <div class="card overflow-hidden">
+                                        <div class="card-body bootslider p-3">
+                                                <ngb-carousel data-interval="5">
+                                                        <ng-template ngbSlide
+                                                                *ngFor="let IL of AttendanceData.ImageList">
+                                                                <ng-container>
+                                                                        <img src="{{IL.Path}}" alt="Random first slide"
+                                                                                style="max-height: 400px;">
+                                                                </ng-container>
+                                                        </ng-template>
+                                                </ngb-carousel>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <div class="col-md-9">
+                        <div class="productdesc">
+                                <div class="card overflow-hidden">
+                                        <div class="">
+                                                <div class="panel panel-primary mb-5 mx-5 border"
+                                                        style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                                                        <div class="table-responsive">
+                                                                <h4 class="mb-5 mt-3 fw-bold"
+                                                                        style="text-align: center;"> Attendance Details
+                                                                </h4>
+                                                                <br>
+                                                                <table class="table table-bordered">
+                                                                        <tr>
+                                                                                <td class="fw-bold">Name</td>
+                                                                                <td>{{AttendanceData.EmployeeName}}</td>
+                                                                                <td class="fw-bold"> Mobile</td>
+                                                                                <td>{{AttendanceData.ContactNumber}}
+                                                                                </td>
+
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td class="fw-bold">Branch</td>
+                                                                                <td>{{AttendanceData.Branch}}</td>
+                                                                                <td class="fw-bold">Department</td>
+                                                                                <td
+                                                                                        *ngIf="AttendanceData.Department!=null && AttendanceData.Department!=''">
+                                                                                        {{AttendanceData.Department}}
+                                                                                </td>
+                                                                                <td
+                                                                                        *ngIf="AttendanceData.Department==null ||AttendanceData.Department==''">
+                                                                                        --</td>
+                                                                                        <td class="fw-bold">Shift</td>
+                                                                                        <td>{{AttendanceData.LoginData[0].ShiftName}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <td class="fw-bold">Total Duration</td>
+                                                                                <td>{{AttendanceData.TimeDuration}}
+                                                                                </td>
+                                                                                <td class="fw-bold">Status</td>
+                                                                                <td>{{AttendanceData.TransactionStatus}}
+                                                                                </td>
+                                                                                <td class="fw-bold">Approve/Reject Status</td>
+                                                                                <td>{{AttendanceData.LoginData[0].ApprovedByStatus}}
+                                                                                </td>
+                                                                        </tr>
+                                                                        <tr
+                                                                                *ngIf="AttendanceData.count==1 ||AttendanceData.count==2">
+                                                                                <td style="min-width: 100px;"
+                                                                                        class="fw-bold">Visit Type</td>
+                                                                                        <td style="min-width: 100px;" *ngIf="AttendanceData.count==2"
+                                                                                        class="fw-bold">Session Type</td>
+                                                                                <td style="min-width: 150px;"
+                                                                                        class="fw-bold">Check-In</td>
+
+                                                                                        
+                                                                                <td style="min-width: 150px;"
+                                                                                        class="fw-bold">Check-Out</td>
+                                                                                <!-- <td style="min-width: 80px;"
+                                                                                        class="fw-bold">Duration</td> -->
+                                                                                <td style="min-width: 150px;max-width: 200px;" *ngIf="ShowShift"
+                                                                                        class="fw-bold">Shift</td>                                                                               
+                                                                                <td style="min-width: 170px;"
+                                                                                        class="fw-bold" *ngIf="AttendanceData.count==1">Session</td>
+                                                                                        <td style="min-width: 170px;"
+                                                                                        class="fw-bold" *ngIf="AttendanceData.count!=1">Comment</td>
+                                                                                        <td style="min-width: 80px;"
+                                                                                        class="fw-bold">Status</td>
+                                                                                <td style="min-width: 150px;"
+                                                                                        class="fw-bold">Action</td>
+
+                                                                        </tr>
+                                                                        <tr
+                                                                                *ngIf="AttendanceData.count==1 || AttendanceData.count==2">
+                                                                                <td>{{AttendanceData.LoginData[0].VisitTypeName}}
+                                                                                </td>
+                                                                                <td  *ngIf="AttendanceData.count==2">{{AttendanceData.LoginData[0].SessionTypeName}}
+                                                                                </td>
+                                                                                <td> {{AttendanceData.LoginData[0].CheckInDate|customDate}} {{AttendanceData.LoginData[0].CheckInTime}}
+                                                                                        <!-- <input [ngxTimepicker]="picker1"
+                                                                                                placeholder="checkin time"
+                                                                                                name="example-text-input"
+                                                                                                class="form-control timings"
+                                                                                                [(ngModel)]="AttendanceData.LoginData[0].CheckInTime"
+                                                                                                [format]="timeFormat">
+                                                                                        <ngx-material-timepicker
+                                                                                                #picker1>
+                                                                                        </ngx-material-timepicker> -->
+                                                                                        <br>
+                                                                                        {{AttendanceData.LoginData[0].CheckInAddress}}
+
+
+
+                                                                                </td>
+                                                                                 <td><!-- {{AttendanceData.LoginData[0].CheckOutDate|customDate}} -->
+
+                                                                                        <!-- <input name="example-password-input" placeholder="Select Date" type="date" required
+                                                                                        [(ngModel)]="AttendanceData.LoginData[0].CheckOutDate" class="form-control">
+                                                                                        <input [ngxTimepicker]="picker2"
+                                                                                                placeholder="checkout time"
+                                                                                                name="example-text-input"
+                                                                                                class="form-control timings"
+                                                                                                [(ngModel)]="AttendanceData.LoginData[0].CheckOutTime"
+                                                                                                [format]="timeFormat">
+                                                                                        <ngx-material-timepicker
+                                                                                                #picker2>
+                                                                                        </ngx-material-timepicker> -->
+
+                                                                                        <input class="inputclass" [(ngModel)]="AttendanceData.LoginData[0].CheckOutDateTime" type="datetime-local" (change)="ValidateCheckOut(AttendanceData.LoginData[0].CheckInDateTime,AttendanceData.LoginData[0].CheckOutDateTime,0)">
+                                                                                        <br>
+
+
+                                                                                        {{AttendanceData.LoginData[0].CheckOutAddress}}
+
+
+                                                                                </td>
+                                                                                <!-- <td>
+                                                                                        {{AttendanceData.LoginData[0].Duration}}
+                                                                                </td> -->
+                                                                             
+                                                                                <td *ngIf="ShowShift" style="min-width: 150px;max-width: 200px;">
+
+                                                                                        <ng-select [items]="ShiftTypes" style=" white-space: pre-wrap;"
+                                                                                                   bindLabel="ShiftName"
+                                                                                                   bindValue="ShiftID"
+                                                                                                   [multiple]="false"
+                                                                                                  
+                                                                                                   [searchable]="false"
+                                                                                                   [(ngModel)]="AttendanceData.LoginData[0].ShiftID">
+                                                                                        </ng-select>
+                                                                                </td>
+                                                                             
+                                                                                <td>
+                                                                                        <ng-select [items]="LoginTypes" *ngIf="AttendanceData.count==1"
+                                                                                        bindLabel="Text"
+                                                                                        bindValue="Value"
+                                                                                        [multiple]="false"
+                                                                                        [searchable]="false"
+                                                                                        [(ngModel)]="AttendanceData.LoginData[0].ApprovedSessionID">
+                                                                             </ng-select>
+                                                                                        <br>
+
+                                                                                        <textarea
+                                                                                                style="background-color: white;height: 100px;"
+                                                                                                type="text"
+                                                                                                name="example-text-input"
+                                                                                                class="form-control"
+                                                                                                id="RoleName"
+                                                                                                name="RoleName"
+                                                                                                placeholder="Enter Comment"
+                                                                                                #RoleName="ngModel"
+                                                                                                [(ngModel)]="AttendanceData.LoginData[0].Admin_Comments"> </textarea>
+
+                                                                                </td>
+
+                                                                                <td>
+                                                                                        {{AttendanceData.LoginData[0].ApproveStatus}}
+                                                                                </td>
+                                                                                <td
+                                                                                *ngIf="AttendanceData.PayslipExist==false && AttendanceData.AllowApprove==true">
+                                                                                        <button style="background-color: #108F7D;" matTooltip="Approve"
+                                                                                                (click)="Approve(AttendanceData.LoginData[0],'Approved',AttendanceData.EmployeeName,AttendanceData.EmployeeID);"
+                                                                                                id="bEdit" type="button"
+                                                                                                class="btn btn-primary mb-4"
+                                                                                                style="border-radius:10px;background-color: #3601b5a3;">
+                                                                                                <span
+                                                                                                        class="fa fa-check-circle"></span></button>
+                                                                                        <button id="bEdit" type="button" matTooltip="Reject"
+                                                                                                (click)="Approve(AttendanceData.LoginData[0],'Rejected',AttendanceData.EmployeeName,AttendanceData.EmployeeID);"
+                                                                                                class="btn btn-danger mb-4"><span
+                                                                                                        class="fa fa-times"></span></button>
+                                                                                </td>
+                                                                                <td
+                                                                                *ngIf="AttendanceData.PayslipExist==true || AttendanceData.AllowApprove==false">
+                                                                                        <button style="background-color: #108F7D;" matTooltip="Approve"
+                                                                                                disabled id="bEdit"
+                                                                                                type="button"
+                                                                                                class="btn btn-primary mb-4"
+                                                                                                style="border-radius:10px;background-color: #3601b5a3;"><span
+                                                                                                        class="fa fa-check-circle"></span></button>
+                                                                                        <button id="bEdit" type="button" matTooltip="Reject"
+                                                                                                disabled
+                                                                                                class="btn btn-danger mb-4"><span
+                                                                                                        class="fa fa-times"></span></button>
+                                                                                </td>
+                                                                        </tr>
+
+                                                                        <tr *ngIf="AttendanceData.count==2">
+                                                                                <td>{{AttendanceData.LoginData[1].VisitTypeName}}
+                                                                                </td>
+
+                                                                                <td  *ngIf="AttendanceData.count==2">{{AttendanceData.LoginData[1].SessionTypeName}}
+                                                                                </td>
+
+                                                                                <td> {{AttendanceData.LoginData[1].CheckInDate|customDate}} {{AttendanceData.LoginData[1].CheckInTime}}
+                                                                                        <!-- <input [ngxTimepicker]="picker3"
+                                                                                                placeholder="checkin time"
+                                                                                                name="example-text-input"
+                                                                                                class="form-control timings"
+                                                                                                [(ngModel)]="AttendanceData.LoginData[1].CheckInTime"
+                                                                                                [format]="timeFormat">
+                                                                                        <ngx-material-timepicker
+                                                                                                #picker3>
+                                                                                        </ngx-material-timepicker> -->
+                                                                                        <br>
+                                                                                        {{AttendanceData.LoginData[1].CheckInAddress}}
+
+
+
+                                                                                </td>
+                                                                                <td>
+                                                                                         <!-- {{AttendanceData.LoginData[1].CheckOutDate|customDate}} -->
+                                                                                        <!-- <input [ngxTimepicker]="picker4"
+                                                                                                placeholder="checkout time"
+                                                                                                name="example-text-input"
+                                                                                                class="form-control timings"
+                                                                                                [(ngModel)]="AttendanceData.LoginData[1].CheckOutTime"
+                                                                                                [format]="timeFormat">
+                                                                                        <ngx-material-timepicker
+                                                                                                #picker4>
+                                                                                        </ngx-material-timepicker> -->
+
+                                                                                        <input class="inputclass" [(ngModel)]="AttendanceData.LoginData[1].CheckOutDateTime" type="datetime-local" (change)="ValidateCheckOut(AttendanceData.LoginData[1].CheckInDateTime,AttendanceData.LoginData[1].CheckOutDateTime, 1)">
+                                                                                       
+                                                                                        <br>
+
+
+                                                                                        {{AttendanceData.LoginData[1].CheckOutAddress}}
+
+
+                                                                                </td> 
+                                                                                <td *ngIf="ShowShift" style="min-width: 150px;max-width: 200px;">
+                                                                                        <ng-select [items]="ShiftTypes"
+                                                                                                   bindLabel="ShiftName"
+                                                                                                   bindValue="ShiftID"
+                                                                                                   [multiple]="false"
+                                                                                                   [searchable]="false"
+                                                                                                   [(ngModel)]="AttendanceData.LoginData[1].ShiftID">
+                                                                                        </ng-select>
+                                                                                </td>
+                                                                             
+                                                                                <td>
+
+                                                                                        <ng-select [items]="LoginTypes" *ngIf="AttendanceData.count==1"
+                                                                                        bindLabel="Text"
+                                                                                        bindValue="Value"
+                                                                                        [multiple]="false"
+                                                                                        [searchable]="false"
+                                                                                        [(ngModel)]="AttendanceData.LoginData[1].ApprovedSessionID">
+                                                                             </ng-select>
+                                                                                        <br>
+
+                                                                                        <textarea
+                                                                                                style="background-color: white;height: 100px;"
+                                                                                                type="text"
+                                                                                                name="example-text-input"
+                                                                                                class="form-control"
+                                                                                                id="RoleName"
+                                                                                                name="RoleName"
+                                                                                                placeholder="Enter Comment"
+                                                                                                #RoleName="ngModel"
+                                                                                                [(ngModel)]="AttendanceData.LoginData[1].Admin_Comments"> </textarea>
+
+                                                                                </td>
+
+                                                                                <td>
+                                                                                        {{AttendanceData.LoginData[1].ApproveStatus}}
+                                                                                </td>
+
+                                                                                <td
+                                                                                *ngIf="AttendanceData.PayslipExist==false && AttendanceData.AllowApprove==true">
+                                                                                        <button style="background-color: #108F7D;"  matTooltip="Approve"
+                                                                                                (click)="Approve(AttendanceData.LoginData[1],'Approved',AttendanceData.EmployeeName,AttendanceData.EmployeeID);"
+                                                                                                id="bEdit" type="button"
+                                                                                                class="btn btn-primary mb-4"
+                                                                                                style="border-radius:10px;background-color: #3601b5a3;">
+                                                                                                <span
+                                                                                                        class="fa fa-check-circle"></span></button>
+                                                                                        <button id="bEdit" type="button"  matTooltip="Rejected"
+                                                                                                (click)="Approve(AttendanceData.LoginData[1],'Rejected',AttendanceData.EmployeeName,AttendanceData.EmployeeID);"
+                                                                                                class="btn btn-danger mb-4"><span
+                                                                                                        class="fa fa-times"></span></button>
+                                                                                </td>
+                                                                                <td
+                                                                                *ngIf="AttendanceData.PayslipExist==true || AttendanceData.AllowApprove==false">
+                                                                                        <button style="background-color: #108F7D;"  matTooltip="Approve"
+                                                                                                disabled id="bEdit"
+                                                                                                type="button"
+                                                                                                class="btn btn-primary mb-4"
+                                                                                                style="border-radius:10px;background-color: #3601b5a3;"><span
+                                                                                                        class="fa fa-check-circle"></span></button>
+                                                                                        <button id="bEdit" type="button" matTooltip="Rejected"
+                                                                                                disabled
+                                                                                                class="btn btn-danger mb-4"><span
+                                                                                                        class="fa fa-times"></span></button>
+                                                                                </td>
+                                                                        </tr>
+                                                                        <tr *ngIf="AttendanceData.count==0">
+                                                                                <td class="fw-bold">-- No In-Out Data
+                                                                                        Found --</td>
+                                                                        </tr>
+                                                                </table>
+                                                                <!-- <div *ngIf="AttendanceData.PayslipExist==false" class="text-center mt-2 pb-5 border-bottom">
+                                <a class="btn btn-primary me-1" (click)="Action(AttendanceData.EmployeeID,'Approved',AttendanceData.Date,AttendanceData.AdminID);">
+                                    <i  class="fa fa-check-circle"></i> Approve</a>
+                                    <a class="btn btn-secondary" (click)="Action(AttendanceData.EmployeeID,'Rejected',AttendanceData.Date,AttendanceData.AdminID);">
+                                        <i  class="fa fa-times"></i>Reject</a>
+                                    </div> -->
+
+
+                                                        </div>
+
+
+
+
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <button class="btn btn-primary" (click)="CloseTab()">Cancel</button>
+        </div>
+</div>

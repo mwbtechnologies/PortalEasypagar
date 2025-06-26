@@ -1,0 +1,48 @@
+<div class="card-header" style="display: flex;justify-content: start;">
+    <h3 class="mb-0 card-title">Location Config</h3>
+  </div>
+  <div class="card-body" style="min-height: 60vh;">
+    <div style="display: flex;">
+        <div class="col-md-3" >
+            <label class="form-label">Select Organization</label>
+            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                (onDeSelect)="onDeselectedOrg($event)">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-3">
+           <label class="form-label">Select Branch </label>
+           <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+               [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+               (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+           </ng-multiselect-dropdown>
+       </div>
+       <div class="col-md-6" style="align-items: end;display: flex;">   
+        <!-- <div style="display: flex;margin-top: 2%;"> -->
+            <div class="col-md-8">
+                <textarea style="border: 1px solid #b5b2b2;" placeholder="Enter Address" class="form-control" [(ngModel)]="LocationAddress"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="submitLocation()">Submit</button>
+            </div>
+        <!-- </div> -->
+           <!-- <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="addLocation()">Add</button>&nbsp;&nbsp;
+           <button type="submit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;">View</button> -->
+       </div>
+        </div>
+        <div >
+            <div style="margin-top: 2%;">
+                <app-common-table [data]="Location" [ExportName]="'Location Report'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+                [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+                <!-- <ng-container *ngFor="let ad of Location">
+                    <div class="col-md-4">
+                        <textarea disabled style="border: 1px solid #b5b2b2;" placeholder="Enter Address" class="form-control" [(ngModel)]="ad.Address"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-danger" (click)="deleteAddress(ad.ID)"><i class="fa fa-trash"></i></button>
+                    </div>
+                    <br>
+                </ng-container> -->
+            </div>
+        </div>
+  </div>

@@ -1,0 +1,181 @@
+
+<div class="dialogs" style="overflow: hidden; padding: 20px;max-height: 90vh;">
+  <div style="display: flex;justify-content: space-between;">
+    <h4><span *ngIf="!isEdit">Add</span><span *ngIf="isEdit">Edit</span> Shift</h4>
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+</div>
+   
+    <div class="row Content">
+        <div class="col-md-4" >
+          <label class="labels"> 
+            <span *ngIf="!isEdit">Add</span>
+            <span *ngIf="isEdit">Edit</span> Branch&nbsp;<b> *</b>
+          </label>
+          <br>
+         <ng-multiselect-dropdown *ngIf="!isEdit"
+         [placeholder]="'Select Branch'" 
+          [data]="Columns"
+          [(ngModel)]="selectedBranch"
+          (onSelect)="onBranchSelect($event)"
+          (onDeSelect)="onBranchDeSelect($event)"   
+          [settings]="branchSettings">
+          </ng-multiselect-dropdown>
+
+          <ng-multiselect-dropdown *ngIf="isEdit"
+          [placeholder]="'Select Branch'" 
+           [data]="Columns"
+           [(ngModel)]="selectedBranchEdit"
+           (onSelect)="onBranchEditSelect($event)"
+           (onDeSelect)="onBranchEditDeSelect($event)"   
+           [settings]="branchSettings">
+           </ng-multiselect-dropdown>
+         <!-- <input *ngIf="isEdit" [disabled]="isEdit" name="example-text-input" class="timings" id="Branches" name="Branches" type="text"
+          placeholder="Branch Name" #Branches="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" Branches [(ngModel)]="formInput.Branches"> -->
+        </div>
+
+        <div class="col-md-4" >
+          <label class="labels">
+             <span *ngIf="!isEdit">Add</span>
+             <span *ngIf="isEdit">Edit</span> 
+             Department &nbsp;<b> *</b></label><br>
+         <ng-multiselect-dropdown  *ngIf="!isEdit"
+           [placeholder]="'Select Department'" 
+          [data]="DepColumns"
+           [(ngModel)]="selectedDepartment"
+            (onSelect)="onDeptSelect($event)"
+              (onDeSelect)="onDeptDeSelect($event)"
+          (onSelectAll)="onDeptSelectAll($event)" (onDeSelectAll)="onDeptDeSelectAll()"
+          [settings]="departmentSettings">
+          </ng-multiselect-dropdown>
+
+          <ng-multiselect-dropdown  *ngIf="isEdit"
+          [placeholder]="'Select Department'" 
+         [data]="DepColumns"
+          [(ngModel)]="selectedDeptEdit"
+           (onSelect)="ondepthEditSelect($event)"
+             (onDeSelect)="ondepthEditDeSelect($event)"
+         [settings]="DeptSettings">
+         </ng-multiselect-dropdown>
+          <!-- <input type="text" class="form-control timings" *ngIf="isEdit" [disabled]="isEdit" [(ngModel)]="formInput.Branches"> -->
+          <!-- <input *ngIf="isEdit" [disabled]="isEdit" name="example-text-input" class="timings" id="Departments" name="Departments" type="text"
+          placeholder="Department Name" 
+          [ngClass]="{'is-invalid': !Departments.valid && (Departments.dirty || Departments.touched || isSubmit)}"
+          #Departments="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" Departments [(ngModel)]="formInput.Departments"> -->
+        </div>
+        <div class="col-md-4" >
+          <label class="labels"> 
+            <span *ngIf="!isEdit">Add</span>
+            <span *ngIf="isEdit">Edit</span> Shift Type &nbsp;<b> *</b>
+          </label>
+          <br>
+         <ng-multiselect-dropdown *ngIf="!isEdit"
+         [placeholder]="'Select Shift Type'" 
+          [data]="ShiftTypeList"
+          [(ngModel)]="selectShift"
+          (onSelect)="onShiftSelect($event)"
+          (onDeSelect)="onShiftDeSelect($event)"   
+          [settings]="shifttypeSettings">
+          </ng-multiselect-dropdown>
+
+          <ng-multiselect-dropdown *ngIf="isEdit"
+          [placeholder]="'Select Shift Type'" 
+           [data]="ShiftTypeList"
+           [(ngModel)]="selectShiftEdit"
+           (onSelect)="onShiftEditSelect($event)"
+           (onDeSelect)="onShiftEditDeSelect($event)"   
+           [settings]="shifttypeSettings">
+           </ng-multiselect-dropdown>
+            </div>
+       
+    </div>
+    <div class="row Content">
+      <div class="col-md-12">
+        <div class="row col-md-12 spacing">
+          <div class="col-md-4">
+            <label class="labels"> <span>Shift Name&nbsp;<b> *</b></span></label>
+            <input name="example-text-input" [disabled]="isEdit" class="timings" id="ShiftName" name="ShiftName" type="text"
+              placeholder="Shift Name" 
+              [ngClass]="{'is-invalid': !ShiftName.valid && (ShiftName.dirty || ShiftName.touched || isSubmit)}"
+              #ShiftName="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" ShiftName [(ngModel)]="formInput.ShiftName">
+          </div>
+      
+          <div class="col-md-4">
+            <label class="labels">
+              <button mat-raised-button matTooltip="Employee will get this amount along with his regular salary"><i class="fa fa-info-circle"></i></button>
+              Extra Amount</label>
+            <input
+            name="example-text-input" class="form-control timings" id="Amount" name="Amount" type="number"
+            [ngClass]="{'is-invalid': !Amount.valid && (Amount.dirty || Amount.touched || isSubmit)}"
+            #Amount="ngModel" required  Amount [(ngModel)]="formInput.Amount"  (keypress)="AmountValidation()">
+          </div>
+
+          <div class="col-md-4">
+            <label class="labels">
+              <button mat-raised-button matTooltip="If Ratio is 2 and employee works for 3 hours. His worked hours will be considered as 6 hours"><i class="fa fa-info-circle"></i></button>
+             Hours Ratio(x)</label>
+            <input
+            name="example-text-input" class="form-control timings" id="Ratio" name="Ratio" type="number"
+            [ngClass]="{'is-invalid': !Ratio.valid && (Ratio.dirty || Ratio.touched || isSubmit)}"
+            #Ratio="ngModel" required  Ratio [(ngModel)]="formInput.Ratio" (keypress)="RatioValidation()">
+          </div>
+          
+           <!-- <div class="col-md-5" ><br>
+            <label class="labels" style="display: flex;align-items: start;" style="margin: 0;">
+            <input type="checkbox" class="" style="margin-right:3px;" [(ngModel)]="formInput.IsPercent" name="isPercent" (change)="changeamttype();"> &nbsp;<button mat-raised-button matTooltip="Entered percent of his gross salary will be paid as extra amount"><i class="fa fa-info-circle"></i></button>Percent</label>
+            <br><label class="labels" style="display: flex;align-items: end;" style="margin: 0;">
+            <input type="checkbox" class="" [(ngModel)]="formInput.isHalfDay" name="isHalfDay">&nbsp;<button mat-raised-button matTooltip="Employee will get half day attendance if he/she work on this shift"><i class="fa fa-info-circle"></i></button>HalfDay</label>
+          -->
+          </div>
+              
+        </div>
+         
+      </div>
+    <div class="row Content">
+        <div class="col-md-6">
+          <div class="row col-md-12 spacing">
+            <div class="col-md-6">
+                <label class="labels">Start Time&nbsp;<b> *</b></label><br>
+                <input 
+                name="example-text-input" class="form-control timings" id="FromTime" name="FromTime" type="time" 
+                [ngClass]="{'is-invalid': !FromTime.valid && (FromTime.dirty || FromTime.touched || isSubmit)}"
+                #FromTime="ngModel" required  FromTime [(ngModel)]="formInput.FromTime">
+            </div>
+            <div class="col-md-6">
+                <label class="labels">End Time&nbsp;<b> *</b></label><br>
+                <input
+                 name="example-text-input" class="form-control timings" id="ToTime" name="ToTime" type="time"
+                 [ngClass]="{'is-invalid': !ToTime.valid && (ToTime.dirty || ToTime.touched || isSubmit)}"
+                 #ToTime="ngModel" required  ToTime [(ngModel)]="formInput.ToTime">
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="row col-md-12 spacing">
+            <div class="col-md-6">
+              <button mat-raised-button matTooltip="If GraceIn time is 20. Employee can come office 20min late"><i class="fa fa-info-circle"></i></button>
+                <label class="labels">Grace-In&nbsp;<b> *</b></label><br>
+                <input 
+                name="example-text-input" class="form-control timings" id="GraceIn" name="GraceIn" type="number"
+                [ngClass]="{'is-invalid': !GraceIn.valid && (GraceIn.dirty || GraceIn.touched || isSubmit)}"
+                #GraceIn="ngModel" required  GraceIn [(ngModel)]="formInput.GraceIn">
+            </div>
+            <div class="col-md-6">
+              <button mat-raised-button matTooltip="If Grace-out time is 20. Employee can leave office 20min early"><i class="fa fa-info-circle"></i></button>
+                <label class="labels">Grace-Out&nbsp;<b> *</b></label><br>
+                <input
+                 name="example-text-input" class="form-control timings" id="GraceOut" name="GraceOut" type="number"
+                 [ngClass]="{'is-invalid': !GraceOut.valid && (GraceOut.dirty || GraceOut.touched || isSubmit)}"
+                 #GraceOut="ngModel" required  GraceOut [(ngModel)]="formInput.GraceOut">
+            </div>
+          </div>
+
+  </div>
+    </div>
+  
+    <div class="container">
+        <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="Cancel()">Cancel</button>&nbsp;
+        <button *ngIf="!isEdit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="CreateShift()">Submit</button>
+        <button *ngIf="isEdit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="UpdateShift()">Update</button>
+    </div>
+</div>

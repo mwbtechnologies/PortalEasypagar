@@ -1,0 +1,11 @@
+::ng-deep app-common-table-buttons .mdc-data-table__content,
+::ng-deep app-common-table-buttons .mdc-data-table__cell {
+    text-wrap: nowrap !important;
+    text-align:center !important;
+}
+
+
+.col-md-4{
+    padding-left:0.2rem;
+    padding-right:0.2rem;
+}

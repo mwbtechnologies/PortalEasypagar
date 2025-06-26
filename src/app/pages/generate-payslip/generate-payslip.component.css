@@ -1,0 +1,353 @@
+.calendar-cell {
+  background-color: #f2f2f2; /* Default background color */
+}
+
+.red-cell {
+  background-color: red; /* Custom background color for specific cells */
+}
+
+.blue-cell {
+  background-color: blue; /* Custom background color for specific cells */
+}
+
+.cal-month-view .cal-day-cell.cal-in-month.cal-has-events
+{
+  background-color: bisque;
+}
+
+.cal-day-badge {
+  display: none;
+}
+.maincard{
+  margin-bottom: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+.datecard{
+background-color: #efe7e7;
+padding: 10px;
+font-size: 16px;
+text-align: center;
+margin-bottom: 10px;
+border-radius: 10px 11px 0px 0px;
+}
+
+.calander-container{
+  --box-shadow-present: none;
+  --box-shadow-absent: none;
+  --box-shadow-holiday: none;
+  --box-shadow-weekoff: none;
+}
+
+.colorcard{
+  width: 100px;
+  margin: 10px;
+}
+
+.colorcard1{
+  background-color: #f1f9f2;
+  width: 100%;
+  padding: 4px;
+  border-top: 4px solid #00a410;
+}
+.colorcard2{
+  background-color: #FEF2F2;
+  width: 100%;
+  padding: 4px;
+  border-top: 4px solid #ec0000;
+}
+.colorcard3{
+  /* background-color: #FDFFEF;
+  width: 100%;
+  padding: 4px;
+  border-top: 4px solid #EFEE00; */
+  background-color: #defcff;
+  width: 100%;
+  padding: 4px;
+  border-top: 4px solid #14a8ff;
+}
+.colorcard4{
+  background-color: #EAEAEA;
+  width: 100%;
+  padding: 4px;
+  border-top: 4px solid #004770;
+}
+.colorcard5{
+  background-color: #bdffd8;
+  width: 100%;
+  padding: 4px;
+  border-top: 4px solid #006e2e;
+}
+.calendarcard{
+ padding: 10px 0px 0px 10px;
+}
+/* Optional: Ensure that only the dots are shown without any background or box */
+h1 {
+  font-weight: 800;
+  margin: 1rem 0 0;
+}
+
+/* ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  column-gap: 29px;  
+  li {
+    display: flex;
+    width: 6rem;
+    height: 5rem;
+    margin-bottom: 1.25rem;
+    flex-flow: column;
+    border-radius: 0.2rem;
+    padding: 1rem;
+    font-weight: 300;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 8px 10px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    time {
+      font-size: 2rem;
+      margin: 0 0 1rem 0;
+      font-weight: 500;
+    }
+  }
+} */
+
+.title{
+  font-size:12px;
+  color: #616161;
+  padding: 20px 0px 0px 0px;
+}
+
+.titleData{
+  font-size: 16px;
+  font-weight: 500;
+  padding: 20px 0px 0px 40px;
+}
+
+.salaryRow{
+  font-size: 14px;
+  color: #616161;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+
+.amount{
+  font-size: 14px;
+  color: #000;
+}
+
+.deduction{
+  border-top:5px solid #EC0000;
+  padding: 10px;
+  background-color: #EC00000d;
+  color: #616161;
+  width: 48%;
+  /* margin-left: 2%;
+  height: inherit; */
+}
+
+.earning{
+  border-top:5px solid #00A510;
+  padding: 10px;
+  color: #616161;
+  background-color: #00A5100d;
+  width: 48%;
+  /* margin-right: 2%;
+  height: inherit; */
+}
+
+label{
+  margin-bottom: 0;
+}
+
+.weekDay{
+  background-color: #F5F5F5;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  margin: 8px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.weekHeader{
+  padding: 0px 3px;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+  color: #626262;
+}
+
+/* .present{
+  background-color: #f1f9f2;
+  border: 1px solid #00a410;
+  color: #00a410;
+} */
+/* background-color: #00a410; */
+
+/* background-color: #ec0000; */
+/* .absent{
+  background-color: #fef2f2;
+  border: 1px solid #ec0000;
+  color: #ec0000;
+} */
+
+/* background-color: #efee00; */
+/* .holiday{
+  background-color: #fdffef;
+  border: 1px solid #efee00;
+  color: #d7d100;
+} */
+/* background-color: #efee00; */
+/* .weekoff{
+  background-color: #EAEAEA;
+  border: 1px solid #004770;
+  color: #004770;
+} */
+
+.halfHolidayHalfPresent{
+  background-color: #EAEAEA;
+  /* background-color: #efee00; */
+  border: 1px solid #004770;
+  color: #004770;
+}
+
+.daysLabel{
+  font-size: 25px;
+  text-align: center;
+}
+
+.dayTypeLabel{
+  text-align: center;
+  font-size: 12px;
+  color: #616161;
+}
+
+.imgcontainer {
+  width: 250px;
+}
+
+.imgcontainer {
+  object-fit: contain;
+} 
+.payImg {
+  height: 100%;
+  width: 100%;
+}
+
+.payImg {
+  object-fit: contain;
+} 
+
+.calendar-card {
+  /* background-color: #F5F5F5; */
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+  margin: 0px;
+  border-radius: 5px;
+  font-weight: 500;
+
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  /* width: 100px;
+  height: 150px; */
+  /* border-radius: 10px; */
+  /* text-align: center; */
+}
+
+.calendar-card .calendar-top {
+  height: 25px;
+  width: 40px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 2px solid #ece800;
+  border-bottom: none !important;
+  background-color: #fcfef2;
+  color: #ece800;
+
+}
+
+.calendar-card .calendar-bottom {
+  height: 25px;
+  width: 40px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 2px solid #ece800;
+  border-top: none !important;
+  background-color: #fcfef2;
+  color: #ece800;
+}
+
+.calendar-card .calendar-number {
+  position: absolute;
+  /* font-size: 48px; */
+  /* font-weight: bold; */
+  /* color: black; */
+}
+
+.present{
+  background-color: #f1f9f2 !important;
+  border: 2px solid #00a410 !important;
+  color: #00a410 !important;
+  box-shadow: var(--box-shadow-present);
+}
+
+
+.absent{
+  background-color: #fef2f2 !important;
+  border: 2px solid #ec0000 !important;
+  color: #ec0000 !important;
+}
+
+.leave{
+  background-color: #bdffd8 !important;
+  border: 2px solid #006e2e !important;
+  color: #006e2e !important;
+}
+
+.holiday{
+  /* background-color: #f9ffcb !important;
+  border: 2px solid #c1c000 !important; */
+  background-color: #defcff !important;
+  border: 2px solid #14a8ff !important;
+  color: #000000 !important;
+
+  /* background-color: #ffd678 !important;
+  border: 2px solid #6f4d00 !important; */
+}
+
+.weekoff{
+  background-color: #EAEAEA !important;
+  border: 2px solid #004770 !important;
+  color: #004770 !important;
+}
+
+
+.top-hovered{
+  box-shadow: 0px -6px 10px -5px #000;
+}
+.bottom-hovered{
+  box-shadow: 0px 6px 10px -5px #000;
+}
+.bottom-hide{
+  opacity: 10;
+}
+#pay_slip_container {
+  width: 100%;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+}

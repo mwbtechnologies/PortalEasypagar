@@ -1,0 +1,62 @@
+<div class="dialogs">
+    <h4 style="margin: 0;"><span *ngIf="isEdit">Edit Asset</span><span *ngIf="!isEdit">Add Asset</span></h4>
+    <!-- <span style="font-size: 12px;" class="filelabels">create your asset here.</span> -->
+<!-- <div class=""> -->
+    <div class="col-md-12 row" style="row-gap:15px;padding: 0;margin-top: 15px;">
+        <div class="col-md-6">
+            <label class="filelabels">Asset Name</label>
+            <input type="text" class="timings form-control" [(ngModel)]="AssetName" placeholder="Enter Asset Name">
+            <label class="filelabels" *ngIf="errors.AssetName" style="color:red;font-size: 12px;">{{errors.AssetName}}</label>
+        </div>
+        <div class="col-md-6">
+            <label class="filelabels">Category</label>
+            <div class="autocomplete-container">
+                <input type="text" class="timings form-control" [(ngModel)]="SelectedAssetType" (focus)="showAssetTypes = true" (input)="editAssetTypes()" placeholder="Categories" />
+                <ul *ngIf="showAssetTypes && AssetTypeList.length > 0">
+                  <li *ngFor="let unit of AssetTypeList" (click)="selectAssetTypes(unit)">
+                    {{ unit.name }}
+                  </li>
+                </ul>
+              </div>
+              <label class="filelabels" *ngIf="errors.AssetType" style="color:red;font-size: 12px;">{{errors.AssetType}}</label>
+            <!-- <ng-multiselect-dropdown [placeholder]="'Select Asset Type'" [data]="AssetTypeList"
+            [(ngModel)]="SelectedAssetType" [settings]="assetTypeSettings">
+        </ng-multiselect-dropdown>   -->
+        </div>
+        <!-- <div class="col-md-6">
+            <label class="filelabels">Model Number</label>
+            <input type="number" class="timings form-control" [(ngModel)]="ModelNumber" placeholder="Enter Model Number">
+        </div> -->
+        <div class="col-md-6">
+            <label class="filelabels">Unit Of Measurement</label>
+              <div class="autocomplete-container">
+                <input type="text" class="timings form-control" [(ngModel)]="searchText" (focus)="showmeasurements = true" (input)="editUnits()" placeholder="Enter unit..." />
+                <ul *ngIf="showmeasurements && filteredUnits.length > 0">
+                  <li *ngFor="let unit of filteredUnits" (click)="selectUnit(unit)">
+                    {{ unit }}
+                  </li>
+                </ul>
+              </div>
+              <label class="filelabels" *ngIf="errors.Measurement" style="color:red;font-size: 12px;">{{errors.Measurement}}</label>
+        </div>
+        <div class="col-md-6">
+            <label class="filelabels">Return Type</label>
+            <ng-multiselect-dropdown [settings]="ReturnTypeSettings" [placeholder]="'Select Return Type'" [data]="ReturnTypeList" [(ngModel)]="SelectedReturnType">
+            </ng-multiselect-dropdown> 
+            <label class="filelabels" *ngIf="errors.ReturnType" style="color:red;font-size: 12px;">{{errors.ReturnType}}</label>
+        </div>
+        <!-- <div class="col-md-6">
+            <label class="filelabels">Measurement Type</label>
+            <ng-multiselect-dropdown *ngIf="!isEdit"  [placeholder]="'Select Measure Type'" [data]="MeasureTypeList"
+            [(ngModel)]="SelectedMeasureType" [settings]="MeasureTypeSettings">
+            </ng-multiselect-dropdown> 
+            <input type="text" *ngIf="isEdit" disabled class="timings form-control" [(ngModel)]="MeasurementType">
+        </div> -->
+    </div>
+    <div class="button-container">
+        <button type="submit" class="btn btn-primary" (click)="addAsset()" *ngIf="!isEdit">Save</button>
+        <button type="submit" class="btn btn-primary" (click)="addAsset()" *ngIf="isEdit">Update</button>
+        <button type="submit" class="btn btn-primary" (click)="closeAsset()">Cancel</button>
+    </div>
+<!-- </div> -->
+</div>

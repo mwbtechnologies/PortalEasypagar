@@ -1,0 +1,64 @@
+.spacing{
+    padding: 0;
+  }
+  .dialogs{
+    width: auto;
+    height: 600px;
+    overflow-y: scroll;
+    padding: 25px;
+    font-family: poppins;
+}
+
+.ms-5, .mx-5 {
+  margin-left: 0rem !important;
+}
+
+.mb-5, .my-5 {
+  margin-bottom: 0rem !important;
+}
+.me-5, .mx-5 {
+  margin-right: 0rem !important;
+}
+.confirmation{
+  width: auto;
+  position: fixed;
+  padding: 20px;
+  z-index: 1000;
+  top: 0;
+  margin-left: 25%;
+  margin-top: 18%;
+  text-align: center;
+}
+.popup {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1001; /* Ensure it stays above the overlay */
+  position: relative;
+}
+.flex{
+  display: flex;
+  margin-top: 15%;
+  justify-content: center;
+  gap: 57px;
+}
+.green{
+  background-color: rgb(51, 156, 51);
+  color: white;
+  padding: 4px;
+  height: fit-content;
+  font-size: 10px;
+  border-radius: 5px;
+  width: fit-content;
+      }
+
+ .red{
+   background-color: #fb5454;
+   color: white;
+   padding: 4px;
+   height: fit-content;
+   font-size: 10px;
+   border-radius: 5px;
+   width: fit-content;
+}

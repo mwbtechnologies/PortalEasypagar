@@ -1,0 +1,175 @@
+<div *ngIf="showMonthWise == false">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: start;">
+                    <div class="col-md-5"><label (click)="backToDashboard()" class="mb-0 card-title"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+                    </label></div>
+                    <h3 class="mb-0 card-title">Attendance Summary Report</h3>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex;flex-wrap: wrap;">
+                        <div class="col-md-2" >
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Select Branch </label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                                [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Select Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onSelectAll)="onDeptDeSelectAll()" (onDeSelectAll)="onDeptDeSelectAll()"
+                                (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Report Type</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Type'" [data]="TypeList"
+                                [(ngModel)]="selectedType" (onSelect)="onTypeSelect($event)"
+                                (onDeSelect)="onTypeDeSelect($event)" [settings]="typeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3" *ngIf="selectedType == 'Weekly'">
+                            <label class="form-label">Select Date</label>
+                            <input type="date" class="form-control" [(ngModel)]="selectedWeeklyDate">
+                        </div>
+                        <div class="col-md-3" *ngIf="selectedType == 'Custom'">
+                            <label class="form-label">From Date</label>
+                            <input type="date" class="form-control" [(ngModel)]="selectedFromDate">
+                        </div>
+                        <div class="col-md-3" *ngIf="selectedType == 'Custom'">
+                            <label class="form-label">To Date</label>
+                            <input type="date" class="form-control" [(ngModel)]="selectedToDate">
+                        </div>
+                        
+                        <div class="col-md-3" *ngIf="selectedType == 'Monthly'">
+                            <label class="form-label">Select Year</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Year'" [data]="YearList"
+                                [(ngModel)]="selectedyear" (onSelect)="OnYearChange($event)"
+                                (onDeSelect)="onyearDeSelect($event)" [settings]="yearSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3" *ngIf="selectedType == 'Monthly'">
+                            <label class="form-label">Select Month</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Month'" [data]="MonthList"
+                                [(ngModel)]="selectedMonth" (onSelect)="OnMonthChange($event)"
+                                (onDeSelect)="onMonthDeSelect($event)" [settings]="monthSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Select Employees</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="form-label">Action</label>
+                            <button class="btn btn-primary mb-4" (click)="GetReport();"> Search</button> &nbsp;
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="display: flex;justify-content: end;">
+                            <button class="btn btn-primary" *ngIf="ShowDownload" (click)="GetReportInPDF()" [disabled]="SalaryList ==undefined || SalaryList == null || !(SalaryList.length > 0)">Export
+                                PDF</button>&nbsp;
+                            <button class="btn btn-primary" *ngIf="ShowDownload" (click)="GetReportInExcel()" [disabled]="SalaryList ==undefined || SalaryList == null || !(SalaryList.length > 0)">Export
+                                Excel</button>&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+                <div class="card-body">
+                    <div class="table-responsive ng-star-inserted">
+                        <div class="note text-muted mt-n3 mb-3" style="font-size: 0.9rem;font: black;">
+                            <b style="font-size: 0.9rem;">Note :</b> Attendance & Salary for the current day is excluded from the report since employees may still check in, check out, or request leave or half-day adjustments. Accurate data is available only after the completion of working hours
+                           </div>  
+                    </div>
+<!-- common table__{{employeeLoading==undefined}}__ -->
+<app-common-table [data]="SalaryList" [ExportName]="'Attendance Report'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+[smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+<!-- end here --> 
+                    <!-- <div class="table-responsive">
+                        <table id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions"
+                            [dtTrigger]="dtTrigger" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>SL No</th>
+                                    <th>Employee Name</th>
+                                    <th>Branch</th>
+                                    <th>Department</th>
+                                    <th>Working Days</th>
+                                    <th>Present Days</th>
+                                    <th>Absent Days</th>
+                                    <th>Efficiency</th>
+                                    <th>View Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="ng-star-inserted" *ngFor="let IL of SalaryList; let i = index;">
+                                    <td>
+                                        <div class="ng-star-inserted"> {{i+1}} </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="ng-star-inserted">{{IL.Employee}} </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="ng-star-inserted"> {{IL.Branch}} </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="ng-star-inserted"> {{IL.Department}} </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="ng-star-inserted"> {{IL.WorkingDays}} </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="ng-star-inserted"> {{IL.PresentDays}} </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="ng-star-inserted"> {{IL.EmployeeLeaves}} </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="ng-star-inserted">{{IL.Efficiency}}% </div>
+
+                                    </td>
+
+                                    <td><button id="bEdit" type="button" matTooltip="View"
+                                            class="btn btn-sm btn-primary ng-star-inserted"><span class="fa fa-eye"
+                                                (click)="ViewDetails(IL.EmployeeID);"></span></button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showMonthWise == true">
+    <label class="button" (click)="backToAttendance()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+        report</label>
+    <app-monthly-attendance-report></app-monthly-attendance-report>
+</div>
+<!-- 
+                               <div  *ngIf="!ViewPermission">
+                       
+                                <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary"> </a></div></div></div></div></div></div>
+                            </div> -->

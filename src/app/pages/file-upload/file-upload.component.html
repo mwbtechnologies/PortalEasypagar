@@ -1,0 +1,589 @@
+
+<div class="row" *ngIf="ActiveTab=='List'">
+
+    <div class="col-lg-12">
+        <div class="card">
+            <!-- <div class="card-body border-top-0"> -->
+                <!-- <div class="card"> -->
+                    <div class="card-header" style="justify-content: start;">
+                    <div class="col-md-5"><label (click)="backToDashboard()" class="mb-0 card-title"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+                    </label></div>
+                    <h3 class="mb-0 card-title">Upload File</h3>
+                </div>
+                    <div class="card-body">
+                        <div style="display: flex;flex-wrap: wrap;">
+                            <div class="col-md-3" >
+                                <label class="form-label">Select Organization</label>
+                                <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                    [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                    (onDeSelect)="onDeselectedOrg($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Branch </label>
+                                <ng-multiselect-dropdown [placeholder]="'All Branch'" [data]="BranchList"
+                                    [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                    (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Department</label>
+                                <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                                    [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                                    (onSelectAll)="onDeptDeSelectAll()" (onDeSelectAll)="onDeptSelectAll()"
+                                    (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Employee</label>
+                                <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                    [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                    (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">File Type </label>
+                                <ng-multiselect-dropdown [placeholder]="'All Files'" [data]="FileTypeList"
+                                    [(ngModel)]="selectedFileType" (onSelect)="onFiletypeSelect($event)"
+                                    (onDeSelect)="onFiletypeDeSelect($event)" [settings]="FileSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <!-- <div class="col-md-12" style="padding-top: 15px;">
+                                <button class="btn btn-primary mb-4" (click)="Submit();">Submit</button> &nbsp;
+                            </div> -->
+                        </div>
+                    </div>
+                <!-- </div> -->
+            <!-- </div> -->
+        </div>
+    </div>
+    <div class="col-lg-12" *ngIf="SubFileTypeList">
+        <div class="card">
+            <div class="card-body">
+                                <div class="row" style="padding-top: 20px;">
+                                    <div class="col-md-3" *ngFor="let IL of SubFileTypeList; let i= index">
+                                        <div class="card pos-relative">
+                                            <div class="card-body pt-4 pb-0">
+                                                <div class="d-flex text-primary">
+                                                    <!-- <svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                                        <path fill="#525ce5"
+                                                            d="M9.3 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4H10L12 6H20C21.1 6 22 6.9 22 8V14.6C20.6 13.6 18.9 13 17 13C13.5 13 10.4 15.1 9.1 18.3L8.8 19L9.1 19.7C9.2 19.8 9.2 19.9 9.3 20M23 19C22.1 21.3 19.7 23 17 23S11.9 21.3 11 19C11.9 16.7 14.3 15 17 15S22.1 16.7 23 19M19.5 19C19.5 17.6 18.4 16.5 17 16.5S14.5 17.6 14.5 19 15.6 21.5 17 21.5 19.5 20.4 19.5 19M17 18C16.4 18 16 18.4 16 19S16.4 20 17 20 18 19.6 18 19 17.6 18 17 18">
+                                                        </path>
+                                                    </svg> -->
+                                                    <img (click)="ViewDetails(IL)" src="{{IL.FileIcon}}"style="height: 200px;width: 200px;" >
+                                                    <!-- <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                                            href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                                                class="fa fa-bars"></i></a>
+                                                        <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                                                href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                                                    class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                                                href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                                                    class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                                                href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                                                    class="fe fe-trash me-2"></i> Delete</a></div>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="card-footer border-top-0">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <h6 class="text-primary" style="font-size: 11px;" (click)="ViewDetails(IL)">{{IL.FileType}}</h6>
+                                                        <p class="text-muted fs-13 mb-0" style="font-size: 8px;" (click)="ViewDetails(IL)"><b>{{IL.FilesCount}}</b> Files</p>
+                                                    </div>
+                                                    <div class="ms-auto mt-4">
+                                                        <button style="background-color: #3601b5a3;text-align: center;" (click)="openDialog(IL)" class="btn btn-primary"><i class="fa fa-cloud-upload"></i></button>
+                                                              <!-- &nbsp;
+                                                        <button style="background-color: #3601b5a3;text-align: center;" class="btn btn-primary"><i class="fa fa-cloud-download"></i></button>
+                                                           -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div class="form-group">
+                                     <ngx-dropzone class="expandable" style="min-height: 100px;">
+                            <input style="outline: none;border: 0px solid rgb(218, 218, 218);" id="undefined" multiple="" accept="*">
+                            <ngx-dropzone-label  class="ff_fileupload_dropzone ng-star-inserted"> <br>Choose Files</ngx-dropzone-label>
+                        </ngx-dropzone>
+
+                                    <ngx-dropzone class="expandable" style="min-height: 100px;"
+                                        (change)="onSelect($event)">
+                                        <ngx-dropzone-label class="ff_fileupload_dropzone">
+                                            <br>Choose Files
+                                        </ngx-dropzone-label>
+
+                                        <ngx-dropzone-preview *ngFor="let file of files" [file]="file"
+                                            (removed)="onRemove(file)">
+                                            {{ file.name }}
+                                        </ngx-dropzone-preview>
+                                    </ngx-dropzone>
+
+                                </div> -->
+                            </div>
+
+                            <!-- <div class="col-md-12" style="padding-top: 15px;">
+                                <button class="btn btn-primary mb-4" (click)="Submit();">Submit</button> &nbsp;
+                            </div> -->
+            </div>
+            </div>
+            
+   <!--  <div class="col-lg-7 col-xl-8 col-xxl-8" style="padding-top: 30px;padding-right: 10px;">
+        <div class="text-dark mb-2 ms-1 fs-20 fw-semibold">All Folders</div>
+        <div class="row row-sm">
+            <div class="col-xl-2 col-md-6 col-sm-6" *ngFor="let IL of FileTypeList; let i= index">
+                <div class="card pos-relative" style="max-height: 150px;">
+                    <a (click)="MoveToFiles(IL.Text)" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex text-primary">
+                           <svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#525ce5"
+                                    d="M9.3 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4H10L12 6H20C21.1 6 22 6.9 22 8V14.6C20.6 13.6 18.9 13 17 13C13.5 13 10.4 15.1 9.1 18.3L8.8 19L9.1 19.7C9.2 19.8 9.2 19.9 9.3 20M23 19C22.1 21.3 19.7 23 17 23S11.9 21.3 11 19C11.9 16.7 14.3 15 17 15S22.1 16.7 23 19M19.5 19C19.5 17.6 18.4 16.5 17 16.5S14.5 17.6 14.5 19 15.6 21.5 17 21.5 19.5 20.4 19.5 19M17 18C16.4 18 16 18.4 16 19S16.4 20 17 20 18 19.6 18 19 17.6 18 17 18">
+                                </path>
+                            </svg> 
+                            <img src="{{IL.Icon}}" style="height: 60px;width: 60px;" >
+                          <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                    href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a></div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h6 class="text-primary" style="font-size: 11px;">{{IL.Text}}</h6>
+                                <p class="text-muted fs-13 mb-0" style="font-size: 8px;"><b>{{IL.Count}}</b> Files</p>
+                            </div>
+                          <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">23 MB</h6>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+        <!-- FileType Wise Sorting -->
+        <!-- <div class="text-dark mb-2 ms-1 fs-20 fw-semibold">All Files</div>
+        <div class="row row-sm">
+            <div class="col-xl-3 col-md-6 col-sm-6">
+                <div class="card pos-relative">
+                    <a (click)="MoveToFiles('Video')" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex text-primary">
+                            <svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#525ce5"
+                                    d="M9.3 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4H10L12 6H20C21.1 6 22 6.9 22 8V14.6C20.6 13.6 18.9 13 17 13C13.5 13 10.4 15.1 9.1 18.3L8.8 19L9.1 19.7C9.2 19.8 9.2 19.9 9.3 20M23 19C22.1 21.3 19.7 23 17 23S11.9 21.3 11 19C11.9 16.7 14.3 15 17 15S22.1 16.7 23 19M19.5 19C19.5 17.6 18.4 16.5 17 16.5S14.5 17.6 14.5 19 15.6 21.5 17 21.5 19.5 20.4 19.5 19M17 18C16.4 18 16 18.4 16 19S16.4 20 17 20 18 19.6 18 19 17.6 18 17 18">
+                                </path>
+                            </svg>
+                            <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                    href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <h6 class="text-primary">Resume</h6>
+                                <p class="text-muted fs-13 mb-0">35 Files</p>
+                            </div>
+                            <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">23 MB</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-6">
+                <div class="card pos-relative">
+                    <a (click)="MoveToFiles('Video')" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex">
+                            <svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#e82646"
+                                    d="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z">
+
+                                </path>
+                            </svg>
+                            <div class="ms-auto mt-1 file-dropdown dropdown">
+                                <a ngbdropdowntoggle="" href="javascript:void(0);" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0 align-items-end">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <h6 class="text-danger">ID Proof</h6>
+                                <p class="text-muted fs-13 mb-0">25 Files</p>
+                            </div>
+                            <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">15 MB</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-6">
+                <div class="card pos-relative">
+                    <a (click)="MoveToFiles('Image')" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex">
+                            <svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#09ad95"
+                                    d="M10 4L12 6H20C21.1 6 22 6.89 22 8V18C22 19.1 21.1 20 20 20H4C2.89 20 2 19.1 2 18L2 6C2 4.89 2.89 4 4 4H10M19 9H15.5V13.06L15 13C13.9 13 13 13.9 13 15C13 16.11 13.9 17 15 17C16.11 17 17 16.11 17 15V11H19V9Z">
+                                </path>
+                            </svg>
+                            <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                    href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start">
+                                    <a ngbdropdownitem="" href="javascript:void(0);" class="dropdown-item" tabindex="0">
+                                        <i class="fe fe-edit me-2"></i> Edit</a>
+                                    <a ngbdropdownitem="" href="javascript:void(0);" class="dropdown-item"
+                                        tabindex="0"><i class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <h6 class="text-teal">License</h6>
+                                <p class="text-muted fs-13 mb-0">25 Files</p>
+                            </div>
+                            <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">15 MB</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-6">
+                <div class="card pos-relative"><a (click)="MoveToFiles('Image')" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex"><svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#fc5296"
+                                    d="M10,4L12,6H20A2,2 0 0,1 22,8V18A2,2 0 0,1 20,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10M12.46,10.88L14.59,13L12.46,15.12L13.88,16.54L16,14.41L18.12,16.54L19.54,15.12L17.41,13L19.54,10.88L18.12,9.46L16,11.59L13.88,9.46L12.46,10.88Z">
+                                </path>
+                            </svg>
+                            <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                    href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <h6 class="text-pink">XLS</h6>
+                                <p class="text-muted fs-13 mb-0">25 Files</p>
+                            </div>
+                            <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">15 MB</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-6">
+                <div class="card pos-relative"><a (click)="MoveToFiles('Image')" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex"><svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#f7b731"
+                                    d="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z">
+                                </path>
+                            </svg>
+                            <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                    href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <h6 class="text-warning">PDF</h6>
+                                <p class="text-muted fs-13 mb-0">25 Files</p>
+                            </div>
+                            <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">15 MB</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-6">
+                <div class="card pos-relative"><a (click)="MoveToFiles('Image')" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex"><svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#9c52fd"
+                                    d="M20,6H12L10,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8A2,2 0 0,0 20,6M15,16H6V14H15V16M18,12H6V10H18V12Z">
+                                </path>
+                            </svg>
+                            <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                    href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <h6 class="text-secondary">TXT</h6>
+                                <p class="text-muted fs-13 mb-0">25 Files</p>
+                            </div>
+                            <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">15 MB</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-6">
+                <div class="card pos-relative"><a (click)="MoveToFiles('Image')" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex"><svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#fc7303"
+                                    d="M5,17L9.5,11L13,15.5L15.5,12.5L19,17M20,6H12L10,4H4A2,2 0 0,0 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8A2,2 0 0,0 20,6Z">
+                                </path>
+                            </svg>
+                            <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                    href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <h6 class="text-orange">Images</h6>
+                                <p class="text-muted fs-13 mb-0">21 Files</p>
+                            </div>
+                            <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">19 MB</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-6">
+                <div class="card pos-relative"><a (click)="MoveToFiles('Image')" class="open-file"></a>
+                    <div class="card-body pt-4 pb-0">
+                        <div class="d-flex"><svg viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                                <path fill="#1170e4"
+                                    d="M20 6H12L10 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6M18 12H16V14H18V16H16V18H14V16H16V14H14V12H16V10H14V8H16V10H18V12Z">
+                                </path>
+                            </svg>
+                            <div class="ms-auto mt-1 file-dropdown dropdown"><a ngbdropdowntoggle=""
+                                    href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle text-muted"><i
+                                        class="fa fa-bars"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start"><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-edit me-2"></i> Edit</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-share me-2"></i> Share</a><a ngbdropdownitem=""
+                                        href="javascript:void(0);" class="dropdown-item" tabindex="0"><i
+                                            class="fe fe-trash me-2"></i> Delete</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="d-flex align-items-end">
+                            <div>
+                                <h6 class="text-info">ZIP</h6>
+                                <p class="text-muted fs-13 mb-0">22 Files</p>
+                            </div>
+                            <div class="ms-auto mt-4">
+                                <h6 class="text-muted fs-13 mb-0">10 MB</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+
+</div>-->
+</div>
+
+<div class="row" *ngIf="ActiveTab=='File'">
+    <label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+        report</label>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{FileType}} ({{FilesCount}})</h3>
+                </div>
+                <div class="card-body">
+                    <div class="file-image-1 file-image-md" style="padding: 10px;" *ngFor="let sub of FileDetails">
+                        <div class="product-image">
+                            <a>
+                                <img *ngIf="sub.Fileformat=='Image'" alt="Image File" src="{{sub.FilePath}}"  style="max-height: 400px;min-height: 200px;min-width: 200px;">  <br> 
+                                <img *ngIf="sub.Fileformat=='Image' && sub.BackFilePath!=null &&sub.BackFilePath!=''" alt="Image File" src="{{sub.BackFilePath }}"  style="max-height: 400px;min-height: 200px;min-width: 200px;">   
+                                <img *ngIf="sub.Fileformat=='Music'" alt="Music File" src="assets/images/files/music.png" style="max-height: 400px;min-height: 200px;min-width: 200px;">
+                                <img *ngIf="sub.Fileformat=='Video'" alt="Video File" src="assets/images/files/video.png" style="max-height: 400px;min-height: 200px;min-width: 200px;">
+                                <img *ngIf="sub.Fileformat=='Document'" alt="Document File" src="assets/images/files/pdf.png"  style="max-height: 400px;min-height: 200px;min-width: 200px;">
+                                <img *ngIf="sub.Fileformat=='Excel'" alt="Excel File" src="assets/images/files/excel.png" style="max-height: 400px;min-height: 200px;min-width: 200px;">
+                                <img *ngIf="sub.Fileformat=='Word'" alt="Word File" src="assets/images/files/word.png" style="max-height: 400px;min-height: 200px;min-width: 200px;">
+                                <img *ngIf="sub.Fileformat=='Text'" alt="Text File" src="assets/images/files/text.png" style="max-height: 400px;min-height: 200px;min-width: 200px;"> 
+                                <img *ngIf="sub.Fileformat=='PowerPoint'" alt="PowerPoint File" src="assets/images/files/ppt.png" style="max-height: 400px;min-height: 200px;min-width: 200px;">
+                                <img *ngIf="sub.Fileformat=='XML'" alt="XML File" src="assets/images/files/xml.png"  style="max-height: 400px;min-height: 200px;min-width: 200px;">
+                                <img *ngIf="sub.Fileformat=='Json'" alt="Json File" src="assets/images/files/json.png" style="max-height: 400px;min-height: 200px;min-width: 200px;">
+                            </a>
+                            <ul class="icons">
+                                <li><a class="btn bg-danger" (click)="DeleteFile(sub.RecordID)"><i class="fa fa-trash"></i></a>
+                                </li>
+                                <li>
+                                    <a class="btn bg-primary" (click)="openDialogNew(sub)">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a class="btn bg-primary" (click)="Open(sub.FilePath)">
+                                        <i class="fa fa-download" ></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+       
+    </div>
+    
+</div>
+
+<div class="row" *ngIf="ActiveTab=='Upload'">
+    <label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+        report</label>
+        <div class="row">
+                <div class="card">
+            <div class="col-md-12">
+                    <div class="productdesc">
+                            <div class="card overflow-hidden" style="padding-top: 10px;">
+                                            <div class="panel panel-primary mb-5 mx-5 border"
+                                                    style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;justify-self: center;">
+                                                
+                                                            <h5 class="mb-5 mt-3 fw-bold" style="padding:10px"> <br>{{FileType}}
+                                                            </h5>
+                                                            <br>
+                                                          
+                                                                    <form *ngIf="ShowTwo==true">
+                                                                
+                                                                        <div class="col-md-5">
+                                                                            <label for="frontImage">Front Image:</label>
+                                                                            <input type="file" id="frontImage" (change)="onFileSelect($event, 'front')" accept="image/*">
+                                                                            <img *ngIf="frontImagePreview" [src]="frontImagePreview" alt="Front Image Preview" style="width: 150px; height: auto;">
+                                                                        
+                                                                        </div>
+                                                                   <br>
+                                                                    <div class="col-md-5">
+                                                                    <label for="backImage">Back Image:</label>
+                                                                    <input type="file" id="backImage" (change)="onFileSelect($event, 'back')" accept="image/*">
+                                                                    <img *ngIf="backImagePreview" [src]="backImagePreview" alt="Back Image Preview" style="width: 150px; height: auto;">
+                                                                </div>
+                                                                </form>
+
+                                                                <form *ngIf="ShowTwo==false">
+                                                                
+                                                                        <div class="col-md-5">
+                                                                            <label for="frontImage">Upload File:</label>
+                                                                            <input type="file" id="frontImage" (change)="onFileSelect($event, 'front')" accept="*">
+                                                                            <img *ngIf="frontImagePreview" [src]="frontImagePreview" alt="Front Image Preview" style="width: 150px; height: auto;">
+                                                                        
+                                                                        </div>
+                                                                   
+                                                                </form>
+                                                              
+                                                               
+                                                          
+                                                            <br>
+                                                            <div style="padding: 10px;"> 
+                                                                <button *ngIf="ShowTwo==false"  class="btn btn-primary" (click)="ShowFile()">Upload Images</button>&nbsp;
+                                                                <button *ngIf="ShowTwo==true"  class="btn btn-primary" (click)="ShowFile()">Upload File</button> &nbsp;
+                                                                    <button  class="btn btn-primary" (click)="uploadImages()">Submit</button>
+                                                            </div>
+                                                           
+                                                    
+
+
+
+
+                                            </div>
+                                    
+                            </div>
+                    </div>
+
+            </div>
+          
+   
+    </div></div>
+</div>

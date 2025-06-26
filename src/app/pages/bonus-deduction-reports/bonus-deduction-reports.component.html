@@ -1,0 +1,81 @@
+<div class="row" *ngIf="showMonthWise == false">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="justify-content: start;">
+                <div class="col-md-4"><label (click)="backToDashboard()" class="mb-0 card-title"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+                </label></div>
+                <div class="col-md-6">
+                <h3 class="card-title">Bonus And Deduction Reports</h3>
+            </div>
+                <div class="col-md-2" style="display: flex;justify-content: flex-end; flex-wrap: wrap-reverse;  padding: 5px;row-gap: 4px;">
+                    <button type="button" class="btn btn-primary" (click)="downloadReport()">📥 Download Report</button>&nbsp;
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3" >
+                        <label class="form-label">Select Organization</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                            [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                            (onDeSelect)="onDeselectedOrg($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Select Branch &nbsp;</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                            [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                            (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Select Department</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                            [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                            (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                  
+                    <div class="col-md-2">
+                        <label class="form-label">Select Year</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Year'" [data]="YearList"
+                            [(ngModel)]="selectedyear" (onSelect)="OnYearChange($event)"
+                            (onDeSelect)="onyearDeSelect($event)" [settings]="yearSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Select Month</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Month'" [data]="MonthList"
+                            [(ngModel)]="selectedMonth" (onSelect)="OnMonthChange($event)"
+                            (onDeSelect)="onMonthDeSelect($event)" [settings]="monthSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Select Employees</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                            [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                            (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="form-label">.</label>
+                        <button class="btn btn-primary mb-4" (click)="getBDHistory()"> Search</button> &nbsp;
+                    </div>
+                </div>
+                <br>
+                <!-- <div style="display:flex;justify-content: end;">
+                    <div class="col-md-6" style="display:flex;justify-content: end;">
+                        <button class="btn btn-primary mb-4" (click)="GetCalculatedReport()" [disabled]="!(selectedRows.length>0)">Recalculate Details</button> &nbsp;
+                   </div>
+                </div> -->
+                <app-common-table [data]="BDHistory" [ExportName]="'Bonus Deduction Reports'" [displayColumns]="displayColumns" [Loading]="employeeLoading" 
+                [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors" 
+                [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="showMonthWise == true">
+    <label class="button" (click)="backToBonusDeduction()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+        report</label>
+    <app-monthwise [MonthlyData]="MonthlyData"></app-monthwise>
+</div>

@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Employee Salary Configuration</h3>
+                </div>
+                    <div class="card-body">
+                        <div class="row" style="align-items: end;">
+                            <div class="col-md-3" >
+                                <label class="form-label">Select Organization</label>
+                                <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                    [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                    (onDeSelect)="onDeselectedOrg($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Select Branch</label>
+                            <ng-multiselect-dropdown [settings]="branchSettings" [placeholder]="'Select Branch'" [data]="BranchList" [(ngModel)]="SelectedBranches" (onSelect)="onBranchtextSelect($event)"
+                              (onDeSelect)="onBranchDeSelect($event)">
+                            </ng-multiselect-dropdown>
+                          </div>
+                          <div class="col-md-2">
+                            <label class="form-label">Select Department</label>
+                            <ng-multiselect-dropdown [settings]="departmentSettings" [placeholder]="'All Department'" [data]="DepartmentList"
+                              [(ngModel)]="SelectedDepartments" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"
+                             >
+                            </ng-multiselect-dropdown>
+                          </div>
+                        <!-- <div class="col-md-3">
+                            <label class="form-label">List Type</label>
+                            <ng-multiselect-dropdown [placeholder]="'All'" [(ngModel)]="FilterType"
+                                [data]="ApplicationList" [settings]="SingleSelectionSettings"
+                                (onSelect)="onselectedTypeChangenew($event)"
+                                (onDeSelect)="onDeselectedTypeChange($event)">
+                            </ng-multiselect-dropdown>
+                        </div> -->
+                        <!-- Add search bar -->
+                        <div class="col-md-2"><br>
+                                <button id="bEdit" type="button" class="btn btn-primary"
+                                    (click)="GetEmployeeList();"><span class="fa fa-search"> Search</span></button>
+                        </div>
+                        <!-- <div class="col-md-10" style="display: flex;justify-content: end;">
+                            <button class="btn btn-primary" (click)="downloadSample()">Download Sample</button>
+                          
+                                <div class="col-md-3"><input type="file" class="form-control" (change)="onFileChange($event)" accept=".xlsx"/></div>
+                                <button type="submit" (click)="uploadExcel()" class="btn btn-primary">
+                                    Upload Excel
+                                </button>
+                          
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- <div class="col-md-12" class="ng-star-inserted"
+                        style="padding-bottom: 10px;display: flex;justify-content: right;flex-wrap: wrap-reverse;row-gap: 15px;">
+                        <button id="table2-new-row-button" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"
+                            (click)="downloadReport();" >📥 Download Report</button>&nbsp;
+                    </div> -->
+                    <div class="table-responsive">
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" (click)="downloadReport();" [disabled]="EmployeeList ==undefined || EmployeeList == null || !(EmployeeList.length > 0)"  >📥 Download Report</button>&nbsp;
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4"  (click)="SubmitBulkSalaryConfiguration();" [disabled]="!(selectedRows.length>0)"> Bulk Submit</button>
+                        <app-common-table [data]="EmployeeList" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" (actionEmitter)="actionEmitter($event)" [headerColors]="headerColors" [actions]="actionOptions" [topHeaders]="topHeaders"></app-common-table>
+<!-- [actions]="actionOptions" [headerColors]="headerColors" [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+.leavedialog{
+    width: 700px;
+    min-height: 250px;
+    max-height: 500px;
+    padding: 20px;
+    overflow: scroll;
+}
+
+.radiosize{
+    transform: scale(1.5);
+}
+
+.radiospacing{
+    display: flex;
+    gap:10px;
+    align-items: center;
+}
+.outercard{
+    display: flex;
+    justify-content: space-around;
+}
+
+.tablerow{
+ border: 1px solid #c3bfbf;
+}
+
+.tableheader{
+   background-color: #3601b51f;
+   text-align: center;
+   border:1px solid #b7b7b7
+}
+.leave{
+border: 1px solid #c7c5c5;
+}

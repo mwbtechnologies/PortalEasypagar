@@ -1,0 +1,56 @@
+<div style="width: auto;height: 600px;padding:20px;overflow: scroll;">
+    <h4>Shift Summary</h4>
+    <br>
+    <p>
+        <span *ngFor="let IL of ShiftList;">{{IL.ShiftName}} -> {{IL.FromTime}} - {{IL.ToTime}} &nbsp; &nbsp;</span>
+    </p>
+   
+    <table
+    class="table table-striped table-bordered table-hover">
+    <thead style="background-color: #3601b51f;text-align: center;">
+      <tr>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Date</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Shift</th>
+          <!-- <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Shift Start Time</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Shift End Time</th> -->
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Work Duration</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Employee Start Time</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Employee End Time</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Employee Duration</th>
+          <th style="background-color: #3601b51f;text-align: center;border:1px solid #b7b7b7">Lunch Duration</th>
+      </tr>
+  </thead>
+      <tbody >
+          <tr  class="ng-star-inserted" *ngFor="let IL of EmpshiftSummary;let i = index;">   
+            <td >
+                <div  class="ng-star-inserted">{{IL.Date | date:'dd-MMM-yyyy'}}</div>
+            </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.Shift}}</div>
+              </td>
+              <!-- <td >
+                  <div  class="ng-star-inserted">{{IL.ShiftStartTime}}</div>
+              </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.ShiftEndTime}}</div>
+              </td> -->
+              <td >
+                <div  class="ng-star-inserted">{{IL.WorkDuration}}</div>
+            </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.EmployeeStartTime}}</div>
+              </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.EmployeeEndTime}}</div>
+              </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.EmpDuration}}</div>
+              </td>
+              <td >
+                  <div  class="ng-star-inserted">{{IL.LunchDuration}}</div>
+              </td>
+          
+          </tr>
+      </tbody>
+    </table>
+</div>

@@ -1,0 +1,498 @@
+<div class="dialogs">
+  <div [class.noImage]="previewImage == true">
+    <div style="display: flex; justify-content: space-between;">
+      <div mat-dialog-title style="font-size: 16px;font-weight: 500px;padding: 7px 0px ;">
+        <h4 style="margin: 0;">{{ data.fulldata[0].name }} <span *ngIf="data.fulldata[0].required == true" style="color: red;">*</span></h4>
+        <label style="font-size: 13px;">{{ data.fulldata[0].subName }}</label>
+      </div>
+      <div>
+          <div class="upload-status filelabels" 
+          [class.approval-pending]="data.uploadedStatus == 'approval-pending'"
+          [class.not-uploaded]="data.uploadedStatus == 'not-uploaded'"
+          [class.rejected]="data.uploadedStatus == 'rejected'"
+          [class.approved]="data.uploadedStatus == 'approved'">
+            <label class="filelabels" *ngIf="data.uploadedStatus == 'not-uploaded'" style="margin: 0;padding: 2px 0px;">Not Uploaded</label>
+            <label class="filelabels" *ngIf="data.uploadedStatus == 'approved'" style="margin: 0;padding: 2px 0px;">Approved</label>
+            <label class="filelabels" *ngIf="data.uploadedStatus == 'approval-pending'" style="margin: 0;padding: 2px 0px;">Approval Pending</label>
+            <label class="filelabels" *ngIf="data.uploadedStatus == 'rejected'" style="margin: 0;padding: 2px 0px;">Rejected</label>
+          </div>
+                                        
+          <button mat-icon-button aria-label="close dialog" mat-dialog-close (click)="closeDialog()" style="background-color: #ffffff00;color: #515151;font-size: 20px;">
+              <i style="cursor: pointer;" class="fa fa-times"></i>
+          </button>
+      </div>
+    </div>
+    <br>
+
+    <mat-tab-group [(selectedIndex)]="activeTabIndex" (selectedTabChange)="onTabChange($event)">
+        <mat-tab label="Latest">
+          <div class="matBody">
+            <div *ngIf="latestLoader == true" class="loaderContainer">
+              <img src="./assets/images/gifs/animation.gif" height="30px" width="30px"/>
+            </div >
+            <div *ngIf="showEdit" style="width: 98%;margin: 10px 0px;background-color: #e8f0ff;padding: 20px;border-radius: 10px;">
+              <div class="row" style="width: 98%;">
+                <ng-container *ngFor="let param of data.fulldata[0].parameters">
+                  <!-- {{param._id}}{{editDocParam?.key}} -->
+                  <div class="col-md-5" *ngIf="param._id == editLatestDocParam?.key">
+                    <label class="filelabels">{{param.name}} <span *ngIf="param.required == true" style="color: red;">*</span></label>
+                    <div *ngIf="param.type === 'text' || param.type === 'number'">
+                      <input type="{{param.type}}" class="form-control" placeholder="{{ param.name }}" (blur)="checkminmax(param, formValuesEdit);" [required]="param.required" [(ngModel)]="formValuesEdit[param._id]"  (keydown)="ValidationFeilds($event,param.type)" />
+                      
+                      <small *ngIf="param.minSize || param.maxSize">
+                        Min size length - {{ param.minSize }} and Max size length - {{ param.maxSize }}
+                      </small><br>
+                      <div class="text-danger" *ngIf="errors[param._id]">
+                        {{ errors[param._id] }}
+                      </div>
+                    </div>
+                    <div *ngIf="param.type === 'file'">
+                      <input type="file" class="form-control" (change)="onFileChange($event, param,formValuesEdit)" [required]="param.required" accept="{{getAllowedExtensions(param)}}"/>
+                      
+                      <div *ngIf="formValuesEdit[param._id]" style="width: 100px;box-shadow: 0 4px 8px 0 rgb(92 92 92), 0 6px 20px 0 rgb(161 161 161 / 50%);margin: 20px 0px;border-radius: 5px;">
+                        <img [src]="IMGURL + formValuesEdit[param._id]" alt="Preview" style="object-fit: cover;width: 100px;height: 100px;border-radius: 5px;">
+                      </div>
+                      <small *ngIf="param.minSize || param.maxSize">
+                        File size must be between {{ param.minSize }} KB and {{ param.maxSize }} KB. 
+                      </small><br>
+                      <small *ngIf="param.allowedExtension">
+                        Allowed Extensions : {{param.allowedExtension}} 
+                      </small>
+                      <div class="text-danger" *ngIf="errors[param._id]">
+                        {{ errors[param._id] }}
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <br>
+              <button class="btn btn-primary" style="width: fit-content;padding: 2px 10px;" *ngIf="showEdit == true" (click)="update(formValuesEdit,'Latest')">Update</button>
+            </div>
+            <ng-container *ngIf="latestLoader !=true">
+              <div id="history_container" class="history-tl-container" style="height: 40vh;overflow: auto;">
+                <!-- <div class="update" (click)="changeTab(4)" style="width: fit-content;padding: 10px;border-radius: 5px;margin: 10px 0px 5px 0px;">Add New {{ data.fulldata[0].name }}</div> -->
+                <ul class="tl" *ngIf="latestDocument && latestDocument.length>0">
+                  <li class="tl-item" *ngFor="let up of latestDocument,let i = index">
+            <div class="timestamp">
+              {{ up.createdAt | date: 'dd-MMM-yyyy' }}<br>
+              {{ up.createdAt | date: 'hh:mm:ss a' }}
+            </div>
+            <div class="item-title">
+              <div class="maincard">
+                <div class="file-container">
+                  <div class="file-block" *ngFor="let doc of up.documents['file']">
+                    <div class="file-title">{{getDocDetails(doc.key,'name',"line 49 html")}}</div>
+                    <div *ngIf="doc.fileType == 'image'">
+                              <img [src]="IMGURL + doc.data" style="color:#000" class="image" #imageElement (error)="doc.imageError = true" *ngIf="!doc.imageError">
+                    </div>
+                    <div class="file-metaData">
+                              <label *ngIf="doc.imageError == true" style="font-size: 14px;color: #ff4747;">Image not found</label>
+                      <div style="display: flex; gap: 3px;">
+                                <div class="file-button" matTooltip="Preview" (click)="showPreview(doc,up)">
+                          <i class="fa fa-eye" aria-hidden="true"></i>
+                        </div>
+                        <div class="file-button" matTooltip="Copy Image" (click)="copyImageDirectly(IMGURL + doc.data)">
+                          <i class="fa fa-clone" aria-hidden="true"></i>
+                        </div>
+                                <div class="file-button" matTooltip="Edit" (click)="editLatest(up._id,i,doc,latestDocument)">
+                                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </div>
+                                <div class="file-button" matTooltip="Download" (click)="download(up,doc)">
+                          <i class="fa fa-download" aria-hidden="true"></i>
+                        </div>
+                                <div class="file-button" matTooltip="Delete" (click)="delete(doc,i,up._id)">
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container *ngFor="let doc of up.documents['text']">
+                  <div class="text-block">
+                    <div class="file-title">{{getDocDetails(doc.key,'name',"line 75 html")}}</div>
+                    <div class="file-button" style="padding-left: 0px;">{{doc.data}}</div>
+                    <div style="display: flex;align-items: center;justify-content: space-between;gap:3px;">
+                      <div class="file-button" matTooltip="Copy Image" style="padding: 10px;border-radius: 17px;" (click)="copyToClipBoard(doc.data)">
+                        <i class="fa fa-clone" aria-hidden="true"></i>
+                      </div>
+                              <div class="file-button" matTooltip="Edit" style="padding: 10px;border-radius: 17px;" (click)="editLatest(up._id,i,doc, latestDocument)">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </div>
+                              <div class="file-button" matTooltip="Delete" (click)="delete(doc,i,up._id)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                          </div>
+                </ng-container> 
+                <ng-container *ngFor="let doc of up.documents['number']">
+                  <div class="text-block">
+                    <div class="file-title">{{getDocDetails(doc.key,'name',"line 92 html")}}</div>
+                    <div style="display: flex;align-items: center;justify-content: space-between;gap:3px;">
+                      <div class="file-button" style="padding-left: 0px;">{{doc.data}}</div>
+                      <div class="file-button" matTooltip="Copy Image" style="padding: 10px;border-radius: 17px;">
+                        <i class="fa fa-clone" aria-hidden="true"></i>
+                      </div>
+                              <div class="file-button" matTooltip="Edit" style="padding: 10px;border-radius: 17px;" (click)="editLatest(up._id,i,doc,latestDocument)">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </div>
+                              <div class="file-button" matTooltip="Delete" (click)="delete(doc,i,up._id)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                          </div>
+                </ng-container> 
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div *ngIf="!latestDocument || latestDocument.length==0" class="no-data">
+                  <div>No Documnets found</div>
+                  <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: center;margin: 10px 0px;">
+                    <div class="update" (click)="changeTab(4)" style="width: fit-content;padding: 10px;border-radius: 5px;">Add {{ data.fulldata[0].name }}</div>
+                  </div>
+                </div>
+               </div>
+            </ng-container>
+
+          </div>
+
+        </mat-tab>
+        <mat-tab label="History">
+          <div *ngIf="historyLoader == true" class="loaderContainer">
+            <img src="./assets/images/gifs/animation.gif" height="30px" width="30px"/>
+                    </div>
+          <ng-container *ngIf="historyLoader != true">
+            <div id="history_container" class="history-tl-container" style="height: 65vh;overflow: auto;">
+              <button *ngIf="!showFilter" style="width: auto;padding: 2px 10px;margin-top: 10px;" class="btn btn-primary" (click)="applyFilter()"><i class="fa fa-filter"></i>&nbsp; Apply Filters</button>
+              <div *ngIf="showFilter" class="col-md-12" style="border: 1px solid rgb(215, 215, 215);border-radius: 10px;padding: 6px 10px;">
+                <div style="display: flex;justify-content: space-between;">
+                  <label style="font-weight: 500;">Filters</label>
+                  <i class="fa fa-times" (click)="cancelFilter()"></i>
+                </div>
+                <div style="display: flex;gap: 10px;align-items: end">
+                  <div>
+                    <label>From Date</label>
+                    <input type="date" [(ngModel)]="fromDate" class="form-control">
+                  </div>
+                  <div>
+                    <label>To Date</label>
+                    <input type="date" [(ngModel)]="toDate" class="form-control">
+                  </div>
+                  <div>
+                    <label>Parameter</label>
+                    <input type="text" [(ngModel)]="parameterSearch" placeholder="Search By Parameter" class="form-control">
+                  </div>
+                  <div>
+                    <button class="btn btn-primary" style="padding: 0px 6px;" (click)="SearchFilter()">Search</button>
+                  </div>
+                  <div *ngIf="fromDate != undefined || toDate != undefined || parameterSearch != undefined">
+                    <button class="btn btn-primary" style="padding: 0px 6px;" (click)="resetHistory()">Reset Filter</button>
+                  </div>
+                </div>
+              </div>
+              <ul class="tl" *ngIf="uploadHistory && uploadHistory.length>0">
+                <li class="tl-item" *ngFor="let up of uploadHistory,let i = index">
+                  <div class="timestamp">
+                    {{ up.createdAt | date: 'dd-MMM-yyyy' }}<br>
+                    {{ up.createdAt | date: 'hh:mm:ss a' }}
+                  </div>
+                  <div class="item-title">
+                    <div class="maincard">
+                      <div class="file-container">
+                        <div class="file-block" *ngFor="let doc of up.documents['file']">
+                          <div class="file-title">{{getDocDetails(doc.key,'name',"line 143 html")}}</div>
+                          <div *ngIf="doc.fileType == 'image'">
+                            <img [src]="IMGURL + doc.data" style="color:#000" class="image" #imageElement (error)="doc.imageError = true" *ngIf="!doc.imageError">
+                          </div>
+                          <div class="file-metaData">
+                            <label *ngIf="doc.imageError == true" style="font-size: 14px;color: #ff4747;">Image not found</label>
+                            <div style="display: flex; gap: 3px;">
+                              <div class="file-button" matTooltip="Preview" (click)="showPreview(doc,up)">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                              </div>
+                              <div class="file-button" matTooltip="Copy Image" (click)="copyImageDirectly(IMGURL + doc.data)">
+                                <i class="fa fa-clone" aria-hidden="true"></i>
+                              </div>
+                              <div class="file-button" matTooltip="Add" (click)="editHistoryDoc(up._id,i,doc,uploadHistory)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                              </div>
+                              <div class="file-button" matTooltip="Download" (click)="download(up,doc)">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                              </div>
+                              <div class="file-button" matTooltip="Delete" (click)="delete(doc,i,up._id)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                            
+        
+                          </div>
+                        </div>
+                      </div>
+                      <ng-container *ngFor="let doc of up.documents['text']">
+                        <div class="text-block">
+                          <div class="file-title">{{getDocDetails(doc.key,'name',"line 169 html")}}</div>
+                          <div class="file-button" style="padding-left: 0px;">{{doc.data}}</div>
+                          <div style="display: flex;align-items: center;justify-content: space-between;gap:3px;">
+                            <div class="file-button" matTooltip="Copy Image" style="padding: 10px;border-radius: 17px;" (click)="copyToClipBoard(doc.data)">
+                              <i class="fa fa-clone" aria-hidden="true"></i>
+                            </div>
+                            <!-- <div class="file-button" matTooltip="Edit" style="padding: 10px;border-radius: 17px;" (click)="editHistoryDoc(up._id,i,doc,uploadHistory)">
+                              <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </div> -->
+                            <div class="file-button" matTooltip="Delete" (click)="delete(doc,i,up._id)">
+                              <i class="fa fa-trash" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                        </div>
+                  </ng-container>
+                      <ng-container *ngFor="let doc of up.documents['number']">
+                        <div class="text-block">
+                          <div class="file-title">{{getDocDetails(doc.key,'name',"line 186 html")}}</div>
+                          <div style="display: flex;align-items: center;justify-content: space-between;gap:3px;">
+                            <div class="file-button" style="padding-left: 0px;">{{doc.data}}</div>
+                            <div class="file-button" matTooltip="Copy Image" style="padding: 10px;border-radius: 17px;">
+                              <i class="fa fa-clone" aria-hidden="true"></i>
+                            </div>
+                            <!-- <div class="file-button" matTooltip="Edit" style="padding: 10px;border-radius: 17px;" (click)="editHistoryDoc(up._id,i,doc,uploadHistory)">
+                              <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </div> -->
+                            <div class="file-button" matTooltip="Delete" (click)="delete(doc,i,up._id)">
+                              <i class="fa fa-trash" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                        </div>
+                </ng-container>
+            </div>
+          </div>
+        </li>
+               </ul>
+              <div *ngIf="!uploadHistory || uploadHistory.length==0" class="no-data">
+                <div>No History found</div>
+                <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: center;margin: 10px 0px;">
+                  <div class="update" (click)="changeTab(4)" style="width: fit-content;padding: 10px;border-radius: 5px;">Add {{ data.fulldata[0].name }}</div>
+     </div>
+     </div>
+            </div>
+          </ng-container> 
+        </mat-tab>
+        <!-- <mat-tab label="Pending Approvals"><i class="fa fa-exclamation"></i> -->
+          <mat-tab>
+          <ng-template mat-tab-label>
+            Pending Approvals&nbsp;
+            <i *ngIf="approvalPending && approvalPending.length>0" class="fa fa-exclamation" style="padding: 5px 9px;margin: 0;border-radius: 50px;background: #e7aa03;color: white;font-size: 14px;"></i>
+          </ng-template>
+          <div *ngIf="pendingLoader == true" class="loaderContainer">
+            <img src="./assets/images/gifs/animation.gif" height="30px" width="30px"/>
+          </div >
+          <ng-container *ngIf="pendingLoader != true">
+            
+            <div *ngIf="approvalPending && approvalPending.length>0" style="padding: 20px 0px;">
+              <ng-container *ngFor="let up of approvalPending; let i=index">
+                <div class="maincard" style="padding: 10px 0px 0px 0px;">
+                  <div class="file-container">
+                    <div class="file-block" *ngFor="let doc of up.documents['file']">
+                      <div *ngIf="doc.fileType == 'image'">
+                        <img [src]="IMGURL + doc.data" style="color:#000" class="image" #imageElement (error)="doc.imageError = true" *ngIf="!doc.imageError">
+                      </div>
+                      <div class="file-metaData">
+                        <div class="file-title">{{getDocDetails(doc.key,'name',"line 230 html")}}</div>
+                        <label *ngIf="doc.imageError == true" style="font-size: 14px;color: #ff4747;">Image not found</label>
+                        <div style="display: flex; gap: 3px;">
+                          <div class="file-button" matTooltip="Preview" (click)="showPreview(doc,up)">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                          </div>
+                          <div class="file-button" matTooltip="Copy Image" (click)="copyImageDirectly(IMGURL + doc.data)">
+                            <i class="fa fa-clone" aria-hidden="true"></i>
+                          </div>
+                          <div class="file-button" matTooltip="Download" (click)="download(up,doc)">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                          </div>
+                          <!-- <div class="file-button" matTooltip="Edit" style="padding: 6px 10px;border-radius: 17px;" (click)="editPending(up._id,i,doc,approvalPending)">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                          </div> -->
+                        </div>
+                        
+          
+                      </div>
+                    </div>
+                  </div>
+                  <ng-container *ngFor="let doc of up.documents['text']">
+                    <div class="text-block">
+                      <div class="file-title">{{getDocDetails(doc.key,'name',"line 253 html")}}</div>
+                      <div style="display: flex;align-items: center;justify-content: space-between;gap:3px;">
+                        <div class="file-button" style="padding-left: 0px;">{{doc.data}}</div>
+                        <div class="file-button" matTooltip="Copy Image" style="padding: 10px;border-radius: 17px;" (click)="copyToClipBoard(doc.data)">
+                          <i class="fa fa-clone" aria-hidden="true"></i>
+                        </div>
+                        <!-- <div class="file-button" matTooltip="Edit" style="padding: 6px 10px;border-radius: 17px;" (click)="editPending(up._id,i,doc,approvalPending)">
+                          <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </div> -->
+                      </div>
+                    </div>
+                  </ng-container> 
+                  <ng-container *ngFor="let doc of up.documents['number']">
+                    <div class="text-block">
+                      <div class="file-title">{{getDocDetails(doc.key,'name',"line 267 html")}}</div>
+                      <div style="display: flex;align-items: center;justify-content: space-between;gap:3px;">
+                        <div class="file-button" style="padding-left: 0px;">{{doc.data}}</div>
+                        <div class="file-button" matTooltip="Copy Image" style="padding: 10px;border-radius: 17px;">
+                          <i class="fa fa-clone" aria-hidden="true"></i>
+                        </div>
+                        <!-- <div class="file-button" matTooltip="Edit" style="padding: 10px;border-radius: 17px;" (click)="editPending(up._id,i,doc,approvalPending)">
+                          <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </div> -->
+                      </div>
+                    </div>
+                  </ng-container> 
+                </div>
+                <div style="display: flex; gap:20px">
+                  <button class="approval approve" (click)="setPendingStatus('approved')">Approve</button>
+                  <button class="approval reject" (click)="setPendingStatus('rejected')">Reject</button>
+                </div>
+              </ng-container>
+             </div>
+             
+             <div *ngIf="!approvalPending || approvalPending.length==0" class="no-data">
+              <div>No Approvals Pending</div>
+              <div style="width: 100%;display: flex;flex-direction: row;align-items: center;justify-content: center;margin: 10px 0px;">
+                <div class="update" (click)="changeTab(4)" style="width: fit-content;padding: 10px;border-radius: 5px;">Add {{ data.fulldata[0].name }}</div>
+              </div>
+            </div>
+          </ng-container >
+           
+
+           <div *ngIf="showPendingEdit">
+      <div class="row" >
+      <ng-container *ngFor="let param of data.fulldata[0].parameters">
+        <div class="col-md-5" *ngIf="param._id == editDocParam?.key || uploadHistory.length == 0">
+                  <label class="filelabels">{{param.name}} <span *ngIf="param.required == true" style="color: red;">*</span></label>
+                  <div *ngIf="param.type === 'text' || param.type === 'number'">
+                      <input
+                        type="{{param.type}}"
+                        class="form-control"
+                        placeholder="{{ param.name }}"
+                              (blur)="checkminmax(param, formValuesPending);"
+                        [required]="param.required"
+                              [(ngModel)]="formValuesPending[param._id]"  (keydown)="ValidationFeilds($event,param.type)"
+                      />
+                        <small *ngIf="param.minSize || param.maxSize">
+                          Min size length - {{ param.minSize }} and Max size length - {{ param.maxSize }}
+                        </small><br>
+                      <div class="text-danger" *ngIf="errors[param._id]">
+                        {{ errors[param._id] }}
+                      </div>
+                    </div>
+                    <div *ngIf="param.type === 'file'">
+                      <input
+                        type="file"
+                        class="form-control"
+                              (change)="onFileChange($event, param,formValuesPending)"
+                        [required]="param.required"
+                        accept="{{getAllowedExtensions(param)}}"  
+                      />
+                            <div *ngIf="formValuesPending[param._id]" style="width: 100px;box-shadow: 0 4px 8px 0 rgb(92 92 92), 0 6px 20px 0 rgb(161 161 161 / 50%);margin: 20px 0px;border-radius: 5px;">
+                                <img [src]="IMGURL + formValuesPending[param._id]" alt="Preview" style="object-fit: cover;width: 100px;height: 100px;border-radius: 5px;">
+                        </div>
+                      <small *ngIf="param.minSize || param.maxSize">
+                        File size must be between {{ param.minSize }} KB and {{ param.maxSize }} KB. 
+                      </small><br>
+                      <small *ngIf="param.allowedExtension">
+                        Allowed Extensions : {{param.allowedExtension}} 
+                      </small>
+                      <div class="text-danger" *ngIf="errors[param._id]">
+                        {{ errors[param._id] }}
+                      </div>
+                    </div>
+        </div>
+      </ng-container>
+      </div>
+      <br>
+            <!-- <button class="btn btn-primary" style="width:fit-content;padding: 2px 10px" *ngIf="showTimeline == false && showEdit == true" (click)="submit()">Submit</button> -->
+      <button class="btn btn-primary" style="
+      width: fit-content;
+      padding: 2px 10px;
+        " *ngIf="showTimeline == true && showPendingEdit == true" (click)="update(formValuesPending)">Update</button>
+     </div>
+
+        </mat-tab>
+        <mat-tab label="Add New Document">
+
+          <div class="row" style="width: 95%;">
+            <ng-container *ngFor="let param of data.fulldata[0].parameters">
+              <div class="col-md-4">
+                <label class="filelabels">{{param.name}} <span *ngIf="param.required == true">*</span></label>
+                <div *ngIf="param.type === 'text' || param.type === 'number'">
+                  <input type="{{param.type}}" class="form-control" placeholder="{{ param.name }}" (blur)="checkminmax(param,formValuesAdd);" [required]="param.required" [(ngModel)]="formValuesAdd[param._id]" (keydown)="ValidationFeilds($event,param.type)"/>
+                  <small *ngIf="param.minSize || param.maxSize">
+                    Min size length - {{ param.minSize }} and Max size length - {{ param.maxSize }}
+                  </small><br>
+                <div class="text-danger" *ngIf="errors[param._id]">
+                  {{ errors[param._id] }}
+                </div>
+                 </div>
+                      
+                <div *ngIf="param.type === 'file'">
+                  <input type="file" class="form-control" (change)="onFileChange($event, param,formValuesAdd)" [required]="param.required" accept="{{getAllowedExtensions(param)}}"/>
+                  <div *ngIf="formValuesAdd[param._id]" style="width: 100px;box-shadow: 0 4px 8px 0 rgb(92 92 92), 0 6px 20px 0 rgb(161 161 161 / 50%);margin: 20px 0px;border-radius: 5px;">
+                    <img [src]="IMGURL + formValuesAdd[param._id]" alt="Preview" style="object-fit: cover;width: 100px;height: 100px;border-radius: 5px;">
+                  </div>
+                  <small *ngIf="param.minSize || param.maxSize">
+                    File size must be between {{ param.minSize }} KB and {{ param.maxSize }} KB. 
+                  </small><br>
+                  <small *ngIf="param.allowedExtension">
+                    Allowed Extensions : {{param.allowedExtension}} 
+                  </small>
+                  <div class="text-danger" *ngIf="errors[param._id]">
+                    {{ errors[param._id] }}
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <br>
+          <button class="btn btn-primary" style="width:fit-content;padding: 2px 10px;margin: 0px 0px 0px 15px;" *ngIf="latestDocument && latestDocument.length>0"  (click)="update(formValuesAdd,'Add')">Add</button>
+          <button class="btn btn-primary" style="width:fit-content;padding: 2px 10px;margin: 0px 0px 0px 15px;" *ngIf="!latestDocument || latestDocument.length==0" (click)="submit()">Add</button>
+    
+
+        </mat-tab>
+    </mat-tab-group>
+
+
+     
+
+     <br>
+     <hr>
+
+  </div>
+  <div  [class.noImage]="previewImage == false">
+    <div style="display: flex; justify-content: space-between;">
+      <div mat-dialog-title style="font-size: 16px;font-weight: 500px;padding: 7px 0px ;">
+          <div>Preview</div>
+      </div>
+      <div style="display: flex;justify-content: space-between;gap: 50px;">
+          <!-- <div class="file-button" matTooltip="Download" (click)="download(previewDocData,previewDoc)">
+            <i class="fa fa-download" aria-hidden="true"></i>
+          </div> -->
+          <button mat-icon-button aria-label="close dialog" (click)="closePreview()" style="background-color: #ffffff00;color: #515151;font-size: 20px;">
+              <i style="cursor: pointer;" class="fa fa-times"></i>
+          </button>
+      </div>
+    </div>
+    <div style="padding: 50px;">
+      <div *ngIf="previewDoc && previewDoc.fileType=='image'" style="display:flex;justify-content:center;width:100%">
+        <img [src]="IMGURL + previewDoc.data" style="color:#000;box-shadow:  0px 27px -5px #000;" class="" #imageElement>
+      </div>
+    </div>
+    <div style="display: flex;gap: 10px;">
+      <button class="download" style="width: fit-content;padding: 1px 10px;" (click)="download(previewDocData,previewDoc)">
+        <i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+        Download
+      </button>
+      <button  style="width: fit-content;padding: 3px 11px;" (click)="copyImageDirectly(IMGURL + previewDocData.data)">
+        <i class="fa fa-clone" aria-hidden="true"></i>&nbsp;
+        Copy
+      </button>
+  </div>
+  </div>
+
+</div>

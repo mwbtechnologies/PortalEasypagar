@@ -1,0 +1,13 @@
+<div class="leavedialog">
+    <h4 style="font-size: 18px;"><label style="font-weight: 500;">{{data.row.BranchName}}'s</label> Branches Mapping</h4>
+    <div class="col-md-12 row" style="padding: 0;padding: 0;display: flex;align-items: end;gap: 20px;">
+        <div class="col-md-6"   >
+            <label class="form-label">Select Branches</label>
+            <ng-multiselect-dropdown [placeholder]="'Select Branches'" [(ngModel)]="selectedBranches" [data]="BranchList"
+                [settings]="branchSettings" (onSelect)="onselectedBranch($event)"
+                (onDeSelect)="onDeselectedBranch($event)">
+            </ng-multiselect-dropdown>
+        </div>
+        <button class="btn btn-primary" style="width: fit-content;height: fit-content;" (click)="mapBranches()">Map</button>
+    </div>
+</div>

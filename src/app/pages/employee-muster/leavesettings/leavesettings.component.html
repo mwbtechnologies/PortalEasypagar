@@ -1,0 +1,37 @@
+<div class="leavedialog">
+    <h4 style="font-size: 18px;"><label style="font-weight: 500;">{{data.empname}}'s</label> Leave Configuration</h4>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="tableheader">Leave Name</th>
+                <th class="tableheader">Type</th>
+                <th class="tableheader" style="width: 20%;"> Leaves</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="ng-star-inserted" *ngFor="let lt of LeaveTypes;let i = index">
+                <td class="tablerow">
+                    <div class="ng-star-inserted">{{lt.LeaveType}} </div>
+                </td>
+                <td class="tablerow">
+                    <div class="ng-star-inserted outercard">
+                        <div class="radiospacing">
+                            <input type="radio" class="radiosize" [(ngModel)]="lt.IsMonthwise" [value]="true" [id]="'monthly' + i" [name]="'leaveType' + i">
+                            <label style="margin: 0;" [for]="'monthly' + i">Monthly</label><br>
+                        </div>
+                        <div class="radiospacing">
+                            <input type="radio" class="radiosize" [(ngModel)]="lt.IsMonthwise" [value]="false" [id]="'yearly' + i" [name]="'leaveType' + i">
+                            <label style="margin: 0;" [for]="'yearly' + i">Yearly</label><br>
+                        </div>
+                    </div>
+                </td>
+                <td class="tablerow">
+                    <div class="ng-star-inserted"> <input  [(ngModel)]="lt.Value" type="number" class="form-control leave"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="text-align: center;margin-top:10px">
+        <button class="btn btn-primary" (click)="submit()">Submit</button>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+.spacing{
+  padding: 0;
+}
+.dialogs{
+  height: auto;
+  width: 800px;
+  overflow-y: scroll;
+  padding: 20px;
+  font-family: poppins;
+}
+
+.ms-5, .mx-5 {
+margin-left: 0rem !important;
+}
+
+.mb-5, .my-5 {
+margin-bottom: 0rem !important;
+}
+.me-5, .mx-5 {
+margin-right: 0rem !important;
+}
+ngx-material-timepicker {
+z-index: 10000 !important;
+}

@@ -1,0 +1,83 @@
+<div class="roledialog">
+    <div style="display: flex;justify-content: space-between;">
+        <h4>🧑‍💼 Create Trainer</h4>
+        <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+    </div>
+    <div class="col-md-12">
+        <!-- <app-role-and-permission></app-role-and-permission> -->
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label">Select Trainer <span style="color: red;">*</span></label>
+                    <ng-multiselect-dropdown [placeholder]="'Select Trainer'" [data]="EmployeeList"
+                        [(ngModel)]="selectedEmployee" (onSelect)="onEmpSelect($event)"
+                        (onDeSelect)="onEmpDeSelect($event)" [settings]="employeeSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Select Role <span style="color: red;">*</span></label>
+                    <ng-multiselect-dropdown [placeholder]="'Select Role'" [disabled]="disableFeild" [settings]="RoleSettings" [data]="OrgRoleList"
+                        [(ngModel)]="SelectedRole" (onSelect)="OnRoleSelect($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Select Organization &nbsp;
+                    </label>
+                    <ng-multiselect-dropdown [settings]="orgSettings"  [placeholder]="'Select Organization'"
+                        [data]="OrgList" [(ngModel)]="selectedOrganization" (onSelect)="onselectedOrg($event)"
+                        (onDeSelect)="onDeselectedOrg($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Select Branch <span style="color: red;">*</span></label>
+                    <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                        [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                        (onDeSelect)="onBranchDeSelect($event)" (onSelectAll)="onallbranchselect($event)"
+                        (onDeSelectAll)="onallbranchdeselect($event)" [settings]="branchSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group"><label class="form-label">Select Department</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Department'" [data]="DepartmentList"
+                            [(ngModel)]="selectedDepartment" (onSelect)="onDepartmentSelect($event)"
+                            (onDeSelect)="onDeselectDepartment($event)" (onSelectAll)="onalldeptselect($event)"
+                            (onDeSelectAll)="onalldeptdeselect($event)" [settings]="departmentSettings">
+                        </ng-multiselect-dropdown>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group"><label class="form-label">Email <span style="color: red;">*</span></label>
+                            <input class="timings" placeholder="Enter Email" type="text" size="30"
+                                [(ngModel)]="EmailID" (blur)="validateEmail()">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                         <div class="form-group"><label class="form-label">Password <span style="color: red;">*</span></label>
+                            <input class="timings" placeholder="Enter Password" type="text" size="30"
+                                [(ngModel)]="Password">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                          <div class="form-group"><label class="form-label">Confirm Password <span style="color: red;">*</span></label>
+                            <input class="timings" placeholder="Confirm Password" type="text" size="30"
+                                [(ngModel)]="ConfirmPassword">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <button id="table2-new-row-button" class="btn btn-primary mb-4"
+                            style="border-radius:10px;background-color: #3601b5a3;margin-top: 10px;"
+                            (click)="MapModule();">Assign Credentials</button>&nbsp;
+                        <button id="table2-new-row-button" class="btn btn-primary mb-4"
+                            style="border-radius:10px;background-color: #3601b5a3;margin-top: 10px;"
+                            (click)="close();">Cancel</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

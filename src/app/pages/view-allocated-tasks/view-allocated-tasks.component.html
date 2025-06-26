@@ -1,0 +1,61 @@
+<div >
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0 card-title">Allocated TaskList</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group"><label class="form-label">FromDate</label><input
+                                    name="example-password-input" placeholder="Select Date" type="date"
+                                    [ngClass]="{'is-invalid': !FromDate.valid && (FromDate.dirty || FromDate.touched || isSubmit)}"
+                                    #FromDate="ngModel" required FromDate [(ngModel)]="formInput.FromDate"
+                                    class="form-control"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group"><label class="form-label">To Date</label><input
+                                    name="example-password-input" placeholder="Select Date" type="date"
+                                    [ngClass]="{'is-invalid': !ToDate.valid && (ToDate.dirty || ToDate.touched || isSubmit)}"
+                                    #ToDate="ngModel" required ToDate [(ngModel)]="formInput.ToDate"
+                                    class="form-control"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Action</label>
+                            <button id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="GetReport();">
+                                Search</button> &nbsp;
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div  class="row">
+                        <div  class="col-md-12">
+                            <ul  class="cbp_tmtimeline">
+                                <li *ngFor="let IL of TaskList;" >
+                                    <time  datetime="2017-11-04T18:30"
+                                        class="cbp_tmtime"><span >{{IL.StartDate}}</span>
+                                        </time>
+                                    <div  class="cbp_tmicon bg-danger" *ngIf="IL.Title=='No Activity'"><i class="fa fa-briefcase"></i></div>
+                                    <div  class="cbp_tmicon bg-success" *ngIf="IL.Title!='No Activity'"><i class="fa fa-briefcase"></i></div>
+                                    <div  class="cbp_tmlabel empty" *ngIf="IL.Title=='No Activity'"><span >No Activity</span></div>
+                                     <div  class="cbp_tmlabel" *ngIf="IL.Title!='No Activity'"><h2 >
+                                        <a  href="javascript:void(0);">{{IL.Title}}</a></h2>
+                                                <p  class="text-sm">{{IL.Description}}</p>
+                                            </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  *ngIf="!ViewPermission">
+                       
+    <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+</div>

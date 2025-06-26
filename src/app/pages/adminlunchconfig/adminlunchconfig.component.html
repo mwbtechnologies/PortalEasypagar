@@ -1,0 +1,92 @@
+<div  *ngIf="showReportWise == false">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-md-12" style="display: flex;justify-content: space-between;flex-wrap: wrap;">
+                        <div><h3 class="mb-0 card-title">Breaks Configs</h3></div>
+                        <div style="display: flex;">
+                            <button class="btn btn-primary" (click)="addLunchConfig()">Add Breaks</button>&nbsp;
+                            <!-- <button class="btn btn-primary" (click)="addLunchReports()">Report</button> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- <div style="display: flex;flex-wrap: wrap;">
+                        <div class="col-md-3">
+                            <label class="form-label">Select Branch &nbsp;<i class="fa fa-info-circle"
+                                    matTooltip="If you dont select any branches,by default it takes all branches"></i></label>
+                            <ng-multiselect-dropdown [placeholder]="'All Branches'" [data]="BranchList"
+                                [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Select Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Department'" [data]="DepartmentList"
+                                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                                (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Select Employees</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Select Date</label>
+                           <input type="date" class="form-control" [(ngModel)]="selectdate">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Action</label>
+                            <button class="btn btn-primary mb-4" (click)="GetReport();"> Search</button> &nbsp;
+                        </div>
+
+                    </div> -->
+<!-- common table -->
+<app-common-table [data]="AllLunchList" [ExportName]="'Break List'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors" [smallHeaders]="smallHeaders" [dataColors]="tableDataColors" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+<!-- end here -->
+<!-- <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th style="background-color: #3601b51f">Employee </th>
+                <th style="background-color: #3601b51f">LunchIn  </th>
+                <th style="background-color: #3601b51f">LunchOut </th>
+                <th style="background-color: #3601b51f">Duration </th>
+                <th style="background-color: #3601b51f">Status   </th>
+            </tr>
+        </thead>
+         <tbody>
+            <tr class="ng-star-inserted" *ngFor="let IL of AllLunchList; let i = index;">
+                <td>
+                    <div class="ng-star-inserted"> {{IL.Username}} </div>
+                </td>
+                <td>
+                    <div class="ng-star-inserted"> {{IL.Lunchin | date:'dd-MMM-yyyy HH:mm'}} </div>
+                </td>
+                <td>
+                    <div class="ng-star-inserted"> {{IL.Lunchout | date:'dd-MMM-yyyy HH:mm'}} </div>
+                </td>
+                <td>
+                    <div class="ng-star-inserted"> {{IL.Duration}} </div>
+                </td>
+                <td>
+                    <div class="ng-star-inserted"> {{IL.Status}} </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+ </div> -->
+      </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div *ngIf="showReportWise == true">
+        <label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+          List</label>
+        <app-addlunchtimings [EditedData]="editdata"></app-addlunchtimings>
+      </div>

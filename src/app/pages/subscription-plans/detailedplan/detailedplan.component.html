@@ -1,0 +1,95 @@
+<!-- <div
+  class="subscription-container"
+  [ngClass]="{ 'addon-layout': CurrentPlanDetails[0].Type === 'Addon' }"
+>
+  <div
+    class="plan-card"
+    [ngClass]="{ 'addon-card': CurrentPlanDetails[0].Type === 'Addon' }"
+    *ngFor="let cpd of CurrentPlanDetails"
+  >
+    <div class="plan-header">
+      <h2 class="plan-name">{{ cpd.PlanName }}</h2>
+      <p class="plan-status">
+        {{ cpd.Type }}
+      </p>
+    </div>
+    <div class="plan-body">
+      <div class="plan-details">
+        <p class="plan-price">₹{{ cpd.Amount }}</p>
+        <p class="plan-duration" *ngIf="cpd.Type === 'Plan'">
+          {{ cpd.Duration }} days
+        </p>
+        <div class="plan-dates">
+          <span class="plan-single-date">
+            Start: {{ cpd.CreatedDate | date: 'dd MMM yyyy' }}
+          </span>
+          <span class="plan-single-date">
+            Expires On: {{ cpd.ExpiryDate | date: 'dd MMM yyyy' }}
+          </span>
+        </div>
+      </div>
+      <div class="feature-section">
+        <h3 *ngIf="cpd.Type === 'Plan'">Features</h3>
+        <div class="feature-grid">
+          <div class="feature-card" *ngFor="let fe of cpd.featuresList">
+            <div style="display: flex;align-items: center;gap:10px">
+            <img
+              [src]="ImgURl + fe.image"
+              alt="{{ fe.FeatureName }}"
+              class="feature-icon"
+            />
+            <h4 class="feature-name">{{ fe?.FeatureName }}</h4>
+        </div>
+              <p class="feature-usage">
+                {{ fe.Usage }} Used Out Of {{ fe.Allocation }}
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="card">
+  <div class="card-header" style="justify-content: center;">
+    <h3 class="mb-0 card-title">Current Plan And Addons</h3>
+</div>
+<div class="subscription-container" *ngFor="let cpd of CurrentPlanDetails">
+  <div style="display: flex;flex-wrap: wrap;gap: 10px;">
+    <div class="plan-card">
+      <div class="plan-header">
+        <h2 class="plan-name">{{ cpd.PlanName }}</h2>
+        <p class="plan-status">
+          {{ cpd.Type }}
+          </p>
+      </div>
+      <div class="plan-body">
+        <p class="plan-price">₹{{ cpd.Amount }}</p>
+        <p class="plan-duration">{{ cpd.Duration }} days</p>
+        <p class="plan-dates">
+          <span class="plan-single-date">Start: {{ cpd.CreatedDate | date: 'dd MMM yyyy' }}</span>
+          <span class="plan-single-date">Expires On: {{ cpd.ExpiryDate | date: 'dd MMM yyyy' }}</span>
+        </p>
+      </div>
+    </div>
+    <!-- Features Section -->
+     <div class="FeatureClass">
+       <h3 style="margin: 0;color: blue;font-size: 16px;">Features</h3>
+       <div class="features-section">
+         <ng-container *ngFor="let feature of cpd.featuresList">
+           <div class="combinedContainer"> 
+             <span class="feature-name">{{ feature?.FeatureName }}</span>
+           <div class="combinedvalues">
+             <label style="margin:0">{{ feature?.Usage }}</label>&nbsp;
+             <label style="margin:0;font-size: 12px;align-self: center;">Used out of</label>&nbsp;
+             <label style="margin:0">{{ feature?.Allocation }}</label>
+           </div>
+           <div class="progress-bar">
+             <div class="progress" [style.width]="(feature?.Usage / feature?.Allocation) * 100 + '%'"
+             ></div></div>
+           </div>
+         </ng-container> 
+       </div>
+     </div>
+  </div>
+</div>
+</div>

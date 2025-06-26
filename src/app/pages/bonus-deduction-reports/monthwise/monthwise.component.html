@@ -1,0 +1,27 @@
+<div >
+    <div  class="row">
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header" style="display:flex;justify-content: left;">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-5">
+                    <h3  class="mb-0 card-title">Monthly Bonus Deduction For <b>{{MonthlyData.name}}</b></h3>
+                </div>
+                    <div class="col-md-3" style="display:flex;justify-content: end;">
+                        <button  id="table2-new-row-button" [disabled]="monthlyData ==undefined || monthlyData == null || !(monthlyData.length > 0)" class="btn btn-primary mb-4" (click)="downloadReport()">📥 Download Report</button>
+                       </div>
+                </div>
+                 <div  class="card-body">               
+
+                    <div  class="table-responsive">
+                        <app-common-table [data]="monthlyData" [ExportName]="'Monthly BonusDeduction Report'" [displayColumns]="displayColumns" 
+                        [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+                        [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+                    </div>
+                </div>
+                   </div>
+                   </div>
+                   </div>
+                   </div>
+
+                            

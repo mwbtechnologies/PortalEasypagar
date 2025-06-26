@@ -1,0 +1,680 @@
+<div class="row">
+    <div class="col-xl-12 col-md-12">
+        <div class="card">
+            <div class="card-body pb-4">
+                <div class="profile-cover">
+                    <div class="profile-cover__action-2 profile-2">
+                        <span class="avatar avatar-xxl brround cover-image" *ngIf="employee_data_object.ProfileImageURl"
+                              [ngStyle]="{ 'background-image': 'url(' + employee_data_object.ProfileImageURl + ')' }"></span>
+                       
+                    </div>
+                    <div class="profile-info">
+                        <h3 class="mb-1">{{ employee_data_object.FirstName }} {{ employee_data_object.LastName }}</h3>
+                        <span *ngIf="employee_data_object.Email"> <i class="fa fa-envelope"></i> &nbsp;{{employee_data_object.Email}} &nbsp;  </span>  <span *ngIf="employee_data_object.MobileNumber"><i class="fa fa-phone"></i> &nbsp; {{employee_data_object.MobileNumber}}</span> 
+                        <h6><i class="fa fa-user-o" aria-hidden="true"></i> &nbsp;{{ employee_data_object.Role }}</h6>
+                    </div>
+                    <div class="btn-profile mt-md-5">
+                        <div class="d-flex mb-0 ms-sm-auto mt-md-2">
+                            <div class="me-sm-4 me-2">
+                                <p class="fw-bold fs-16  text-shadow mb-0 text-white">{{employee_data_object.Department}}</p>
+                                <p class="mb-0 fs-12 text-white">{{employee_data_object.Branch}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                 
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="profile-tabs">
+                                <nav class="nav nav-pills flex-column flex-sm-row pt-4" role="tablist">
+                                    <a data-bs-toggle="tab" data-bs-target="#basic-tab-pane" class="nav-link nav-item active">Basic Details</a>
+                                    <a data-bs-toggle="tab" data-bs-target="#account-tab-pane" class="nav-link nav-item">Bank Details</a>
+                                    <a data-bs-toggle="tab" data-bs-target="#salary-tab-pane" class="nav-link nav-item">Salary Details</a>
+
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 d-flex justify-content-end">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div _ngcontent-jwr-c176="" class="row">
+    <div _ngcontent-jwr-c176="" class="col-xl-12 col-xxl-12 col-md-12">
+        <div _ngcontent-jwr-c176="" class="tab-content">
+            <div class="tab-pane fade show active bg-white p-4 rounded-3" id="basic-tab-pane" role="tabpanel" aria-labelledby="basic-tab">
+                <ul class="list-group">
+                    <li class="list-group-item active">
+                        Organization Details
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-user-circle"></i> Role
+                            </div>
+                            <div class="col-md-4 col-8">: {{employee_data_object.Role}}</div>
+
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-building"></i> Department
+                            </div>
+                            <div class="col-md-4 col-8">: {{employee_data_object.Department}}</div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-map-marker"></i> Branch
+                            </div>
+                            <div class="col-md-4 col-8">: {{employee_data_object.Branch}}</div>
+
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-sitemap"></i> Organization
+                            </div>
+                            <div class="col-md-4 col-8">: {{employee_data_object.Organization}}</div>
+                        </div>
+                    </li>
+                    <li class="list-group-item active">
+                        Contact Details
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-envelope"></i> Email
+                            </div>
+                            <div class="col-md-4 col-8">: {{employee_data_object.Email}}</div>
+
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-phone"></i> Phone
+                            </div>
+                            <div class="col-md-4 col-8">: {{employee_data_object.MobileNumber}}</div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-home"></i> Address
+                            </div>
+                            <div class="col-md-10 col-8">: {{employee_data_object.Address}}, {{employee_data_object.State}}</div>
+                        </div>
+                    </li>
+                    <li class="list-group-item active">
+                        Additional Info
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-clock-o"></i> Office Timing
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.OfficeStartTime}} - {{employee_data_object.OfficeEndTime}}
+                            </div>
+
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-cutlery"></i> Lunch Hour Enabled
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.IsAddLunchHour ? 'Yes' : 'No'}}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-bell"></i> Notification Settings
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.IsNotificationSettings ? 'Enabled' : 'Disabled'}}
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-check-square-o"></i> Paid Leave
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.NoOfPaidLeave}}
+                            </div>
+
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-medkit"></i> Sick Leave
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.NoOfSickLeave}}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="tab-pane fade bg-white p-4 rounded-3" id="account-tab-pane" role="tabpanel" aria-labelledby="account-tab">
+                <ul class="list-group">
+                    <li class="list-group-item active">
+                        Account Details
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-user"></i> Account Name
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.AccountName}}
+                            </div>
+
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-credit-card"></i> Account Number
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.AccountNumber}}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-barcode"></i> IFSC
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.IFSC}}
+                            </div>
+
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-map-marker"></i> Branch
+                            </div>
+                            <div class="col-md-4 col-8">
+                                : {{employee_data_object.BankBranch}}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                <i class="fa fa-university"></i> Bank
+                            </div>
+                            <div class="col-md-8 col-8">
+                                : {{employee_data_object.Bank}}
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="tab-pane fade bg-white p-4 rounded-3" id="salary-tab-pane" role="tabpanel">
+
+                <ul class="list-group">
+                    <li class="list-group-item active">Salary Details</li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                Basic Salary
+                            </div>
+                            <div class="col-md-1 col-1">
+                            </div>
+                            <div class="col-md-3 col-7">
+                                ₹ {{employee_data_object.BasicSalary}}
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                HRA
+                            </div>
+                            <div class="col-md-1 col-1">
+                            </div>
+                            <div class="col-md-3 col-7">
+                                ₹ {{employee_data_object.HRA}}
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                DA
+                            </div>
+                            <div class="col-md-1 col-1">
+                            </div>
+                            <div class="col-md-3 col-7">
+                                ₹ {{employee_data_object.DA}}
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                TA
+                            </div>
+                            <div class="col-md-1 col-1">
+                            </div>
+                            <div class="col-md-3 col-7">
+                                ₹ {{employee_data_object.TA}}
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                MA
+                            </div>
+                            <div class="col-md-1 col-1">
+                            </div>
+                            <div class="col-md-3 col-7">
+                                ₹ {{employee_data_object.MA}}
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                PF
+                            </div>
+                            <div class="col-md-1 col-1">
+                            </div>
+                            <div class="col-md-3 col-7">
+                                ₹ {{employee_data_object.PF}} {{employee_data_object.IsPFStopped ? '(Stopped)' : ''}}
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                ESI
+                            </div>
+                            <div class="col-md-1 col-1">
+                            </div>
+                            <div class="col-md-3 col-7">
+                                ₹ {{employee_data_object.ESI}} {{employee_data_object.IsESIStopped ? '(Stopped)' : ''}}
+                            </div>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item active">
+                        <div class="row">
+                            <div class="col-md-2 col-4">
+                                Gross Salary
+                            </div>
+                            <div class="col-md-1 col-1">
+                            </div>
+                            <div class="col-md-3 col-7">
+                                ₹ {{employee_data_object.GrossSalary}}
+                            </div>
+                        </div>
+
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+   
+
+<div class="container py-5">
+
+
+    <div class="row px-5">
+       
+       <div class="col-2">
+           <button (click)="goBack()" class="btn btn-secondary"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> &nbsp;BACK</button>
+        </div>
+    </div>
+
+    <div class="card custom-card">
+        <div class="card-body">
+            <div class="card custom-card overflow-hidden rounded-2">
+                <div class="card-body d-sm-flex align-items-center p-4   main-profile-cover">
+                    <p class="avatar avatar-xxl avatar-rounded  me-3 my-auto">
+
+                        <img [src]="employee_data_object.ProfileImageURl" alt="Profile Image" class="rounded-circle" width="100">
+                    </p>
+                    <div class="flex-fill main-profile-info my-auto">
+                        <h5 class="fw-semibold mb-1 text-fixed-white">{{employee_data_object.FirstName}}  {{employee_data_object.LastName}}</h5>
+                        <div>
+                            <p class="mb-1 text-fixed-white">
+                                {{employee_data_object.Role}}
+                            </p>
+
+                            <div class="fs-12 op-7 mb-0 d-flex">
+                                <p class="me-3 mb-0 text-fixed-white">
+                                    <i class="fa fa-envelope me-1 align-middle d-inline-flex"></i>
+                                    {{employee_data_object.Email}}
+                                </p>
+                                <p class="mb-0 text-fixed-white">
+                                    <i class="fa fa-phone me-1 align-middle d-inline-flex"></i>
+                                    {{employee_data_object.MobileNumber}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-profile-info ms-auto">
+                        <div class="">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex mb-0 ms-sm-auto">
+                                    <div class="me-sm-4 me-2">
+                                        <p class="fw-bold fs-16  text-shadow mb-0 text-fixed-white">{{employee_data_object.Department}}</p>
+                                        <p class="mb-0 fs-12 text-fixed-white">{{employee_data_object.Branch}}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <div class="border-block-end-dashed  bg-white rounded-2 ">
+                <div class="d-flex align-items-center">
+                    <ul class="nav nav-pills  p-0" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic-tab-pane" type="button" role="tab" aria-controls="basic-tab-pane" aria-selected="true">
+                                <i class="fa fa-user-circle" aria-hidden="true"></i> &nbsp;Basic Details
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="account-tab" data-bs-toggle="tab" data-bs-target="#account-tab-pane" type="button" role="tab" aria-controls="account-tab-pane" aria-selected="false">
+                                <i class="fa fa-university me-1"></i>&nbsp; Account Details
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="account-tab" data-bs-toggle="tab" data-bs-target="#salary-tab-pane" type="button" role="tab" aria-controls="account-tab-pane" aria-selected="false">
+                                <i class="fa fa-address-book" aria-hidden="true"></i> &nbsp;Salary Details
+                            </button>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content px-5" id="myTabContent">
+        <div class="tab-pane fade show active bg-white p-4 rounded-3" id="basic-tab-pane" role="tabpanel" aria-labelledby="basic-tab">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    Organization Details
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-user-circle"></i> Role
+                        </div>
+                        <div class="col-md-4 col-8">: {{employee_data_object.Role}}</div>
+
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-building"></i> Department
+                        </div>
+                        <div class="col-md-4 col-8">: {{employee_data_object.Department}}</div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-map-marker"></i> Branch
+                        </div>
+                        <div class="col-md-4 col-8">: {{employee_data_object.Branch}}</div>
+
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-sitemap"></i> Organization
+                        </div>
+                        <div class="col-md-4 col-8">: {{employee_data_object.Organization}}</div>
+                    </div>
+                </li>
+                <li class="list-group-item active">
+                    Contact Details
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-envelope"></i> Email
+                        </div>
+                        <div class="col-md-4 col-8">: {{employee_data_object.Email}}</div>
+
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-phone"></i> Phone
+                        </div>
+                        <div class="col-md-4 col-8">: {{employee_data_object.MobileNumber}}</div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-home"></i> Address
+                        </div>
+                        <div class="col-md-10 col-8">: {{employee_data_object.Address}}, {{employee_data_object.State}}</div>
+                    </div>
+                </li>
+                <li class="list-group-item active">
+                    Additional Info
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-clock-o"></i> Office Timing
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.OfficeStartTime}} - {{employee_data_object.OfficeEndTime}}
+                        </div>
+
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-cutlery"></i> Lunch Hour Enabled
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.IsAddLunchHour ? 'Yes' : 'No'}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-bell"></i> Notification Settings
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.IsNotificationSettings ? 'Enabled' : 'Disabled'}}
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-check-square-o"></i> Paid Leave
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.NoOfPaidLeave}}
+                        </div>
+
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-medkit"></i> Sick Leave
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.NoOfSickLeave}}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+        <div class="tab-pane fade bg-white p-4 rounded-3" id="account-tab-pane" role="tabpanel" aria-labelledby="account-tab">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    Account Details
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-user"></i> Account Name
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.AccountName}}
+                        </div>
+
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-credit-card"></i> Account Number
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.AccountNumber}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-barcode"></i> IFSC
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.IFSC}}
+                        </div>
+
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-map-marker"></i> Branch
+                        </div>
+                        <div class="col-md-4 col-8">
+                            : {{employee_data_object.BankBranch}}
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            <i class="fa fa-university"></i> Bank
+                        </div>
+                        <div class="col-md-8 col-8">
+                            : {{employee_data_object.Bank}}
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="tab-pane fade bg-white p-4 rounded-3" id="salary-tab-pane" role="tabpanel">
+
+            <ul class="list-group">
+                <li class="list-group-item active">Salary Details</li>
+                <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            Basic Salary
+                        </div>
+                        <div class="col-md-1 col-1">
+                        </div>
+                        <div class="col-md-3 col-7">
+                            ₹ {{employee_data_object.BasicSalary}}
+                        </div>
+                    </div>
+
+                </li>
+                <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            HRA
+                        </div>
+                        <div class="col-md-1 col-1">
+                        </div>
+                        <div class="col-md-3 col-7">
+                            ₹ {{employee_data_object.HRA}}
+                        </div>
+                    </div>
+
+                </li>
+                <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            DA
+                        </div>
+                        <div class="col-md-1 col-1">
+                        </div>
+                        <div class="col-md-3 col-7">
+                            ₹ {{employee_data_object.DA}}
+                        </div>
+                    </div>
+
+                </li>
+                <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            TA
+                        </div>
+                        <div class="col-md-1 col-1">
+                        </div>
+                        <div class="col-md-3 col-7">
+                            ₹ {{employee_data_object.TA}}
+                        </div>
+                    </div>
+
+                </li>
+                <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            MA
+                        </div>
+                        <div class="col-md-1 col-1">
+                        </div>
+                        <div class="col-md-3 col-7">
+                            ₹ {{employee_data_object.MA}}
+                        </div>
+                    </div>
+
+                </li>
+                <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            PF
+                        </div>
+                        <div class="col-md-1 col-1">
+                        </div>
+                        <div class="col-md-3 col-7">
+                            ₹ {{employee_data_object.PF}} {{employee_data_object.IsPFStopped ? '(Stopped)' : ''}}
+                        </div>
+                    </div>
+
+                </li>
+                <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            ESI
+                        </div>
+                        <div class="col-md-1 col-1">
+                        </div>
+                        <div class="col-md-3 col-7">
+                            ₹ {{employee_data_object.ESI}} {{employee_data_object.IsESIStopped ? '(Stopped)' : ''}}
+                        </div>
+                    </div>
+
+                </li>
+                <li class="list-group-item active">
+                    <div class="row">
+                        <div class="col-md-2 col-4">
+                            Gross Salary
+                        </div>
+                        <div class="col-md-1 col-1">
+                        </div>
+                        <div class="col-md-3 col-7">
+                            ₹ {{employee_data_object.GrossSalary}}
+                        </div>
+                    </div>
+
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

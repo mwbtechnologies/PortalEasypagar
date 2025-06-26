@@ -1,0 +1,15 @@
+.profile-cover__action-2 {
+    background-image: url('https://angular.spruko.com/yoha/preview/bg-profileimage.97a034e18663b887.jpg');
+
+}
+
+.profile-cover__action-3 {
+  
+}
+
+@media (max-width: 576px) {
+    .btn-profile {
+        left: 1rem;
+        top: 8.5rem;
+    }
+}

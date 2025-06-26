@@ -1,0 +1,100 @@
+<div class="dialogs">
+    <div  class="row">
+           
+            <div class="col-md-12">
+            <div  class="productdesc">
+                <div  class="card overflow-hidden">
+                    <div  class="card-body bootslider p-3">
+                                            <div  class="panel panel-primary mb-5 mx-5 border" style="background-color: #E6F1F7;border: black;margin-left: 0rem;margin-right: 0rem;margin-bottom: 0rem;">
+                                                    <div  class="table-responsive">
+                                                            <h4  class="mb-5 mt-3 fw-bold" style="text-align: center;"> {{LoanData.LoanType}} Details</h4>
+                                                          <br> 
+                                                           <table  class="table table-bordered">
+                                                        <tr ><td  class="fw-bold">Name</td>
+                                                            <td >{{LoanData.EmpName}}</td>
+                                                            <td  class="fw-bold">Branch</td>
+                                                            <td >{{LoanData.Branch}}</td>
+                                                            <td  class="fw-bold">Department</td>
+                                                            <td *ngIf="LoanData.Department!=null && LoanData.Department!=''" >{{LoanData.Department}}</td>
+                                                            <td *ngIf="LoanData.Department==null ||LoanData.Department==''" > --</td>
+                                                    </tr>
+                                                        <tr >
+                                                            <td  class="fw-bold">Type </td>
+                                                            <td >{{LoanData.LoanType}} </td>
+                                                            <td  class="fw-bold">Requested Amount </td>
+                                                            <td >{{LoanData.RequestedAmount}} </td>
+                                                            <td  class="fw-bold">Requested Date</td>
+                                                            <td >{{LoanData.RequestDate|date: 'dd-MM-yyyy'}} </td>
+                                                                                 
+                                                          
+                                                </tr>
+                                                <tr >
+                                                    <td  class="fw-bold">Reason</td>
+                                                    <td >{{LoanData.ReasonForLoan}} </td>
+                                                    <td  class="fw-bold">Approve Status </td>
+                                                    <td >{{LoanData.ApproveStatus}} </td>
+
+                                                    <td  class="fw-bold"><span style="padding: 0;color: #242e4c;" *ngIf="LoanData.ApproveStatus == 'Paid'">Approve Date</span><span style="padding: 0;color: #242e4c;" *ngIf="LoanData.ApproveStatus == 'Rejected'">Rejected Date</span></td>
+                                                    <td >{{LoanData.ApprovedDate|date: 'dd-MM-yyyy'}} </td>
+                                        </tr>   
+                                        <tr>
+                                         <td  class="fw-bold">Approved Amount</td>
+                                        <td>
+
+                                         <input [disabled]="LoanData.ApproveStatus === 'Approved' || LoanData.ApproveStatus === 'Rejected'|| LoanData.ApproveStatus === 'Paid'" style="background-color: white;"  type="number" class="form-control" id="ApprovedAmount" name="ApprovedAmount" 
+                                         placeholder="ApprovedAmount" #ApprovedAmount="ngModel" [(ngModel)]="LoanData.ApprovedAmount">
+                                          
+                                     </td> <td  class="fw-bold">Monthly Deduction</td>
+                                     <td>
+
+                                        <input [disabled]="LoanData.ApproveStatus === 'Approved' || LoanData.ApproveStatus === 'Rejected'|| LoanData.ApproveStatus === 'Paid'" style="background-color: white;"  type="number" class="form-control" id="ApprovedAmount" name="ApprovedAmount" 
+                                        placeholder="MonthlyDeduction" #MonthlyDeduction="ngModel" [(ngModel)]="LoanData.MonthlyDeduction">
+                                         
+                                    </td>
+                                 <td  class="fw-bold">PaymentID</td>
+                                <td>
+
+                                   <input [disabled]="LoanData.ApproveStatus === 'Approved' || LoanData.ApproveStatus === 'Rejected' || LoanData.ApproveStatus === 'Paid'" style="background-color: white;"  type="text" name="example-text-input" class="form-control" id="ApprovedAmount" name="ApprovedAmount" 
+                                   placeholder="PaymentID" #PaymentID="ngModel" [(ngModel)]="LoanData.PaymentID">
+                               </td>
+                                    </tr>
+                                    <tr>
+                                           <td  class="fw-bold">Comment</td>
+                                           <td colspan="2">
+
+                                            <textarea [disabled]="LoanData.ApproveStatus === 'Approved' || LoanData.ApproveStatus === 'Rejected'|| LoanData.ApproveStatus === 'Paid'" style="background-color: white;height: 100px;"  type="text" name="example-text-input" class="form-control" id="Comment" name="Comment" 
+                                            placeholder="Comment" #Comment="ngModel" [(ngModel)]="LoanData.Comment"> </textarea>
+                                             
+                                        </td>
+                                        </tr>                                                                        
+                    </table>
+
+                    <div class="text-center mt-2 pb-5 border-bottom">
+                        <button class="btn btn-success" *ngIf="LoanData.ApproveStatus === 'Pending'"  (click)="Approve(LoanData);"  id="bEdit" type="button" >
+                            Approve <span  class="fa fa-check-circle"></span></button> &nbsp;
+                            <button  id="bEdit" type="button" *ngIf="LoanData.ApproveStatus === 'Pending'" (click)="Reject(LoanData);" class="btn btn-danger"> Reject <span  class="fa fa-times-circle"></span></button>
+                            &nbsp; 
+                            <button  id="bEdit" type="button" (click)="paynow(LoanData)" *ngIf="LoanData.ApproveStatus === 'Approved'" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> Pay<span  class="fa fa-arrow-right"></span></button>
+                            &nbsp; 
+                            <button  id="bEdit" type="button" (click)="CloseTab()" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> Close <span  class="fa fa-times"></span></button>
+                            </div> 
+                             
+                    </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div *ngIf="Confirmation" class="confirmation">
+         <div class="popup">
+                <h4>Are You Sure</h4>
+                <p>Want To Approve {{LoanData.LoanType}} for <b>{{LoanData.EmpName}}</b></p>
+            <div class="flex">
+                <button class="btn btn-primary" style="padding:6px 27px;font-size: 12px;" (click)="PayNow(LoanData)">Pay Now</button>
+                <button class="btn btn-primary"  style="padding:6px 27px;font-size: 12px" (click)="PayLater(LoanData)">Pay Later</button>
+            </div>
+         </div>
+        
+        </div>
+</div>

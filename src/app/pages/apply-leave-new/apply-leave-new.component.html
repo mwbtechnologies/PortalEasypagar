@@ -1,0 +1,335 @@
+<div *ngIf="Add">
+    <div  class="row">
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Add New Request</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+                        <div  class="col-md-4">
+            
+                            <div  class="form-group"><label 
+                                class="form-label">Select LeaveType</label>
+                                <ng-select [items]="LeaveTypes"
+                                bindLabel="Text"
+                                bindValue="Text"
+                                [multiple]="false"
+                                placeholder="Select LeaveType"
+                                (change)="OnLeaveTypeChange($event)"
+                                [(ngModel)]="selectedLeaveIds">
+                     </ng-select>
+                        </div></div>
+                        <div  class="col-md-4">
+                            <div  class="form-group"><label 
+                                class="form-label">From Date</label><input 
+                                name="FromDate" placeholder="Select FromDate" type="date" (change)="CheckDate(this.formInput.FromDate)"
+                                [ngClass]="{'is-invalid': !FromDate.valid && (FromDate.dirty || FromDate.touched || isSubmit)}"
+                                #FromDate="ngModel" required FromDate [(ngModel)]="formInput.FromDate" class="form-control"></div>
+                    </div>
+
+                    <div  class="col-md-4">
+                        <div  class="form-group"><label 
+                            class="form-label">To Date</label><input 
+                            name="ToDate" placeholder="Select ToDate" type="date"
+                            [ngClass]="{'is-invalid': !ToDate.valid && (ToDate.dirty || ToDate.touched || isSubmit)}" (change)="CheckToDate(formInput.ToDate)"
+                            #ToDate="ngModel" required ToDate [(ngModel)]="formInput.ToDate" class="form-control"></div>
+                </div>
+
+                <div class="col-md-4">
+                    <div  class="form-group"><label 
+                        class="form-label">Number of Days</label><input 
+                        name="example-password-input" placeholder="Number Of Days" type="number"  (keypress)="validatedays($event)"
+                        [ngClass]="{'is-invalid': !NoOfDays.valid && (NoOfDays.dirty || NoOfDays.touched || isSubmit)}"
+                        #NoOfDays="ngModel" required NoOfDays [(ngModel)]="formInput.NoOfDays" class="form-control"></div>
+                </div>
+
+                <div class="col-md-8">
+                    <div  class="form-group"><label 
+                        class="form-label">Reason For Leave</label><textarea
+                        name="example-password-input" placeholder="Please Specify the Reason Here.." type="text"
+                        [ngClass]="{'is-invalid': !Comment.valid && (Comment.dirty || Comment.touched || isSubmit)}"
+                        #Comment="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z0-9\s]*$/.test(this.value + event.key)" Comment [(ngModel)]="formInput.Comment" class="form-control"></textarea></div>
+                </div>
+                <div  class="col-md-1">
+                    <div  class="form-group">
+                        <label class="form-label">Show Datewise<br></label>
+                        <label  class="custom-switch">
+                            <input #IsDateWise="ngModel" required IsDateWise [(ngModel)]="formInput.IsDateWise" class="form-control" type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" (change)="showdaterange();">
+                            <span class="custom-switch-indicator"></span><span class="custom-switch-description"></span></label></div>
+            </div>
+                 
+                                  
+                    </div>
+                    <div  class="table-responsive ng-star-inserted">
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Viewlist();"> Back To List</button> &nbsp;
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="CreateRequest();">Submit Request</button>
+                        <!----></div>
+
+                        <div  class="row" *ngFor="let IL of DateRange;let i = index;">
+                            <div class="col-md-4">
+                                <div  class="form-group"><label 
+                                    class="form-label">Date</label><input 
+                                    name="IL.Date" type="text"
+                                    [ngClass]="{'is-invalid': !IL.Date.valid && (IL.Date.dirty || IL.Date.touched || isSubmit)}"
+                                    #IL.Date="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" IL.Date [(ngModel)]="IL.Date" class="form-control" disabled="true"></div>
+                            </div>
+                            <div  class="col-md-4">
+            
+                                <div  class="form-group"><label 
+                                    class="form-label">Select LeaveType</label>
+                                    <ng-select [items]="LeaveTypes"
+                                    bindLabel="Text"
+                                    bindValue="Text"
+                                    [multiple]="false"
+                                    placeholder="Select LeaveType"
+                                    [(ngModel)]="IL.LeaveType">
+                         </ng-select>
+                            </div></div>
+                            <div  class="col-md-1">
+                                <div  class="form-group">
+                                    <label class="form-label">HalfDay<br></label>
+                                    <label  class="custom-switch">
+                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" #IL.IsHalfDay="ngModel" required IL.IsHalfDay [(ngModel)]="IL.IsHalfDay" id="Day{i}" name="Day{i}" value="true">
+                                        <span class="custom-switch-indicator"></span><span class="custom-switch-description"></span></label></div>
+                        </div>
+           
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>
+<div *ngIf="Edit">
+    <div  class="row">
+        <div  class="col-md-12">
+            <div  class="card-body">
+                <div  class="row">
+                    <div  class="col-md-4">
+        
+                        <div  class="form-group"><label 
+                            class="form-label">Select LeaveType</label>
+                            <ng-select [items]="LeaveTypes"
+                            bindLabel="Text"
+                            bindValue="Text"
+                            [multiple]="false"
+                            placeholder="Select LeaveType"
+                            (change)="OnLeaveTypeChange($event)"
+                            [(ngModel)]="selectedLeaveIds">
+                 </ng-select>
+                    </div></div>
+                    <div  class="col-md-4">
+                        <div  class="form-group"><label 
+                            class="form-label">From Date</label><input 
+                            name="FromDate" placeholder="Select FromDate" type="date" (change)="CheckDate(this.formInput.FromDate)"
+                            [ngClass]="{'is-invalid': !FromDate.valid && (FromDate.dirty || FromDate.touched || isSubmit)}"
+                            #FromDate="ngModel" required FromDate [(ngModel)]="formInput.FromDate" class="form-control"></div>
+                </div>
+
+                <div  class="col-md-4">
+                    <div  class="form-group"><label 
+                        class="form-label">To Date</label><input 
+                        name="ToDate" placeholder="Select ToDate" type="date"
+                        [ngClass]="{'is-invalid': !ToDate.valid && (ToDate.dirty || ToDate.touched || isSubmit)}" (change)="CheckToDate(formInput.ToDate)"
+                        #ToDate="ngModel" required ToDate [(ngModel)]="formInput.ToDate" class="form-control"></div>
+            </div>
+
+            <div class="col-md-4">
+                <div  class="form-group"><label 
+                    class="form-label">Number of Days</label><input 
+                    name="NoOfDays" placeholder="Number Of Days" type="number"  (keypress)="validatedays($event)"
+                    [ngClass]="{'is-invalid': !NoOfDays.valid && (NoOfDays.dirty || NoOfDays.touched || isSubmit)}"
+                    #NoOfDays="ngModel" required NoOfDays [(ngModel)]="formInput.NoOfDays" class="form-control"></div>
+            </div>
+
+            <div class="col-md-7">
+                <div  class="form-group"><label 
+                    class="form-label">Reason For Leave</label><textarea
+                    name="example-password-input" placeholder="Please Specify the Reason Here.." type="text"
+                    [ngClass]="{'is-invalid': !Comment.valid && (Comment.dirty || Comment.touched || isSubmit)}"
+                    #Comment="ngModel" required  onkeydown="return /^[a-zA-Z][a-zA-Z0-9\s]*$/.test(this.value + event.key)" Comment [(ngModel)]="formInput.Comment" class="form-control"></textarea></div>
+            </div>
+            <div  class="col-md-1">
+                <div  class="form-group">
+                    <label class="form-label">Show Datewise<br></label>
+                    <label  class="custom-switch">
+                        <input #IsDateWise="ngModel" required IsDateWise [(ngModel)]="formInput.IsDateWise" class="form-control" type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" (change)="showdaterange();">
+                        <span class="custom-switch-indicator"></span><span class="custom-switch-description"></span></label></div>
+        </div>
+             
+                              
+                </div>
+                <div  class="table-responsive ng-star-inserted">
+                    <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="Viewlist();"> Back To List</button> &nbsp;
+                    <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="UpdateRequest();">Update Request</button>
+                    <!----></div>
+
+                    <div  class="row" *ngFor="let IL of DateRange;let i = index;">
+                        <div class="col-md-4">
+                            <div  class="form-group"><label 
+                                class="form-label">Date</label><input 
+                                name="IL.Date" type="text"
+                                [ngClass]="{'is-invalid': !IL.Date.valid && (IL.Date.dirty || IL.Date.touched || isSubmit)}"
+                                #IL.Date="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" IL.Date [(ngModel)]="IL.Date" class="form-control" disabled="true"></div>
+                        </div>
+                        <div  class="col-md-4">
+        
+                            <div  class="form-group"><label 
+                                class="form-label">Select LeaveType</label>
+                                <ng-select [items]="LeaveTypes"
+                                bindLabel="Text"
+                                bindValue="Text"
+                                [multiple]="false"
+                                placeholder="Select LeaveType"
+                                [(ngModel)]="IL.LeaveType">
+                     </ng-select>
+                        </div></div>
+                        <div  class="col-md-1">
+                            <div  class="form-group">
+                                <label class="form-label">HalfDay<br></label>
+                                <label  class="custom-switch">
+                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" #IL.IsHalfDay="ngModel" required IL.IsHalfDay [(ngModel)]="IL.IsHalfDay" id="Day{i}" name="Day{i}" value="true">
+                                    <span class="custom-switch-indicator"></span><span class="custom-switch-description"></span></label></div>
+                    </div>
+       
+                    </div>
+            </div>
+        </div>
+    </div>   
+</div>
+
+
+<div >
+    <div  class="row" *ngIf="View">
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Leave Requests</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row">
+                                <div  class="col-md-4">
+                                    <div  class="form-group"><label 
+                                        class="form-label">FromDate</label><input 
+                                        name="FromDate" placeholder="Select Date" type="date"
+                                        [ngClass]="{'is-invalid': !FromDate.valid && (FromDate.dirty || FromDate.touched || isSubmit)}"
+                                        #FromDate="ngModel" required FromDate [(ngModel)]="formInput.FromDate" class="form-control"></div>
+                            </div>
+                            <div  class="col-md-4">
+                                <div  class="form-group"><label 
+                                    class="form-label">To Date</label><input 
+                                    name="ToDate" placeholder="Select Date" type="date" (change)="CheckToDate(formInput.ToDate);"
+                                    [ngClass]="{'is-invalid': !ToDate.valid && (ToDate.dirty || ToDate.touched || isSubmit)}"
+                                    #ToDate="ngModel" required ToDate [(ngModel)]="formInput.ToDate" class="form-control"></div>
+                        </div>
+                            <div  class="col-md-4">
+                                <label  class="form-label">Action</label>
+                                <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="GetleaveList();"> Search</button> &nbsp;
+                                
+                                                        </div>
+            
+                               </div>
+                               </div>
+                               <div  class="card-body">
+                                <div  class="table-responsive ng-star-inserted"><!----></div>
+                                <!---->
+                                <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="ShowAdd();" >Apply New Request</button>
+                                <div  class="table-responsive">
+                                     <table id="DataTables_Table_0" table datatable [dtOptions]="dtExportButtonOptions" [dtTrigger]="dtTrigger"
+                                class="table table-striped table-bordered table-hover">
+                                        <thead >
+                                            <tr >
+                                               
+                                                <th *ngIf="ViewPermission||DeletePermission" >Edit/Delete</th> 
+                                                <th >SL No</th>
+                                                <th >RequestDate</th>
+                                                <th >LeaveType</th>
+                                                <th >FromDate</th>
+                                                <th >ToDate</th>
+                                                <th >ReasonForLeave</th>
+                                                <th >ApproveStatus</th>
+                                                <th >ApprovedDay</th>
+                                                <th >ApprovedLeaveType</th>
+                                                <th >AdminComment</th>  
+                                                <th >ApprovedOn</th>  
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            <tr  class="ng-star-inserted" *ngFor="let IL of FilteredList; let i = index;">
+                                                <td  *ngIf="EditPermission||DeletePermission">
+                                                    <button *ngIf="IL.ApproveStatus=='Pending' && EditPermission"  id="bEdit"
+                                                        type="button" class="btn btn-sm btn-primary ng-star-inserted" style="background-color: #3601b5a3;"><span
+                                                            
+                                                            class="fa fa-eye" (click)="edit(IL.RequestID);"> Edit</span></button> <br>
+                                                            <button *ngIf="IL.ApproveStatus=='Pending' && DeletePermission"  id="bEdit"
+                                                            type="button" class="btn btn-sm btn-danger ng-star-inserted"><span
+                                                                
+                                                                class="fa fa-trash" (click)="Deleteleave(IL.RequestID);"> Delete</span></button> </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{i+1}} </div><!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted">{{IL.RequestDate|date: 'dd-MM-yyyy'}} </div>
+                                                    <!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.LeaveType}} </div>
+                                                    <!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.FromDateTime|date: 'dd-MM-yyyy'}} </div>
+                                                    <!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.ToDateTime|date: 'dd-MM-yyyy'}} </div>
+                                                    <!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.ReasonForLeave}} </div>
+                                                    <!---->
+                                                </td>
+                                              
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.ApproveStatus}} </div>
+                                                    <!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.ApprovedDays}} </div>
+                                                    <!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.ApprovedLeaveType}} </div>
+                                                    <!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.AdminComment}} </div>
+                                                    <!---->
+                                                </td>
+                                                <td ><!---->
+                                                    <div  class="ng-star-inserted"> {{IL.ApprovedDate}} </div>
+                                                    <!---->
+                                                </td>
+                                           
+                                               
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                         
+
+
+                               </div>
+                               </div>
+                               </div>
+                               </div>
+
+                               <div  *ngIf="!ViewPermission &&!AddPermission&&!EditPermission&&!DeletePermission">
+                       
+                                <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+                            </div>
+
+
+    

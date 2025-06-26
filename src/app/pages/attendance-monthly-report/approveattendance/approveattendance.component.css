@@ -1,0 +1,36 @@
+.spacing{
+    padding: 0;
+  }
+  .dialogs{
+    height: 630px;
+    overflow-y: scroll;
+    padding: 20px;
+    font-family: poppins;
+}
+
+.ms-5, .mx-5 {
+  margin-left: 0rem !important;
+}
+
+.mb-5, .my-5 {
+  margin-bottom: 0rem !important;
+}
+.me-5, .mx-5 {
+  margin-right: 0rem !important;
+}
+ngx-material-timepicker {
+  z-index: 10000 !important;
+}
+/* .ng-select.ng-select-single .ng-select-container .ng-value-container, .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
+  white-space: pre-line;
+  overflow: hidden;
+text-overflow: ellipsis;
+} */
+ng-select .ng-select-search {
+  display: none;
+}
+
+ng-select .ng-select-container {
+  padding-top: 0;
+  padding-bottom: 0;
+}

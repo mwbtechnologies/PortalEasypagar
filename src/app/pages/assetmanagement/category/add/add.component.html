@@ -1,0 +1,19 @@
+<div class="dialogs">
+    <h4 style="margin: 0;"><span *ngIf="isEdit">Edit Category</span><span *ngIf="!isEdit">Add Category</span></h4>
+    <!-- <span style="font-size: 10px;" class="filelabels">create your asset here.</span> -->
+<!-- <div class=""> -->
+    <div class="col-md-12 row" style="row-gap:15px;padding: 0;margin-top: 15px;">
+        <div class="col-md-6">
+            <label class="filelabels">Category Name</label>
+            <input type="text" class="timings form-control" [(ngModel)]="CategoryName" placeholder="Enter category Name">
+            <label class="filelabels" *ngIf="errors.AssetName" style="color:red;font-size: 10px;">{{errors.AssetName}}</label>
+        </div>
+        
+    </div>
+    <div class="button-container">
+        <button type="submit" class="btn btn-primary" (click)="addCategory()" *ngIf="!isEdit">Save</button>
+        <!-- <button type="submit" class="btn btn-primary" (click)="addCategory()" *ngIf="isEdit">Update</button> -->
+        <button type="submit" class="btn btn-primary" (click)="close()">Cancel</button>
+    </div>
+<!-- </div> -->
+</div>

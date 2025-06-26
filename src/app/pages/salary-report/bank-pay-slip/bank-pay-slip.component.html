@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="justify-content: start;">
+                <div class="col-md-5">
+                    <h3  class="card-title">Bank Pay Slip</h3>
+                </div>    
+                <div class="col-md-7" style="display: flex;justify-content: end; flex-wrap: wrap-reverse;  padding: 5px;row-gap: 4px;">
+                    <button class="btn btn-primary" [disabled]="BankSlip ==undefined || BankSlip == null || !(BankSlip.length > 0)"  style="border-radius: 10px;background-color: #3601b5a3;" (click)="downloadReport()">📥 Download Report</button>
+                </div>
+            </div>
+        <div class="card-body">
+<!-- <div class="card-body"> -->
+    <div  class="table-responsive">
+<!-- common table --> 
+<app-common-table [data]="BankSlip" [ExportName]="'Bank PaySlip Report'" [Loading]="employeeLoading" [displayColumns]="displayColumns" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors" [smallHeaders]="smallHeaders" [dataColors]="tableDataColors" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+<p style="font-size: 18px;"><b>Total Amount :</b>{{totalAmount}} </p>
+<!-- end here --> 
+</div>
+</div>  
+</div>
+</div>
+</div>

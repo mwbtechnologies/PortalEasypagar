@@ -1,0 +1,62 @@
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div class="col-md-5">
+                        <h3 class="mb-0 card-title">🆕 Create Bulk Employees</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex;flex-wrap: wrap;">
+                        <div class="col-md-3" >
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Select Branch</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                                [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <label class="form-label">Select Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Department'" [data]="DepartmentList"
+                                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                                (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div> -->
+                        <div class="col-md-3" *ngIf="showweekoff">
+                            <label class="form-label">Select Weekoffs</label>
+                            <ng-multiselect-dropdown [placeholder]="'WeekOffs'" [data]="weekoffList"
+                                [(ngModel)]="selectedWeekoff" (onSelect)="onweekoffSelect($event)"
+                                (onDeSelect)="onweekoffDeSelect($event)" [settings]="weekoffSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-2 row" style="display: flex;align-items: end;justify-content: center;">
+                            <label class="form-label">
+                            <input type="checkbox" [(ngModel)]="dailyPayment" (click)="Update(dailyPayment)">&nbsp;Daily Payment</label>
+                        </div>
+                    </div>
+
+                    <div class="container" style="display: flex;justify-content: center;padding-top: 40px;">
+                        <button class="btn btn-primary" (click)="exportexcel()">
+                            Download Excel
+                        </button>&nbsp;
+                        <form (ngSubmit)="uploadExcel()">
+                            <input type="file" (change)="onFileChange($event)" accept=".xlsx"  #fileInput/>
+                            <button type="submit" class="btn btn-primary">
+                                Upload Excel
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        

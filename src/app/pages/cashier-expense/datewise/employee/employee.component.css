@@ -1,0 +1,30 @@
+.dailog{
+    width:1150px;
+    min-height: 400px;
+    max-height: 600px;
+    overflow: scroll;
+    padding: 20px;
+}
+
+.headers{
+    display: flex;
+    justify-content: start;
+    padding: 10px;
+    font-size:16px
+}
+.approve{
+    width: max-content;
+    background-color:green;
+    color: white;
+}
+.reject{
+    width: max-content;
+    background-color:red;
+    color: white;
+}
+.actionbtns{
+    background-color:#3601b5a3;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 5px;
+}

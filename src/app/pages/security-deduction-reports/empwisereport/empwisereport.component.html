@@ -1,0 +1,39 @@
+ <div class="row">
+     
+        <div class="col-md-12">
+            <div class="card">
+                   <div class="maincards">
+                    <div class="chip3">
+                        <div class="chip3-title">Employee</div>
+                        <h3 class="chip3-value">{{EmployeeName}}</h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">SD Amount</div>
+                        <h3 class="chip3-value">{{TotalSD}}</h3>
+                    </div>
+                     <div class="chip3">
+                        <div class="chip3-title">Monthly Deduction</div>
+                        <h3 class="chip3-value">{{MonthlyDeduction}}</h3>
+                    </div>
+                    <div class="chip3">
+                        <div class="chip3-title">Balance</div>
+                        <h3 class="chip3-value">{{Balance}}</h3>
+                    </div>
+                     <div class="chip3">
+                        <div class="chip3-title">Estimated Date</div>
+                        <h3 class="chip3-value">{{EstimatedDate| date:'dd-MMM-yyyy'}}</h3>
+                    </div>
+                   
+                  
+                </div>
+              <div class="card-header" style="justify-content: start;">
+                 
+                    <h3 class="mb-0 card-title">Deduction Summary Report</h3>
+                </div>
+                <div class="card-body">
+<app-common-table [data]="SalaryList" [ExportName]="'Attendance Report'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+[smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+                </div>
+            </div>
+        </div>
+    </div>

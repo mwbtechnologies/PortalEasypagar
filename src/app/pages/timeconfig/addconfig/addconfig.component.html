@@ -1,0 +1,53 @@
+
+<div class="dialog">
+    <!-- <h4>Add Time Configs</h4> -->
+    <h4><span *ngIf="!isEdit">Add</span><span *ngIf="isEdit">Edit</span> Time Configs</h4>
+    <div class="row Content">
+        <div class="col-md-6" >
+          <label class="labels"> <span *ngIf="!isEdit">Add</span><span *ngIf="isEdit">Edit</span> Branch</label><br>
+         <ng-multiselect-dropdown *ngIf="!isEdit"  [placeholder]="'Select Branch'" 
+          [data]="BranchList" [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)"
+          [settings]="branchSettings">
+          </ng-multiselect-dropdown>
+          <input type="text" class="timings" *ngIf="isEdit" [disabled]="isEdit" [(ngModel)]="branch">
+        </div>
+        <div class="col-md-6">
+          <label class="labels"><span *ngIf="!isEdit">Add</span><span *ngIf="isEdit">Edit</span> Department</label><br>
+         <ng-multiselect-dropdown  *ngIf="!isEdit" [placeholder]="'All Department'" 
+          [data]="DepartmentList" [(ngModel)]="selectedDepartment" (onSelect)="onDepartmentSelect($event)"
+          [settings]="departmentSettings">
+          </ng-multiselect-dropdown>
+          <input type="text" class="timings" *ngIf="isEdit" [disabled]="isEdit" [(ngModel)]="department">
+        </div>
+    </div>
+    <div class="row Content">
+        <div class="col-md-6">
+          <label class="labels"><span *ngIf="!isEdit">Add</span><span *ngIf="isEdit">Edit</span> Days</label><br>
+          <ng-multiselect-dropdown *ngIf="!isEdit"
+          [placeholder]="'Select Day'" 
+          [data]="DaysList" 
+          [(ngModel)]="selectedDays" 
+          (onSelect)="onDaySelect($event)"
+          [settings]="DaySettings">
+        </ng-multiselect-dropdown>
+        <input type="text" class="timings" *ngIf="isEdit" [disabled]="isEdit" [(ngModel)]="day">
+        </div>
+        <div class="col-md-6">
+          <div class="row col-md-12 spacing">
+            <div class="col-md-6">
+                <label class="labels">Start Time</label><br>
+                <input type="time" [(ngModel)]="startTime" class="timings">
+            </div>
+            <div class="col-md-6">
+                <label class="labels">End Time</label><br>
+                <input type="time" [(ngModel)]="endTime" class="timings">
+            </div>
+          </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <button *ngIf="!isEdit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="addTimeConfig()">Add</button>
+        <button *ngIf="isEdit" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="editTimeConfig()">Update</button>
+    </div>
+</div>

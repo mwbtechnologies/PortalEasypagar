@@ -1,0 +1,38 @@
+<div class="card">
+    <div class="card-header">
+        <h3  class="card-title">Admin Support</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div  class="col-md-3">
+                <div  class="form-group">
+                    <label class="form-label">Select Problem</label>
+                    <ng-multiselect-dropdown [placeholder]="'Select Problem'" 
+                    [data]="problemlist" [(ngModel)]="selectedProblem" (onSelect)="OnProblemSelect($event)"  (onDeSelect)="onProblemDeSelect($event)"
+                    [settings]="ProblemSettings">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div> 
+            <div class="col-md-4">
+                <label class="form-label">Query</label>
+                <textarea class="form-control" [(ngModel)]="Query" placeholder="Enter your qurey here"></textarea>
+            </div>
+            <div class="col-md-3">
+                <form #validationForm="ngForm" class="editForm" novalidate>
+                <div  class="form-group">
+                    <div  class="form-label">Upload Image</div>
+                    <div  class="mb-3"><input  type="file" id="formFile"
+                        (change)="UploadProof1Image1($event,validationForm)" class="form-control"></div>
+
+                        <div *ngIf="ShowImage">
+                            <img [src]="fileurl" height="100" width="200"/>
+          </div>
+               </div>
+               </form>
+             </div>
+        </div>
+             <button type="button" class="btn btn-primary" (click)="save()">Submit</button><br>
+             <span>Support will be provided within 24 Hours, 10AM - 6PM office hours(Monday to Friday)</span>
+   
+    </div>
+</div>

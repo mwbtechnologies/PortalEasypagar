@@ -1,0 +1,85 @@
+<div style="width: 600px;padding:20px;max-height: 80vh;">
+    <div class="col-md-12">
+     <h4>Payment Summary</h4>
+    <div class="">
+    <div class="col-md-6" style="padding: 0;">
+        <label class="form-label">Select Payment Type</label>
+         <ng-multiselect-dropdown [placeholder]="'Select Payment'" [data]="PaymentType"
+           [(ngModel)]="selectedPayment" (onSelect)="PaymentSelect($event)" (onDeSelect)="PaymentDeselect($event)"
+           [settings]="PaymentSetting">
+         </ng-multiselect-dropdown>
+    </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="labels">Payment Date</label>
+                <input class="timings"  (change)="validateDate()" [min]="minDate" [max]="maxDate" type="date" [(ngModel)]="PaymentDate">
+                <div *ngIf="dateError" class="text-danger">{{ dateError }}</div>
+            </div>
+        <div class="col-md-6">
+            <label class="labels">Amount</label>
+            <label class="timings">{{data.IL.NetSalary}}</label>
+        </div>
+        </div>
+    <div *ngIf="selectedPayment == 'CHEQUE'">
+        <div class="row">
+         <div class="col-md-6">
+            <label class="labels">Cheque Number <span class="text-danger">*</span></label>
+            <input class="timings" type="number" [(ngModel)]="Paymentcheque" placeholder="Enter Cheque No">
+            <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('chequeno') && errorMessages['chequeno']!=''">{{errorMessages['chequeno'].message}}</label>
+        </div>
+        <div class="col-md-6">
+            <label class="labels">Bank Name  </label>
+            <input class="timings" type="text" [(ngModel)]="PaymentBank" placeholder="Enter Bank Name">
+            <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('bankname') && errorMessages['bankname']!=''">{{errorMessages['bankname'].message}}</label>
+        </div>    
+        </div>
+        <div class="row">
+        <div class="col-md-6">
+            <label class="labels">Account Number  <span class="text-danger">*</span></label>
+            <input class="timings" type="text" (keypress)="allowOnlyNumbers($event)" [(ngModel)]="PaymentAccNo" placeholder="Enter Acc No">
+            <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('accno') && errorMessages['accno']!=''">{{errorMessages['accno'].message}}</label>
+        </div>
+        <div class="col-md-6">
+            <label class="labels">IFSC Code  <span class="text-danger">*</span></label>
+            <input class="timings" type="text" [(ngModel)]="PaymentIFSC"   (keypress)="validateIfscKeyPress($event)" placeholder="SBIN0001234">
+            <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('ifsccode') && errorMessages['ifsccode']!=''">{{errorMessages['ifsccode'].message}}</label>
+        </div>
+        </div>
+        </div>
+        <div *ngIf="selectedPayment == 'UPI'">
+            <div class="row">
+             <div class="col-md-6">
+                 <label class="labels">UPI Number  <span class="text-danger">*</span></label>
+                <input class="timings" type="text" [(ngModel)]="PaymentUPINO" placeholder="Enter UPI No">
+                <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('upino') && errorMessages['upino']!=''">{{errorMessages['upino'].message}}</label>
+            </div>
+            <div class="col-md-6">
+                <label class="labels">UPI APP Name</label>
+                <input class="timings" type="text" [(ngModel)]="PaymentUPIAPP" placeholder="Enter UPI app name">
+                <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('upiappname') && errorMessages['upiappname']!=''">{{errorMessages['upiappname'].message}}</label>
+            </div>     
+            </div>
+        </div>
+            <div class="col-md-6" style="padding: 0;">
+                <label class="labels">Description</label>
+                <textarea class="timings" [(ngModel)]="ReferenceID" placeholder="Enter Description"></textarea>
+            </div>
+            <form #validationForm="ngForm" class="editForm" novalidate>
+            <div class="row">
+              <div  class="col-md-6">
+                  <div class="form-label">Upload Image  <span *ngIf="selectedPayment=='UPI' || selectedPayment=='CHEQUE'" class="text-danger">*</span></div>
+                <div  class="mb-3"><input  type="file" id="formFile"
+                    (change)="UploadProof1Image1($event,validationForm)" class="form-control"></div>
+
+                    <div class="imgcontainer" *ngIf="ShowImage">
+                        <img [src]="fileurl" class="payImg"/>
+                     </div>
+                     </div>    
+            </div>
+            </form>
+            <button class="btn btn-primary"(click)=submitSummary()>Submit</button>&nbsp;
+            <button class="btn btn-primary"(click)=cancelSummary()>Cancel</button>
+    </div>    
+    </div>
+   
+</div>

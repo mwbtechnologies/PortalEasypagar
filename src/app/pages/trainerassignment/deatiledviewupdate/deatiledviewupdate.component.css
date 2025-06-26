@@ -1,0 +1,51 @@
+.roledialog{
+    font-family:poppins;
+    width: 600px;
+    padding: 20px;
+    height: 400px;
+    overflow: scroll;
+}
+
+/* Default styling for the select dropdown */
+select {
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+
+  }
+  
+  /* Change background color based on the selected status */
+  select option[value="Pending"] {
+    background-color: red;
+    color: white;
+  }
+  
+  select option[value="On-Going"] {
+    background-color: blue;
+    color: white;
+  }
+  
+  select option[value="Complete"] {
+    background-color: green;
+    color: white;
+  }
+  
+  /* Apply color to the select field itself based on its value */
+  select.Pending {
+    background-color: red;
+    color: white;
+  }
+  
+  select.On-Going {
+    background-color: blue;
+    color: white;
+  }
+  
+  select.Complete {
+    background-color: green;
+    color: white;
+  }
+  

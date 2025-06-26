@@ -1,0 +1,7 @@
+.limitdialog{
+    font-family:poppins;
+    width: auto;
+    padding: 20px;
+    height: 400px;
+    overflow: scroll;
+}

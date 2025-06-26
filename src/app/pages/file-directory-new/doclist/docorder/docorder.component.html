@@ -1,0 +1,35 @@
+<div class="dialogs">
+    <div mat-dialog-title style="font-size: 16px;font-weight: 500px;padding: 7px 0px ;">
+        <h4 style="margin: 0;">Document Set Order</h4>
+        <label style="font-size: 13px;">Arrange the documents in your preferred order for viewing.</label>
+      </div>
+      <br>
+      <div class="col-md-6" style="padding: 0;">
+        <label>Select Document Group</label>
+         <ng-multiselect-dropdown style="width: 15rem;margin: 1rem"
+        [placeholder]="'select Document Group'"
+        [data]="DocumentGroups" 
+        [(ngModel)]="SelectedDocGroup" 
+        (onSelect)="onDocGroupSelect($event)"
+        (onDeSelect)="onDocGroupDeSelect($event)"
+        [settings]="DocSettings">
+         </ng-multiselect-dropdown>
+      </div>
+      <ng-container *ngIf="SelectedDocuments.length > 0">
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+            <ng-container *ngFor="let sub of SelectedDocuments">
+                <div class="example-box" cdkDrag>
+                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                    {{sub.name}}
+                </div>
+            </ng-container>
+        </div>
+        <p style="font-size: 12px;"><b>Please note:</b> Changes to the order will not<br>
+            be saved until you click the Submit button.</p>
+        <br>
+        <div style="text-align: center;">
+            <button class="btn btn-primary" (click)="submit()">Submit</button>&nbsp;
+            <button class="btn btn-primary" (click)="close()">Cancel</button>
+        </div>&nbsp;
+    </ng-container>
+</div>

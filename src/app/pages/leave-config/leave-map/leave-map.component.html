@@ -1,0 +1,175 @@
+
+
+      
+    <div class="card shadow-sm" style="height:400px !important;overflow:hidden!important">
+        <div class="card-header p-2 bg-secondary text-white">
+            <div class="row">
+                <div class="col-10">
+                    <h5> <i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp; Leave Settings</h5>  
+                </div>
+                <div class="col-2">
+                    <a (click)="close()">
+                        <i class="fa fa-times" style="font-size:16px"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row" >
+                <div class="col-lg-3 col-6 ">
+                    <label class="form-label">Select Organization <span class="text-danger">*</span></label>
+                    <ng-multiselect-dropdown [placeholder]="'Select Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                             [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                             (onDeSelect)="onDeselectedOrg($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-lg-3 col-6 ">
+                    <label class="form-label">
+                        Select Branch  &nbsp;<span class="text-danger">*</span>
+                        <i class="fa fa-info-circle"
+                           matTooltip="If you dont select any branches,by default it takes all branches"></i>
+                    </label>
+                    <ng-multiselect-dropdown [settings]="branchSettings" [placeholder]="'Select Branch'" [data]="BranchList" [(ngModel)]="selectedBranch"
+                                             (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)" (onSelectAll)="onBranchSelect_All($event)" (onDeSelectAll)="onBranchDeSelect_All($event)">
+                    </ng-multiselect-dropdown>
+                    <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('branch') && errorMessages['branch']!=''">{{errorMessages['branch'].message}}</label>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <label class="form-label">Select Department</label>
+                    <ng-multiselect-dropdown [settings]="departmentSettings" [placeholder]="'Select Department'" [data]="DepartmentList" (onSelectAll)="onDepartmentSelect_All($event)" (onDeSelectAll)="onDepartmentDeSelect_All($event)"
+                                             [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)">
+                    </ng-multiselect-dropdown>
+                    <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('department') && errorMessages['department']!=''">{{errorMessages['department'].message}}</label>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <label class="form-label">Select Employees</label>
+                    <ng-multiselect-dropdown [settings]="employeeSettings" [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                             [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                             (onDeSelect)="OnEmployeesChangeDeSelect($event)" (onSelectAll)="OnEmployeesChange($event)" (onDeSelectAll)="OnEmployeesChange($event)">
+                    </ng-multiselect-dropdown>
+                    <label class="text-danger" *ngIf="errorMessages.hasOwnProperty('employee') && errorMessages['employee']!=''">{{errorMessages['employee'].message}}</label>
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="form">
+                <div class="row">
+                    <div class="col-md-4 col-6">
+                        <label class="form-label">Leave Type <span class="text-danger">*</span></label>
+                        <select formControlName="LeaveTypeId" class="form-select form-select-sm text-dark border-1 border-dark">
+                            <option value="" >--SELECT--</option>
+                            <option *ngFor="let item of LeaveTypes" [value]="item.Id">{{item.LeaveTypeName}}</option>
+                        </select>
+                        <span class="text-danger" *ngIf="form.get('LeaveTypeId')!.touched && form.get('LeaveTypeId')!.hasError('required')">
+                            * Required
+                        </span>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <label class="form-label">Type <span class="text-danger">*</span></label>
+                        <select (change)="type_changed()" formControlName="CountType" class="form-select form-select-sm text-dark border-1 border-dark">
+                            <option value="M">Month Wise</option>
+                            <option value="Y">Year  Wise</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-12" *ngIf="form.get('CountType')!.value=='M'">
+                        <label class="form-label">Month Wise Leave Count</label>
+                        <input type="number" (input)="month_wise_leave_split()" formControlName="MonthWise" class="form-control form-control-sm" />
+                        <div *ngIf="form.get('MonthWise')!.touched && form.get('MonthWise')!.hasError('required')">
+                            <span class="text-danger"><i class="fa fa-info-circle"></i> * Required </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12" *ngIf="form.get('CountType')!.value=='Y'">
+                        <label class="form-label">Year Wise Leave Count</label>
+                        <input type="number" (input)="year_wise_leave_split()" formControlName="Yearly" class="form-control form-control-sm" />
+
+                        <div *ngIf="form.get('Yearly')!.touched && form.get('Yearly')!.hasError('required')">
+                            <span class="text-danger"><i class="fa fa-info-circle"></i> * Required </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-4">
+                        <table class="table table-bordered table-sm text-nowrap text-center fs-5" style="text-transform:none">
+                            <tr class="text-white">
+                                <th class="bg-light-gray fw-bold">Jan</th>
+                                <th class="bg-light-gray fw-bold">Feb</th>
+                                <th class="bg-light-gray fw-bold">Mar</th>
+                                <th class="bg-light-gray fw-bold">Apr</th>
+                                <th class="bg-light-gray fw-bold">May</th>
+                                <th class="bg-light-gray fw-bold">Jun</th>
+                                <th class="bg-light-gray fw-bold">Jul</th>
+                                <th class="bg-light-gray fw-bold">Aug</th>
+                                <th class="bg-light-gray fw-bold">Sep</th>
+                                <th class="bg-light-gray fw-bold">Oct</th>
+                                <th class="bg-light-gray fw-bold">Nov</th>
+                                <th class="bg-light-gray fw-bold">Dec</th>
+                                <th class="bg-light-gray fw-bold">Total</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="January" class="form-control form-control-sm" placeholder="Count of Leaves in Jan" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="February" class="form-control form-control-sm" placeholder="Count of Leaves in Feb" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="March" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="April" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="May" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="June" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="July" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="August" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="September" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="October" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="November" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" formControlName="December" class="form-control form-control-sm" placeholder="Count of Leaves in Mar" />
+                                </td>
+                                <td>
+                                    <input type="number" (input)="calculate_total()" readonly="readonly" formControlName="Total" class="form-control form-control-sm" placeholder="Total"
+                                            />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12" *ngIf="form.get('CountType')!.value=='Y' && form.get('Total')!.value !=form.get('Yearly')!.value ">
+                        <div class="alert alert-warning text-dark p-2" role="alert">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> &nbsp; The yearly leave count should equal the total of monthly leaves
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </form>
+            <div class="row p-2">
+                <div class="col-3">
+                    <button class="btn btn-primary btn-sm w-100" (click)="OnSave()"  ><i class="fa fa-floppy-o" aria-hidden="true"></i> &nbsp; Save Changes</button>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-danger btn-sm w-100"><i class="fa fa-times" aria-hidden="true"></i> &nbsp; Close</button>
+                </div>
+            </div>
+
+        </div>
+       
+    </div>
+
+

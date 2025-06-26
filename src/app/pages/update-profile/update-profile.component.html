@@ -1,0 +1,147 @@
+
+<div  class="row">
+     
+    <div  class="col-xl-9 col-xxl-9 col-md-12" >
+        <div  class="tab-content">
+            <div ngbnavpane="" class="tab-pane fade show active" id="ngb-nav-0-panel" role="tabpanel"
+                aria-labelledby="ngb-nav-0">
+                <div  id="edit" class="border-top-0">
+                    <div  class="card">
+                        <h4 style="text-align: center;font-weight: bold;padding-top: 20px;">🧑‍💼 Profile Details</h4>
+                        <div  class="card-body" style="max-height: 450px;">
+                          
+                                <div  class="form-group">
+                                    <div  class="row row-sm">
+                                        <div  class="col-md-4"><label 
+                                                class="form-label">Organization Name</label>
+                                                <input disabled
+                                                type="text" placeholder="Organization Name" [ngClass]="{'is-invalid': !Organization.valid && (Organization.dirty || Organization.touched || isSubmit)}"
+                                                #Organization="ngModel" required onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)" Organization [(ngModel)]="formInput.Organization"
+                                                class="form-control"></div>
+
+                                                <div  class="col-md-4"><label 
+                                                    class="form-label">First Name</label>
+                                           <input 
+                                                    type="text" placeholder="First Name" [ngClass]="{'is-invalid': !FirstName.valid && (FirstName.dirty || FirstName.touched || isSubmit)}"
+                                                    #FirstName="ngModel" required  FirstName [(ngModel)]="formInput.FirstName"
+                                                    class="form-control"></div>
+
+                                                    <div  class="col-md-4"><label 
+                                                        class="form-label">Last Name</label><input
+                                                        type="text" placeholder="Last Name" [ngClass]="{'is-invalid': !LastName.valid && (LastName.dirty || LastName.touched || isSubmit)}"
+                                                        #LastName="ngModel" required  LastName [(ngModel)]="formInput.LastName"
+                                                        class="form-control"></div>
+                                    </div>
+                                </div>
+                                <div  class="form-group">
+                                    <div  class="row row-sm">
+                                    
+                                    </div>
+                                </div>
+                             
+                                <div  class="form-group">
+                                    <div  class="row row-sm">
+                                        <div  class="col-md-4"><label 
+                                                class="form-label">Mobile Number</label><input 
+                                                type="number" aria-disabled="true" placeholder="Mobile number" [ngClass]="{'is-invalid':(MobileNumber.dirty || MobileNumber.touched || isSubmit)}"
+                                                #MobileNumber="ngModel" disabled="true" required  MobileNumber [(ngModel)]="formInput.MobileNumber"
+                                                class="form-control"></div>
+                                                <div  class="col-md-4"><label 
+                                                    class="form-label">Email ID</label><input 
+                                                    type="text" placeholder="Email ID" [ngClass]="{'is-invalid': !Email.valid && (Email.dirty || Email.touched || isSubmit)}"
+                                                    #Email="ngModel" required Email [(ngModel)]="formInput.Email"
+                                                    class="form-control"></div>
+
+                                                    <div  class="col-md-2"><label 
+                                                        class="form-label">Work Start-Time</label><input 
+                                                        type="time" placeholder="OfficeStartTime" [ngClass]="{'is-invalid': !OfficeStartTime.valid && (OfficeStartTime.dirty || OfficeStartTime.touched || isSubmit)}"
+                                                        #OfficeStartTime="ngModel" required OfficeStartTime [(ngModel)]="formInput.OfficeStartTime"
+                                                        class="form-control"></div>
+
+                                                        <div  class="col-md-2"><label 
+                                                            class="form-label">End-Time</label><input 
+                                                            type="time" placeholder="OfficeEndTime" [ngClass]="{'is-invalid': !OfficeEndTime.valid && (OfficeEndTime.dirty || OfficeEndTime.touched || isSubmit)}"
+                                                            #OfficeEndTime="ngModel" required OfficeEndTime [(ngModel)]="formInput.OfficeEndTime"
+                                                            class="form-control"></div>
+                                    </div>
+                                </div>
+                                <div  class="form-group">
+                                    <div  class="row row-sm">
+                                   
+                                            
+                                      
+
+                                            <div  class="col-md-4"><label 
+                                                class="form-label">State</label><input 
+                                                type="text" placeholder="State" [ngClass]="{'is-invalid': !State.valid && (State.dirty || State.touched || isSubmit)}"
+                                                #State="ngModel" required  State [(ngModel)]="formInput.State"
+                                                class="form-control"></div>
+                                                <div  class="col-md-4"><label 
+                                                    class="form-label">City</label><input 
+                                                    type="text" placeholder="City" [ngClass]="{'is-invalid': !City.valid && (City.dirty || City.touched || isSubmit)}"
+                                                    #City="ngModel" required City [(ngModel)]="formInput.City"
+                                                    class="form-control"></div>
+
+                                                    <div  class="col-md-4"><label 
+                                                        class="form-label">Address</label><textarea 
+                                                         name="example-textarea-input" rows="2"
+                                                        placeholder="Address" [ngClass]="{'is-invalid': !Address.valid && (Address.dirty || Address.touched || isSubmit)}"
+                                                        #Address="ngModel" required Address [(ngModel)]="formInput.Address"
+                                                        class="form-control"></textarea>
+                                                </div>
+                                             
+                                    </div>
+                                </div>
+                                <div  class="form-group">
+                                    <div  class="row row-sm">
+                                        <div  class="col-md-2"><label 
+                                                class="form-label">Salary Start -</label>
+                                     <input 
+                                                type="number" placeholder="Enter Salary Day *" (change)="checksalaryday(formInput.SalaryDay);" [ngClass]="{'is-invalid': !SalaryDay.valid && (SalaryDay.dirty || SalaryDay.touched || isSubmit)}"
+                                                #SalaryDay="ngModel" required SalaryDay [(ngModel)]="formInput.SalaryDay"
+                                                class="form-control"></div>
+
+                                                <div  class="col-md-2"><label 
+                                                    class="form-label">End Date</label>
+                                         <input 
+                                                    type="number" placeholder="{{MaxSalaryDay}}" required
+                                                    class="form-control"></div>
+                                    </div>
+                                </div>
+                             
+                        </div>
+                        <div  class="card-footer py-4" ><button  (click)="UpdateProfile();"
+                            class="btn ripple w-sm float-end" style="background-color: #3601b5;"> Update Profile </button></div>
+                    </div>
+
+                </div><!---->
+            </div>
+        </div>
+    </div>
+    <div  class="col-xl-3 col-xxl-3 col-md-12" style="padding-left: 0rem;">
+        <div  class="tab-content">
+            
+            <div ngbnavpane="" class="tab-pane fade show active" id="ngb-nav-0-panel" role="tabpanel"
+                aria-labelledby="ngb-nav-0">
+                <div  id="edit" class="border-top-0">
+                      <div  class="card">
+                        <div  class="card-body" style="min-height: 450px;">
+                            <!-- <h5  class="mb-4 font-weight-semibold"> Address Information </h5> -->
+                           <img style="height: 450px;" src="https://img.freepik.com/free-vector/competent-resume-writing-professional-cv-constructor-online-job-application-profile-creation-african-american-woman-filling-up-digital-form-concept-illustration_335657-2053.jpg">
+                        </div>
+                        
+                    </div>
+                </div><!---->
+            </div><!----><!----><!----><!----><!----><!---->
+        </div>
+    </div>
+
+   
+
+   
+</div>
+
+<div  *ngIf="!ViewPermission">
+                   
+<div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+</div>

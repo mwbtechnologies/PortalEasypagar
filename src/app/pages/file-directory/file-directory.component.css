@@ -1,0 +1,11 @@
+.expandable {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .ff_fileupload_dropzone {
+    cursor: pointer;
+    color: #555;
+  }

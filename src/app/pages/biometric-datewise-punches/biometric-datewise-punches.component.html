@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="justify-content: start;">
+                <div class="col-md-5"><i class="fa fa-arrow-left" (click)="backToDashboard()"></i></div>
+                <h3 class="mb-0 card-title">Daily Punch Report</h3>
+            </div>
+            <div class="card-body">
+                <div style="display: flex;flex-wrap: wrap;">
+                    <div class="col-md-3" >
+                        <label class="form-label">Select Organization</label>
+                        <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                            [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                            (onDeSelect)="onDeselectedOrg($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Select Branch </label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Branch'" [data]="BranchList"
+                            [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                            (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">All Department</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Department'" [data]="DepartmentList"
+                            [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onSelectAll)="onDeptDeSelectAll()" (onDeSelectAll)="onDeptDeSelectAll()"
+                            (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Select Employee</label>
+                        <ng-multiselect-dropdown [placeholder]="'Select Employee'" [data]="EmployeeList"
+                            [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                            (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input name="example-password-input" placeholder="Select Date" type="date" required StartDate
+                                [(ngModel)]="formInput.StartDate" class="form-control">
+                        </div>
+                    </div>  
+                    <div class="col-md-2">
+                        <label class="form-label">Action</label>
+                        <button class="btn btn-primary mb-4" (click)="getPunchReport()"> Search</button> &nbsp;
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="display: flex;justify-content: end;margin-right: 3px;">
+                    <button class="btn btn-primary" *ngIf="ShowDownload" (click)="DownloadPDF()" [disabled]="MonthWisePunch ==undefined || MonthWisePunch == null || !(MonthWisePunch.length > 0)">Download PDF</button>
+                  &nbsp;  <button class="btn btn-primary" *ngIf="ShowDownload" (click)="DownloadExcel()" [disabled]="MonthWisePunch ==undefined || MonthWisePunch == null || !(MonthWisePunch.length > 0)">Download Excel</button>
+                 </div>
+            </div>
+            <div class="card-body" *ngIf="showtable">
+                <div class="table-responsive ng-star-inserted"></div>
+                <!-- common table -->
+                <app-common-table [data]="MonthWisePunch" [ExportName]="'Month wise Punch Report'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+                [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+                <p><b>M</b> : Mobile App, <b>F</b> : Face App,  <b>B</b> : Biometric Device, <b>A</b> : Attendance Rectification,</p>
+               
+            </div>
+        </div>
+    </div>
+</div>

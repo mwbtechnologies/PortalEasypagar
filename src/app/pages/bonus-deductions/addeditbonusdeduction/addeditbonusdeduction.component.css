@@ -1,0 +1,11 @@
+.dialogs{
+    width: auto;
+    height: 600px;
+    overflow-y: scroll;
+    padding: 20px;
+    font-family: poppins;
+}
+
+::ng-deep .disable-checkbox-dropdown .dropdown-list .checkbox input[type="checkbox"] {
+    pointer-events: none; /* Disable click events */
+  }

@@ -1,0 +1,83 @@
+.spacing{
+    padding: 0;
+  }
+  .dialogs{
+    height: 700px;
+    width: 1000px;
+    overflow-y: scroll;
+    padding: 20px;
+    font-family: poppins;
+}
+
+.ms-5, .mx-5 {
+  margin-left: 0rem !important;
+}
+
+.mb-5, .my-5 {
+  margin-bottom: 0rem !important;
+}
+.me-5, .mx-5 {
+  margin-right: 0rem !important;
+}
+ngx-material-timepicker {
+  z-index: 10000 !important;
+}
+
+.types{
+background-color: white;
+border-radius: 10px;
+width: 16vw;
+text-align: center;
+height: 100%;
+box-shadow: 0 4px 8px 0 rgb(92 92 92), 0 6px 20px 0 rgb(161 161 161 / 50%);
+}
+.searchbox{
+  padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #bcb9b9;
+    margin: 20px 0px;
+}
+.types:hover{
+  transform: scale(1.05);
+}
+.selected{
+border: 1px solid black;
+}
+.textsize{
+  font-size:14px;
+  font-weight: 500;
+  padding: 10px 0px;
+}
+
+.outercard{
+display:flex;flex-wrap: wrap;row-gap: 10px;column-gap: 10px;
+}
+
+.imagesize{
+  max-height: 150px; min-height: 150px;
+}
+.optbtn{
+  background-color: #3601b5a3;
+  text-align: center;
+  height: max-content;
+  padding: 7px 10px;
+  /* margin: 0px; */
+  color: white;
+  border-radius: 50px;
+}
+@media (min-width:900px) and (max-width: 1100px) {
+  .textsize{
+    font-size:12px;
+  }
+  .types{
+    width: 20vw;
+    }
+}
+@media (min-width:768px) and (max-width: 900px) {
+  .textsize{
+    font-size:12px;
+  }
+  .types{
+    width: 25vw;
+    }
+}

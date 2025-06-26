@@ -1,0 +1,15 @@
+.lunchcard{
+    border-radius: 10px;
+    width: 400px;
+    padding: 0px 0px 0px 0px;
+    background-color: white;
+    text-align: center;
+}
+.lunchheader{
+   background-color: #7373c9;
+    color: white;
+    text-align: center;
+    width: -webkit-fill-available;
+    padding: 10px;
+    border-radius: 10px 10px 0px 0px;
+}

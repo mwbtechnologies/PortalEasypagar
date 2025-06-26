@@ -1,0 +1,78 @@
+<div *ngIf="showEmpWise == false">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="display: flex;flex-wrap: wrap;justify-content: space-between;" >  
+                    <div class="col-md-2">
+                        <h3 class="card-title">Bonus And Deduction</h3>
+                    </div>    
+                    <div class="col-md-6" style="display: flex;justify-content: flex-end; flex-wrap: wrap-reverse;  padding: 5px;row-gap: 4px;">
+                        <button type="button" class="btn btn-primary" (click)="bonusDeduction('Bonus',false)">Add Bonus</button>&nbsp;
+                        <button type="button" class="btn btn-primary" (click)="bonusDeduction('Deduction',false)">Add Deductions</button>&nbsp;
+                        <!-- <button type="button" class="btn btn-primary" [disabled]="BonusAttendanceList ==undefined || BonusAttendanceList == null || !(BonusAttendanceList.length > 0)" (click)="downloadReport()">📥 Download Report</button>&nbsp; -->
+                        <button type="button" class="btn btn-primary" [disabled]="BonusAttendanceList ==undefined || BonusAttendanceList == null || !(BonusAttendanceList.length > 0)" (click)="viewEmpWise()">View</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3" >
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Select Branch &nbsp;</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Branches'" [data]="BranchList"
+                                [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)"
+                                (onDeSelect)="onBranchDeSelect($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <label class="form-label">Select Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                                [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)"
+                                (onDeSelect)="onDeptDeSelect($event)" [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div> -->
+                        <div class="col-md-3">
+                            <label class="form-label">Type</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Type'" [data]="ListType"
+                                [(ngModel)]="selectedListType" [settings]="moduleTypeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Module</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Module'" [data]="ModuleTypeList"
+                                [(ngModel)]="selectedModuleType" [settings]="moduleTypeSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <label class="form-label">Select Employees</label>
+                            <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+                                (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+                            </ng-multiselect-dropdown>
+                        </div> -->
+                        <div class="col-md-2">
+                            <label class="form-label">Action</label>
+                            <button class="btn btn-primary mb-4" (click)="GetList();"> Search</button> &nbsp;
+                        </div>
+
+                    </div>
+                    <app-common-table [data]="BonusAttendanceList" [ExportName]="'Bonus Deduction List'" 
+                    [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" 
+                    [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors" 
+                    [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)">
+                </app-common-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="showEmpWise == true">
+    <label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back to
+        report</label>
+    <app-history></app-history>
+</div>

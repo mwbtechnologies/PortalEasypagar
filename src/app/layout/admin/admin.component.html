@@ -1,0 +1,26 @@
+<div _ngcontent-vpk-c114="" class="horizontalMenucontainer">
+    <div _ngcontent-vpk-c114="" class="page">
+        <app-header [visible]="isSidebarVisible" (toggleSidebar)="toggleSidebar()"></app-header>
+        <app-switcher></app-switcher>
+        <div _ngcontent-vpk-c114="" class="page-main">
+            <app-sidebar [visible]="isSidebarVisible"></app-sidebar>
+           
+            <div _ngcontent-vpk-c114="" class="main-content app-content mt-0">
+           <app-loader></app-loader>
+                <div _ngcontent-vpk-c114="" class="main-container container-fluid">
+                    <app-page-header _nghost-kpa-c130="">      
+                    </app-page-header>
+                    <router-outlet _ngcontent-jdt-c114=""></router-outlet>
+                    <!-- <app-root> -->
+              
+                <!-- </app-root> -->
+                    <!-- <router-outlet></router-outlet> -->
+                    <!-- <app-dashboard _nghost-hbv-c135=""></app-dashboard> -->
+                    <!----></div>
+            </div>
+        </div>
+        <app-right-sidebar></app-right-sidebar>
+        <app-footer></app-footer>
+    </div>
+    <app-tab-to-top></app-tab-to-top>
+</div>

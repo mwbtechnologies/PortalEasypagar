@@ -1,0 +1,66 @@
+<div class="card" *ngIf="MainPage">
+    <div class="card-header" style="justify-content: start;">
+        <div class="col-md-5"><label (click)="backToDashboard()" class="mb-0 card-title"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back
+        </label></div>
+        <h3 class="mb-0 card-title">Subscription Details</h3>
+    </div>
+<div class="subscription-container" >
+  <div style="display: flex;flex-wrap: wrap;gap: 10px;">
+    <div class="plan-card">
+      <div class="plan-header">
+        <h2 class="plan-name">{{ PlanDetails?.Plan?.PlanName }}</h2>
+        <p class="plan-status" [class.expired]="PlanDetails?.Plan?.IsExpired">
+            {{ PlanDetails?.Plan?.IsExpired ? 'Expired' : 'Active' }}
+          </p>
+      </div>
+      <div class="plan-body">
+        <p class="plan-price">₹{{ PlanDetails?.Plan?.Amount }}</p>
+        <p class="plan-duration">{{ PlanDetails?.Plan?.Duration }} days</p>
+        <p class="plan-dates">
+          <span class="plan-single-date">Start: {{ PlanDetails?.Plan?.CreatedDate | date: 'dd MMM yyyy' }}</span>
+          <span class="plan-single-date">Expires On: {{ PlanDetails?.Plan?.ExpiryDate | date: 'dd MMM yyyy' }}</span>
+        </p>
+      </div>
+      <!-- <div class="plan-actions">
+        <button class="btn renew" (click)="viewDetailedPlan()">View Detailed Plan</button>
+      </div> -->
+    </div>
+    <!-- Features Section -->
+     <div class="FeatureClass">
+       <h3 style="margin: 0;color: blue;font-size: 16px;">Features</h3>
+       <div class="features-section">
+         <ng-container *ngFor="let feature of PlanDetails?.Features">
+           <div class="combinedContainer" (click)="addonAndPacks(feature?.FeatureName,PlanDetails)"> 
+             <span class="feature-name">{{ feature?.FeatureName }}</span>
+           <div class="combinedvalues">
+             <label style="margin:0">{{ feature?.Usage }}</label>&nbsp;
+             <label style="margin:0;font-size: 12px;align-self: center;">Used out of</label>&nbsp;
+             <label style="margin:0">{{ feature?.Allocation }}</label>
+           </div>
+           <div class="progress-bar">
+             <div class="progress" [style.width]="(feature?.Usage / feature?.Allocation) * 100 + '%'"
+             ></div></div>
+           </div>
+         </ng-container> 
+       </div>
+       <div style="display: flex;justify-content: center;">
+         <button *ngIf="AddonButton === 'true'" class="btn btn-primary addonbtn" (click)="addonAndPacks('All',PlanDetails)">Addons</button>
+         <button *ngIf="RenewButton === 'true'" class="btn btn-primary addonbtn" (click)="renewPlanPack()">Renew</button>
+       </div>
+     </div>
+  </div>
+</div>
+  </div>
+  <div *ngIf="DetailedPage">
+       <label class="button" (click)="backToMainPage()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back</label> 
+    <app-detailedplan></app-detailedplan>
+  </div>
+  <div *ngIf="addonPacks">
+       <label class="button" (click)="backToMainPage()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back</label> 
+    <app-addonpacks [addontype]="addontype" [PlanAddons]="AddonListPlanName"></app-addonpacks>
+  </div>
+  <div *ngIf="renewPlan">
+       <label class="button" (click)="backToMainPage()"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;Back</label> 
+    <app-renewplans></app-renewplans>
+  </div>
+  

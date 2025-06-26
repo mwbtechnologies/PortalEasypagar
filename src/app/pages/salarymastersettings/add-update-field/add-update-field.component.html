@@ -1,0 +1,52 @@
+<div style="width: 400px;height:300px;overflow: scroll;">
+    <div>
+        <div class="tab-content">
+            <div ngbnavpane="" class="tab-pane fade show active" id="ngb-nav-0-panel" role="tabpanel"
+                aria-labelledby="ngb-nav-0">
+                <div id="edit" class="border-top-0">
+                    <div class="card">
+                        <h4 style="text-align: center;font-weight: bold;padding-top: 20px;margin: 0;">Add Field</h4>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="row row-sm">
+                                    <div class="col-md-10"><label class="form-label">Field Name</label>
+                                        <input type="text" placeholder="Field Name"
+                                            [ngClass]="{'is-invalid': !textField.valid && (textField.dirty || textField.touched || isSubmit)}"
+                                            #textField="ngModel" required
+                                            onkeydown="return /^[a-zA-Z][a-zA-Z\s]*$/.test(this.value + event.key)"
+                                            textField [(ngModel)]="formInput.textField" class="form-control">
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12">
+                                        <!-- <label class="form-label">IsDeductable</label> -->
+                                        <!-- <mat-checkbox [(ngModel)]="formInput.IsChecked"></mat-checkbox> -->
+                                        <mat-radio-group aria-label="Select an option" [(ngModel)]="formInput.IsChecked">
+                                            <mat-radio-button value="1">Earnings</mat-radio-button>
+                                            <mat-radio-button value="2">Deductions</mat-radio-button>
+                                          </mat-radio-group>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <button *ngIf="edit==false" class="btn btn-primary"
+                                style="border-radius: 10px;background-color: #3601b5a3;" (click)="SaveData();">
+                                Submit
+                            </button>&nbsp;
+                            <button *ngIf="edit==true" class="btn btn-primary"
+                                style="border-radius: 10px;background-color: #3601b5a3;" (click)="SaveData();">
+                                Update
+                            </button>&nbsp;
+                            <button class="btn btn-danger" style="border-radius: 10px;background-color: #3601b5a3;"
+                                (click)="CloseTab();">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+
+                </div><!---->
+            </div>
+        </div>
+    </div>
+</div>

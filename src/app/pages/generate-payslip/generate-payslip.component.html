@@ -1,0 +1,484 @@
+<!-- <div *ngIf=""> -->
+    <div class="row">
+        <div class="col-md-12 row">
+            <!-- <div class="card"> -->
+            <!-- <div class="card-header">
+                    <h3 class="mb-0 card-title">{{EmployeeName}} Payslip</h3>
+                </div> -->
+                <div class="col-lg-12 col-xl-7">
+                <div id="pay_slip_container" class="card row"  style="width: 100%;margin: 20px auto;padding: 30px;" >
+                    <div class="row">
+                        <div class="col-lg-9 col-xl-10" style="padding: 0;">
+                            <label style="font-size:18px ;font-weight: 500;" *ngIf="AdminProfile && (AdminProfile.Organization!=undefined || AdminProfile.Organization!=null)">{{AdminProfile.Organization}}</label><br>
+                            <label style="font-size:14px ;color: #616161;" *ngIf="AdminProfile && (AdminProfile.Address!=undefined || AdminProfile.Address!=null)">{{AdminProfile.Address}}</label>
+                        </div>
+                        <div class="col-lg-3 col-xl-2" style="padding: 0;justify-content: end;display: flex;">
+                            <button class="btn btn-primary" style="height: fit-content;text-wrap: auto;line-height: 1;padding: 8px 5px;width: fit-content;" *ngIf="employeeDetail && employeeDetail.hasOwnProperty('IsPayslipExist') && employeeDetail['IsPayslipExist'] == true" (click)="DownloadSlip()">Download Payslip</button>
+                        </div>
+                    </div>
+                    <div class="col-12" style="display: flex;justify-content: space-between;background-color: #f5f5f5;border-radius: 5px;padding: 5px 20px;color: #3601b5;margin-top: 20px;">
+                        <div style="font-size: 14px;display: flex;align-items: center;">Payslip For the Month</div>
+                        <div style="font-size: 18px;font-weight: 500;display: flex;align-items: center;color: #1a0057;">{{getMonthName()}} {{employeeDetail?.Year}}</div>
+                    </div>
+                    <div class="col-12 row">
+                        <div class="col-8" style="padding: 20px 0px 0px 0px;">
+                            <table>
+                                <tr *ngIf="employeeDetail && employeeDetail.hasOwnProperty('Employee') && employeeDetail.Employee!=''"><td class="title">Employee name</td><td class="titleData">{{employeeDetail.Employee}}</td></tr>
+                                <tr *ngIf="employeeDetail && employeeDetail.hasOwnProperty('Designation') && employeeDetail.Designation!=''"><td class="title">Designation</td><td class="titleData">{{employeeDetail.Designation}}</td></tr>
+                                <tr *ngIf="employeeDetail && employeeDetail.hasOwnProperty('EmployeeID') && employeeDetail.MappedEmpId!=''"><td class="title">Employee ID</td><td class="titleData">{{employeeDetail.MappedEmpId}}</td></tr>
+                                <tr *ngIf="employeeDetail && employeeDetail.hasOwnProperty('Branch') && employeeDetail.Branch!=''"><td class="title">Branch</td><td class="titleData">{{employeeDetail.Branch}}</td></tr>
+                                <tr *ngIf="employeeDetail && employeeDetail.hasOwnProperty('Department') && employeeDetail.Department!=''"><td class="title">Department</td><td class="titleData">{{employeeDetail.Department}}</td></tr>
+                                <tr *ngIf="employeeDetail && employeeDetail.hasOwnProperty('Organization') && employeeDetail.Organization!=''"><td class="title">Date of Joining</td><td class="titleData">{{employeeDetail.Organization}}</td></tr>
+                                <!-- <tr *ngIf="employeeDetail.hasOwnProperty('PayslipDate') && employeeDetail.PayslipDate!=''"><td class="title">PaySlip Generation Date</td><td class="titleData">{{employeeDetail.PayslipDate |date: 'dd-MM-yyyy'}}</td></tr> -->
+                                <tr *ngIf="employeeDetail && employeeDetail.hasOwnProperty('Month') && employeeDetail.Month!=''"><td class="title">PaySlip Duration</td><td class="titleData">{{getPaySlipDuration(employeeDetail.Month)}}</td></tr>
+
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <div style="margin: 20px 0px 0px 0px;border-top: 10px solid #00A510;padding: 10px 10px 10px 10px;background-color: #F5F5F5;width: 100%;">
+                                <div style="color: #616161;font-size: 14px;padding: 10px 0px 0px 10px;display: flex;justify-content: space-between;flex-wrap: wrap;">
+                                    <span>Net Pay</span>
+                                    <span style="color: #00950e;background-color: #aeffb8;font-size: 12px;padding: 2px 7px;width: fit-content;border-radius: 20px;" *ngIf="employeeDetail && employeeDetail.hasOwnProperty('IsPayslipExist') && employeeDetail['IsPayslipExist'] == true">
+                                        payslip apporved
+                                    </span>
+                                </div>
+                                <div style="font-size: 25px;font-weight: 700;padding: 5px 0px 0px 10px;color: #272727;" *ngIf="employeeDetail && employeeDetail.hasOwnProperty('NetSalary')">
+                                    ₹ {{employeeDetail.NetSalary | numberPrecision}}
+                                </div>
+                                
+                            </div>
+                            <div style="display: flex;justify-content: space-between;width:100%;">
+                                <div style="margin: 20px 0px 0px 0px; border-top: 5px solid #007676; padding: 10px 10px 10px 10px; background-color: #F5F5F5; width: 48%;" *ngIf="employeeDetail && (employeeDetail.hasOwnProperty('PresentDays') || employeeDetail.hasOwnProperty('WeekOffDays') || employeeDetail.hasOwnProperty('WeekOffDeduction'))">
+                                    <div style="font-size: 25px; font-weight: 400;text-align: center; color: #181818;">
+                                        <ng-container *ngIf="dateWiseStatus['present'] + dateWiseStatus['holiday'] + dateWiseStatus['weekoff']">
+                                            {{employeeDetail.PaidDays}}
+                                        </ng-container>
+                                        <ng-container *ngIf="!(dateWiseStatus['present'] + dateWiseStatus['holiday'] + dateWiseStatus['weekoff'])">
+                                            -
+                                        </ng-container>
+                                    </div>
+                                    <div style="color: #616161; font-size: 12px;text-align: center;">
+                                        Paid Days
+                                    </div>
+                                </div>
+                                <div style="margin: 20px 0px 0px 0px; border-top: 5px solid #760000; padding: 10px 10px 10px 10px; background-color: #F5F5F5; width: 48%;" *ngIf="employeeDetail && (employeeDetail.hasOwnProperty('WorkingDays') || employeeDetail.hasOwnProperty('PresentDays') || employeeDetail.hasOwnProperty('WeekOffDays') || employeeDetail.hasOwnProperty('WeekOffDeduction'))">
+                                    <div style="font-size: 25px; font-weight: 400;text-align: center; color: #181818;">
+                                        {{employeeDetail.TotalWokingDays - employeeDetail.PaidDays}}
+                                    </div>
+                                    <div style="color: #616161; font-size: 12px;text-align: center;">
+                                        Unpaid Days
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="border-top: 1px solid #616161;display: flex;justify-content: space-between;padding: 20px 0px;margin-top: 40px;margin-left: 0.2rem;">
+                        <div class="earning">
+                            <!-- <div class=" earning"> -->
+                                <div style="font-size: 14px;color: #222222;padding: 10px 0px;font-weight: 500;">Earnings</div>
+                                <ng-container *ngFor="let earn of Earnings">
+                                    <div class="salaryRow" *ngIf="employeeDetail && employeeDetail.hasOwnProperty(earn.title) && employeeDetail[earn.title] >0" >
+                                        <!-- && employeeDetail[earn.title] >0" -->
+                                        <div>{{earn.displayText}}</div>
+                                        <div class="amount">
+                                            <ng-container *ngIf="earn.title == 'Bonus' &&  employeeDetail['IsPayslipExist'] == false">
+                                                <a (click)="viewDeductions('Bonus')" *ngIf="showbonus">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                &nbsp;&nbsp;
+                                            </ng-container>
+                                            {{employeeDetail[earn.title] | numberPrecision}}</div>
+                                    </div>
+                                </ng-container>
+                                
+                            <!-- </div> -->
+                        </div>
+                        <div class="deduction">
+                                <div style="font-size: 14px;color: #222222;padding: 10px 0px;font-weight: 500;">Deductions</div>
+                                
+                                <ng-container *ngFor="let deduct of Deductions">
+                                    <div class="salaryRow" *ngIf="employeeDetail && employeeDetail.hasOwnProperty(deduct.title) && employeeDetail[deduct.title] >0">
+                                        <!-- && employeeDetail[deduct.title] >0 -->
+                                        <div>{{deduct.displayText}}</div>
+                                        <div class="amount">
+                                            <!-- <ng-container *ngIf="deduct.title == 'LoanDeduction' || deduct.title == 'AdvanceDeduction'">
+                                                <a (click)="openDialog(SalaryDetails[0].LoanList, SalaryDetails[0].TotalLoanDeduction,SalaryDetails[0].NetSalary);">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                &nbsp;&nbsp;
+                                            </ng-container> -->
+                                            <ng-container *ngIf="employeeDetail && employeeDetail.hasOwnProperty('IsPayslipExist') && employeeDetail['IsPayslipExist'] == false">
+                                                <ng-container *ngIf="(deduct.title == 'LoanDeduction' || deduct.title == 'AdvanceDeduction')">
+                                                    <a (click)="openDialog(SalaryDetails[0].LoanList, SalaryDetails[0].TotalLoanDeduction);">
+                                                        <i class="fa fa-eye"></i> 
+                                                    </a>
+                                                </ng-container>
+                                            </ng-container>
+                                           
+                                                <ng-container *ngIf="deduct.title == 'Deduction'">
+                                                    <a (click)="viewDeductions('Deduction')" *ngIf="showdeduction">
+                                                        <i class="fa fa-eye"></i> 
+                                                    </a>
+                                                    &nbsp;&nbsp;
+                                            <!-- <ng-container *ngIf="deduct.title == 'Deduction'">
+                                                <a (click)="viewDeductions('Deduction')">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                &nbsp;&nbsp; -->
+                                            </ng-container>
+                                            {{employeeDetail[deduct.title] | numberPrecision}}
+                                        </div>
+                                        
+                                    </div>
+                                </ng-container>
+                        </div>
+
+                        
+                    </div>
+                    <div class="row" style="display: flex;justify-content: space-between;padding: 20px 0px;margin-left: 0.2rem;" *ngIf="employeeDetail">
+                        <div class="" style="width:48%;border-top:2px solid #00A510;border-bottom:2px solid #00A510;padding: 3px 10px;color: #616161;background-color: #00A5100d;">
+                            <div class="salaryRow" style="padding: 3px 0px;" >
+                                <div>Gross Pay</div>
+                                <div class="amount">
+                                    {{getTotal(Earnings,employeeDetail) | numberPrecision}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="" style="width:48%;border-top:2px solid #EC0000;border-bottom:2px solid #EC0000;padding: 3px 10px;background-color: #EC00000d;color: #616161;">
+                            <div class="salaryRow" style="padding: 3px 0px;" >
+                                <div>Total Deductions</div>
+                                <div class="amount">
+                                    {{getTotal(Deductions,employeeDetail) | numberPrecision}}
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row" style="margin: 0;padding:0;">
+                            <div class="col-12 row" style="display: flex;justify-content: space-between;background-color: #F5F5F5;padding: 5px 20px;border-radius: 5px;margin: 30px 0;display: flex;align-items: center;">
+                                <!-- <div class="col-4">Bonus</div>
+                                <div class="col-8" style="display:flex;font-size: 20px;font-weight: 700;padding: 5px 0px 0px 10px;color: #272727;justify-content: end;">
+                                    ₹ {{employeeDetail?.Bonus}}
+                                </div>
+                                 <div class="col-4">Deduction</div>
+                                 <div class="col-8" style="display:flex;font-size: 20px;font-weight: 700;padding: 5px 0px 0px 10px;color: #272727;justify-content: end;">
+                                    ₹ {{employeeDetail?.Deduction}}&nbsp;<button style="padding: 0px;" matTooltip="View Deductions"><i class="fa fa-eye" style="background-color: #3601b5a3;font-size: 12px;color: white;padding: 5px;border-radius: 4px;" 
+                                    (click)="viewDeductions()"></i></button>
+                                </div>   -->
+                                <div class="col-4">Total Net Pay</div>
+                                <div class="col-4" style="display:flex;font-size: 20px;font-weight: 700;padding: 5px 0px 0px 10px;color: #272727;justify-content: end;">
+                                    ₹ {{employeeDetail?.NetSalary | numberPrecision}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div>This is system generated payslip and does not require </div>
+
+                        </div> -->
+                    </div>
+
+                </div>
+                </div>
+                <div class="col-lg-12 col-xl-5">
+                <div class="card row"  style="width: 100%;margin: 20px auto;padding: 30px;" >
+                    <div *ngIf="calendarData && calendarData.length>0">
+                        <span class="col-6">
+                            <label style="font-size: 18px;font-weight: 500;">Calendar</label><br>
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td class="weekHeader">Mon</td>
+                                        <td class="weekHeader">Tue</td>
+                                        <td class="weekHeader">Wed</td>
+                                        <td class="weekHeader">Thu</td>
+                                        <td class="weekHeader">Fri</td>
+                                        <td class="weekHeader">Sat</td>
+                                        <td class="weekHeader">Sun</td>
+                                    </tr>
+                                    <tr *ngFor="let wd of calendarData">
+                                        <td *ngFor="let d of wd">
+                                            <!-- <div 
+                                                *ngIf="d!=null" 
+                                                class="weekDay" 
+                                                [class.present]="DatewiseListKV[d].IsPresent == true"  
+                                                [class.leave]="DatewiseListKV[d].IsOnLeave == true"  
+                                                [class.holiday]="DatewiseListKV[d].Isholiday == true && DatewiseListKV[d].Status != 'WO'" 
+                                                [class.weekoff]="DatewiseListKV[d].Isholiday == true && DatewiseListKV[d].Status == 'WO'"
+                                                [class.halfHolidayHalfPresent]="DatewiseListKV[d].IsHalfdayHoliday == true && DatewiseListKV[d].IsHalfdaypresent == true">
+                                                {{d?.getDate()}}
+                                            </div> -->
+                                            <div class="calendar-card" *ngIf="d!=null" >
+                                                <div class="calendar-top" 
+                                                [class.present]="['P'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])"
+                                                [class.absent]="['LOP','A'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])"
+                                                [class.leave]="['PL','SL','POW'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])"
+                                                [class.holiday]="['H'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])"
+                                                [class.weekoff]="['WO'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])"
+                                                
+                                                [class.top-hovered]="((['P'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])) && presentHover == true) || 
+    
+                                                ((['LOP','A'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])) && absentHover == true) || 
+    
+                                                ((['PL','SL','POW'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])) && leaveHover == true) || 
+                                                ((['WO'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])) && weekoffHover == true) || 
+                                                ((['H'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[0])) && holidayHover == true)"
+                                                >
+                                            </div>
+    
+                                            <div class="calendar-bottom"
+                                            [class.present]="['P'].includes(DatewiseListKV[d]?.Comment) || ['P'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])"
+                                            [class.absent]="['LOP','A'].includes(DatewiseListKV[d]?.Comment) || ['LOP','A'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])"
+                                            [class.leave]="['PL','SL','POW'].includes(DatewiseListKV[d]?.Comment) || ['PL','SL','POW'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])"
+                                            [class.holiday]="['H'].includes(DatewiseListKV[d]?.Comment) || ['PL','SL','POW'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])"
+                                            [class.weekoff]="['WO'].includes(DatewiseListKV[d]?.Comment) || ['WO'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])"
+                                            
+                                                [class.bottom-hovered]="((['P'].includes(DatewiseListKV[d]?.Comment) || ['P'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])) && presentHover == true) || 
+    
+                                                ((['LOP','A'].includes(DatewiseListKV[d]?.Comment) || ['LOP','A'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])) && absentHover == true) || 
+    
+                                                ((['PL','SL','POW'].includes(DatewiseListKV[d]?.Comment) || ['PL','SL','POW'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])) && leaveHover == true) || 
+                                                ((['WO'].includes(DatewiseListKV[d]?.Comment) || ['WO'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])) && weekoffHover == true) || 
+                                                ((['H'].includes(DatewiseListKV[d]?.Comment) || ['PL','SL','POW'].includes(DatewiseListKV[d]?.Comment?.toString().split('/')[1])) && holidayHover == true)"
+    
+                                                
+                                                >
+                                                <!-- [class.bottom-hide]="(DatewiseListKV[d]?.IsPresent == true  && (DatewiseListKV[d]?.IsHalfdayHoliday == false || DatewiseListKV[d]?.IsHalfdaypresent == true) && presentHover == false && (absentHover == true || leaveHover == true || weekoffHover == true || holidayHover == true)) || 
+    
+                                                (((DatewiseListKV[d]?.IsOnLeave == true || DatewiseListKV[d]?.IsHalfdaypresent == true)) && absentHover == true  && (presentHover == true || leaveHover == true || weekoffHover == true || holidayHover == true)) || 
+    
+                                                (DatewiseListKV[d]?.IsPortalPaidLeave == true && leaveHover == true && (presentHover == true || absentHover == true || weekoffHover == true || holidayHover == true)) || 
+    
+                                                (DatewiseListKV[d]?.Status == 'WO' && weekoffHover == true && (presentHover == true || absentHover == true || leaveHover == true || holidayHover == true)) || 
+    
+                                                (((DatewiseListKV[d]?.IsHalfdayHoliday == true || DatewiseListKV[d]?.Isholiday == true )  && (DatewiseListKV[d]?.Status != 'WO')) && holidayHover == true && (presentHover == true || absentHover == true || leaveHover == true || weekoffHover == true))" -->
+                                            </div>
+                                                <div class="calendar-number">{{d?.getDate()}}</div>
+                                            </div><br>
+                                            
+                                            <!-- {{DatewiseListKV[d]?.IsPresent}}
+                                            {{DatewiseListKV[d]?.IsHalfdayHoliday}}
+                                            {{DatewiseListKV[d]?.IsHalfdaypresent}}
+                                            {{presentHover == true}} -->
+    
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </span>
+                        <span class="col-6">
+                            <div style="padding: 10px 0px;margin: 40px 0px;">
+                                <div style="display:flex;justify-content:space-evenly;flex-wrap:wrap">
+                                    <div class="colorcard">
+                                        <div class="colorcard1" style="align-items: center;" (mouseover)="calendarHover('present',true)" (mouseout)="calendarHover('present',false)" >
+                                         <div class="daysLabel">{{this.dateWiseStatus['present']}}</div>
+                                         <div class="dayTypeLabel">Present</div>        
+                                        </div>
+                                    </div>
+                                    <div class="colorcard">
+                                        <div class="colorcard2" style="align-items: center;" (mouseover)="calendarHover('absent',true)" (mouseout)="calendarHover('absent',false)">
+                                         <div class="daysLabel">{{this.dateWiseStatus['absent']}}</div>
+                                         <div class="dayTypeLabel">Absent</div>        
+                                        </div>
+                                    </div>
+                                    <div class="colorcard">
+                                        <div class="colorcard3" style="align-items: center;" (mouseover)="calendarHover('holiday',true)" (mouseout)="calendarHover('holiday',false)">
+                                         <div class="daysLabel">{{this.dateWiseStatus['holiday']}}</div>
+                                         <div class="dayTypeLabel">Holiday</div>        
+                                        </div>
+                                    </div><br>
+                                    <div class="colorcard">
+                                        <div class="colorcard4" style="align-items: center;" (mouseover)="calendarHover('weekoff',true)" (mouseout)="calendarHover('weekoff',false)">
+                                         <div class="daysLabel">{{this.dateWiseStatus['weekoff']}}</div>
+                                         <div class="dayTypeLabel">Week Off</div>
+                                        </div>
+                                    </div>
+                                    <div class="colorcard">
+                                        <div class="colorcard5" style="align-items: center;" (mouseover)="calendarHover('leave',true)" (mouseout)="calendarHover('leave',false)">
+                                         <div class="daysLabel">{{this.dateWiseStatus['leave']}}</div>
+                                         <div class="dayTypeLabel">Leave</div>        
+                                        </div>
+                                    </div>  
+                                 </div>
+                                <!-- <span style="margin: 5px;"><span class="present" style="padding: 5px 13px;border-radius: 5px;margin: 2px 5px;"></span>  Present</span>&nbsp;&nbsp;
+                                <span style="margin: 5px;"><span class="leave" style="padding: 5px 13px;border-radius: 5px;margin: 2px 5px;"></span> Leave</span>&nbsp;&nbsp;
+                                <span style="margin: 5px;"><span class="holiday" style="padding: 5px 13px;border-radius: 5px;margin: 2px 5px;"></span> Holiday</span>&nbsp;&nbsp;
+                                <span style="margin: 5px;"><span style="padding: 5px 13px;border-radius: 5px;margin: 2px 5px;background-color: #F5F5F5;"></span> No Data</span>&nbsp;&nbsp; -->
+                            </div>
+                        </span>
+                    </div>
+
+                </div>
+                </div>
+
+                <!-- <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> -->
+                <!-- <div class="col-md-12 card-body" style="overflow: scroll;">
+                    <div class="maincard">
+                        <div class="datecard" *ngFor="let sd of SalaryDetails">From : {{sd.FromDate | date:'dd-MMM-yyyy'}} -  {{sd.ToDate | date:'dd-MMM-yyyy'}}</div>
+                        <div class="calendarcard">
+                         <ul>
+                        <ng-container *ngFor="let ss of DatewiseList">
+                        <li style="background-color: #73c31b;" *ngIf="ss.IsPresent == true">{{ss.Date | date:'dd'}}<br><label>{{ss.Date | date:'EEE' }}</label></li>
+                        <li style="background-color: #ff6262;" *ngIf="ss.IsOnLeave == true">{{ss.Date | date:'dd'}}<br><label>{{ss.Date | date:'EEE' }}</label></li>
+                        <li style="background-color: #d7d100;" *ngIf="ss.Isholiday == true">{{ss.Date | date:'dd'}}<br><label>{{ss.Date | date:'EEE' }}</label></li>
+                        </ng-container>
+                    </ul>      
+                        </div>
+                        
+                    </div>
+                 <div class="row">
+
+
+                    <div class="col-3">
+                        <div class="colorcard1" style="display:flex;align-items: center;" >
+                         <label>{{this.dateWiseStatus['present']}}</label>
+                         <label style="margin: 0;">Present</label>        
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="colorcard2" style="display:flex;align-items: center;" >
+                         <label>this.dateWiseStatus['absent']</label>
+                         <label style="margin: 0;">Absent</label>        
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="colorcard3" style="display:flex;align-items: center;" >
+                         <label>{{this.dateWiseStatus['holiday']}}</label>
+                         <label style="margin: 0;">Holiday</label>        
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="colorcard4" style="display:flex;align-items: center;" >
+                         <label>{{this.dateWiseStatus['nodata']}}</label>
+                         <label style="margin: 0;">No Data</label>        
+                        </div>
+                    </div>
+                 
+                 </div>
+                   
+                </div> -->
+
+                <!-- <div class="card-body">
+                    <div ngbnavpane="" class="tab-pane fade active show" aria-labelledby="ngb-nav-4">
+                        <div  class="tab-pane pt-5">
+                          
+                            <div class="row" *ngFor="let IL of SalaryDetails;">
+                                <div class="col-md-10" style="text-align: center;">
+                                    <h5 style="font-weight: bold;">Total Working Days : {{IL.TotalDays}}</h5>
+                                </div>
+                                <div class="col-md-2">
+                                    <button  id="table2-new-row-button" class="btn btn-primary mb-4" (click)="DownloadSlip();">Download Payslip</button>
+                                </div>
+                                <div class="col-md-6">
+                            <div  class="table-responsive">
+                                <table  class="table table-bordered">
+                                    <tr >
+                                        <td  class="fw-bold">Present</td>
+                                        <td >{{IL.PresentDays}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Absent</td>
+                                        <td >{{IL.EmployeeLeaves}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Holidays</td>
+                                        <td >{{IL.OfficialHolidays}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Basic Salary</td>
+                                        <td >{{IL.EarnedBasicSalary}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Old Balance</td>
+                                        <td >{{IL.OldSalaryBalance}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Incentive</td>
+                                        <td> 
+                                        <input type="number" (ngModelChange)="onIncentiveChanged($event,IL)" style="height: 25px;border: 1px solid #ada6a6;border-radius: 5px;" [(ngModel)]="IL.Incentive">
+                                        </td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">Shift Amount</td>
+                                        <td >{{IL.ShiftAmount}} <a *ngIf="IL.ShiftAmount > 0" (click)="shiftSummary(IL)"><i class="fa fa-eye"></i></a></td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">OT Hours</td>
+                                        <td >{{IL.OTHours}} <a *ngIf="IL.OTHours > 0" (click)="otSummary(IL)"><i class="fa fa-eye"></i></a></td>
+                                    </tr>
+                                    <tr >
+                                        <td  class="fw-bold">OT Amount</td>
+                                        <td >{{IL.OTAmount}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div  class="table-responsive">
+                                    <table  class="table table-bordered">
+                                        <tr >
+                                            <td  class="fw-bold">Paid Leaves</td>
+                                            <td >{{IL.PaidLeave}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">Sick Leaves</td>
+                                            <td >{{IL.SickLeave}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">WeekOff Deduction</td>
+                                            <td >{{IL.WeekOffDeduction}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">WeekOff</td>
+                                            <td >{{IL.WeekOffDays}} WeekOff Alloted
+                                                <p *ngIf="IL.WeekOffDeduction!=0"> {{IL.WeekOffDeduction}} WeekOff are deducted due to continues absence</p>
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">Leave Deduction </td>
+                                            <td >{{IL.leaveDeduction}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">Loan & Advance</td>
+                                            <td *ngIf="IL.TotalLoanDeduction!==0">{{IL.TotalLoanDeduction}} &nbsp; <a (click)="openDialog(IL.LoanList, IL.TotalLoanDeduction,IL.NetSalary);"><i class="fa fa-eye"></i></a></td>
+                                            <td *ngIf="IL.TotalLoanDeduction==0">{{IL.TotalLoanDeduction}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">Professional Tax</td>
+                                            <td >{{IL.ProfessionalTax}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">PF</td>
+                                            <td >{{IL.PF}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td  class="fw-bold">ESI</td>
+                                            <td >{{IL.ESI}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <h6 style="font-weight: bold;">NET SALARY :  <label style="padding:4px;width: auto;height: 25px;border: 1px solid #ada6a6;border-radius: 5px;">{{IL.NetSalary}}</label></h6>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6 *ngIf="IL.Comment" style="font-weight: bold;">Comment:  <label style="padding:4px;width: auto;height: 25px;border: 1px solid #ada6a6;border-radius: 5px;">{{IL.Comment}}</label></h6>
+                                    <h6 *ngIf="!IL.Comment" style="font-weight: bold;">Comment:  <input type="text" [(ngModel)]="comment" style="height: 25px;border: 1px solid #ada6a6;border-radius: 5px;"></h6>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary" *ngIf="IL.IsPayslipExist == false" (click)="Pay(IL)">Pay</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        <!-- </div> -->
+    </div>
+<!-- </div> -->
+<!-- <div  *ngIf="!ViewPermission"> -->
+                       
+    <!-- <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary"> </a></div></div></div></div></div></div> -->
+<!-- </div> -->

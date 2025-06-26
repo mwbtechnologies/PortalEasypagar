@@ -1,0 +1,26 @@
+.dialogs{
+    width: fit-content;
+    height: fit-content;
+    overflow-y: scroll;
+    padding: 25px;
+    font-family: poppins;
+    background-color: #ffffff;
+    max-width: 45vh;
+    max-height: 60vh;
+}
+
+.title {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.title .success{
+    color: #006534;
+}
+.title .option{
+    color: #3f2200;
+}

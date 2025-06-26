@@ -1,0 +1,71 @@
+.dialog-responsive {
+    width: 40%;
+}
+
+@media only screen and (max-width: 760px) {
+    .dialog-responsive {
+        width: 100%;
+    }
+}
+
+mat-dialog-container {
+    max-width: 50%;
+    margin: auto;
+}
+
+@media (max-width: 500px) {
+    mat-dialog-container {
+        max-width: 80vw;
+    }
+}
+
+
+.full-with-dialog {
+    position: relative;
+    overflow: auto;
+    width: 500px;
+}
+
+@media (max-width: 568px) {
+
+    .full-with-dialog {
+        width: 440px;
+    }
+}
+
+@media (max-width: 468px) {
+    .full-with-dialog {
+        width: 340px;
+    }
+}
+
+@media (max-width: 368px) {
+    .full-with-dialog {
+        width: 340px;
+    }
+}
+
+.full-with-dialog-lg {
+    position: relative;
+    overflow: auto;
+    width: 800px;
+}
+
+@media (max-width: 568px) {
+
+    .full-with-dialog-lg {
+        width: 440px;
+    }
+}
+
+@media (max-width: 468px) {
+    .full-with-dialog-lg {
+        width: 340px;
+    }
+}
+
+@media (max-width: 368px) {
+    .full-with-dialog-lg {
+        width: 340px;
+    }
+}

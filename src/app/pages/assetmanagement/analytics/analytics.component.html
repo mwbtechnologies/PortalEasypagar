@@ -1,0 +1,50 @@
+<div>
+    <label class="button" (click)="backtolist()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back</label>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div>
+                        <!-- <h3 class="mb-0 card-title filelabels" style="font-size: 12px;color: #978f8f;">Asset Manager</h3>
+                        <h3 class="mb-0 card-title filelabels" style="font-size: 18px;font-weight: 600;">View Assets Assigned Users</h3> -->
+                        <span class="filelabels" style="font-size: 12px;color: #978f8f">Asset Manager</span>
+                        <h3 class="mb-0 card-title filelabels">Analytics</h3>
+                    </div>
+                    <div style="display: flex;gap: 10px;">
+                        <!-- <button class="btn btn-primary listbutton" (click)="getBranchWise()">Branch Wise</button>
+                        <button class="btn btn-primary listbutton" (click)="getDepartmentWise()">Department Wise</button>
+                        <button class="btn btn-primary listbutton" (click)="goToUserAssign()">Assign to user</button>
+                        <button class="btn btn-primary listbutton" (click)="drawerOpen()">Filters</button> -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <mat-tab-group (selectedTabChange)="onTabChange($event)">
+                            <mat-tab label="Item Analytics">
+                                <ng-container *ngIf="tab.itemAnalytics == true">
+                                    <app-asset-item-analytics></app-asset-item-analytics>
+                                </ng-container>
+                            </mat-tab>
+                            <mat-tab label="Category Analytics">
+                                <ng-container *ngIf="tab.categoryAnalytics == true">
+                                    <app-asset-categorywise></app-asset-categorywise>
+                                </ng-container>
+                            </mat-tab>
+                            <mat-tab label="Branch Analytics">
+                                <ng-container *ngIf="tab.branchAnalytics == true">
+                                    <app-asset-branch-analytics></app-asset-branch-analytics>
+                                </ng-container>
+                            </mat-tab>
+                            <mat-tab label="Department Analytics">
+                                <ng-container *ngIf="tab.departmentAnalytics == true">
+                                    <app-asset-department-analytics style="height: 65vh;display: block;"></app-asset-department-analytics>
+                                </ng-container>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        

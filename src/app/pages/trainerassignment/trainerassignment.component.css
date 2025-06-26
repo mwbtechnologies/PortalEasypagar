@@ -1,0 +1,52 @@
+/* Default styling for the select dropdown */
+select {
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+
+  }
+  
+  /* Change background color based on the selected status */
+  select option[value="Pending"] {
+    background-color: red;
+    color: white;
+  }
+  
+  select option[value="On-Going"] {
+    background-color: blue;
+    color: white;
+  }
+  
+  select option[value="Complete"] {
+    background-color: green;
+    color: white;
+  }
+  
+  /* Apply color to the select field itself based on its value */
+  select.Pending {
+    background-color: red;
+    color: white;
+  }
+  
+  select.On-Going {
+    background-color: blue;
+    color: white;
+  }
+  
+  select.Complete {
+    background-color: green;
+    color: white;
+  }
+  
+  
+  .button{
+    background-color: white;
+    border:1px solid #dadada;
+    color: black;
+    border-radius: 10px;
+    margin-right: 4px;
+    padding: 6px;
+}

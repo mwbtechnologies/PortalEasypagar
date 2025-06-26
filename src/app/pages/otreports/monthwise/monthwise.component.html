@@ -1,0 +1,21 @@
+<div >
+    <div  class="row">
+        <div  class="col-md-12">
+            <div  class="card">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Monthly OT Report Of {{EmpName}}</h3>
+                </div> <div  class="card-body">
+                    <div  class="table-responsive ng-star-inserted"></div>
+                    <button  id="table2-new-row-button" class="btn btn-primary mb-4" (click)="downloadReport()" >📥 Download Report</button>
+                    <div  class="table-responsive">
+                        <app-common-table [data]="monthlyData" [ExportYearMonth]="SelectedMonth +'-'+ Selecteddate" [ExportBranch]="Selectedbranch" [ExportName]="'Monthly OT Report Of '+EmpName" [displayColumns]="displayColumns" 
+                        [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" [headerColors]="headerColors"
+                        [smallHeaders]="smallHeaders" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+                    </div>
+                </div>
+                   </div>
+                   </div>
+                   </div>
+                   </div>
+
+                            

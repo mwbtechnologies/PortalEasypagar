@@ -1,0 +1,134 @@
+
+<div class="dialogs">
+    <!-- <h4>Add Time Configs</h4> -->
+    <div style="display: flex;justify-content: space-between;">
+      <h3 style="font-weight: bold;text-align: center;" > Edit Allocated Shift</h3>
+      <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+  </div>
+    <div class="row Content" style="margin-bottom: 0%;margin-top:2%">
+        <div class="col-md-3">
+          <label class="labels"><span >Edit</span> Branch</label><br>
+          <input type="text" class="timings"  [disabled]="isEdit" [(ngModel)]="branch">
+        </div>
+        <div class="col-md-3">
+          <label class="labels"><span >Edit</span> Department</label><br>
+          <input type="text" class="timings"  [disabled]="isEdit" [(ngModel)]="department">
+        </div>
+        <div class="col-md-3">
+          <label class="labels"><span >Edit</span> Employee</label>
+          <input type="text" class="timings"  [disabled]="isEdit" [(ngModel)]="EmployeeName">
+        
+        </div>
+        <div class="col-md-3">
+          <label class="labels">Start-Date</label>
+          <input name="example-password-input" placeholder="Select Date" type="date"
+                 (change)="CheckDate(formInput.StartDate)"
+          required StartDate [(ngModel)]="formInput.StartDate" class="form-control">
+        
+        </div>
+    </div>
+
+    <div class="row Content" style="margin-bottom: 0%;margin-top:2%">
+      <div  class="table-responsive">
+        <table id="DataTables_Table_0" table  class="table table-striped table-bordered table-hover">
+           <thead >
+               <tr >
+                   <th >Weeks          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button></th>
+                   <th >Select Shift          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button></th>
+                   <th >Working Days          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button></th>
+                   <th >WeekOff          <button mat-raised-button matTooltip="Selected employee will be assigned to this shift"><i class="fa fa-info-circle"></i></button></th>
+               </tr>
+           </thead>
+           <tbody >
+               <tr  class="ng-star-inserted" *ngFor="let IL of DynamicArray; let i = index;">
+                   <td >
+                       <div  class="ng-star-inserted">{{IL.WeekName}}</div>
+                   </td>
+                  
+                   <td style="min-width: 150px;">
+                       <div  class="ng-star-inserted">
+                        <ng-multiselect-dropdown  [placeholder]="'Shift'" 
+                         [data]="ShiftList" [(ngModel)]="IL.ShiftID" (onSelect)="onShiftSelect($event)"
+                         [settings]="shiftSettings">
+                         </ng-multiselect-dropdown> </div>
+                       
+                   </td>
+                   <td style="min-width: 150px;">
+                    <div  class="ng-star-inserted">
+                      <label *ngFor="let wk of IL.WorkingDays;let j = index;">{{wk.Text}}<br>
+                        <input type="checkbox" name="{{j}}{{IL.ID}}" id="{{j}}{{IL.ID}}{{IL.WeekName}}" [(ngModel)]="DynamicArray[i].WorkingDays[j].Value" (change)="OnCheckSelect(j,i,'work')"></label>
+                       </div>                                 
+                </td>
+                <td style="min-width: 150px;">
+                       <div  class="ng-star-inserted">
+                        <label *ngFor="let wo of IL.WeekOffDays; let j = index;">
+                          {{wo.Text}}<br>
+                          <input type="checkbox" name="{{j}}{{IL.ID}}" id="{{j}}{{IL.ID}}{{IL.WeekName}}" [(ngModel)]="DynamicArray[i].WeekOffDays[j].Value" (change)="OnCheckSelect(j,i,'week')">
+                        </label>
+                         </div>
+                       
+                   </td>
+                
+               </tr>
+           </tbody>
+       </table>                       
+    </div>
+    <div class="col-md-11">
+      <label class="labels">Applicable to Whole Year &nbsp;<input type="checkbox" [(ngModel)]="IsWholeYear" (change)="changeyearselection();"><button mat-raised-button matTooltip="Selected employees will work under this configuration for below selected months"><i class="fa fa-info-circle"></i></button></label><br>
+        <div class="col-md-12" style="display:flex;justify-content: start;padding: 0;flex-wrap: wrap;">
+          <div>
+          <label class="weeks">Jan</label>&nbsp;
+           <input type="checkbox" title="For Sunday" [(ngModel)]="IsJan" (change)="setwholeyearvalue();">
+         </div>&nbsp;
+          <div>
+          <label class="weeks">Feb</label>&nbsp;
+           <input type="checkbox" title="For Monday" [(ngModel)]="IsFeb" (change)="setwholeyearvalue();">
+         </div>&nbsp;
+          <div>
+          <label class="weeks">March</label>&nbsp;
+           <input type="checkbox" title="For Tuesday" [(ngModel)]="IsMarch" (change)="setwholeyearvalue();">
+         </div>&nbsp;
+          <div>
+          <label class="weeks">April</label>&nbsp;
+           <input type="checkbox" title="For Wednesday" [(ngModel)]="IsApril" (change)="setwholeyearvalue();">
+         </div>&nbsp;
+          <div>
+          <label class="weeks">May</label>&nbsp;
+           <input type="checkbox" title="For Thursday" [(ngModel)]="IsMay" (change)="setwholeyearvalue();">
+         </div>&nbsp;
+          <div>
+          <label class="weeks">June</label>&nbsp;
+           <input type="checkbox" title="For Friday" [(ngModel)]="IsJune" (change)="setwholeyearvalue();">
+         </div>&nbsp;
+         <div>
+          <label class="weeks">July</label>&nbsp;
+           <input type="checkbox" title="For Saturday" [(ngModel)]="IsJuly" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Aug</label>&nbsp;
+           <input type="checkbox" title="For Saturday" [(ngModel)]="IsAug" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Sep</label>&nbsp;
+           <input type="checkbox" title="For Saturday" [(ngModel)]="IsSep" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Oct</label>&nbsp;
+           <input type="checkbox" title="For Saturday" [(ngModel)]="IsOct" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Nov</label>&nbsp;
+           <input type="checkbox" title="For Saturday" [(ngModel)]="IsNov" (change)="setwholeyearvalue();">
+         </div>
+         <div>
+          <label class="weeks">Dec</label>&nbsp;
+           <input type="checkbox" title="For Saturday" [(ngModel)]="IsDec" (change)="setwholeyearvalue();">
+         </div>
+      </div>
+    </div>
+        <div class="col-md-1"><br>
+            <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="updateAllocation()">Update</button>
+     
+        </div>
+    </div>
+</div>

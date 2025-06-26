@@ -1,0 +1,259 @@
+<!-- {{Loading==undefined}} -->
+ <div style="display: flex;justify-content: space-between;margin: 5px 0px 8px 0px;" *ngIf="Loading!=undefined">
+   <div style="padding: 0" class="col-md-3" >
+     <input class="search"  type="search" class="searchbar"
+       placeholder="Search" [(ngModel)]="searchText" ngDefaultControl (ngModelChange)="applyFilter()">
+       <div class="cancelsearch">
+          <i class="fa fa-times" *ngIf="searchText.length > 0" (click)="removesearch()" ></i>
+          <i class="fa fa-search" *ngIf="searchText.length == 0"></i>
+        </div>
+   </div>
+   <div style="display: flex;gap: 10px;">
+    <button class="btn btn-primary listbutton" *ngIf="name?.length>0" (click)="setDisplayColumns()">Columns</button>
+    <button class="btn btn-primary listbutton" *ngIf="name?.length>0" (click)="downloadReport(displayedColumns)">📥 Download Report</button>
+   </div>
+
+ </div>
+<ng-container *ngIf="Loading==true">
+  <table mat-table [dataSource]="dataSource" style="font-family: poppins;margin-top:10px">
+    <ng-container [matColumnDef]="column"
+      *ngFor="let column of displayedColumns ; index as i">
+      <th mat-header-cell *matHeaderCellDef sorted="displayedColumns"
+        (click)="sort(i)" style="z-index: 8 !important;" [style.color]="getHeaderColor(column)" [style.background]="getHeaderBG(column)"  [style.border]="getHeaderBorder(column)" [class.selectAllTh]="column==='SelectAll'" >
+        <ng-container *ngIf="column === 'SelectAll'">
+          <h6 style="font-size: 15px;">Select All</h6>
+          <input type="checkbox" class="largerCheckbox" [disabled]="dataSource.data.length == 0 || dataSource.filteredData.length === 0" [(ngModel)]="selectAll" ngDefaultControl
+            (change)="changeAll()">
+        </ng-container>
+        <ng-container *ngIf="column !== 'SelectAll'">
+          {{ getColumnName(column) }}
+        </ng-container>
+        <ng-container *ngIf="(sortIndex==i && (sortType==0) ) || sortIndex!=i">
+          <i *ngIf="column !== 'SelectAll' && column !== 'Actions'" class="fa fa-thin fa-sort sorticon"></i>
+        </ng-container>
+        <ng-container *ngIf="sortIndex==i && sortType==1 && sortIndex==i">
+          <i *ngIf="column !== 'SelectAll' && column !== 'Actions'" class="fa fa-thin fa-sort-asc sorticon"></i>
+        </ng-container>
+        <ng-container *ngIf="sortIndex==i && sortType==2 && sortIndex==i">
+          <i *ngIf="column !== 'SelectAll' && column !== 'Actions'" class="fa fa-thin fa-sort-desc sorticon"></i>
+        </ng-container>
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <div>
+          <div class="loadingAnimation"></div>
+        </div>
+      </td>
+    </ng-container>
+    <!-- <ng-container *ngIf="Loading==undefined">
+<td>Loading...</td>
+</ng-container> -->
+
+<ng-container *ngIf="topHeaders!=undefined" >
+  <ng-container *ngFor="let header of topHeaders ; index as i">
+    <ng-container [matColumnDef]="header.id">
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="header.colspan" style="text-align: center;z-index: 8 !important;"
+        [style.color]="getHeaderColor(header.id)" [style.background]="getHeaderBG(header.id)"
+        [style.border]="getHeaderBorder(header.id)">{{header.name}} </th>
+    </ng-container>
+  </ng-container>
+  </ng-container>
+
+  
+  <ng-container *ngIf="topHeaders!=undefined" >
+  <tr mat-header-row *matHeaderRowDef="getTopHeaders(); sticky: true" style="z-index: 0;"></tr>
+  </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <!-- <ng-template #rightClick>
+<div class="example-menu" cdkMenu>
+  <button class="example-menu-item" cdkMenuItem >City List</button>
+</div>
+</ng-template> -->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+
+  </table>
+
+  <!-- <ng-template #rightClick>
+<div class="example-menu" cdkMenu>
+<button class="example-menu-item" cdkMenuItem>City List</button>
+<button class="example-menu-item" cdkMenuItem> App List</button>
+<button class="example-menu-item" cdkMenuItem> Plan List</button>
+</div>
+</ng-template> -->
+</ng-container>
+<ng-container *ngIf="Loading == false">
+  <div class="table-responsive">
+    <section class="example-container" #tableContainer>
+      <table mat-table [dataSource]="dataSource" style="font-family: poppins">
+
+        <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns ; index as i">
+          <th mat-header-cell *matHeaderCellDef sorted="displayedColumns" (click)="sort(i)" style="z-index: 8 !important;padding: 2px !important;"
+            [style.color]="getHeaderColor(column)" [style.background]="getHeaderBG(column)"
+            [style.border]="getHeaderBorder(column)" [class.selectAllTh]="column==='SelectAll'" >
+            <ng-container *ngIf="column === 'SelectAll'">
+              <h6 style="font-size: 11px;">Select All</h6>
+              <input type="checkbox" class="largerCheckbox" [disabled]="dataSource.data.length == 0 || dataSource.filteredData.length === 0" [(ngModel)]="selectAll" ngDefaultControl
+                (change)="changeAll()">
+            </ng-container>
+            <ng-container *ngIf="column !== 'SelectAll'">
+              <!-- <label [class.smallHeader]="smallHeaders.includes(column)"> -->
+              <!-- style="width: 70px;text-wrap: wrap;padding: 10px;" -->
+              <label style="padding: 0px 5px 0px 2px;" *ngIf="headerInfo == undefined || headerInfo[column] == undefined">{{ getColumnName(column) }} </label>
+              <label style="padding: 0px 5px 0px 2px;" *ngIf="headerInfo != undefined && headerInfo[column]" [matTooltip]="headerInfo[column]?.text">{{ getColumnName(column) }} 
+                <!-- <span *ngIf="headerInfo?.hasOwnProperty(column)"  ><i class="fa fa-info-circle"></i></span> -->
+              </label>  
+              <!-- </label> -->
+            </ng-container>
+            <ng-container *ngIf="(sortIndex==i && (sortType==0) ) || sortIndex!=i">
+              <i *ngIf="column !== 'SelectAll' && column !== 'Actions'" class="fa fa-thin fa-sort sorticon"></i>
+            </ng-container>
+            <ng-container *ngIf="sortIndex==i && sortType==1 && sortIndex==i">
+              <i *ngIf="column !== 'SelectAll' && column !== 'Actions'" class="fa fa-thin fa-sort-asc sorticon"></i>
+            </ng-container>
+            <ng-container *ngIf="sortIndex==i && sortType==2 && sortIndex==i">
+              <i *ngIf="column !== 'SelectAll' && column !== 'Actions'" class="fa fa-thin fa-sort-desc sorticon"></i>
+            </ng-container>
+          </th>
+
+          <!-- <td mat-cell *matCellDef="let element; let rowIndex = index" (dblclick)="onrowDoubleClick(element)"> -->
+          <td mat-cell *matCellDef="let element; let rowIndex = index" [class.blink]="editRow == rowIndex" [class.blinkFail]="editRowFail == rowIndex" (click)="rowClick(element)" style="max-width: 250px;text-wrap: nowrap;" [matTooltip]="getToolTip(element,column)" [cdkContextMenuTriggerFor]="rightClick">
+            <span [ngClass]="getTableDataColorClass(column,element)">
+            <!-- [cdkContextMenuTriggerFor]="rightClick"> -->
+            <ng-container
+              *ngIf="column !== 'Actions' && isDateType(element[column],column) == false && isDateTimeType(element[column],column) == false && column != 'BranchName' && column != 'DepartmentName' && column != 'Status' && column != 'SLno'">
+              <ng-container *ngIf="column != currentEditData?.column || rowIndex != currentEditData?.rowIndex">
+                <ng-container *ngIf="!editableColumns || !editableColumns[column]?.type || editableColumns[column]?.type == 'Number'">
+                  <ng-container *ngIf="editableColumns[column]?.type == 'Number'">
+                    {{ element[column] | numberPrecision }}
+                  </ng-container>
+                  <ng-container *ngIf="!(editableColumns[column]?.type == 'Number')">
+                    {{ element[column] }}
+                  </ng-container>
+                  
+                </ng-container>
+                
+                <mat-slide-toggle *ngIf="editableColumns && editableColumns[column] && editableColumns[column]?.type == 'Boolean'" [(ngModel)]="element[column]" (click)="editTableData(column,rowIndex);editTableData(column,rowIndex)" color="primary" [disabled]="!checkBooleanEditFilter(column,element)"></mat-slide-toggle>
+
+                <ng-container *ngIf="editableColumns?.hasOwnProperty(column) && checkEditFilter(column,element) && column !='SelectAll'">
+                  <span class="fa fa-pencil" [matTooltip]="'Edit '+ getColumnName(column)" style="opacity: 60%;" (click)="editTableData(column,rowIndex)"></span>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="column == currentEditData?.column && rowIndex == currentEditData?.rowIndex">
+
+                <input *ngIf="!editableColumns[column].type || editableColumns[column].type == 'Number'" [(ngModel)]="editValue"
+                  [style.width.ch]="element[column] ? element[column].toString().length+1 : 2"
+                  (keyup.enter)="editTableData(column,rowIndex)" style="width: fit-content;">
+                <mat-slide-toggle *ngIf="editableColumns[column].type == 'Boolean'" [(ngModel)]="editValue" color="primary" [disabled]="!checkBooleanEditFilter(column,element)">{{editValue}}</mat-slide-toggle>
+                <span *ngIf="!editableColumns || !editableColumns[column]?.type || editableColumns[column]?.type == 'Number'" class="fa fa-check" (click)="editTableData(column,rowIndex)"></span>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="column == 'SLno'" >
+              <label style="text-align: center;width: 100%;">
+                {{element[column]}}
+              </label>
+            </ng-container>
+            <ng-container *ngIf="column == 'BranchName'">
+              {{ !!element[column] ? element[column] : 'All Branches'}}
+            </ng-container>
+            <ng-container *ngIf="column == 'Status'">
+              <div style="text-align: center;width: 100%;padding-top:5px"><label [class.StatusActive]="element[column] == true && 'Active'" (click)="ChangeStatus(element)"
+              [class.StatusDeactive]="element[column] == false && 'Inactive'" [matTooltip]="getStatusMessage(element[column])">
+              {{!!element[column]?'Active':'Inactive'}}</label>
+            </div>
+            </ng-container>
+            <ng-container *ngIf="column == 'DepartmentName'">
+              {{ !!element[column] ? element[column] : 'All Departments'}}
+            </ng-container>
+            <ng-container *ngIf="column == 'Actions'">
+
+            </ng-container>
+
+
+
+            <ng-container *ngIf="isDateType(element[column],column) == true || isDateTimeType(element[column],column) == true">
+              {{ convertToLocalTimezone(element[column],column)}}
+            </ng-container>
+
+            <div *ngIf="column === 'Actions'" style="display: flex;justify-content: center;width: 100%;">
+              <!-- <button mat-icon-button aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button> -->
+              <!-- <ng-container *ngIf="actions.length==1"> -->
+              <ng-container *ngFor="let action of actions">
+                <button [disabled]="!(validateActionFilter(element,action.filter))" type="button" style="border-radius: 5px; margin:0px 2px"
+                  class="btn btn-sm btn-primary ng-star-inserted" [ngClass]="action.class" (click)="actionCall(element,action)"
+                  [matTooltip]="action.name"><span [class]="action.icon"> </span></button>
+              </ng-container>
+              <!-- </ng-container> -->
+              <!-- <ng-container *ngIf="actions.length>1"> -->
+              <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button> -->
+              <!-- <mat-menu #menu="matMenu">
+              <ng-container *ngFor="let action of actions">
+                <button class="actionbtn" (click)="actionCall(element,action)">
+                  <i style="font-size: 17px;cursor: pointer;" matTooltip="View" [class]="action.icon"></i>
+                  &nbsp;{{action.name}}</button><br>
+              </ng-container>
+    
+            </mat-menu> -->
+              <!-- </ng-container> -->
+
+
+
+
+            </div>
+            <input style="display: flex;justify-content: center;width: 100%;margin:0" type="checkbox" class="largerCheckbox" *ngIf="column === 'SelectAll'" [disabled]="!checkEditFilter('SelectAll',element)" [(ngModel)]="element.isSelected" ngDefaultControl (change)="onRowCheckboxChange(element)">
+            <ng-template #rightClick >
+              <div class="example-menu" cdkMenu *ngIf="actions.length>0">
+                <ng-container *ngFor="let action of actions">
+                  <button [disabled]="!(validateActionFilter(element,action.filter))" class="example-menu-item" cdkMenuItem (click)="actionCall(element,action)">
+                    <div  style="border-radius: 5px; margin:0px 10px 0px 0px"
+                        class="btn btn-sm btn-primary ng-star-inserted" [ngClass]="action.class" (click)="actionCall(element,action)"
+                        [matTooltip]="action.name"><span [class]="action.icon"> </span></div>
+                    {{action.name}}
+                  </button>
+                </ng-container>
+              </div>
+            </ng-template>
+          </span>
+        
+          </td>
+
+
+
+        </ng-container>
+        <!-- <ng-container *ngIf="Loading==undefined">
+          <td>Loading...</td>
+        </ng-container> -->
+        <!-- Header row second group -->--{{topHeaders}}--
+        <ng-container *ngIf="topHeaders!=undefined" >
+        <ng-container *ngFor="let header of topHeaders ; index as i">
+          <ng-container [matColumnDef]="header.id">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="header.colspan" style="text-align: center;z-index: 8 !important;"
+              [style.color]="getHeaderColor(header.id)" [style.background]="getHeaderBG(header.id)"
+              [style.border]="getHeaderBorder(header.id)">{{header.name}} </th>
+          </ng-container>
+        </ng-container>
+        </ng-container>
+
+        
+        <ng-container *ngIf="topHeaders!=undefined" >
+        <tr mat-header-row *matHeaderRowDef="getTopHeaders(); sticky: true" style="z-index: 8 !important;"></tr>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" style="z-index: 8 !important;"></tr>
+        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr> -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <!-- <span style="text-align:center" *ngIf="dataSource.filteredData.length === 0 && searchText.length > 0 ">No Data Found</span> -->
+    </section>
+  </div>
+</ng-container>
+<!-- {{Loading == undefined}} -->
+ <div *ngIf="(Loading == false && dataSource.data.length == 0) || (dataSource.filteredData.length === 0 && searchText.length > 0 )" style="display: flex;justify-content: center;padding: 15px 0px;background-color: #f0f0f8;">
+  No data found
+ </div>
+<ng-container [class.hide]="Loading == undefined" *ngIf="LoadingPagination == false && scrollPagination!=true">
+  <mat-paginator [class.hide]="Loading == undefined" [pageSizeOptions]="[10,25,50,100]" showFirstLastButtons #paginator
+              (page)="onPageChange($event)" [length]="totalRecords" [pageIndex]="pageIndex" [pageSize]="pageSize"></mat-paginator>
+</ng-container>

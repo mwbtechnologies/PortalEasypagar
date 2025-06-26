@@ -1,0 +1,18 @@
+
+        <div  class="row">
+            <div  class="col-md-12">
+                <div  class="card">
+                                   <div class="card-body">
+                              
+                                    <div  class="table-responsive">
+                                        <div class="note text-muted mt-n3 mb-3" style="font-size: 0.9rem;font: black;">
+                                            <b style="font-size: 0.9rem;">Note :</b>Attendance & Salary for the current day is excluded from the report since employees may still check in, check out, or request leave or half-day adjustments. Accurate data is available only after the completion of working hours
+                                           </div>
+                                        <app-common-table [data]="SalaryList" [ExportName]="'Salary Report'" [displayColumns]="displayColumns" [Loading]="employeeLoading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [headerInfo]="headerInfo" [actions]="actionOptions" [topHeaders]="topHeaders" [headerColors]="headerColors" [smallHeaders]="smallHeaders" [dataColors]="tableDataColors" [ReportTitles]="ReportTitles" (actionEmitter)="actionEmitter($event)"></app-common-table>
+                                        <p><b>T</b> : Total Working Days, <b>P</b>:Paid Days , <b>HRA</b> : House Rent Allowance ,<b>TA</b>:Travel Allowance, <b>DA</b>:Dearness Allowance , <b>MA</b>: Medical Allowance , <b>ESI</b>: Employee's State Insurance , <b>EPF</b>:Employee Provident Fund ,  <b>TDS</b> :Tax Deducted at Source     <b>PT</b> :Professional Tax  <b>SD</b> :Security Deposit  </p>
+ </div>
+                                </div>
+                                   </div>
+                                   </div>
+                                   </div>
+                 

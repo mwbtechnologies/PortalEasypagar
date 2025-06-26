@@ -1,0 +1,52 @@
+<div style="display: flex;padding-bottom:10px">
+  <label class="tableview" [class.active]="currentView === 'table'" (click)="ViewTable()">Table View</label>
+  <label class="gridview" [class.active]="currentView === 'grid'" (click)="ViewGrid()">Grid View</label>
+</div>
+
+<div *ngIf="gridView">
+  <div id="history_container" class="history-tl-container"
+    *ngIf="timeLineList && timeLineList && timeLineList.length>0">
+    <ul class="tl">
+      <li class="tl-item" *ngFor="let doc of timeLineList,let i = index">
+        <div class="timestamp">
+          {{ doc.createdAt | date: 'dd-MMM-yyyy' }}<br>
+          {{ doc.createdAt | date: 'hh:mm' }}
+        </div>
+        <div class="item-title">
+          <div class="maincard">
+            <div class="out-card" style="width:20vw;display: flex;gap: 10px;">
+              <div class="main-card">
+                <img [src]="IMGURL + doc.iconPath" class="imagesize" (error)="setDefaultImage($event)">
+              </div>
+              <div class="info" style="margin-top: 10px;">
+                <h3 class="filelabels" style="margin:0;width: fit-content;">
+                  {{ doc.documentType}}</h3>
+                <h3 class="filelabels" style="font-size: 12px;margin: 0;width: fit-content;">
+                  {{ doc.documentGroup }}</h3>
+                  <br>
+                  <button style="background-color: blue;color: white;border-radius: 5px;" (click)="UploadDoc(doc)">View</button>&nbsp;
+                  <button style="background-color: blue;color: white;border-radius: 5px;">Print</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div *ngIf="tableView">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <!-- <app-common-table [data]="timeLineList" [displayColumns]="displayColumns" [Loading]="TimeLoading"
+          [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions"
+          (actionEmitter)="actionEmitter($event)" [name]="commonTableName"></app-common-table> -->
+          <app-common-table [data]="timeLineList" [displayColumns]="displayColumns"
+          [Loading]="TimeLoading" [displayedColumns]="displayedColumns"
+          [editableColumns]="editableColumns" [actions]="actionOptions"
+          (actionEmitter)="actionEmitter($event)"
+          [dataColors]="tableDataColors"></app-common-table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="dialogs" [ngClass]="alertType">
+    <div class="productdesc">
+        <h3 class="fw-bold alert-title">
+            <i [ngClass]="iconClass"></i> {{ alertHeading }}
+        </h3>
+        <p class="alert-message">{{ Message }}</p>
+        <div class="text-center border-top pt-3">
+            <button class="btn btn-light close-btn" (click)="CloseTab()">
+                Okay <i class="fa fa-check-circle"></i>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="position-relative search-container" style="width: 300px;">
+    <input type="search"
+           class="form-control"
+           placeholder="Search by Using Name,Mobile Number"
+           [formControl]="searchCtrl"
+           (focus)="showDropdown = filteredItems.length > 0" />
+    <div *ngIf="isLoading" class="spinner-border spinner-border-sm text-primary"></div>
+    <ul *ngIf="showDropdown" class="list-group bg-white position-absolute w-100 shadow z-3 mt-1" style="max-height: 250px; overflow-y: auto;">
+        <li *ngFor="let item of filteredItems"
+            class="list-group-item list-group-item-action text-uppercase"
+            (click)="selectItem(item)">
+            <div class="fw-semibold">{{ item.FirstName }} {{ item.LastName }}</div>
+            <div class="text-muted small">{{ item.MobileNumber }}</div>
+        </li>
+    </ul>
+
+
+</div>
+
+<button data-bs-toggle="modal" data-bs-target="#detail_modal" #click_button style="visibility:hidden"> </button>
+
+<div class="modal fade" aria-hidden="true" id="detail_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">MEMBER DETAILS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="selected_id!=-1">
+                <iframe class="w-100" style="height:600px" [attr.src]="getSafeUrl()">
+                </iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>

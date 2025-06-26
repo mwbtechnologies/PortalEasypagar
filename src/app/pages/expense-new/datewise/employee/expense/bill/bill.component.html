@@ -1,0 +1,12 @@
+<div class="dialogs">
+  <div style="display: flex;justify-content: space-between;">
+    <h5>{{data.expensename}}</h5>
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+</div>
+      <div class="container" *ngIf="Image.length > 0">
+                <img [src]="IMGURL + Image" style="width:300px;height:300px;border: 1px solid black;">
+        </div>
+        <div class="container nif" *ngIf="Image.length == 0">
+          <h5>No Image Found</h5>
+        </div>
+  </div>

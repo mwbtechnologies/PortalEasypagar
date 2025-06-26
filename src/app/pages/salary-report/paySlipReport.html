@@ -1,0 +1,47 @@
+<div style="width: auto;padding: 20px;">
+    <div mat-dialog-title class="dialog-title">
+      <div>
+        <div style="font-size: 18px;color: #000000;position: relative;font-weight: 500;" >
+          PaySlip Submitted Report
+        </div>
+      </div>
+      <div>
+        <button mat-icon-button aria-label="close dialog" style="padding: 0;" mat-dialog-close (click)="close()">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <div style="padding-top: 10px;">
+        <table>
+            <tr>
+                <!-- <th>Employee ID</th> -->
+                <th>Employee Name</th>
+                <th *ngIf="showNetPay == true">Net Pay</th>
+                <th>Status</th>
+                <th>Message</th>
+            </tr>
+            <tr *ngFor="let r of report">
+                <!-- <td style="padding: 5px 20px 5px 0px;">{{r.EmployeeID}}</td> -->
+                <td style="padding: 5px 20px 5px 0px;">{{r.EmployeeName}}</td>
+                <td *ngIf="showNetPay == true" style="padding: 5px 20px 5px 0px;">{{r.NetSalary}}</td>
+                <td style="padding: 5px 20px 5px 0px;font-size: 16px;display: flex;align-content: center;color: #000;">
+                    <i *ngIf="r.status==true"  class="fa fa-check-circle" style="color: #008f3b;font-size: 30px;" aria-hidden="true" ></i>
+                    <i *ngIf="r.status==false" class="fa fa-exclamation-circle" style="color: #ee2121;font-size: 30px;" aria-hidden="true" ></i>
+                </td>
+                <td style="padding: 5px 20px 5px 0px;">{{r.result}}</td>
+            </tr>
+    
+        </table>
+<br>
+
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-danger" (click)="close()"> 
+            Okay
+          </button>
+        </div>
+                                     
+     
+
+    </div>
+</div>

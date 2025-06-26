@@ -1,0 +1,24 @@
+<!-- <div>
+    <label class="button" (click)="backtolist()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back</label>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div>
+                        <h3 class="mb-0 card-title filelabels">Category Wise List</h3>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary listbutton" (click)="openAdd()">Add</button>&nbsp;
+                    </div>
+                </div>
+                 <div class="card-body">
+                    <div class="table-responsive"> -->
+                        <app-common-table [data]="CategoryList"[displayColumns]="displayColumns" [Loading]="Loading" [displayedColumns]="displayedColumns"   
+                        [editableColumns]="editableColumns" [actions]="actionOptions" 
+                        (actionEmitter)="actionEmitter($event)" [topHeaders]="topHeaders" [name]="commonTableName"></app-common-table>
+                    <!-- </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div> -->

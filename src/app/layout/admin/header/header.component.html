@@ -1,0 +1,173 @@
+<div class="app-header header sticky hor-header fixed-header visible-title stickyClass">
+    <div class="container-fluid main-container">
+        <div class="d-flex align-items-center">
+            <a aria-label="Hide Sidebar" data-bs-toggle="sidebar" class="app-sidebar__toggle">
+                <i aria-hidden="true" class="fa fa-menu"></i>
+            </a>
+            <a class="logo-horizontal" routerLink="['']">
+                <img src="assets/images/pngs/PagarLogo.png" alt="logo" class="header-brand-img desktop-logo">
+            </a>
+            <app-search-bar></app-search-bar>
+            <div class="header-search d-none d-lg-flex">
+                <div class="form-inline">
+                    <div class="search-element">
+                        <br>
+                        <h5 style="color: black;font-weight: bold;"> Hi, {{LoginUserName}}</h5>
+
+                    
+                        <!-- <input type="search" placeholder="Search…" aria-label="Search"
+                       tabindex="1" autocomplete="off"
+                       class="form-control header-search ng-pristine ng-valid ng-touched"><button
+                       class="btn btn-primary-color"><i aria-hidden="true" class="fa fa-search"></i></button>
+                <ul
+                       class="list-group p-absolute w-100 mt-1 serach-result-empty text-break">
+                       <li class="list-group-item no-result"><i
+                               aria-hidden="true" class="fa fa-frown-o text-primary me-2"></i>No Search Result
+                           Found with "" </li>
+                   </ul>   -->
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex order-lg-2 ms-auto header-right-icons header-search-icon">
+                <button type="button" aria-controls="collapseExample" (click)="VisibleClick()"
+                        class="navbar-toggler navresponsive-toggler d-lg-none ms-auto collapsed" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
+                         class="navbar-toggler-icon">
+                        <path d="M0 0h24v24H0V0z" fill="none"></path>
+                        <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
+                        </path>
+                    </svg>
+                </button>
+                <div class="navbar navbar-collapse responsive-navbar p-0">
+                    <div id="navbarSupportedContent-4" class="collapse navbar-collapse collapse-horizontal">
+
+                        <div class="d-flex">
+                            <div class="dropdown d-flex">
+                                <a appfullscreen="" (click)="openFullscreen();" *ngIf="!Fullscreen"
+                                   class="nav-link icon full-screen-link nav-link-bg"><i class="fa fa-desktop"></i></a>
+                                <a appfullscreen="" (click)="closeFullscreen();" *ngIf="Fullscreen"
+                                   class="nav-link icon full-screen-link nav-link-bg"><i class="fa fa-desktop"></i></a>
+                            </div>
+
+                            <div ngbDropdown class="d-flex notifications dropdown">
+                                <a class="dropdown-toggle nav-link icon" aria-expanded="false" id="dropdownBasic"
+                                   ngbDropdownToggle>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                                    <div class="dropdown-item p-4 border-bottom" tabindex="0">
+                                        <h5 class="border-bottom-0 mb-0 fs-16 font-weight-semibold">
+                                            Rate Us
+                                        </h5>
+                                    </div>
+                                    <div class="message-menu message-menu-scroll message-menu">
+                                        <div class="rating-container">
+                                            <div *ngFor="let star of stars; let i = index"
+                                                 class="star"
+                                                 (click)="rate(i + 1)"
+                                                 [ngClass]="{'active': i < rating}">
+                                                ★
+                                            </div>
+                                        </div>
+                                        <div class="rating-text">
+                                            <span *ngIf="rating === 1">Below Average</span>
+                                            <span *ngIf="rating === 2">Average</span>
+                                            <span *ngIf="rating === 3">Good</span>
+                                            <span *ngIf="rating === 4">Better</span>
+                                            <span *ngIf="rating === 5">Awesome</span>
+                                        </div>
+                                        <label style="margin-left: 1rem;">Feedback(Optional)</label>
+                                        <div class="rating-container">
+                                            <input type="text" [ngModel]="feedback" class="rating-input"><br>
+                                        </div>
+                                        <br>
+                                        <div class="rating-container">
+                                            <button class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;" (click)="rateUs()">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div ngbDropdown class="d-flex notifications dropdown">
+                                    <a [routerLink]="['/Notifications']"
+                                       class="dropdown-toggle nav-link icon caret" aria-expanded="false" id="dropdownBasic"
+                                       ngbDropdownToggle>
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                        <span class="nav-unread badge bg-danger rounded-pill pulse" [routerLink]="['/Notifications']">{{NotificationCount}}</span>
+                                    </a>
+                                    <!-- <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                                <div class="dropdown-item p-4 border-bottom" tabindex="0">
+                                    <h5 class="border-bottom-0 mb-0 fs-16 font-weight-semibold"> Notifications
+                                    </h5>
+                                </div>
+                                <div class="notifications-menu">
+                                    <a *ngFor="let IL of NotificationList; let i =index;" class="d-flex">
+                                        <div class="me-3 notifyimg bg-primary brround box-shadow-primary">
+                                            <i class="fa fa-money" aria-hidden="true" *ngIf="IL.Type=='Loan'"></i>
+                                            <i class="fa fa-pencil-square" aria-hidden="true"
+                                                *ngIf="IL.Type=='Leave'"></i>
+                                            <i class="fa fa-ticket" aria-hidden="true"
+                                                *ngIf="IL.Type=='Expense'"></i>
+                                            <i class="fa fa-check-square" aria-hidden="true"
+                                                *ngIf="IL.Type=='Attendance'"></i>
+                                            <i class="fa fa-user" aria-hidden="true" *ngIf="IL.Type=='Account'"></i>
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"
+                                                *ngIf="IL.Type=='AttendanceAlert'">
+                                            </i>
+                                        </div>
+                                        <div class="w-80">
+                                            <label style="color: black;">{{IL.Title}}</label>
+                                            <h6 class="notification-label mb-0 text-wrap">
+                                                {{IL.Message}} </h6><span
+                                                class="notification-subtext text-muted fs-12">{{IL.CreatedDate|
+                                                date:'yyyy-MM-dd'}}</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-divider"></div><a [routerLink]="['/Notifications']"
+                                    class="dropdown-item text-center pt-2 mb-2">View all Notification</a>
+                            </div> -->
+                                </div>
+                                <!-- <div ngbDropdown class="d-flex message dropdown">
+                            <a
+                                class="dropdown-toggle nav-link icon" aria-expanded="false" ngbDropdownToggle><i
+                                    class="fa fa-envelope"></i><span
+                                    class="nav-unread badge bg-danger rounded-pill pulse">3</span></a>
+                             <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end dropdown-menu-arrow"
+                                data-bs-popper="static">
+                                <div class="dropdown-item p-4 border-bottom" tabindex="0">
+                                    <h5 class="border-bottom-0 mb-0 fs-16 font-weight-semibold"> Messages </h5>
+                                </div>
+                                <div class="message-menu message-menu-scroll message-menu">
+                                    <a class="dropdown-item d-flex" *ngFor="let IL of MessageList;">
+
+                                        <span class="avatar brround me-3 cover-image"><img
+                                                src="{{IL.ProfileImgUrl}}" /></span>
+                                        <div class="w-90">
+                                            <div class="d-flex" (click)="chat(IL.EmployeeID);">
+                                                <h6 class="my-1 text-break">{{IL.Employee}}</h6>
+                                                <span class="text-muted ms-auto text-wrap fs-12">{{IL.ReceivedDate|
+                                                    date:'yyyy-MM-dd'}} </span>
+                                            </div>
+                                            <span class="text-muted fs-13"
+                                                (click)="chat(IL.EmployeeID);">{{IL.Message}}</span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="dropdown-divider m-0"></div>
+                                <a *ngIf="this.RoleID==6" [routerLink]="['/chat']"
+                                    class="dropdown-item text-center">See all Messages</a>
+                                <a *ngIf="this.RoleID!=6" [routerLink]="['/chat']"
+                                    class="dropdown-item text-center">See all Messages</a>
+                            </div>
+                        </div> -->
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="switch-icon nav-link icon"><a (click)="logout();"><i class="fa fa-sign-out"></i></a></div>
+                </div>
+            </div>
+        </div>
+</div>

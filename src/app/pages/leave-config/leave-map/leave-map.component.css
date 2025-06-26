@@ -1,0 +1,107 @@
+.col-lg-4
+{
+    padding-left:0.2rem !important;
+    padding-right:0.2rem !important;
+}
+
+.col-lg-6,.col-6{
+    padding-left:0.2rem !important;
+    padding-right:0.2rem !important;
+}
+
+.card-header {
+    display: block;
+}
+
+label, .form-title {
+    color: black !important;
+    font-size: 14px;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+.form-control {
+    border: 1px solid black;
+}
+
+.dialog_title {
+    vertical-align: middle;
+    color: black;
+}
+
+.text-muted {
+    font-size: 11px;
+    line-height: 10px;
+}
+
+.dialog-responsive {
+    width: 40%;
+}
+
+@media only screen and (max-width: 760px) {
+    .dialog-responsive {
+        width: 100%;
+    }
+}
+
+
+.full-with-dialog {
+    position: relative;
+    overflow: auto;
+    width: 800px;
+}
+
+@media (max-width: 568px) {
+
+    .full-with-dialog {
+        width: 440px;
+    }
+}
+
+@media (max-width: 468px) {
+    .full-with-dialog {
+        width: 340px;
+    }
+}
+
+@media (max-width: 368px) {
+    .full-with-dialog {
+        width: 340px;
+    }
+}
+
+
+.full-with-dialog-lg {
+    position: relative;
+    overflow: auto;
+    width: 500px;
+}
+
+@media (max-width: 568px) {
+
+    .full-with-dialog-lg {
+        width: 440px;
+    }
+}
+
+@media (max-width: 468px) {
+    .full-with-dialog-lg {
+        width: 340px;
+    }
+}
+
+@media (max-width: 368px) {
+    .full-with-dialog-lg {
+        width: 340px;
+    }
+}
+
+tr th{
+    text-transform:initial !important;
+    font-size:12px !important;
+}
+
+.col-3{
+    padding-left:0.2rem !important;
+    padding-right:0.2rem !important;
+}

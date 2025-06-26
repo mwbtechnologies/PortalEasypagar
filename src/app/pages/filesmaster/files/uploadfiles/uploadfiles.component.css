@@ -1,0 +1,29 @@
+.dialogs{
+    height: 500px;
+    width: 1000px;
+    overflow-y: scroll;
+    padding: 20px;
+    font-family: poppins;
+  }
+
+  .plus{
+    background: blue;
+    width: 30px;
+    height: 30px;
+    color: white;
+    border-radius: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .cancel{
+    background: red;
+    width: 30px;
+    height: 30px;
+    color: white;
+    border-radius: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:4%
+  }

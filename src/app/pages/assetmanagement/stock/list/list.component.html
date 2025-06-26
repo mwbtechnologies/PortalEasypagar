@@ -1,0 +1,33 @@
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <div>
+                        
+                        <span class="filelabels" style="font-size: 12px;color: #978f8f">Asset Manager</span>
+                        <h3 class="mb-0 card-title filelabels">Stock Inward List</h3>
+                    </div>
+                    <div style="display: flex;gap: 10px;">
+                        <!-- <button class="btn btn-primary listbutton" >Bulk Upload</button> -->
+                        <button class="btn btn-primary listbutton" (click)="goToStockAdd()">Add Stock Inward</button>
+                        <button class="btn btn-primary listbutton" >Filter</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div  class="table-responsive">
+                        <!-- <app-common-table [data]="StockList" [displayColumns]="displayColumns" [Loading]="Loading" [displayedColumns]="displayedColumns" [editableColumns]="editableColumns" [actions]="actionOptions" (actionEmitter)="actionEmitter($event)" ></app-common-table> -->
+                        <app-common-paginated-table [paginatedData]="paginatedData" [data]="StockList" [displayColumns]="displayColumns" [Loading]="Loading"
+                            [displayedColumns]="displayedColumns" [editableColumns]="editableColumns"
+                            [actions]="actionOptions" (actionEmitter)="actionEmitter($event)"
+                            [name]="commonTableName" (onPageNumberChange)="onPageNumberChange($event)"></app-common-paginated-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display: flex;gap: 10px;">
+    <button class="btn btn-primary listbutton" (click)="goToAssign()">Assignment</button>
+    <button class="btn btn-primary listbutton" (click)="goToItems()">Items</button>
+</div>

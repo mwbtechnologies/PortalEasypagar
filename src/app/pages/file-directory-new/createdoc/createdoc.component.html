@@ -1,0 +1,137 @@
+<label class="button" (click)="backToList()"><i class="fa fa-chevron-left"></i>&nbsp;&nbsp;Back To Documents</label>
+<div style="overflow: scroll;min-height: 100vh;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" style="justify-content: start">
+                    <h3 class="mb-0 card-title filelabels"><span *ngIf="Edit">Edit Document</span><span *ngIf="!Edit">Create new Document</span></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="filelabels">Title *</label>
+                                    <input type="text" [ngClass]="{ 'is-invalid': error?.DocName }" [(ngModel)]="DocumentName" class="form-control timings" placeholder="Document Title" (keydown)="TextFeildValidation($event)">    
+                                    <label style="color: red;font-size: 12px;" *ngIf="error?.DocName">{{ error?.DocName }}</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="filelabels">Sub title</label>
+                                    <input type="text" [(ngModel)]="DocumentSubName" class="form-control timings" placeholder="Document Sub title" (keydown)="TextFeildValidation($event)">    
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="filelabels">Requirement *</label>
+                                    <ng-multiselect-dropdown [settings]="requiredSettings" [placeholder]="'Requirement'" [data]="RequiredList"
+                                    [(ngModel)]="selectedRequired">
+                                </ng-multiselect-dropdown>  
+                                <label style="color: red;font-size: 12px;" *ngIf="error?.required">{{ error?.required }}</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="filelabels">Document group *</label>
+                                    <ng-multiselect-dropdown [settings]="groupSettings" [placeholder]="'Select Group'" [data]="GroupList"
+                                    [(ngModel)]="selectedGroups">
+                                </ng-multiselect-dropdown>  
+                                <label style="color: red;font-size: 12px;" *ngIf="error?.groups">{{ error?.groups }}</label>
+                                </div>
+                                <div class="col-1">
+                                    <label class="plus" style="margin-top:30px" matTooltip="Click To Add Document group" (click)="addDocumentGroup()">+</label>
+                                </div>
+                                <div *ngIf="showGroup" class="ngifboxforaddtime" >
+                                    <ng-container>
+                                        <div style="display: flex;justify-content: space-between;">
+                                            <label style="font-size: 12px;margin: 5px;">Add New Document Group</label>
+                                            <label (click)="cancelDocument()"><i class="fa fa-times"></i></label>
+                                        </div>
+                                      <div class="row">
+                                        <div class="col-md-8">
+                                          <input class="inputs" [ngClass]="{ 'is-invalid': error?.GroupName }"  [(ngModel)]="documentName" class="form-control" type="text" placeholder="Enter New Document" (keydown)="TextFeildValidation($event)">
+                                          <label style="color: red;font-size: 12px;" *ngIf="error?.GroupName">{{ error?.GroupName }}</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                         <button class="btn btn-primary" (click)="createNewGroup()">Add</button>
+                                        </div>
+                                      </div>
+                                    </ng-container>
+                                  </div>
+                            </div>
+                            <label class="filelabels" style="font-size: 15px;font-weight: 500;margin-top:25px">Parameters</label>
+                    <div *ngFor="let pm of Parameters; let i = index" style="display: flex; justify-content: start;margin-bottom: 10px">
+                        <div class="col-md-2">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Name *</label>
+                            <input  [ngClass]="{ 'is-invalid': error?.[i]?.name }" type="text" [(ngModel)]="pm.name" class="form-control timings" placeholder="Document Name" (keydown)="TextFeildValidation($event)">    
+                            <label style="color: red;font-size: 12px;" *ngIf="error?.[i]?.name">{{ error?.[i]?.name }}</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Type *</label>
+                            <ng-multiselect-dropdown [settings]="typeSettings" [placeholder]="'Types'" [data]="TypeList"
+                            [(ngModel)]="pm.SelectedType">
+                        </ng-multiselect-dropdown>    
+                        <label style="color: red;font-size: 12px;" *ngIf="error?.[i]?.type">{{ error?.[i]?.type }}</label>
+                        </div>
+                        <div class="col-md-3 row">
+                            <div class="col-md-6">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Min Size *</label>
+                            <input type="number"  [ngClass]="{ 'is-invalid': error?.[i]?.min}" [(ngModel)]="pm.minSize" class="form-control timings" placeholder="Min" (keydown)="NumberValidation($event)">    
+                            <label class="filelabels" style="font-size:10px" *ngIf="pm.SelectedType && pm.SelectedType.length>0 && pm.SelectedType[0] == 'file'">in terms of KB</label>
+                            <label class="filelabels" style="font-size:10px" *ngIf="pm.SelectedType && pm.SelectedType.length>0 && pm.SelectedType[0] == 'text' || pm.SelectedType && pm.SelectedType.length>0 && pm.SelectedType[0] == 'number'">in terms of length</label>
+                            <label style="color: red;font-size: 12px;" *ngIf="error?.[i]?.min">{{ error?.[i]?.min }}</label>
+                           </div>
+                            <div class="col-md-6">
+                                <label class="filelabels" [ngClass]="{'invisible': i != 0}">Max Size *</label>
+                                <input type="text" [ngClass]="{ 'is-invalid': error?.[i]?.max}" [(ngModel)]="pm.maxSize" class="form-control timings" placeholder="Max" (keydown)="NumberValidation($event)">    
+                                <label class="filelabels" style="font-size:10px" *ngIf="pm.SelectedType && pm.SelectedType.length>0 && pm.SelectedType[0] == 'file'">in terms of KB</label>
+                                <label class="filelabels" style="font-size:10px" *ngIf="pm.SelectedType && pm.SelectedType.length>0 && pm.SelectedType[0] == 'text' || pm.SelectedType && pm.SelectedType.length>0 && pm.SelectedType[0] == 'number'">in terms of length</label>
+                                <label style="color: red;font-size: 12px;" *ngIf="error?.[i]?.max">{{ error?.[i]?.max }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="filelabels" [ngClass]="{'invisible': i != 0}">Requirement *</label>
+                            <ng-multiselect-dropdown [settings]="requiredSettings" [placeholder]="'Requirement'" [data]="RequiredList"
+                            [(ngModel)]="pm.SelectedRequirement">
+                        </ng-multiselect-dropdown>  
+                             <label style="color: red;font-size: 12px;" *ngIf="error?.[i]?.require">{{ error?.[i]?.require }}</label>
+                        </div>
+                        <div class="col-md-2" *ngIf="pm.SelectedType && pm.SelectedType.length>0 && pm.SelectedType[0] == 'file'">
+                            <label class="filelabels">Allowed Extensions <span *ngIf="pm.SelectedType && pm.SelectedType.length>0 && pm.SelectedType[0] == 'file'">*</span></label>
+                            <ng-multiselect-dropdown [settings]="extensionSettings" [placeholder]="'select Extensions'" [data]="ExtensionList"
+                            [(ngModel)]="pm.allowedExtension">
+                        </ng-multiselect-dropdown>  
+                        <label style="color: red;font-size: 12px;" *ngIf="error?.[i]?.extension">{{ error?.[i]?.extension}}</label>
+
+                        </div>
+                            <div class="col-md-1" style="display: flex;align-items: center;">
+                              <label class="cancel" matTooltip="Click To Remove Parameters"*ngIf="Parameters.length > 1" (click)="removeParameters(i)"><i class="fa fa-times" style="font-size: 10px;"></i></label>
+                          </div>
+                          </div>
+                        <hr>
+                        <div class="col-12" style="display: flex;">
+                          <div>
+                              <label class="plus" matTooltip="Click To Add Multiple Parameters" (click)="addParameters()">Add new parameter</label><br>
+                              <label style="color: red;font-size: 14px;" *ngIf="error?.parameterErr">{{ error?.parameterErr }}</label>
+                          </div>
+                        </div>
+                    
+                        <br>
+                        </div>
+                        <div class="col-3">
+                            <div class="col-10">
+                                <label class="filelabels">Document Icon</label><br>
+                                <input style="display: none;" id="docimg" type="file" (change)="onFileSelect($event)" />
+                                <label *ngIf="documentFile == ''" [ngClass]="{ 'is-invalid': error?.icon}" for="docimg" class="image-picker">Choose<br>Files</label>   
+                                <label *ngIf="documentFile != ''" for="docimg" class="image-picker" style="padding: 0px;">
+                                    <img  *ngIf="documentFile != ''" class="image-picker" style="padding: 0px;border-style: none;object-fit: cover;width: 268px;height: 150px;" (change)="onFileSelect($event)" [src]="IMGURL + documentFile" (error)="setDefaultImage($event)"/>
+                                </label>
+                              <br>
+                              <div class="filelabels" style="font-size: 12px;" >Preffered dimensions 268*150 pixels</div>
+                              <label style="color: red;font-size: 12px;" *ngIf="error?.icon">{{ error?.icon }}</label>
+                            </div>
+                        </div>
+                    </div>
+                  <div>
+                    <button class="btn btn-primary" (click)="submit()"><span *ngIf="Edit">Update</span><span *ngIf="!Edit">Submit</span></button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

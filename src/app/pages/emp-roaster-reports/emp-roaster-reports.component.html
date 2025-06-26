@@ -1,0 +1,79 @@
+
+<div class="row">
+
+    <div class="col-12">
+
+        
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12">
+                            <!--<app-search-bar>
+    </app-search-bar>-->
+                            <h3 class="fw-bold text-center ">Employee Duty Roster</h3>
+                            <h5 *ngIf="start_date" class="text-center fw-bold">  {{start_date}} - {{end_date}} </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <div class="row align-items-center">
+
+                        <div class="col-md-3 col-4">
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                                     [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                                     (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3 col-3">
+                            <label class="form-label">
+                                Select Branch &nbsp;
+                                <!-- <i class="fa fa-info-circle"
+                        matTooltip="If you dont select any branches,by default it takes all branches"></i> -->
+                            </label>
+                            <ng-multiselect-dropdown [placeholder]="'Select a branch'" [data]="BranchList" [(ngModel)]="selectedBranch"
+                                                     (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)" (onSelectAll)="onBranchSelect_All($event)" (onDeSelectAll)="onBranchDeSelect_All($event)" [settings]="branchSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3 col-3">
+                            <label class="form-label">Select Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepartmentList"
+                                                     [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"
+                                                     [settings]="departmentSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-3 col-2">
+                            <label class="form-label"></label>
+                            <button class="btn btn-primary mt-4" (click)="load_employeedata()">Generate</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <app-common-table-buttons [cellWiseButtons]="cellWiseButtons" [data]="final_data_list" [ExportName]="'Duty Roster'" [name]="export_list"
+                                              [displayColumns]="displayColumns" [Loading]="employeeLoading"
+                                              [displayedColumns]="displayedColumns" [editableColumns]="editableColumns"
+                                              [actions]="actionOptions" [dataColors]="tableDataColors" [headerColors]="headerColors" [ReportTitles]="ReportTitles"
+                                              (actionEmitter)="actionEmitter($event)" (cellButtonClicked)="onCellButtonClicked($event)"></app-common-table-buttons>
+
+
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                      
+                        <div class="col-md-12">
+                            <p class="text-muted">
+                                <span class="badge bg-secondary text-white">Info</span>      1) <strong>H/O</strong> -- Holiday &nbsp;&nbsp;  2)<strong>W/0</strong> -- WEEK OFF
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+</div>
+</div>

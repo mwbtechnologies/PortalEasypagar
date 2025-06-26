@@ -1,0 +1,39 @@
+.drawer {
+    position: fixed;
+    margin-top: 4.1rem;
+    z-index: 101;
+    height: 87%;
+    width: 24%;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid #006080a1;
+  }
+  .mat-drawer-container{
+    position: relative;
+    z-index: 1;
+    width:3px;
+    display:contents;
+    height: 100%;
+    overflow: auto;
+  }
+  
+  .drawer .header {
+    position: absolute;
+    right: 0;
+    justify-content: space-between;
+  }
+  .drawer .contents {
+    padding:10px;
+  }
+  .filtercss{
+    padding: 10px;
+  }
+  .button {
+    background-color: white;
+    border: 1px solid #dadada;
+    color: black;
+    border-radius: 10px;
+    margin-right: 4px;
+    padding: 5px;
+  }

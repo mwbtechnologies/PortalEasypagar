@@ -1,0 +1,102 @@
+<!-- <div *ngIf="AddPermission"> -->
+    <div class="createdailog">
+    <div  class="row">
+       
+        <div  class="col-md-12">
+                <div  class="card-header">
+                    <h3  class="mb-0 card-title">Create Message</h3>
+                </div>
+                <div  class="card-body">
+                    <div  class="row" style="row-gap: 30px;">
+                        <div class="col-md-4">
+                            <label class="form-label">Select Organization</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Organizations'" [(ngModel)]="selectedOrganization" [data]="OrgList"
+                                [settings]="orgSettings" (onSelect)="onselectedOrg($event)"
+                                (onDeSelect)="onDeselectedOrg($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Select Branch</label>
+                            <ng-multiselect-dropdown 
+                            [placeholder]="'Select Branch'" 
+                             [data]="Columns"
+                             [(ngModel)]="selectedBranch"
+                             (onSelect)="onBranchSelect($event)"
+                             (onDeSelect)="onBranchDeSelect($event)"   
+                             (onSelectAll)="onBranchSelectAll()"   
+                             (onDeSelectAll)="onBranchDeSelectAll()"   
+                             [settings]="branchSettings">
+                             </ng-multiselect-dropdown>
+                          </div>
+                          <div class="col-md-4">
+                            <label class="form-label">Select Department</label>
+                            <ng-multiselect-dropdown [placeholder]="'All Department'" [data]="DepColumns"
+                            [(ngModel)]="selectedDepartment"
+                             (onSelect)="onDeptSelect($event)"
+                               (onDeSelect)="onDeptDeSelect($event)"
+                           (onSelectAll)="onDeptSelectAll($event)" (onDeSelectAll)="onDeptDeSelectAll()"
+                           [settings]="departmentSettings">
+                           </ng-multiselect-dropdown>
+                          </div>
+                               <div class="col-md-4">
+                                <label class="form-label">Select Employees</label>
+                                <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+                                  [(ngModel)]="selectedEmployees" (onSelectAll)="OnEmpSelectAll($event)" (onDeSelectAll)="OnEmpDeSelectAll($event)" (onSelect)="OnEmployeesChange($event)" (onDeSelect)="OnEmployeesChangeDeSelect($event)"
+                                  [settings]="employeeSettings">
+                                </ng-multiselect-dropdown>
+                              </div>
+                              <div class="col-md-3">
+                                <div  class="form-group">
+                                    <div  class="form-label">Upload Image</div>
+                                    <div  class="mb-3">
+                                        <input multiple type="file" id="formFile" (change)="UploadMultipleFiles($event,validationForm)" class="form-control">
+                                    </div>
+                                    <form #validationForm="ngForm" class="editForm" novalidate>
+                                        <div *ngIf="ShowImage">
+                                            <div class="row">
+                                                <div class="col-4" *ngFor="let img of ReplyFiles">
+                                                    <img *ngIf="img.FileType=='Image'" (click)="ShowAlert(CurrentDomain,img.FilePath)" src="{{CurrentDomain}}{{img.FilePath}} " alt="img" class="img-fluid rounded">
+                                                    <a href="{{CurrentDomain}}{{img.FileUrl}}"><img *ngIf="img.FileType=='PDF'" src="./assets/images/Banner/Icons/pdfdownload.png" alt="PDF img" class="img-fluid rounded">
+                                                        <img *ngIf="img.FileType=='Excel'" src="./assets/images/Banner/Icons/exceldownload.png" alt="PDF img" class="img-fluid rounded">
+                                                        <img *ngIf="img.FileType=='Word'" src="./assets/images/Banner/Icons/worddownload.png" alt="PDF img" class="img-fluid rounded"></a>
+                                                </div>
+                                            </div>
+                                         
+                          </div>
+                          </form>
+                                </div>
+                             </div> 
+                           <div  class="col-md-6">
+                            <div  class="form-group"><label 
+                                    class="form-label">Description</label><textarea  type="text" rows="3"
+                             class="form-control" id="Description" name="Description" placeholder="Tommorow everyone should be there at 10 o clock" 
+                                    [ngClass]="{'is-invalid': !Description.valid && (Description.dirty || Description.touched || isSubmit)}"
+                                    #Description="ngModel" Description [(ngModel)]="formInput.Description"></textarea>
+                                   
+                                </div>
+                           </div>
+                           <div  class="col-md-2" style="display: flex;align-items: center;justify-content: center;">
+                            <div  class="form-group">
+                    <div  class="table-responsive ng-star-inserted">
+                        <br>
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="SendMessage();"> Submit</button> &nbsp;
+                        <button  id="table2-new-row-button" class="btn btn-primary mb-4" style="border-radius:10px;background-color: #3601b5a3;" (click)="CloseTab();"> Close</button>  </div></div>
+                        </div>
+
+                </div>
+            </div>
+    </div>  
+</div>
+    </div>
+    <br>
+    <br>
+
+<!-- </div> -->
+
+<!-- <div  *ngIf="!AddPermission">
+                       
+    <div  class="page page-h"><div  class="page-content z-index-10"><div  class="container text-center"><div  class="row"><div  class="col-lg-6 col-xl-6 col-md-6 d-block mx-auto"><div  class="text-black"><div  class="display-1 t mb-5"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div><h1  class="h2 mb-3">Authorization Error..<i class="fa fa-exclamation" aria-hidden="true"></i></h1><p  class="h4 font-weight-normal mb-7 leading-normal">“Sorry, You Are Not Allowed to Access This Page”</p><a  routerlink="/dashboard/sales-dashboard" class="btn btn-primary" style="border-radius: 10px;background-color: #3601b5a3;"> </a></div></div></div></div></div></div>
+</div> -->
+   
+   
+   

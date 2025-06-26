@@ -1,0 +1,155 @@
+<div class="dialogs" style="overflow: hidden; padding: 20px;max-height: 100vh;">
+  <div style="display: flex;justify-content: space-between;">
+    <h4 style="margin-left: 10px;"><span *ngIf="data.type == 'Bonus'">Bonus</span><span
+      *ngIf="data.type == 'Deduction'">Deduction And Penalties</span></h4>
+    <i class="fa fa-times" style="font-size: 20px;" (click)="close()"></i>
+</div>
+
+  <div class="col-md-12 row Content" style="margin-bottom: 0%;margin-top:2%;row-gap: 20px;">
+    <div class="col-md-12 row">
+      <div class="col-md-4">
+        <label class="labels">Branch &nbsp;</label>
+        <ng-multiselect-dropdown *ngIf="!isEdit" [placeholder]="'Select Branch'" [data]="BranchList"
+          [(ngModel)]="selectedBranch" (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)"
+          [settings]="branchSettings">
+        </ng-multiselect-dropdown>
+        <input type="text" *ngIf="isEdit" class="form-control timings" disabled [(ngModel)]="branchName">
+      </div>
+      <div class="col-md-4">
+        <label class="labels">Department</label>
+        <ng-multiselect-dropdown [disabled]="isEdit" [placeholder]="'All Department'" [data]="DepartmentList"
+          [(ngModel)]="selectedDepartment" (onSelect)="onDeptSelect($event)" (onDeSelect)="onDeptDeSelect($event)"
+          [settings]="departmentSettings">
+        </ng-multiselect-dropdown>
+        <!-- <input type="text" *ngIf="isEdit" class="form-control timings" disabled [(ngModel)]="departmentName"> -->
+      </div>
+      <div class="col-md-4">
+        <label class="labels">Employees</label>
+        <ng-multiselect-dropdown [placeholder]="'Select Employees'" [data]="EmployeeList"
+          [(ngModel)]="selectedEmployees" (onSelect)="OnEmployeesChange($event)"
+          (onDeSelect)="OnEmployeesChangeDeSelect($event)" [settings]="employeeSettings">
+        </ng-multiselect-dropdown>
+        <!-- <input type="text" *ngIf="isEdit" class="form-control timings" disabled [(ngModel)]="employeeName"> -->
+      </div>
+    </div>
+
+    <div class="col-md-12 row">
+      <div class="col-md-4">
+        <label class="labels">Module</label> <br>
+        <ng-multiselect-dropdown [placeholder]="'Module'" [data]="module" [(ngModel)]="moduletype"
+          (onSelect)="onmoduleTypeSelect($event)" (onDeSelect)="onmoduleTypeDeSelect($event)"
+          [settings]="moduleTypeSettings" (change)="OnModulSelect($event);">
+        </ng-multiselect-dropdown>
+      </div>
+      <!-- <div class="col-md-4">
+          <label class="labels">Duration Type</label> <br>
+          <ng-multiselect-dropdown [placeholder]="'Type'" 
+           [data]="bdData" [(ngModel)]="bdtype" (onSelect)="onbdTypeSelect($event)" (onDeSelect)="onbdTypeDeSelect($event)"
+           [settings]="bdTypeSettings">
+           </ng-multiselect-dropdown>
+          </div> -->
+      <!-- </div> -->
+      <!-- <div class="col-md-12 row Content" style="margin-bottom: 0%;margin-top:2%;row-gap: 20px;"> -->
+
+
+      <div class="col-md-4">
+        <label class="labels">Login Type</label> <br>
+        <ng-multiselect-dropdown [placeholder]="'Login Type'" *ngIf="data.type == 'Bonus'" [data]="TypeBonusList"
+          [(ngModel)]="selectedType" (onSelect)="onTypeSelect($event)" [settings]="TypeSettings">
+        </ng-multiselect-dropdown>
+        <ng-multiselect-dropdown [placeholder]="'Login Type'" *ngIf="data.type == 'Deduction'" [data]="TypeDeducList"
+          [(ngModel)]="selectedType" (onSelect)="onTypeSelect($event)" [settings]="TypeSettings">
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+
+    <div class="col-md-12 row">
+      <div class="col-md-4" *ngIf="selectedType == 'Absent' || selectedType =='Present'">
+        <label class="labels">Value Type</label><br>
+        <input type="radio" id="number" name="valueSelection" [value]="'number'" [(ngModel)]="selectedValueType"
+          (change)="updateValueSelection()">
+        <label for="number">Days</label>&nbsp;&nbsp;&nbsp;
+        <input type="radio" id="percent" name="valueSelection" [value]="'percent'" [(ngModel)]="selectedValueType"
+          (change)="updateValueSelection()">
+        <label for="percent">Percent</label>&nbsp;&nbsp;&nbsp;
+      </div>
+      <div class="col-md-4" *ngIf="selectedType == 'Absent' || selectedType =='Present'">
+        <label class="labels">Min Value</label><br>
+        <input type="number" placeholder="" [(ngModel)]="NoDaysWorked" min="0" class="form-control timings"
+          (keydown)="preventPlusMinus($event)" (ngModelChange)="checkminmax();">
+        <div *ngIf="showminerror">
+          {{minmsg}}
+        </div>
+      </div>
+
+      <div class="col-md-4" *ngIf="selectedType == 'Absent' || selectedType =='Present'">
+        <label class="labels">Max Value</label><br>
+        <input type="number" disabled placeholder="{{TotalNoDays}}" [(ngModel)]="TotalNoDays" min="0" class="form-control timings"
+       >
+        <div *ngIf="showminerror">
+          {{maxmsg}}
+        </div>
+      </div>
+      <!-- <div class="col-md-4" *ngIf="selectedType == 'Absent' || selectedType == 'Present'">
+        <label class="labels">Max Value</label><br>
+        <input type="number" *ngIf="selectedValueType === 'percent'" placeholder="" disabled [(ngModel)]="TotalNoDays" class="form-control timings"
+          (keydown)="preventPlusMinus($event)" (ngModelChange)="checkminmax();">
+
+          <ng-multiselect-dropdown *ngIf="selectedValueType === 'number'" [placeholder]="'Select Day'" [data]="NumberDays"
+          [(ngModel)]="TotalNoDays" [settings]="TypeSettings">
+        </ng-multiselect-dropdown>
+        <div *ngIf="showmaxerror">
+          {{maxmsg}}
+        </div>
+      </div> -->
+    </div>
+    <div class="col-md-12 row">
+      <div class="col-md-4">
+        <label class="labels"><span *ngIf="data.type == 'Bonus'">Bonus</span><span *ngIf="data.type == 'Deduction'">
+            Deduction</span> Type</label><br>
+        <input type="radio" id="amount" name="typeSelection" [value]="'amount'" [(ngModel)]="selectedDeductType"
+          (change)="updateSelection()">
+        <label for="amount">Amount</label>&nbsp;&nbsp;&nbsp;
+        <input type="radio" id="percentage" name="typeSelection" [value]="'percentage'" [(ngModel)]="selectedDeductType"
+          (change)="updateSelection()">
+        <label for="percentage">Percentage</label>&nbsp;&nbsp;&nbsp;
+        <!-- <input type="radio" id="day" name="typeSelection" [value]="'day'" [(ngModel)]="selectedDeductType" (change)="updateSelection()">
+        <label for="day">Day</label>&nbsp;&nbsp;&nbsp; -->
+      </div>
+      <div class="col-md-2" style="align-items: center;display: flex;" *ngIf="selectedDeductType == 'percentage'">
+        <input type="checkbox" [(ngModel)]="IsPerDay"> Use Per Day Salary <button mat-raised-button
+          matTooltip="Check this option to calculate the percentage based on your per day salary. If unchecked, the percentage will be applied to your basic or gross salary instead."><i
+            class="fa fa-info-circle"></i></button>
+      </div>
+      <div class="col-md-2">
+        <label class="labels">Value In <span *ngIf="selectedDeductType == 'amount'">₹</span><span
+            *ngIf="selectedDeductType == 'percentage'">%</span><span *ngIf="selectedDeductType == 'day'">Day</span>
+        </label><br>
+        <input (change)="checkval();" (keydown)="preventPlusMinus($event)" type="number" placeholder="Enter Value"
+          [(ngModel)]="Value" class="form-control timings">
+      </div>
+      <div class="col-md-4" *ngIf="selectedDeductType == 'percentage'">
+        <label class="labels">Salary Type</label> <br>
+        <ng-multiselect-dropdown [placeholder]="'Salary Type'" [data]="SalaryTypeList" [(ngModel)]="selectedSalaryType"
+          (onSelect)="onSalaryTypeSelect($event)" (onDeSelect)="onSalaryTypeDeSelect($event)"
+          [settings]="SalaryTypeSettings">
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 row Content" style="margin-bottom: 0%;margin-top:2%;row-gap: 20px;">
+
+    <!-- <div class="col-md-4">
+          <label class="labels">Extra Hours</label><br>
+          <input type="number" placeholder="Extra Hours" [(ngModel)]="ExtraHours" class="form-control timings">
+        </div>  -->
+    <div class="col-md-4" style="align-items: center;display: flex;"><br>
+      <button *ngIf="!isEdit" class="btn btn-primary" (click)="AddbonusDeduction()">Submit</button>
+      <button *ngIf="isEdit" class="btn btn-primary" (click)="UpdatebonusDeduction()">Update</button>
+    </div>
+  </div>
+  <!-- <div style="text-align: center;margin-top: 10px;">
+        <button *ngIf="!isEdit" class="btn btn-primary" (click)="AddbonusDeduction()">Submit</button>
+        <button *ngIf="isEdit"class="btn btn-primary" (click)="UpdatebonusDeduction()">Update</button>
+    </div>  -->
+</div>
